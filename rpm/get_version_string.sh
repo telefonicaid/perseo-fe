@@ -46,7 +46,7 @@ get_branch_type()
 
 get_version_string()
 {
-    if [[ $(is_pdi_compliant) -eq 0 ]]; then # Not PDI compliant, return a dummy version
+    if [[ $(is_pdi_compliant) -eq 0 ]]; then # Not TID compliant, return a dummy version
         echo "HEAD-0-g$(git log --pretty=format:'%h' -1)"
         return
     fi
