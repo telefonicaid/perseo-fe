@@ -9,10 +9,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "git@pdihub.hi.inet:fiware/fiware-perseo.git"
+        "url": "git@github.com:telefonicaid/perseo-fe.git"
     },
     "bugs": {
-        "url": "https://pdihub.hi.inet/fiware/fiware-perseo/issues"
+        "url": "https://github.com/telefonicaid/perseo-fe/issues"
     },
     "main": "lib/perseo",
     "engines": {

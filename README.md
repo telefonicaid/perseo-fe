@@ -18,4 +18,4 @@ CEP implementation for IoT platform
 
 ## License
 
-Perse FE is licensed under Affero General Public License (GPL) version 3.
+Perseo FE is licensed under Affero General Public License (GPL) version 3.
