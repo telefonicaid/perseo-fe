@@ -30,7 +30,7 @@ get_branch()
     git rev-parse --abbrev-ref HEAD
 }
 
-## PDI specific functions according the pdihub workflow
+## Specific functions according the TID workflow
 get_branch_type()
 {
     local branch="$(get_branch)"
