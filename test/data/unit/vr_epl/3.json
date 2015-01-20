@@ -1,0 +1,71 @@
+{
+    "VR": {
+        "active": 1,
+        "cards": [
+            {
+                "id": "card_19",
+                "type": "SensorCard",
+                "sensorCardType": "userProperty",
+                "configData": {
+
+                },
+                "connectedTo": [
+                    "card_21"
+                ],
+                "conditionList": [
+                    {
+                        "scope": "USER_PROP",
+                        "parameterValue": "UserValue1",
+                        "not": false,
+                        "operator": "EQUAL_TO",
+                        "userProp": "${device.asset.UserProps.MyProp1}"
+                    }
+                ]
+            },
+            {
+                "type": "ActionCard",
+                "actionData": {
+                    "userParams": [
+                        {
+                            "name": "mail.from",
+                            "value": "gsevillano@gmail.com"
+                        },
+                        {
+                            "name": "mail.to",
+                            "value": "macs@tid.es; gsevillano@aubay.es"
+                        },
+                        {
+                            "name": "mail.subject",
+                            "value": "UserProp"
+                        },
+                        {
+                            "name": "mail.message",
+                            "value": "MyProp1: UserValue1\n${device.name}: ${measure.value}"
+                        }
+                    ],
+                    "name": "email",
+                    "type": "SendEmailAction"
+                },
+                "id": "card_21",
+                "connectedTo": [ ]
+            }
+        ],
+        "name": "Regla",
+        "service": "militar",
+        "updateTime": "2014-03-26T11:30:12.722Z",
+        "tenant": "unkownt"
+    },
+    "name": "Regla",
+    "text": "select *,\"Regla\" as ruleName from pattern [every ev=iotEvent((cast(`device__asset__UserProps__MyProp1`?, String)  =  \"UserValue1\"))]",
+    "action": {
+        "type": "email",
+        "template": "MyProp1: UserValue1\n${ev__device__name}: ${ev__measure__value}",
+        "parameters": {
+            "to": "macs@tid.es; gsevillano@aubay.es",
+            "from": "gsevillano@gmail.com",
+            "subject": "UserProp"
+        }
+    },
+    "service": "militar",
+    "tenant": "unkownt"
+}

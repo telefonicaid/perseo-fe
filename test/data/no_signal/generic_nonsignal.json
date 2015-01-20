@@ -1,0 +1,89 @@
+{
+    "name": "NSR1",
+    "active": 1,
+    "cards": [
+        {
+            "id": "card_6",
+            "type": "SensorCard",
+            "model": "ModeloTemperatura",
+            "sensorData": {
+                "measureName": "",
+                "phenomenonApp": "",
+                "phenomenon": "",
+                "dataType": "Text",
+                "uom": ""
+            },
+            "configData": {
+
+            },
+            "connectedTo": [
+                "card_11"
+            ],
+            "conditionList": [
+                {
+                    "scope": "XPATH",
+                    "not": false,
+                    "operator": "MATCH",
+                    "parameterName": "id",
+                    "parameterValue": "^.*"
+                }
+            ]
+        },
+        {
+            "id": "card_11",
+            "type": "SensorCard",
+            "model": "NoSensorSignal",
+            "sensorData": {
+                "measureName": "at",
+                "phenomenonApp": "",
+                "phenomenon": "",
+                "dataType": "",
+                "uom": ""
+            },
+            "timeData": {
+                "interval": "1",
+                "repeat": "0",
+                "context": "ASSET"
+            },
+            "conditionList": [
+                {
+                    "scope": "LAST_MEASURE",
+                    "not": false,
+                    "operator": "GREATER_THAN",
+                    "parameterValue": 900
+                }
+            ],
+            "connectedTo": [
+                "card_12"
+            ]
+        },
+        {
+            "type": "ActionCard",
+            "actionData": {
+                "userParams": [
+                    {
+                        "name": "mail.from",
+                        "value": "brox@tid.es"
+                    },
+                    {
+                        "name": "mail.to",
+                        "value": "brox@tid.es"
+                    },
+                    {
+                        "name": "mail.subject",
+                        "value": "Sin señal"
+                    },
+                    {
+                        "name": "mail.message",
+                        "value": "${id}  (${type}) lleva ${reportInterval}, desde ${lastTime} sin hablar"
+                    }
+                ],
+                "name": "email",
+                "type": "SendEmailAction"
+            },
+            "id": "card_12",
+            "connectedTo": [ ]
+        }
+    ]
+}
+

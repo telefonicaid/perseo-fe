@@ -1,0 +1,12 @@
+{
+    "name": "Blood",
+    "text": "select *,\"Blood\" as ruleName,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+    "action": {
+        "type": "sms",
+        "template": "Meter ${Meter} has pression ${Pression}.",
+        "parameters": {
+            "to": "123456789"
+        }
+    }
+}
+

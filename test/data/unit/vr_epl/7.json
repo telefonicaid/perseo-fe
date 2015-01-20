@@ -1,0 +1,77 @@
+{
+    "VR": {
+        "name": "ReglaRegExp",
+        "active": 1,
+        "cards": [
+            {
+                "id": "card_6",
+                "type": "SensorCard",
+                "model": "ModeloTemperatura",
+                "sensorData": {
+                    "measureName": "temperature",
+                    "phenomenonApp": "urn:x-ogc:def:phenomenon:IDAS:1.0:temperature",
+                    "phenomenon": "urn:x-ogc:def:phenomenon:IDAS:1.0:temperature",
+                    "dataType": "Text",
+                    "uom": "celsius"
+                },
+                "configData": {
+
+                },
+                "connectedTo": [
+                    "card_7"
+                ],
+                "conditionList": [
+                    {
+                        "scope": "OBSERVATION",
+                        "parameterValue": "5{2,3}",
+                        "not": false,
+                        "operator": "MATCH"
+                    }
+                ]
+            },
+            {
+                "type": "ActionCard",
+                "actionData": {
+                    "userParams": [
+                        {
+                            "name": "mail.from",
+                            "value": "dca_support@tid.es"
+                        },
+                        {
+                            "name": "mail.to",
+                            "value": "brox@tid.es"
+                        },
+                        {
+                            "name": "mail.subject",
+                            "value": "calor"
+                        },
+                        {
+                            "name": "mail.message",
+                            "value": "${device.asset.name} ${measure.value}"
+                        }
+                    ],
+                    "name": "email",
+                    "type": "SendEmailAction"
+                },
+                "id": "card_7",
+                "connectedTo": [ ]
+            }
+        ],
+        "updateTime": "2014-05-06T10:39:47.696Z",
+        "service": "militar",
+        "tenant": "unkownt"
+    },
+    "name": "ReglaRegExp",
+    "text": "select *,\"ReglaRegExp\" as ruleName from pattern [every ev=iotEvent((cast(`temperature`?, String)  regexp  \"5{2,3}\"))]",
+    "action": {
+        "type": "email",
+        "template": "${ev__device__asset__name} ${ev__measure__value}",
+        "parameters": {
+            "to": "brox@tid.es",
+            "from": "dca_support@tid.es",
+            "subject": "calor"
+        }
+    },
+    "service": "militar",
+    "tenant": "unkownt"
+}

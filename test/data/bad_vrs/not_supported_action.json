@@ -1,0 +1,54 @@
+{
+    "name": "UMBRAL",
+    "active": 1,
+    "cards": [
+        {
+            "id": "card_196",
+            "type": "SensorCard",
+            "model": "ModeloPresion",
+            "sensorCardType": "threshold",
+            "sensorData": {
+                "measureName": "BloodPressure",
+                "phenomenonApp": "urn:x-ogc:def:phenomenon:IDAS:1.0:BloodPressure",
+                "phenomenon": "urn:x-ogc:def:phenomenon:IDAS:1.0:BloodPressure",
+                "dataType": "Quantity",
+                "uom": "dimensionless"
+            },
+            "configData": {
+            },
+            "connectedTo": [
+                "card_197"
+            ],
+            "conditionList": [
+                {
+                    "scope": "OBSERVATION",
+                    "parameterValue": "${device.asset.UserProps.threshold.max}",
+                    "not": false,
+                    "operator": "EQUAL_TO"
+                }
+            ]
+        },
+        {
+            "type": "ActionCard",
+            "actionData": {
+                "userParams": [
+                    {
+                        "name": "property.name",
+                        "value": "${device.asset.UserProps.histeresis}"
+                    },
+                    {
+                        "name": "property.value",
+                        "value": "false"
+                    }
+                ],
+                "name": "mongodb",
+                "type": "TurnOffAlarmAction"
+            },
+            "connectedTo": [ ],
+            "id": "card_197"
+        }
+    ],
+    "updateTime": "2014-05-29T16:51:01.020Z",
+    "service": 6000
+}
+

@@ -1,0 +1,8 @@
+Note over perseo slave: periodically
+perseo slave->perseo master: check
+perseo master-->perseo slave: ok
+Note over perseo slave: master is ok\nwon`t do actions
+perseo slave->perseo master: check
+Note over perseo master: ERROR
+Note over perseo slave: master is not ok\nwill do actions
+

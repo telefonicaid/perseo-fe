@@ -1,0 +1,23 @@
+digraph dfd0 {
+
+    perseo[shape=circle];
+	sms[label="SMS Gateway"] [shape=box];
+	smtp[label="SMTP Server"] [shape=box];
+	orion[label="Orion"] [shape=box];
+	oriondb[label="Orion DB"] [shape=box];
+	http[label="HTTP Server"] [shape=box];
+	portal[label="Portal"] [shape=box];
+
+	perseo -> sms [label="action"];
+	perseo -> smtp [label="action"];
+	perseo -> http [label="action"];
+	orion -> perseo [label="event"];
+	perseo -> orion [label="action"];
+	portal -> perseo [label="rules"];
+	perseo -> portal [label="rules"];
+	oriondb -> perseo [label="entity"];
+
+	{ rank=uno; sms smtp http  }
+	{ rank=two; orion oriondb portal }
+
+ }

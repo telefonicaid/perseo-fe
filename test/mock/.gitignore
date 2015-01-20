@@ -1,0 +1,6 @@
+# test
+.idea/
+*.pyc
+testreport/
+old/
+properties.json

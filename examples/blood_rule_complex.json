@@ -1,0 +1,12 @@
+{
+   "name":"blood_rule_complex",
+   "text":"select \"blood_rule_complex\" as ruleName, * from ev=iotEvent.win:length(3).stat:uni(cast(cast(BloodPressure?,string),float)) output last every 3 events",
+   "action":{
+      "type":"email",
+      "template":"Average is ${average}. Total is ${total}. Stddev is ${stddev}. (${datapoints} points)",
+      "parameters":{
+         "to":"brox@tid.es",
+         "from":"brox@tid.es"
+      }
+   }
+}

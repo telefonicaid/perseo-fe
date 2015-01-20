@@ -1,0 +1,67 @@
+{
+    "active": 1,
+    "cards": [
+        {
+            "id": "card_28",
+            "type": "SensorCard",
+            "model": "ModeloPresion",
+            "sensorData": {
+                "measureName": "BloodPressure",
+                "phenomenonApp": "urn:x-ogc:def:phenomenon:IDAS:1.0:BloodPressure",
+                "phenomenon": "urn:x-ogc:def:phenomenon:IDAS:1.0:BloodPressure",
+                "dataType": "Quantity",
+                "uom": "dimensionless"
+            },
+            "configData": {
+
+            },
+            "connectedTo": [
+                "card_167"
+            ],
+            "conditionList": [
+                {
+                    "scope": "OBSERVATION",
+                    "parameterValue": "75",
+                    "not": false,
+                    "operator": "GREATER_THAN"
+                }
+            ]
+        },
+        {
+            "id": "action1",
+            "model": "ModelWithThisInformation",
+            "type": "ActionCard",
+            "actionData": {
+                "name": "sms",
+                "type": "SendSmsMibAction",
+                "userParams": [
+                    {
+                        "name": "sms.to",
+                        "value": "12345678"
+                    },
+                    {
+                        "name": "sms.message",
+                        "value": "${device.asset.UserProps.threshold.major} message"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "card_167",
+            "type": "TimeCard",
+            "timeData": {
+                "context": "ASSET",
+                "interval": "30e3",
+                "repeat": "0"
+            },
+            "configData": {
+                "timeType": "timeElapsed"
+            },
+            "connectedTo": [
+                "card_30"
+            ]
+        }
+    ],
+    "name": "Blood",
+    "updateTime": "2014-05-29T15:34:06.989Z"
+}

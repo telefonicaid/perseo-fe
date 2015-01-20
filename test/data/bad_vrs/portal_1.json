@@ -1,0 +1,56 @@
+{
+    "name":"test",
+    "active":1,
+    "cards":[
+        {
+            "type":"ActionCard",
+            "actionData":{
+                "userParams":[
+                    {
+                        "name":"mail.from",
+                        "value":"dca_support@tid.es"
+                    },
+                    {
+                        "name":"mail.to",
+                        "value":"MANDATORY"
+                    },
+                    {
+                        "name":"mail.subject",
+                        "value":"DCA message"
+                    },
+                    {
+                        "name":"mail.message",
+                        "value":"DCA message"
+                    }
+                ],
+                "name":"email",
+                "type":"SendEmailAction"
+            },
+            "id":"card_3",
+            "connectedTo":[
+
+            ]
+        },
+        {
+            "id":"card_4",
+            "type":"SensorCard",
+            "sensorCardType":"regexp",
+            "configData":{
+
+            },
+            "connectedTo":[
+                "card_3"
+            ],
+            "conditionList":[
+                {
+                    "scope":"XPATH",
+                    "parameterValue":"test",
+                    "parameterName":"regexp",
+                    "not":false,
+                    "operator":"MATCH",
+                    "userProp":""
+                }
+            ]
+        }
+    ]
+}

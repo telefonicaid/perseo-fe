@@ -1,0 +1,12 @@
+core->perseo: action
+perseo-->core: ok
+Note over perseo: is master or\n master is unavailable
+perseo->mongodb:getRule
+mongodb-->perseo:rule
+perseo->mongodb:getLastExecution
+mongodb-->perseo:lastExecution
+Note over perseo: not recently\n executed
+perseo->SMS Gateway: message
+SMS Gateway-->perseo: ok
+perseo->mongodb:updateLastExecution
+mongodb-->perseo:ok

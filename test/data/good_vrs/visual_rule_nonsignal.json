@@ -1,0 +1,55 @@
+{
+    "name": "VR_nonsignal",
+    "service": 1052,
+    "active": 1,
+    "cards": [
+        {
+            "id": "card_11",
+            "type": "SensorCard",
+            "model": "NoSensorSignal",
+            "sensorData": {
+                "measureName": "temperature",
+                "phenomenonApp": "urn:x-ogc:def:phenomenon:IDAS:1.0:temperature",
+                "phenomenon": "urn:x-ogc:def:phenomenon:IDAS:1.0:temperature",
+                "dataType": "Quantity",
+                "uom": "celsius"
+            },
+            "timeData": {
+                "interval": "1",
+                "repeat": "0",
+                "context": "ASSET"
+            },
+            "conditionList": [
+                {
+                    "scope": "LAST_MEASURE",
+                    "not": false,
+                    "operator": "GREATER_THAN",
+                    "parameterValue": 300e3
+                }
+            ],
+            "connectedTo": [
+                "card_12"
+            ]
+        },
+        {
+            "type": "ActionCard",
+            "actionData": {
+                "userParams": [
+                    {
+                        "name": "sms.to",
+                        "value": "123456789"
+                    },
+                    {
+                        "name": "sms.message",
+                        "value": "${device.asset.name}"
+                    }
+                ],
+                "name": "sms",
+                "type": "SendSmsMibAction"
+            },
+            "id": "card_12",
+            "connectedTo": [ ]
+        }
+    ],
+    "updateTime": "2014-03-26T14:29:40.561Z"
+}

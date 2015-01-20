@@ -1,0 +1,68 @@
+{
+    "VR": {
+        "name": "DoorControlSMS",
+        "active": 0,
+        "cards": [
+            {
+                "id": "sensor1",
+                "model": "ModelWithThisInformation",
+                "type": "SensorCard",
+                "connectedTo": [
+                    "action1",
+                    "action2"
+                ],
+                "configData": {
+                    "cardType": "Cartype rest tests"
+                },
+                "sensorData": {
+                    "measureName": "door_status",
+                    "phenomenon": "urn:x-ogc:def:phenomenon:IDAS:1.0:temperature",
+                    "phenomenonApp": "urn:x-ogc:def:phenomenon:IDAS:1.0:temperature",
+                    "dataType": "Quantity",
+                    "uom": "celsius"
+                },
+                "conditionList": [
+                    {
+                        "scope": "OBSERVATION",
+                        "parameterValue": "22",
+                        "not": true,
+                        "operator": "EQUAL_TO"
+                    }
+                ]
+            },
+            {
+                "id": "action1",
+                "model": "ModelWithThisInformation",
+                "type": "ActionCard",
+                "actionData": {
+                    "name": "sms",
+                    "type": "SendSmsMibAction",
+                    "userParams": [
+                        {
+                            "name": "sms.to",
+                            "value": "12345678"
+                        },
+                        {
+                            "name": "sms.message",
+                            "value": "${device.asset.UserProps.threshold.major} message"
+                        }
+                    ]
+                }
+            }
+        ],
+        "updateTime": "2013-11-15T12:07:40.772Z",
+        "service": "militar",
+        "tenant": "unkownt"
+    },
+    "name": "DoorControlSMS",
+    "text": "select *,\"DoorControlSMS\" as ruleName from pattern [every ev=iotEvent((cast(cast(`door_status`?, String), float)  =  22))]",
+    "action": {
+        "type": "sms",
+        "template": "${ev__device__asset__UserProps__threshold__major} message",
+        "parameters": {
+            "to": "12345678"
+        }
+    },
+    "service": "militar",
+    "tenant": "unkownt"
+}

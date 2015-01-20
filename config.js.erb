@@ -1,0 +1,148 @@
+/*
+ * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+ *
+ * This file is part of perseo-fe
+ *
+ * perseo-fe is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * perseo-fe is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with perseo-fe.
+ * If not, see http://www.gnu.org/licenses/.
+ *
+ * For those usages not covered by the GNU Affero General Public License
+ * please contact with::[contacto@tid.es]
+ */
+'use strict';
+
+var config = {};
+
+/**
+ * Default log level. Can be one of: 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'
+ * @type {string}
+ */
+config.logLevel = 'INFO';
+
+
+/**
+ * Configures the exposed API.
+ */
+config.endpoint = {
+    host: 'localhost',
+    port: <%= @iotperseocep_port %>,
+    rulesPath : '/rules',
+    actionsPath : '/actions/do',
+    noticesPath : '/notices',
+    vrPath : '/m2m/vrules',
+    checkPath : '/check'
+};
+
+/**
+ * Is Master this one?
+ */
+config.isMaster = <%= @iotperseocep_ha_master %>;
+
+/**
+ * DB Configuration.
+ */
+config.mongo = {
+    url: 'mongodb://<%= @iotperseocep_mongo_host %>:<%= @iotperseocep_mongo_port %>/<%= @iotperseocep_mongo_db %>'
+};
+
+/**
+ * OrionDB Configuration.
+ */
+config.orionDb = {
+    url : 'mongodb://<%= @cb_db_host %>:<%= @cb_db_port %>/<%= @cb_db_name %>',
+    collection : 'entities',
+    prefix : 'orion',
+    batchSize: 500
+};
+
+/**
+ * EPL core options
+ *
+ * interval is the time in milliseconds between refreshing rules
+ * at core. Each <<interval>> ms, the rules are sent to core.
+ */
+config.perseoCore = {
+    rulesURL : 'http://<%= @iotperseocep_core_host %>:<%= @iotperseocep_core_port %>/perseo-core/rules',
+    noticesURL : 'http://<%= @iotperseocep_core_host %>:<%= @iotperseocep_core_port %>/perseo-core/events',
+    interval: 60e3*30
+};
+
+
+/**
+ * NEXT EPL core options (with HA)
+ */
+config.nextCore = {
+    rulesURL : 'http://<%= @iotperseocep_core2_host %>:<%= @iotperseocep_core2_port %>/perseo-core/rules',
+    noticesURL : 'http://<%= @iotperseocep_core2_host %>:<%= @iotperseocep_core2_port %>/perseo-core/events'
+};
+
+/**
+ * NEXT EPL core options (with HA, only for slave)
+ *
+ * reportInterval is the time in milliseconds between reports (error logs)
+ * about master being missing
+ */
+config.master = {
+    <% if @iotperseocep_ha_master %>
+    checkURL : 'http://<%= @iotperseocep_core_host %>:<%= @iotperseocep_core_port %>/check',
+    <% else %>
+    checkURL : 'http://<%= @iotperseocep_core2_host %>:<%= @iotperseocep_core2_port %>/check',
+    <% end %>
+    interval: 500,
+    reportInterval: 30e3
+};
+
+/**
+ * SMTP endpoint options
+ */
+config.smtp = {
+    port : <%= @smtp_port %>,
+    host : '<%= @smtp_host %>'
+};
+
+/**
+ * SMS endpoint options
+ */
+config.sms = {
+    URL : 'http://<%= @smpp_host %>:<%= @smpp_port %>/sms/v2/smsoutbound',
+    API_KEY : '80ce17b0-2232-4788-b506-0efa38e3a22d',
+    API_SECRET: '22c51b7b-3f66-485c-a01b-6dcfc74106be'
+};
+
+/**
+ * Orion (Context Broker) endpoint options
+ */
+config.orion = {
+    URL : 'http://<%= @cb_host %>:<%= @cb_port %>/NGSI10/updateContext'
+};
+
+/**
+ * Collections
+ * @type {{}}
+ */
+config.collections = {
+    rules : 'rules',
+    executions: 'executions'
+};
+
+/**
+ * Constants for missing header fields for service (Fiware-servicepath) DEFAULT_SERVICE
+ * and tenant (Fiware-service) DEFAULT_TENANT
+ *
+ * @type {{}}
+ */
+config.DEFAULT_SERVICE= '/';
+config.DEFAULT_TENANT= 'unknownt';
+
+module.exports = config;

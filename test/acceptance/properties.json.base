@@ -1,0 +1,24 @@
+{
+    "environment": {
+        "name": "orion_cep",
+        "logs_path": "logs"
+    },
+    "CEP": {
+        "cep_url": "<protocol>://<host>:<port>",
+        "cep_send_sms_url": "<protocol>://<host>:<port>",
+        "cep_send_email_url": "<protocol>://<host>:<port>",
+        "cep_send_update_url": "<protocol>://<host>:<port>",
+        "cep_version": "X.Y.z",
+        "cep_rule_name_default": "name",
+        "cep_tenant_default": "unknownT",
+        "cep_service_path_default": "/",
+        "cep_identity_type": "Room",
+        "cep_identity_id": "Room1",
+        "cep_attribute_number_default": 1,
+        "cep_rules_number_default": 1,
+        "cep_epl_attribute_data_type": "float",
+        "cep_epl_operation": ">",
+        "cep_epl_value":"1.5",
+        "cep_card_active":8
+    }
+}

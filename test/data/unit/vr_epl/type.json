@@ -1,0 +1,78 @@
+{
+    "VR": {
+        "name": "ReglaType",
+        "active": 1,
+        "cards": [
+            {
+                "id": "card_6",
+                "type": "SensorCard",
+                "model": "ModeloTemperatura",
+                "sensorData": {
+                    "measureName": "temperature",
+                    "phenomenonApp": "urn:x-ogc:def:phenomenon:IDAS:1.0:temperature",
+                    "phenomenon": "urn:x-ogc:def:phenomenon:IDAS:1.0:temperature",
+                    "dataType": "Text",
+                    "uom": "celsius"
+                },
+                "configData": {
+
+                },
+                "connectedTo": [
+                    "card_7"
+                ],
+                "conditionList": [
+                    {
+                        "scope": "XPATH",
+                        "not": false,
+                        "operator": "EQUAL_TO",
+                        "parameterName": "type",
+                        "parameterValue": "valueForType"
+                    }
+                ]
+            },
+            {
+                "type": "ActionCard",
+                "actionData": {
+                    "userParams": [
+                        {
+                            "name": "mail.from",
+                            "value": "dca_support@tid.es"
+                        },
+                        {
+                            "name": "mail.to",
+                            "value": "brox@tid.es"
+                        },
+                        {
+                            "name": "mail.subject",
+                            "value": "calor"
+                        },
+                        {
+                            "name": "mail.message",
+                            "value": "${device.asset.name} ${measure.value}"
+                        }
+                    ],
+                    "name": "email",
+                    "type": "SendEmailAction"
+                },
+                "id": "card_7",
+                "connectedTo": [ ]
+            }
+        ],
+        "updateTime": "2014-05-06T10:39:47.696Z",
+        "service": "SERVICE/PATH/subpath/y más",
+        "tenant": "SERVICIO"
+    },
+    "name": "ReglaType",
+    "text": "select *,\"ReglaType\" as ruleName from pattern [every ev=iotEvent((cast(`type`?, String)  =  \"valueForType\"))]",
+    "action": {
+        "type": "email",
+        "template": "${ev__device__asset__name} ${ev__measure__value}",
+        "parameters": {
+            "to": "brox@tid.es",
+            "from": "dca_support@tid.es",
+            "subject": "calor"
+        }
+    },
+    "service": "SERVICE/PATH/subpath/y más",
+    "tenant": "UnkownT"
+}

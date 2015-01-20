@@ -1,0 +1,55 @@
+{
+    "active": 1,
+    "cards": [
+        {
+            "id": "card_19",
+            "type": "SensorCard",
+            "sensorCardType": "userProperty",
+            "configData": {
+
+            },
+            "connectedTo": [
+                "card_21"
+            ],
+            "conditionList": [
+                {
+                    "scope": "USER_PROP",
+                    "parameterValue": "UserValue1",
+                    "not": false,
+                    "operator": "EQUAL_TO",
+                    "userProp": "${España y olé. !}"
+                }
+            ]
+        },
+        {
+            "type": "ActionCard",
+            "actionData": {
+                "userParams": [
+                    {
+                        "name": "mail.from",
+                        "value": "gsevillano@gmail.com"
+                    },
+                    {
+                        "name": "mail.to",
+                        "value": "macs@tid.es; gsevillano@aubay.es"
+                    },
+                    {
+                        "name": "mail.subject",
+                        "value": "UserProp"
+                    },
+                    {
+                        "name": "mail.message",
+                        "value": "MyProp1: UserValue1\n${device.name}: ${measure.value}"
+                    }
+                ],
+                "name": "email",
+                "type": "SendEmailAction"
+            },
+            "id": "card_21",
+            "connectedTo": [ ]
+        }
+    ],
+    "name": "Regla",
+    "updateTime": "2014-03-26T11:30:12.722Z"
+}
+
