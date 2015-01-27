@@ -275,7 +275,7 @@ describe('Actions', function() {
                     clients.PostAction(action, function(error, data) {
                         should.not.exist(error);
                         data.should.have.property('statusCode', 200);
-                        setTimeout(callback, 500);
+                        setTimeout(callback, 1000);
                     });
                 },
                 function(callback) {
