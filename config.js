@@ -51,6 +51,12 @@ config.endpoint = {
 config.isMaster = true;
 
 /**
+ * Delay (in milliseconds) for slave to execute an action
+ */
+config.slaveDelay = 500;
+
+
+/**
  * DB Configuration.
  */
 config.mongo = {
