@@ -31,7 +31,8 @@ var
     utilsT = require('../utils/utilsT'),
     testEnv = require('../utils/testEnvironment'),
     actions = require('../../lib/models/actions'),
-    executionsStore = require('../../lib/models/executionsStore');
+    executionsStore = require('../../lib/models/executionsStore'),
+    EXEC_GRACE_PERIOD = 500;
 
 describe('Actions', function() {
     beforeEach(testEnv.commonBeforeEach);
@@ -242,7 +243,7 @@ describe('Actions', function() {
                     clients.PostAction(action, function(error, data) {
                         should.not.exist(error);
                         data.should.have.property('statusCode', 200);
-                        setTimeout(callback, 500);
+                        setTimeout(callback, EXEC_GRACE_PERIOD);
                     });
                 },
                 function(callback) {
@@ -275,7 +276,7 @@ describe('Actions', function() {
                     clients.PostAction(action, function(error, data) {
                         should.not.exist(error);
                         data.should.have.property('statusCode', 200);
-                        setTimeout(callback, 500);
+                        setTimeout(callback, EXEC_GRACE_PERIOD);
                     });
                 },
                 function(callback) {
@@ -293,7 +294,7 @@ describe('Actions', function() {
                     clients.PostAction(action, function(error, data) {
                         should.not.exist(error);
                         data.should.have.property('statusCode', 200);
-                        setTimeout(callback, 500);
+                        setTimeout(callback, EXEC_GRACE_PERIOD);
                     });
                 },
                 function(callback) {
