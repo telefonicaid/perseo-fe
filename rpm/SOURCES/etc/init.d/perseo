@@ -11,12 +11,12 @@
 # Default-Start:  345
 # Default-Stop: 90
 # Short-Description: run perseo
-# Description: Perseo is the Complex Event Process for the Fiware platform.
+# Description: Perseo is the Complex Event Process for IoT platform
 ### END INIT INFO
 
 # Copyright 2014 Telefonica Investigacion y Desarrollo, S.A.U
 #
-# This file is part of perseo-fe Complex Event Processor.
+# This file is part of perseo-fe.
 #
 # perseo-fe is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as

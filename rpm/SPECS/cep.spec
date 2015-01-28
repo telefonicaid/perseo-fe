@@ -35,7 +35,7 @@ Vendor: Telefonica I+D
 BuildRequires: npm
 
 %description
-Perseo is the Complex Event Process for the Fiware platform.
+Perseo is the Complex Event Process for IoT platform.
 
 # System folders
 %define _srcdir $RPM_BUILD_ROOT/../../..
