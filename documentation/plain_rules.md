@@ -131,3 +131,20 @@ Makes an HTTP POST to an URL specified in `url` inside `parameters`, sending a b
         }
     }
 ```
+
+### twitter action
+
+Updates the status of a twitter account, with the text build from the `template` field. The field `parameters` must contain the values for the consumer key and secret and the access token key and access token secret of the pre-provisioned application associated to the twitter user.
+
+```json
+ "action": {
+        "type": "twitter",
+        "template": "Meter ${Meter} has pression ${Pression} (GEN RULE)",
+        "parameters": {
+          "consumer_key": "xvz1evFS4wEEPTGEFPHBog",
+          "consumer_secret": "L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg",
+          "access_token_key": "xvz1evFS4wEEPTGEFPHBog",
+          "access_token_secret": "L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg"
+        }
+    }
+```
