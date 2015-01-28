@@ -7,7 +7,7 @@ Logs have levels `FATAL`, `ERROR`, `INFO` and `DEBUG`. The log level must be set
  * Default log level. Can be one of: 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'
  * @type {string}
  */
-config.logLevel = 'DEBUG';
+config.logLevel = 'INFO';
 ```
 
  In order to have logs that can enable alarms being raised and ceased, `INFO` level should be set in the configuration file.
