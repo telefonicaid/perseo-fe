@@ -7,7 +7,7 @@ The “anatomy” of a rule is as follows
 ```json
 {
    "name":"blood_rule_update",
-   "text":"select *,\"blood_rule_update\" as ruleName, \"/\" as service, \"unknownT\" as tenant, *, ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+   "text":"select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
    "action":{
       "type":"update",
       "parameters":{
