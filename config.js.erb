@@ -1,21 +1,21 @@
 /*
- * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+ * Copyright 2013 Telefonica Investigación y Desarrollo, S.A.U
  *
- * This file is part of perseo-fe
+ * This file is part of perseo
  *
- * perseo-fe is free software: you can redistribute it and/or
+ * perseo is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the License,
  * or (at your option) any later version.
  *
- * perseo-fe is distributed in the hope that it will be useful,
+ * perseo is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public
- * License along with perseo-fe.
- * If not, see http://www.gnu.org/licenses/.
+ * License along with perseo.
+ * If not, seehttp://www.gnu.org/licenses/.
  *
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
@@ -53,14 +53,14 @@ config.isMaster = <%= @iotperseocep_ha_master %>;
  * DB Configuration.
  */
 config.mongo = {
-    url: 'mongodb://<%= @iotperseocep_mongo_host %>:<%= @iotperseocep_mongo_port %>/<%= @iotperseocep_mongo_db %>'
+    url: 'mongodb://<%first=1 -%><% @iotperseocep_mongo_hosts.each do |node| -%><% if first !=1 %>,<% end -%><% first=0%><%= node %>:<%= @iotperseocep_mongo_port %><% end %>/<%= @iotperseocep_mongo_db %>'
 };
 
 /**
  * OrionDB Configuration.
  */
 config.orionDb = {
-    url : 'mongodb://<%= @cb_db_host %>:<%= @cb_db_port %>/<%= @cb_db_name %>',
+    url : 'mongodb://<%first=1 -%><% @iotperseocep_mongo_hosts.each do |node| -%><% if first !=1 %>,<% end -%><% first=0%><%= node %>:<%= @iotperseocep_mongo_port %><% end %>/<%= @cb_db_name %>',
     collection : 'entities',
     prefix : 'orion',
     batchSize: 500
@@ -95,9 +95,9 @@ config.nextCore = {
  */
 config.master = {
     <% if @iotperseocep_ha_master %>
-    checkURL : 'http://<%= @iotperseocep_core_host %>:<%= @iotperseocep_core_port %>/check',
+    checkURL : 'http://<%= @iotperseocep_core_host %>:<%= @iotperseocep_port %>/check',
     <% else %>
-    checkURL : 'http://<%= @iotperseocep_core2_host %>:<%= @iotperseocep_core2_port %>/check',
+    checkURL : 'http://<%= @iotperseocep_core2_host %>:<%= @iotperseocep_port %>/check',
     <% end %>
     interval: 500,
     reportInterval: 30e3
