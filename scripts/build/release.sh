@@ -80,7 +80,7 @@ export PERSEO_RELEASE=$2
 # correct date format
 #
 DATE=$(LANG=C date +"%a %b %d %Y")
-export dateLine="$DATE Daniel Moran <daniel.moranjimenez@telefonica.com> ${NEW_VERSION}-${PERSEO_RELEASE}"
+export dateLine="$DATE Daniel Moran <daniel.moranjimenez@telefonica.com> ${NEW_VERSION}"
 
 
 # Modify rpm/SPECS/cep.spec only when step to a non-devel release
@@ -155,7 +155,7 @@ echo "new version:     $NEW_VERSION"
 #
 # Edit files that depend on the current version (which just changed)
 #
-sed "s/$currentVersion/$NEW_VERSION/" package.json        > /tmp/package.json
+sed "s/\"version\": \"$currentVersion\"/\"version\": \"$NEW_VERSION\"/" package.json        > /tmp/package.json
 sed "s/$currentVersion/$NEW_VERSION/" rpm/create-rpm.sh        > /tmp/create-rpm.sh
 
 mv /tmp/package.json              package.json
