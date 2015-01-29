@@ -54,9 +54,11 @@ In the example below,
 * ‘reference’ should be the perseo's IP and port
 * ‘condValues’ a list of the attributes of the entity used in rules. In a future release of Orion (Context Broker) will be possible to subscribe to changes in any attribute, but in the current version, they must be specified
 * 'orion-machine:1026' should be substituted by the actual Context Broker's IP and port
+* 'service' is the service associated to the subscription
+* 'subservice' is the subservice associated to the subscription
 
 ```
-(curl http://orion-machine:1026/v1/subscribeContext -s -S --header 'Content-Type: application/json' --header 'Accept: application/json' -d @- | python -mjson.tool) <<EOF
+(curl http://orion-machine:1026/v1/subscribeContext -s -S --header 'Content-Type: application/json' --header 'Accept: application/json' --header 'Fiware-Service: service' –header 'Fiware-ServicePath: subservice' -d @- | python -mjson.tool) <<EOF
 {
     "entities": [
         {
