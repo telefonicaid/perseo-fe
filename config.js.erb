@@ -3,18 +3,18 @@
  *
  * This file is part of perseo
  *
- * perseo is free software: you can redistribute it and/or
+ * perseo-fe is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the License,
  * or (at your option) any later version.
  *
- * perseo is distributed in the hope that it will be useful,
+ * perseo-fe is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public
- * License along with perseo.
+ * License along with perseo-fe.
  * If not, seehttp://www.gnu.org/licenses/.
  *
  * For those usages not covered by the GNU Affero General Public License
@@ -48,6 +48,11 @@ config.endpoint = {
  * Is Master this one?
  */
 config.isMaster = <%= @iotperseocep_ha_master %>;
+
+/**
+ * Delay (in milliseconds) for slave to execute an action
+ */
+config.slaveDelay = 500;
 
 /**
  * DB Configuration.
@@ -88,22 +93,6 @@ config.nextCore = {
 };
 
 /**
- * NEXT EPL core options (with HA, only for slave)
- *
- * reportInterval is the time in milliseconds between reports (error logs)
- * about master being missing
- */
-config.master = {
-    <% if @iotperseocep_ha_master %>
-    checkURL : 'http://<%= @iotperseocep_core_host %>:<%= @iotperseocep_port %>/check',
-    <% else %>
-    checkURL : 'http://<%= @iotperseocep_core2_host %>:<%= @iotperseocep_port %>/check',
-    <% end %>
-    interval: 500,
-    reportInterval: 30e3
-};
-
-/**
  * SMTP endpoint options
  */
 config.smtp = {
@@ -135,6 +124,15 @@ config.collections = {
     rules : 'rules',
     executions: 'executions'
 };
+
+/**
+ * Executions TTL
+ *
+ * Number of seconds to expire a document in 'executions'
+ * @type {Number}
+ *
+ */
+config.executionsTTL = 1 * 24 * 60 * 60;
 
 /**
  * Constants for missing header fields for service (Fiware-servicepath) DEFAULT_SERVICE
