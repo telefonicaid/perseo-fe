@@ -106,9 +106,9 @@ config.smtp = {
  * SMS endpoint options
  */
 config.sms = {
-    URL : 'http://pigeon.hopto.org:443/sms/v2/smsoutbound',
-    API_KEY : '80ce17b0-2232-4788-b506-0efa38e3a22d',
-    API_SECRET: '22c51b7b-3f66-485c-a01b-6dcfc74106be'
+    URL : 'http://locahost/smsoutbound',
+    API_KEY : '',
+    API_SECRET: ''
 };
 
 /**
