@@ -51,6 +51,12 @@ config.endpoint = {
 config.isMaster = true;
 
 /**
+ * Delay (in milliseconds) for slave to execute an action
+ */
+config.slaveDelay = 500;
+
+
+/**
  * DB Configuration.
  */
 config.mongo = {
@@ -86,17 +92,7 @@ config.nextCore = {
     rulesURL : 'http://demo-dca-be-01:8080/perseo-core/rules',
     noticesURL : 'http://demo-dca-be-01:8080/perseo-core/events'
 };
-/**
- * NEXT EPL core options (with HA, only for slave)
- *
- * reportInterval is the time in milliseconds between reports (error logs)
- * about master being missing
- */
-config.master = {
-    checkURL : 'http://localhost:9999/check',
-    interval: 500,
-    reportInterval: 30e3
-};
+
 
 /**
  * SMTP endpoint options
@@ -130,6 +126,15 @@ config.collections = {
     rules : 'rules',
     executions: 'executions'
 };
+
+/**
+ * Executions TTL
+ *
+ * Number of seconds to expire a document in 'executions'
+ * @type {Number}
+ *
+ */
+config.executionsTTL = 1 * 24 * 60 * 60;
 
 /**
  * Constants for missing header fields for service (Fiware-servicepath) DEFAULT_SERVICE

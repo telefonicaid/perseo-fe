@@ -1,6 +1,9 @@
 core->perseo: action
 perseo-->core: ok
-Note over perseo: is master
+Note over perseo: wait <<delay>>
+perseo->mongodb:getExecutionForNotice
+mongodb-->perseo:lastExecutionForNotice
+Note over perseo: Already done, \nnothing to do.\nNever executed,\n proceed
 perseo->mongodb:getRule
 mongodb-->perseo:rule
 perseo->mongodb:getLastExecution

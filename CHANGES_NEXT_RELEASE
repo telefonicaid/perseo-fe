@@ -1,0 +1,4 @@
+Change HA model for execution of actions
+Fix error if parameter "type" exist in Update entity action (#30)
+
+

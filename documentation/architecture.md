@@ -174,7 +174,7 @@ The rule and action is specified by an old-compatible format used in the portal,
 	}
 ```
 
-Aditional info about VisualRules: [DCA documentation](https://colabora.tid.es/dca/SitePages/Inicio.aspx) (RESTAPI-SBC_2.6, section 6.15)
+Additional info about VisualRules: [DCA documentation](https://colabora.tid.es/dca/SitePages/Inicio.aspx) (RESTAPI-SBC_2.6, section 6.15)
 
 #### "Plain" rules
 A simplified format in JSON can be used to represent rules. The former visual rule would be represented so:
@@ -194,7 +194,7 @@ A simplified format in JSON can be used to represent rules. The former visual ru
 	},
 }
 ```
-Actuallly, visual rules are translated to "plain" rules by perseo internally. This is transparent for the portal which only see visual rules (create, update, delete)
+Actually, visual rules are translated to "plain" rules by perseo internally. This is transparent for the portal which only see visual rules (create, update, delete)
 
 #### EPL
 
@@ -221,7 +221,7 @@ The action included in rule allows sending an email, sending an SMS or updating 
 
 ## HA
 
-The scheme for HA has two sets of perseo and perseo-core components, connected each other. Each set follows the "normal" flow mentioned before. Rules and events are processed by perseo and sent to its associated core. Additionally, the rule and event are *propagated* to the "next" core. Only at the time of executing an action there is an asymmetry between the two sets. The "master" always executes the action. The slave (substitute could be a more appropiate name) executes the action only and only if it "thinks" that the master is not available. The slave checks the availability of the master periodically, making an HTTP request to the master.
+The scheme for HA has two sets of perseo and perseo-core components, connected each other. Each set follows the "normal" flow mentioned before. Rules and events are processed by perseo and sent to its associated core. Additionally, rules and events are *propagated* to the "next" core. Only at the time of executing an action there is an asymmetry between the two sets. The "master" always executes the action. The slave (substitute could be a more appropriate name) executes the action only and only if it "thinks" that the master has not been able to do it. The slave waits a configurable time and then checks in mongoDB if an action for the original notice has been executed already. If not, it executes the action, else it forgets the action.
 
 Events and rules can be sent to the perseo FEs by a load balancer in a round-robin fashion. Regardless which FE receives the event/rule, this one will arrive to both cores. Both will make the same inferences and each one will trigger an action if it is necessary.
 
@@ -248,13 +248,13 @@ In the following diagramas, Portal is depicted as the component managing rules (
 ![Imagen](images/notify.png)
 
 
-### Executing an action
+### Executing an action (master)
 ![Imagen](images/fire_action.png)
 
 
-### Slave checking master availability
-![Imagen](images/check_master.png)
+### Executing an action (slave)
+![Imagen](images/fire_action_slave.png)
 
-### Non-update action
+### No-update action
 ![Imagen](images/nosignal.png)
 
