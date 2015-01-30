@@ -6,14 +6,16 @@ This mock is used to simulate a behaviour of email client (smtp), sms client (sm
 #### Usage:
 
 ```
-    *****************************************************************************************
+    ****************************************************************************************"
     * This mock is used to simulate a behaviour of email client (smtp), sms client (smpp),  *
-    * an update context to Context Broker and send by API REST the content received (http)  *
+    * an update context to Context Broker and send by API REST the content received (http). *
+    * Keep a counter for each action (sms, email, update, post and twitter).                *
     *                                                                                       *
     *  usage: python perseo_mock.py <-u> <-sp=port> <-hp=port> <-i>                         *
     *           ex: python perseo_mock.py -sp=9999 -hp=9998 -i                              *
     *  parameters:                                                                          *
     *         -u: show this usage.                                                          *
+    *         -h: help to request into the mock.                                            *
     *        -sp: change smtp port (by default is 9999).                                    *
     *        -hp: change http port (by default is 9998).                                    *
     *         -i: show more info in console (by default is False).                          *
@@ -26,6 +28,8 @@ This mock is used to simulate a behaviour of email client (smtp), sms client (sm
 ```
 
 #### API Rest requests:
+
+GET
 
 ``` 
      1 - GET - http://<mock_host>:<http_port>/get/email
@@ -66,54 +70,87 @@ This mock is used to simulate a behaviour of email client (smtp), sms client (sm
       updateAction: indicates the type of action that is performed within the update operation
 ```
 
+``
+     4 - GET - http://<mock_host>:<http_port>/get/post
+	     response: <200> Last post action received
+
+	Received data:
+
+	  template: post action template content
 ```
-     4 - POST - http://<mock_host>:<http_port>/send/sms
+
+
+SEND
+
+```
+     1 - POST - http://<mock_host>:<http_port>/send/sms
 	     response: <200> send a new sms to http server
 
 ```
 
 ```
-     5 - POST - http://<mock_host>:<http_port>/send/update
+     2 - POST - http://<mock_host>:<http_port>/send/update
 	     response: <200> send a new update in Context Broker to http server
 
 ```
 
 ```
-     6 - PUT - http://<mock_host>:<http_port>/reset/sms
+     3 - POST - http://<mock_host>:<http_port>/send/post
+	     response: <200> send a new post action to http server
+
+```
+
+RESET
+
+```
+     1 - PUT - http://<mock_host>:<http_port>/reset/sms
 	     response: <200> reset counter to sms received
 
 ```
 
 ```
-     7 - PUT - http://<mock_host>:<http_port>/reset/email
+     2 - PUT - http://<mock_host>:<http_port>/reset/email
 	     response: <200> reset counter to emails received
 
 ```
 
 ```
-     8 - PUT - http://<mock_host>:<http_port>/reset/update
+     3 - PUT - http://<mock_host>:<http_port>/reset/update
 	     response: <200> reset counter to updated sent
 
 ```
 
 ```
-     9 - GET - http://<mock_host>:<http_port>/counter/sms
+     4 - PUT - http://<mock_host>:<http_port>/reset/post
+	     response: <200> reset counter to post action sent
+
+```
+
+COUNTER
+
+```
+     1 - GET - http://<mock_host>:<http_port>/counter/sms
 	     response: <200> get number of sms received after last reset
 
 ```
 
 ```
-    10 - GET - http://<mock_host>:<http_port>/counter/email
+    2 - GET - http://<mock_host>:<http_port>/counter/email
 	     response: <200> get number of email received after last res
 
 ```
 
 ```
-    11 - GET - http://<mock_host>:<http_port>/counter/update
+    3 - GET - http://<mock_host>:<http_port>/counter/update
 	     response: <200> get number of updates sent after last reset
 
 ```
 
+```
+    4 - GET - http://<mock_host>:<http_port>/counter/post
+	     response: <200> get number of post action sent after last reset
+
+```
 
 
 We recommend to change in `config.js`

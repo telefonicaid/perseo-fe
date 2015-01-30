@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+# Copyright 2014 Telefonica Investigación y Desarrollo, S.A.U
 #
-# This file is part of perseo-fe
+# This file is part of perseo
 #
-# perseo-fe is free software: you can redistribute it and/or
+# perseo is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the License,
 # or (at your option) any later version.
 #
-# perseo-fe is distributed in the hope that it will be useful,
+# perseo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public
-# License along with perseo-fe.
+# License along with perseo.
 # If not, see http://www.gnu.org/licenses/.
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid dot es
+#   Ivan Arias (ivan.ariasleon@telefonica.com)
 #
 
 import socket
@@ -44,14 +44,18 @@ APPLICATION_JSON = u'application/json'
 GET_EMAIL      = u'get/email'
 GET_SMS        = u'get/sms'
 GET_UPDATE     = u'get/update'
+GET_POST       = u'get/post'
 SEND_SMS       = u'send/sms'
 SEND_UPDATE    = u'send/update'
+SEND_POST      = u'send/post'
 RESET_EMAIL    = u'reset/email'
 RESET_SMS      = u'reset/sms'
 RESET_UPDATE   = u'reset/update'
+RESET_POST     = u'reset/post'
 COUNTER_SMS    = u'counter/sms'
 COUNTER_EMAIL  = u'counter/email'
 COUNTER_UPDATE = u'counter/update'
+COUNTER_POST   = u'counter/post'
 
 #body responses
 SMTP_RECEIVING_MSG_FROM = u'Receiving message from: '
@@ -72,6 +76,7 @@ SMTP_DATA     = u'smtp_data'
 INITIAL_EMAIL_MSG         = u'Email has not been sent yet'
 INITIAL_SMS_MSG           = u'{"message": "SMS has not been sent yet"}'
 INITIAL_UPDATE_MSG        = u'{"message": "Update context has not been sent yet"}'
+INITIAL_POST_MSG          = u'POST action has not been sent yet'
 CONTENT_LENGTH_WARN_MSG   = u' content-length header does not exist and payload is empty... '
 MULTIPROCESSING_ERROR_MSG = u' unable to start multiprocessing...'
 ONE_LINE                  = u'------------------------------------------------------------------------------------------------------------'
@@ -82,12 +87,14 @@ def __usage():
     """
     print " ****************************************************************************************"
     print " * This mock is used to simulate a behaviour of email client (smtp), sms client (smpp), *"
-    print " * an update context to Context Broker and send by API REST the content received (http) *"
+    print " * an update context to Context Broker and send by API REST the content received (http).*"
+    print " * Keep a counter for each action (sms, email, update, post and twitter).               *"
     print " *                                                                                      *"
     print " *  usage: python perseo_mock.py <-u> <-sp=port> <-hp=port> <-i>                        *"
     print " *           ex: python perseo_mock.py -sp=9999 -hp=9998 -i                             *"
     print " *  parameters:                                                                         *"
     print " *         -u: show this usage.                                                         *"
+    print " *         -h: help to request into the mock.                                           *"
     print " *        -sp: change smtp port (by default is 9999).                                   *"
     print " *        -hp: change http port (by default is 9998).                                   *"
     print " *         -i: show more info in console (by default is False).                         *"
@@ -97,6 +104,21 @@ def __usage():
     print " *                                                                                      *"
     print " *                                     ( use <Ctrl-C> to stop )                         *"
     print " ****************************************************************************************"
+    exit(0)
+
+def __help():
+    """
+    help to request into the mock
+    """
+    with open("help.txt") as help_file:
+        try:
+            content = help_file.read().splitlines()
+            for i in range (len (content)):
+                print content[i]
+
+        except Exception, e:
+            print 'Error parsing help file: %s' % (e)
+            exit(1)
     exit(0)
 
 def __config_print():
@@ -110,7 +132,7 @@ def __config_print():
     print "        SMTP port  : "+ str(SMTP_PORT)
     print "        HTTP port  : "+ str(HTTP_PORT)
     if MORE_INFO:
-        print "        More info is enabled"
+        print "        More info is enabled (counter, etc)"
     else:
         print "        More info is disabled"
     print " *                                     ( use <Ctrl-C> to stop )                                            *"
@@ -124,6 +146,7 @@ def configuration (arguments):
     global SMTP_PORT, HTTP_PORT,  MORE_INFO
     for i in range(len(arguments)):
         if arguments[i].find('-u') >= 0: __usage()
+        if arguments[i].find('-h') >= 0: __help()
         try:
             if arguments[i].find('-sp') >= 0:
                  error_msg = "smtp port parameter"
