@@ -4,9 +4,9 @@
    "action":{
       "type":"update",
       "parameters":{
-          "id":"${id}_mirror",
+         "id":"${id}_mirror",
          "name":"abnormal",
-	"attrType":"boolean",
+	     "attrType":"boolean",
          "value":"true"
       }
    }
