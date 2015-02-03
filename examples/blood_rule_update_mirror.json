@@ -1,13 +1,13 @@
 {
-   "name":"blood_rule_update_mirror",
-   "text":"select *,\"blood_rule_update_mirror\" as ruleName, *, ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
-   "action":{
-      "type":"update",
-      "parameters":{
-         "id":"${id}_mirror",
-         "name":"abnormal",
-	     "attrType":"boolean",
-         "value":"true"
-      }
-   }
+    "name":"blood_rule_update_mirror",
+    "text":"select *,\"blood_rule_update_mirror\" as ruleName, *, ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+    "action":{
+        "type":"update",
+        "parameters":{
+            "id":"${id}_mirror",
+            "name":"abnormal",
+            "attrType":"boolean",
+            "value":"true"
+        }
+    }
 }
