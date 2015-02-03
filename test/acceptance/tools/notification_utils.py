@@ -18,10 +18,11 @@
 # License along with perseo-fe.
 # If not, see http://www.gnu.org/licenses/.
 #
-# For those usages not covered by the GNU Affero General Public License please contact:
-#  iot_support at tid.es
+# For those usages not covered by the GNU Affero General Public License
+# please contact with:
+#   iot_support at tid.es
 #
-#
+
 
 
 # general constants
@@ -161,8 +162,6 @@ class Notifications:
             NOTIFICATION[self.content][CONTEXT_RESPONSES][0][CONTEXT_ELEMENT][ATTRIBUTES] = self.attrs
         return general_utils.convert_dict_to_str(NOTIFICATION[self.content], self.content)
 
-
-
     def __new_metadata(self, name, type, value):
         """
          create a metadata
@@ -188,7 +187,6 @@ class Notifications:
         :param metadata: metadata attribute
         :return: attribute dictionary
         """
-
         if self.content == XML:
             dict_temp = {NAME: name, TYPE: type, CONTENT_VALUE: value}
             if metadatas != None: dict_temp[METADATA] = metadatas
@@ -266,7 +264,7 @@ class Notifications:
         :return: response (code status, headers and body)
         """
         assert len(self.attrs) != 0, \
-            " WARN - It is necessary to create the attributes previously...."
+            " ERROR - It is necessary to create the attributes previously. See create_attributes() method... "
         self.identity_id = identity_id
         self.identity_type = identity_type
         self.__insert_identity_id_and_identity_type (self.identity_id, self.identity_type)
