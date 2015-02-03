@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+# Copyright 2014 Telefonica Investigación y Desarrollo, S.A.U
 #
-# This file is part of perseo-fe
+# This file is part of perseo
 #
-# perseo-fe is free software: you can redistribute it and/or
+# perseo is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the License,
 # or (at your option) any later version.
 #
-# perseo-fe is distributed in the hope that it will be useful,
+# perseo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public
-# License along with perseo-fe.
-# If not, see http://www.gnu.org/licenses/.
+# License along with perseo.
+# If not, seehttp://www.gnu.org/licenses/.
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
@@ -35,6 +35,7 @@ def cep_manager_is_installed_correctly(step, operation):
     :param step:
     """
     world.operation = operation
+    world.cep_requests.verify_CEP()
 
 @step (u'configured with tenant "([^"]*)" and service "([^"]*)"')
 def configured_with_tenant_and_service (self, tenant, service_path):
@@ -71,7 +72,7 @@ def append_a_new_rule_with_a_rule_type_a_template_and_a_parameters (step, rule_t
     :param template: additional info to template
     :param parameters: several parameters according to the type of rule
     """
-    world.cep_requests.set_rule_type(rule_type)
+    parameters = world.cep_requests.set_rule_type_and_parameters(rule_type, parameters)
     world.rules.create_epl_rule (rule_type, template_info, parameters, world.EPL)
 
 @step (u'create "([^"]*)" rules with prefix "([^"]*)" and "([^"]*)" type')
@@ -106,7 +107,7 @@ def delete_a_rule_created(step):
     delete a rule in rule manager
     :param step:
     """
-    world.rules.delete_epl_rule(world.rule_name)
+    world.rules.delete_epl_rule()
 
 @step (u'delete all rules created')
 def delete_group_rules_created (step):

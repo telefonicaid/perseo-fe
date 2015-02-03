@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+# Copyright 2014 Telefonica Investigación y Desarrollo, S.A.U
 #
-# This file is part of perseo-fe
+# This file is part of perseo
 #
-# perseo-fe is free software: you can redistribute it and/or
+# perseo is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the License,
 # or (at your option) any later version.
 #
-# perseo-fe is distributed in the hope that it will be useful,
+# perseo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public
-# License along with perseo-fe.
-# If not, see http://www.gnu.org/licenses/.
+# License along with perseo.
+# If not, seehttp://www.gnu.org/licenses/.
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
@@ -56,25 +56,28 @@ HEADER_USER_AGENT   = u'User-Agent'
 
 #REQUESTs
 #append labels
-DATA           = u'data'
-NAME           = u'name'
-ATTR_NAME      = u'attrName'
-ATTR_TYPE      = u'attrType'
-CONTEXTTYPE    = u'contextType'
-ATTRIBUTE      = u'attribute'
-VALUE          = u'value'
-TEXT           = u'text'
-ACTION         = u'action'
-TYPE           = u'type'
-TEMPLATE       = u'template'
-PARAMETERS     = u'parameters'
-TO             = u'to'
-FROM           = u'from'
+DATA              = u'data'
+NAME              = u'name'
+ATTR_NAME         = u'attrName'
+ATTR_TYPE         = u'attrType'
+CONTEXTTYPE       = u'contextType'
+ATTRIBUTE         = u'attribute'
+VALUE             = u'value'
+TEXT              = u'text'
+ACTION            = u'action'
+TYPE              = u'type'
+TEMPLATE          = u'template'
+PARAMETERS        = u'parameters'
+TO                = u'to'
+FROM              = u'from'
+URL               = u'URL'
+MESSAGE           = u'message'
 
 # EPL operations
 SMS_EPL_TYPE         = u'sms'
 EMAIL_EPL_TYPE       = u'email'
 UPDATE_EPL_TYPE      = u'update'
+POST_EPL_TYPE        = u'post'
 
 
 
@@ -84,13 +87,12 @@ class Rules:
     Manage Perseo requests / responses.
     """
 
-    def __init__(self, cep_url, **kwargs):
+    def __init__(self, cep_url):
         """
         constructor
         :param cep_url:  cep endpoint (MANDATORY)
-
         """
-        self.cep_url                 = cep_url
+        self.cep_url = cep_url
 
     def __create_url(self, operation=None, name=EMPTY):
         """
@@ -99,7 +101,6 @@ class Rules:
         :param name: label name
         :return: request url
         """
-
         if operation == APPEND_EPL_RULE:
             value = "%s/%s" % (self.cep_url, RULES_EPL_PATH)
         if operation == DELETE_EPL_RULE or operation == GET_EPL_RULE:
@@ -129,9 +130,6 @@ class Rules:
         self.tenant = tenant
         self.service_path = service_path
 
-        #if tenant != DEFAULT: self.tenant = tenant
-        #if service_path != DEFAULT: self.service_path = service_path
-
     def generate_EPL (self, rule_name, identity_type,  attributes_number, attribute_data_type, operation, value):
         """
         generate a EPL query dinamically.
@@ -142,7 +140,6 @@ class Rules:
         :param operation: operation type (>, <, >=, <=, =)
         :param value: value to verify in rule
         """
-
         self.rule_name = rule_name
         self.identity_type = identity_type
         self.attributes_number = int (attributes_number)
@@ -174,19 +171,21 @@ class Rules:
         elif rule_type == EMAIL_EPL_TYPE:
             return {TO:parameter_info, FROM: parameter_info}
         elif rule_type == UPDATE_EPL_TYPE:
-            return {NAME: ATTR_NAME+"_0", VALUE: parameter_info, TYPE: ATTR_TYPE+"_0"}
-        pass
+            return {NAME: "ALARM", VALUE: parameter_info, TYPE: "message"}
+        elif rule_type == POST_EPL_TYPE:
+            return {URL:parameter_info}
 
-    def __generateTemplate (self, template_info=None):
+    def __generateTemplate (self, rule_type, template_info=None):
         """
         generate a new template according to the attributes number
         :param template_info: additional info in template
         """
-        template = EMPTY
+        template_str = EMPTY
         for i in range(0,int(self.attributes_number)):
             attrVar = ATTR_NAME+"_"+str(i)+'_var'
-            template = template + "Element ${Meter} has value <<<${"+attrVar+"}"+">>> \n"
-        return template+" -- "+template_info
+            template_str = template_str + "Element ${Meter} has value <<<${"+attrVar+"}"+">>> \n"
+        template_str = template_str + " -- " + template_info
+        return template_str
 
     def create_epl_rule (self, rule_type, template_info, parameters, EPL):
         """
@@ -195,15 +194,23 @@ class Rules:
         :param rule_type: rule type
         :param parameters: several parameter depending of rule type
         """
+        self.parameters = {}
         self.parameters=self.__generate_parameters(rule_type, parameters)
         payload_dict = {NAME: self.rule_name,
                    TEXT: EPL,
                    ACTION: {
                            TYPE: rule_type,
+                           TEMPLATE: self.__generateTemplate (rule_type, template_info),
                            PARAMETERS: self.parameters
                     }
         }
-        if rule_type != UPDATE_EPL_TYPE: payload_dict[ACTION][TEMPLATE] = self.__generateTemplate (template_info)
+
+        if rule_type == UPDATE_EPL_TYPE:  # update action does not use template
+            del payload_dict [ACTION][TEMPLATE]
+        if rule_type == POST_EPL_TYPE:
+              template_post = {MESSAGE: payload_dict[ACTION][TEMPLATE]}
+              template_post_str = general_utils.convert_dict_to_str(template_post, general_utils.JSON)
+              payload_dict[ACTION][TEMPLATE] = template_post_str
         payload = general_utils.convert_dict_to_str(payload_dict, general_utils.JSON)
 
         self.resp =  http_utils.request(http_utils.POST, url=self.__create_url(APPEND_EPL_RULE), headers=self.__create_headers(),data=payload)
@@ -220,14 +227,13 @@ class Rules:
         self.rules_number = int(rule_number)
         template_info = " (triggered rule)"
 
-        if rule_type == SMS_EPL_TYPE:  self.parameters    = "34123456789"
-        elif rule_type == EMAIL_EPL_TYPE:  self.parameters    = "xxxxxx@fffff.com"
-        elif rule_type == UPDATE_EPL_TYPE:  self.parameters    = "danger"
-
+        if rule_type == SMS_EPL_TYPE:  parameters    = "34123456789"
+        elif rule_type == EMAIL_EPL_TYPE:  parameters    = "xxxxxx@fffff.com"
+        elif rule_type == UPDATE_EPL_TYPE:  parameters    = "danger"
         for i in range (0, self.rules_number):
-            epl = self.generate_EPL (self.prefix_name+"_"+str(i)+"_"+self.rule_type,self.identity_type, self.attributes_number, self.epl_attribute_data_type, self.epl_operation, self.epl_value)
             self.rule_name = self.prefix_name+"_"+str(i)+"_"+self.rule_type
-            self.create_epl_rule (self.rule_type, template_info, self.parameters, epl)
+            epl = self.generate_EPL (self.rule_name, self.identity_type, self.attributes_number, self.epl_attribute_data_type, self.epl_operation, self.epl_value)
+            self.create_epl_rule (self.rule_type, template_info, parameters, epl)
 
     def get_parameters (self):
         """
@@ -242,17 +248,19 @@ class Rules:
         """
         return self.rules_number
 
-    def delete_epl_rule (self, name):
+    def delete_epl_rule (self, name=EMPTY):
         """
         Delete an epl rule
         :param name: rule name
         """
-        self.resp = http_utils.request(http_utils.DELETE, url=self.__create_url(DELETE_EPL_RULE, name), headers=self.__create_headers())
+        if name != EMPTY: self.rule_name = name
+        self.resp = http_utils.request(http_utils.DELETE, url=self.__create_url(DELETE_EPL_RULE, self.rule_name), headers=self.__create_headers())
 
     def delete_rules_group(self, name):
         """
         delete all rules created
         """
+
         for i in range (0, self.rules_number):
             self.delete_epl_rule(name+"_"+str(i)+"_"+self.rule_type)
 
@@ -327,21 +335,3 @@ class Rules:
         assert resp,\
             "Error - name %s does not exist:  \n %s." % (self.prefix_name+"_"+str(i)+"_"+self.rule_type, str(self.resp.text))
 
-
-
-
-    '''
-
-
-    def validate_card_rule_in_bd (self):
-        """
-        Validate that card rule is created successfully in db
-        """
-        temp_name = None
-        world.cep_mongo.connect()
-        collection_dict = world.cep_mongo.current_collection( world.collection)
-        cursor =  world.cep_mongo.find_data(collection_dict, {NAME: self.rule_name})
-        for doc in cursor:
-            temp_name = doc[NAME]
-        assert temp_name == self.rule_name, " la regla %s no ha sido creado..." % (self.rule_name)
-    '''

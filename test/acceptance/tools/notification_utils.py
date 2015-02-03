@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+# Copyright 2014 Telefonica Investigación y Desarrollo, S.A.U
 #
-# This file is part of perseo-fe
+# This file is part of perseo
 #
-# perseo-fe is free software: you can redistribute it and/or
+# perseo is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the License,
 # or (at your option) any later version.
 #
-# perseo-fe is distributed in the hope that it will be useful,
+# perseo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public
-# License along with perseo-fe.
-# If not, see http://www.gnu.org/licenses/.
+# License along with perseo.
+# If not, seehttp://www.gnu.org/licenses/.
 #
 # For those usages not covered by the GNU Affero General Public License please contact:
 #  iot_support at tid.es
@@ -161,8 +161,6 @@ class Notifications:
             NOTIFICATION[self.content][CONTEXT_RESPONSES][0][CONTEXT_ELEMENT][ATTRIBUTES] = self.attrs
         return general_utils.convert_dict_to_str(NOTIFICATION[self.content], self.content)
 
-
-
     def __new_metadata(self, name, type, value):
         """
          create a metadata
@@ -188,7 +186,6 @@ class Notifications:
         :param metadata: metadata attribute
         :return: attribute dictionary
         """
-
         if self.content == XML:
             dict_temp = {NAME: name, TYPE: type, CONTENT_VALUE: value}
             if metadatas != None: dict_temp[METADATA] = metadatas
@@ -266,7 +263,7 @@ class Notifications:
         :return: response (code status, headers and body)
         """
         assert len(self.attrs) != 0, \
-            " WARN - It is necessary to create the attributes previously...."
+            " ERROR - It is necessary to create the attributes previously. See create_attributes() method... "
         self.identity_id = identity_id
         self.identity_type = identity_type
         self.__insert_identity_id_and_identity_type (self.identity_id, self.identity_type)

@@ -10,7 +10,7 @@
 # been supplied.
 #
 #     For those usages not covered by this license please contact with
-#     iot_support at tid dot es
+#     fermin at tid dot es
 #
 #     Author: Ivan Arias
 
