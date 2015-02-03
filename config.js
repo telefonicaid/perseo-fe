@@ -60,7 +60,7 @@ config.slaveDelay = 500;
  * DB Configuration.
  */
 config.mongo = {
-    url : 'mongodb://localhost:27017/test'
+    url : 'mongodb://localhost:27017/cep'
 };
 
 /**
