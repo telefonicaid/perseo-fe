@@ -60,7 +60,22 @@ describe('Notices', function() {
                 done();
             });
         });
-
+        it('id as an attribute should be an error', function(done) {
+            var n = utilsT.loadExample('./test/data/bad_notices/notice_id_as_attr.json');
+            clients.PostNotice(n, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                return done();
+            });
+        });
+        it('type as an attribute should be an error', function(done) {
+            var n = utilsT.loadExample('./test/data/bad_notices/notice_type_as_attr.json');
+            clients.PostNotice(n, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                return done();
+            });
+        });
         it('Core endpoint is not working should be an error', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_notices');
             utilsT.setServerCode(400);
