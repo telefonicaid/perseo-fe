@@ -104,16 +104,29 @@ Sends an email to the recipient set in the action parameters, with the body mail
 ```
 
 ### update attribute action
-Updates an specified attribute of the entity which caused the rule to be fired.
-This action does not use any value from the generated event  (except the id from the originating entity, but this is done transparently). The `parameters` field includes a field `name` for the name of the attribute to be changed and a `value` field with the value to be put in the attribute.
+Updates an specified attribute of a given entity (in the Context Broker instance specified in the Perseo configuration). The `parameters` map includes the following fields:
 
+* **name**: *mandatory*, attribute name to set
+* **value**: *mandatory*, attribute value to set
+* id: optional, the id of the entity which attribute is to be updated (by default the id of the entity that triggers the rule is used, i.e. `${id}`)
+* type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that triggers the rule is usedi.e. `${type}`)
+* isPattern: optional, `false` by default
+* attrType: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is changed).
+
+The values of these fiels can be either literal values or use `${X}` substitution macros, where `X` may be:
+
+* `id` for the id of the entity that triggers the rule. As example, if we want the entity with "id" `sensor1` to update the entity with "id" `sensor1_friend` we should set the `id` field in `parameters` with the value `"${id}_friend"`
+* `type` for the type of the entity that triggers the rule
+* Any other value is interpreted as the name of an attribute in the entity which triggers the rule and the macro is substituded by the value of that attribute.
 
 ```json
- "action": {
-        "type": "update",
-        "parameters": {
-            "name": "abnormal",
-            "value": "true"
+"action":{
+        "type":"update",
+        "parameters":{
+            "id":"${id}_mirror",
+            "name":"abnormal",
+            "attrType":"boolean",
+            "value":"true"
         }
     }
 ```
