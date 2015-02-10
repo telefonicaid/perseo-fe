@@ -24,7 +24,6 @@
 'use strict';
 
 var should = require('should'),
-    utilsT = require('../utils/utilsT'),
     paths = require('../../lib/models/paths');
 
 describe('Paths', function() {
@@ -46,7 +45,7 @@ describe('Paths', function() {
             });
         });
         it('should return error with too long values', function() {
-            var cases = [new Array(52).join('x'), new Array(256).join("x"), new Array(2048).join('x')];
+            var cases = [new Array(52).join('x'), new Array(256).join('x'), new Array(2048).join('x')];
             cases.forEach(function(c) {
                 var err = paths.validService(c);
                 should.exist(err);

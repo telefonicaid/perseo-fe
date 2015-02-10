@@ -3,3 +3,5 @@ Fiware-ServicePath validation (#32)
 Change HA model for execution of actions
 Fix error if parameter "type" exist in Update entity action (#30)
 Added 'twitter' action
+Changed 'update' action, any entity
+
