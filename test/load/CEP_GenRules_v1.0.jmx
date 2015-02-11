@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright 2015 Telefonica Investigacion y Desarrollo, S.A.U
+
+ This file is part of perseo-fe
+
+ perseo-fe is free software: you can redistribute it and/or
+ modify it under the terms of the GNU Affero General Public License as
+ published by the Free Software Foundation, either version 3 of the License,
+ or (at your option) any later version.
+
+ perseo-fe is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU Affero General Public License for more details.
+
+ You should have received a copy of the GNU Affero General Public
+ License along with perseo-fe.
+ If not, see http://www.gnu.org/licenses/.
+
+ For those usages not covered by the GNU Affero General Public License
+ please contact with:
+   iot_support at tid.es
+-->
+<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Perseo - Generate Rules" enabled="true">
+      <stringProp name="TestPlan.comments">Test plan to generate rules in Perseo.  Rules total = THREADS * ITERATIONS</stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="General Settings" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="HOST_CEP" elementType="Argument">
+            <stringProp name="Argument.name">HOST_CEP</stringProp>
+            <stringProp name="Argument.value">${__P(HOST_CEP,127.0.0.1)}</stringProp>
+            <stringProp name="Argument.desc">perseo host</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="PORT_CEP" elementType="Argument">
+            <stringProp name="Argument.name">PORT_CEP</stringProp>
+            <stringProp name="Argument.value">${__P(PORT_CEP,9090)}</stringProp>
+            <stringProp name="Argument.desc">perseo port</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="ITERATIONS" elementType="Argument">
+            <stringProp name="Argument.name">ITERATIONS</stringProp>
+            <stringProp name="Argument.value">${__P(ITERATIONS,1)}</stringProp>
+            <stringProp name="Argument.desc">number of rules in each thread</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="THREADS" elementType="Argument">
+            <stringProp name="Argument.name">THREADS</stringProp>
+            <stringProp name="Argument.value">${__P(THREADS,1)}</stringProp>
+            <stringProp name="Argument.desc">number of threads.  Rules total = THREADS * ITERATIONS</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TENANT" elementType="Argument">
+            <stringProp name="Argument.name">TENANT</stringProp>
+            <stringProp name="Argument.value">${__P(TENANT,unknownt)}</stringProp>
+            <stringProp name="Argument.desc">Tenant or service in header</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SERVICE_PATH" elementType="Argument">
+            <stringProp name="Argument.name">SERVICE_PATH</stringProp>
+            <stringProp name="Argument.value">${__P(SERVICE_PATH,/)}</stringProp>
+            <stringProp name="Argument.desc">sub service or service path in header</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SMS" elementType="Argument">
+            <stringProp name="Argument.name">SMS</stringProp>
+            <stringProp name="Argument.value">${__P(SMS,&quot;TRUE&quot;)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">configurate if the sms action rules are created</stringProp>
+          </elementProp>
+          <elementProp name="EMAIL" elementType="Argument">
+            <stringProp name="Argument.name">EMAIL</stringProp>
+            <stringProp name="Argument.value">${__P(EMAIL,&quot;TRUE&quot;)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">configurate if the email action rules are created</stringProp>
+          </elementProp>
+          <elementProp name="UPDATE" elementType="Argument">
+            <stringProp name="Argument.name">UPDATE</stringProp>
+            <stringProp name="Argument.value">${__P(UPDATE,&quot;TRUE&quot;)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">configurate if the update action rules are created</stringProp>
+          </elementProp>
+          <elementProp name="POST" elementType="Argument">
+            <stringProp name="Argument.name">POST</stringProp>
+            <stringProp name="Argument.value">${__P(UPDATE,&quot;TRUE&quot;)}</stringProp>
+            <stringProp name="Argument.desc">configurate if the post action rules are created</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="APPEND_PATH" elementType="Argument">
+            <stringProp name="Argument.name">APPEND_PATH</stringProp>
+            <stringProp name="Argument.value">/rules</stringProp>
+            <stringProp name="Argument.desc">path to append a new rule</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OUTPUT_DIR" elementType="Argument">
+            <stringProp name="Argument.name">OUTPUT_DIR</stringProp>
+            <stringProp name="Argument.value">/tmp/JMeter_result/rules/result_${__time(YMDHMS,)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">output csv path</stringProp>
+          </elementProp>
+          <elementProp name="POSTFIX_FILE" elementType="Argument">
+            <stringProp name="Argument.name">POSTFIX_FILE</stringProp>
+            <stringProp name="Argument.value">${__time(YMDHMS,)}_IP_${HOST_CEP}_${THREADS}_Threads_x_${ITERATIONS}_Iterations.csv</stringProp>
+            <stringProp name="Argument.desc">postfix in report files</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="MON_PORT" elementType="Argument">
+            <stringProp name="Argument.name">MON_PORT</stringProp>
+            <stringProp name="Argument.value">3450</stringProp>
+            <stringProp name="Argument.desc">Server Agent port  in remote VM </stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="LOADOSOPHIA" elementType="Argument">
+            <stringProp name="Argument.name">LOADOSOPHIA</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.desc">loadosophia token</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+        <stringProp name="TestPlan.comments">General Settings</stringProp>
+      </Arguments>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request defaults" enabled="true">
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Variables definidas por el Usuario" enabled="true">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">${HOST_CEP}</stringProp>
+        <stringProp name="HTTPSampler.port">${PORT_CEP}</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        <stringProp name="HTTPSampler.protocol">http</stringProp>
+        <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+        <stringProp name="HTTPSampler.path">${APPEND_PATH}</stringProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Rules" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Controlador Bucle" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">${THREADS}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
+        <longProp name="ThreadGroup.start_time">1373439867000</longProp>
+        <longProp name="ThreadGroup.end_time">1373439867000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="headers" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Accept</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Fiware-Service</stringProp>
+              <stringProp name="Header.value">${TENANT}</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Fiware-ServicePath</stringProp>
+              <stringProp name="Header.value">${SERVICE_PATH}</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Iterations in each thread" enabled="true">
+          <boolProp name="LoopController.continue_forever">true</boolProp>
+          <stringProp name="LoopController.loops">${ITERATIONS}</stringProp>
+        </LoopController>
+        <hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Controller to SMS action" enabled="true">
+            <stringProp name="TestPlan.comments">By default is SMS=TRUE</stringProp>
+            <stringProp name="IfController.condition">${SMS} == &quot;TRUE&quot;</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname=" Append rule - sms action" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;action&quot;:{&#xd;
+        &quot;type&quot;:&quot;sms&quot;,&#xd;
+        &quot;parameters&quot;:{&#xd;
+            &quot;to&quot;:&quot;123456789&quot;&#xd;
+        },&#xd;
+        &quot;template&quot;:&quot;Element ${Meter} has value &lt;&lt;&lt;${attrName_0_var}&gt;&gt;&gt; \n -- (SMS rule)&quot;&#xd;
+    },&#xd;
+    &quot;text&quot;:&quot;select *,\&quot;SMS_name__${__counter(FALSE)}\&quot; as ruleName, \&quot;${SERVICE_PATH}\&quot; as service, \&quot;${TENANT}\&quot; as tenant, *, ev.attrName_0? as attrName_0_var, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(attrName_0?,String),float)&gt;1.5 and type=\&quot;room\&quot;)]&quot;,&#xd;
+    &quot;name&quot;:&quot;SMS_name__${__counter(FALSE)}&quot;&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path"></stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <boolProp name="HTTPSampler.monitor">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code/Reason" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">8</intProp>
+                <stringProp name="Assertion.scope">all</stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Controller to EMAIL action" enabled="true">
+            <stringProp name="TestPlan.comments">By default is EMAIL=TRUE</stringProp>
+            <stringProp name="IfController.condition">${EMAIL} == &quot;TRUE&quot;</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname=" Append rule - email action" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;action&quot;:{&#xd;
+        &quot;type&quot;:&quot;email&quot;,&#xd;
+        &quot;parameters&quot;:{&#xd;
+            &quot;to&quot;:&quot;aaaaaaa@bbbbbb.ccc&quot;,&#xd;
+            &quot;from&quot;:&quot;aaaaaaa@bbbbbb.ccc&quot;&#xd;
+        },&#xd;
+        &quot;template&quot;:&quot;Element ${Meter} has value &lt;&lt;&lt;${attrName_0_var}&gt;&gt;&gt; \n -- (Email rule)&quot;&#xd;
+    },&#xd;
+    &quot;text&quot;:&quot;select *,\&quot;EMAIL_name__${__counter(FALSE)}\&quot; as ruleName, \&quot;${SERVICE_PATH}\&quot; as service, \&quot;${TENANT}\&quot; as tenant, *, ev.attrName_0? as attrName_0_var, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(attrName_0?,String),float)&gt;1.5 and type=\&quot;room\&quot;)]&quot;,&#xd;
+    &quot;name&quot;:&quot;EMAIL_name__${__counter(FALSE)}&quot;&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path"></stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <boolProp name="HTTPSampler.monitor">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code/Reason" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">8</intProp>
+                <stringProp name="Assertion.scope">all</stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Controller to UPDATE action" enabled="true">
+            <stringProp name="TestPlan.comments">By default is UPDATE=TRUE</stringProp>
+            <stringProp name="IfController.condition">${UPDATE} == &quot;TRUE&quot;</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname=" Append rule - update action" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;action&quot;:{&#xd;
+        &quot;type&quot;:&quot;update&quot;,&#xd;
+        &quot;parameters&quot;:{&#xd;
+            &quot;type&quot;:&quot;message&quot;,&#xd;
+            &quot;name&quot;:&quot;ALARM&quot;,&#xd;
+            &quot;value&quot;:&quot;warning&quot;&#xd;
+        }&#xd;
+    },&#xd;
+    &quot;text&quot;:&quot;select *,\&quot;update_name__${__counter(FALSE)}\&quot; as ruleName, \&quot;${SERVICE_PATH}\&quot; as service, \&quot;${TENANT}\&quot; as tenant, *, ev.attrName_0? as attrName_0_var, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(attrName_0?,String),float)&gt;1.5 and type=\&quot;room\&quot;)]&quot;,&#xd;
+    &quot;name&quot;:&quot;update_name__${__counter(FALSE)}&quot;&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path"></stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <boolProp name="HTTPSampler.monitor">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code/Reason" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">8</intProp>
+                <stringProp name="Assertion.scope">all</stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="Controller to POST action" enabled="true">
+            <stringProp name="TestPlan.comments">By default is POST=TRUE</stringProp>
+            <stringProp name="IfController.condition">${POST} == &quot;TRUE&quot;</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname=" Append rule - update action" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;action&quot;:{&#xd;
+        &quot;type&quot;:&quot;post&quot;,&#xd;
+        &quot;parameters&quot;:{&#xd;
+            &quot;URL&quot;:&quot;http://qa-orion-cep-01:9998/send/post&quot;&#xd;
+        },&#xd;
+        &quot;template&quot;:&quot;{\&quot;message\&quot;: \&quot;Element ${Meter} has value &lt;&lt;&lt;${attrName_0_var}&gt;&gt;&gt; \\n -- (post rule)\&quot;}&quot;&#xd;
+    },&#xd;
+    &quot;text&quot;:&quot;select *,\&quot;post_name__${__counter(FALSE)}\&quot; as ruleName, \&quot;${SERVICE_PATH}\&quot; as service, \&quot;${TENANT}\&quot; as tenant, *, ev.attrName_0? as attrName_0_var, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(attrName_0?,String),float)&gt;1.5 and type=\&quot;room\&quot;)]&quot;,&#xd;
+    &quot;name&quot;:&quot;post_name__${__counter(FALSE)}&quot;&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path"></stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <boolProp name="HTTPSampler.monitor">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code/Reason" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="49586">200</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">8</intProp>
+                <stringProp name="Assertion.scope">all</stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>false</message>
+            <threadName>true</threadName>
+            <dataType>false</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>false</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+          </value>
+        </objProp>
+        <stringProp name="filename">${OUTPUT_DIR}/AggregateReport__${__time(YMDHMS,)}_IP_${HOST_CEP}_${THREADS}_Threads_x_${ITERATIONS}_Iterations.csv</stringProp>
+        <boolProp name="useGroupName">true</boolProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Requests/Responses Errors " enabled="true">
+        <boolProp name="ResultCollector.error_logging">true</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>true</responseData>
+            <samplerData>true</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>true</responseHeaders>
+            <requestHeaders>true</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <url>true</url>
+            <fileName>true</fileName>
+            <hostname>true</hostname>
+            <threadCounts>true</threadCounts>
+            <sampleCount>true</sampleCount>
+            <idleTime>true</idleTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">${OUTPUT_DIR}/ERRORS__${__time(YMDHMS,)}_IP_${HOST_CEP}_${THREADS}_Threads_x_${ITERATIONS}_Iterations.csv</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <kg.apc.jmeter.perfmon.PerfMonCollector guiclass="kg.apc.jmeter.vizualizers.PerfMonGui" testclass="kg.apc.jmeter.perfmon.PerfMonCollector" testname="PerfMon Collector" enabled="false">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>false</assertions>
+            <subresults>false</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <url>true</url>
+            <fileName>true</fileName>
+            <hostname>true</hostname>
+            <threadCounts>true</threadCounts>
+            <sampleCount>true</sampleCount>
+            <idleTime>true</idleTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+        <longProp name="interval_grouping">1000</longProp>
+        <boolProp name="graph_aggregated">false</boolProp>
+        <stringProp name="include_sample_labels"></stringProp>
+        <stringProp name="exclude_sample_labels"></stringProp>
+        <collectionProp name="metricConnections">
+          <collectionProp name="-624783536">
+            <stringProp name="-863694001">${HOST_CEP}</stringProp>
+            <stringProp name="-1152144878">${MON_PORT}</stringProp>
+            <stringProp name="66952">CPU</stringProp>
+            <stringProp name="0"></stringProp>
+          </collectionProp>
+          <collectionProp name="1369469439">
+            <stringProp name="-863694001">${HOST_CEP}</stringProp>
+            <stringProp name="-1152144878">${MON_PORT}</stringProp>
+            <stringProp name="-1993889503">Memory</stringProp>
+            <stringProp name="0"></stringProp>
+          </collectionProp>
+          <collectionProp name="1356589586">
+            <stringProp name="-863694001">${HOST_CEP}</stringProp>
+            <stringProp reference="../../collectionProp[2]/stringProp[2]"/>
+            <stringProp name="82881">TCP</stringProp>
+            <stringProp reference="../../collectionProp[2]/stringProp[4]"/>
+          </collectionProp>
+        </collectionProp>
+      </kg.apc.jmeter.perfmon.PerfMonCollector>
+      <hashTree/>
+      <kg.apc.jmeter.reporters.LoadosophiaUploader guiclass="kg.apc.jmeter.reporters.LoadosophiaUploaderGui" testclass="kg.apc.jmeter.reporters.LoadosophiaUploader" testname="Loadosophia report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="project">${PROJECT}</stringProp>
+        <stringProp name="uploadToken">${LOADOSOPHIA}</stringProp>
+        <stringProp name="storeDir">${OUTPUT_DIR}</stringProp>
+        <stringProp name="color">green</stringProp>
+        <stringProp name="title">${__time(YMDHMS,)}_IP_${HOST_CEP}_${THREADS}_Threads_x_${ITERATIONS}_Iterations</stringProp>
+        <boolProp name="useOnline">true</boolProp>
+      </kg.apc.jmeter.reporters.LoadosophiaUploader>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
