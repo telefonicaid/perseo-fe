@@ -106,6 +106,8 @@ After some processing that notification will be sent to perseo-core as _event_
    "TimeInstant__type":"urn:x-ogc:def:trs:IDAS:1.0:ISO8601"
 }
 ```
+Restriction: an attribute can not be named 'id' or 'type', which would cause confusion with the entity's id or entity's type. Notices with such attributes will be rejected.
+(This is only for perseo, not for Orion - Context Broker)
 
 ### Rule
 
