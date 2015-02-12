@@ -130,7 +130,7 @@ The values of these fiels can be either literal values or use `${X}` substitutio
         }
     }
 ```
-The `name` parameter can not take `id` or `type` as a value. Those values always refer to the entity's id and the entity's type and not to an attribute with any of those names. Trying to create such action will return an error.
+The `name` parameter cannot take `id` or `type` as a value. Those values always refer to the entity's id and the entity's type and not to an attribute with any of those names. Trying to create such action will return an error.
 
 ### HTTP POST action
 Makes an HTTP POST to an URL specified in `url` inside `parameters`, sending a body built from `template`.
