@@ -182,46 +182,6 @@ describe('Actions', function() {
                 done();
             });
         });
-        it('should return error (OK?) when posting an action with an unknown type', function(done) {
-            var rule = utilsT.loadExample('./test/data/bad_actions/rule_unknown_action.json'),
-                action = utilsT.loadExample('./test/data/good_actions/action_sms.json');
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
-                }
-            ], done);
-        });
-        it('should return error (OK?) when posting an action without type', function(done) {
-            var rule = utilsT.loadExample('./test/data/bad_actions/rule_without_action.json'),
-                action = utilsT.loadExample('./test/data/good_actions/action_sms.json');
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
-                }
-            ], done);
-        });
     });
 
     describe('#action.Do()', function() {

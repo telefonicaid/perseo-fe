@@ -118,6 +118,38 @@ describe('Rules', function() {
                 done();
             });
         });
+        it('should return BAD REQUEST when POSTing a rule without action type', function(done) {
+            var rule = utilsT.loadExample('./test/data/bad_rules/rule_without_action_type.json');
+            clients.PostRule(rule, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                done();
+            });
+        });
+        it('should return BAD REQUEST when POSTing a rule with unknown action', function(done) {
+            var rule = utilsT.loadExample('./test/data/bad_rules/rule_unknown_action.json');
+            clients.PostRule(rule, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                done();
+            });
+        });
+        it('should return BAD REQUEST when POSTing a rule with update action and id attr', function(done) {
+            var rule = utilsT.loadExample('./test/data/bad_rules/rule_update_action_id_attr.json');
+            clients.PostRule(rule, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                done();
+            });
+        });
+        it('should return BAD REQUEST when POSTing a rule with update action and type attr', function(done) {
+            var rule = utilsT.loadExample('./test/data/bad_rules/rule_update_action_type_attr.json');
+            clients.PostRule(rule, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                done();
+            });
+        });
         it('should return BAD REQUEST when POSTing an existent rule', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_email.json');
             async.series([
