@@ -2,5 +2,7 @@ Fiware-Service validation (#29)
 Fiware-ServicePath validation (#32)
 Change HA model for execution of actions
 Fix error if parameter "type" exist in Update entity action (#30)
+Fix error in VR for updateAction (#55)
+
 
 
