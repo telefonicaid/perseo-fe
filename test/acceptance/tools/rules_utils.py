@@ -26,7 +26,7 @@
 
 import time
 import http_utils
-import mongo_utils
+from tools.mongo_utils import Mongo
 import general_utils
 
 
@@ -79,7 +79,78 @@ EMAIL_EPL_TYPE       = u'email'
 UPDATE_EPL_TYPE      = u'update'
 POST_EPL_TYPE        = u'post'
 
+# Visual Rules constants
+ID                   = u'id'
+SENSOR_CARD          = u'SensorCard'
+ACTION_CARD          = u'ActionCard'
+TIME_CARD            = u'TimeCard'
+SENSOR_CARD_TYPE     = u'sensorCardType'
+ACTION_CARD_TYPE     = u'actionCardType'
+TIME_CARD_TYPE       = u'timeCardType'
+SC_NOT_UPDATED       = u'notUpdated'
+SC_REGEXP            = u'regexp'
+SC_TYPE              = u'type'
+SC_VALUE_THRESHOLD   = u'valueThreshold'
+SC_ATTR_THRESHOLD    = u'attributeThreshold'
+SC_CEP_EPL           = u'ceprule'
+AC_SMS_TYPE          = u'SendSmsMibAction'
+AC_EMAIL_TYPE        = u'SendEmailAction'
+AC_UPDATE_TYPE       = u'updateAttribute'
+TC_TIME_ELAPSED      = u'timeElapsed'
 
+VISUAL_RULES         = u'visual_rules'
+CONNECTED_TO         = u'connectedTo'
+CONDITION_LIST       = u'conditionList'
+SENSOR_DATA          = u'sensorData'
+CONFIG_DATA          = u'configData'
+TIME_DATA            = u'timeData'
+TIME_TYPE            = u'timeType'
+PARAMETER_VALUE      = u'parameterValue'
+OPERATOR             = u'operator'
+OP_EQUAL_TO          = u'EQUAL_TO'
+OP_MATCH             = u'MATCH'
+OP_DIFFERENT_TO      = u'DIFFERENT_TO'
+OP_GREATER_THAN      = u'GREATER_THAN'
+INTERVAL             = u'interval'
+MEASURE_NAME         = u'measureName'
+DATA_TYPE            = u'dataType'
+DATA_TYPE_TEXT       = u'Text'
+SCOPE                = u'scope'
+SCOPE_LAST_MEASURE   = u'LAST_MEASURE'
+SCOPE_XPATH          = u'XPATH'
+SCOPE_OBSERVATION    = u'OBSERVATION'
+NOT                  = u'Not'
+REPEAT               = u'repeat'
+REPEAT_VALUE         = u'-1'
+CONTEXT              = u'context'
+ASSET                = u'ASSET'
+PARAMETER_NAME       = u'parameterName'
+EPL                  = u'EPL'
+
+AC_MAIL_FROM         = u'mail.from'
+AC_MAIL_FROM_VALUE   = u'iot_support@tid.es'
+AC_MAIL_TO           = u'mail.to'
+AC_MAIL_SUBJECT      = u'mail.subject'
+AC_MAIL_MESSAGE      = u'mail.message'
+AC_MAIL_SUBJ_VALUE   = u'IoT message'
+AC_SMS_NAME          = u'sms'
+AC_SMS_TO            = u'sms.to'
+AC_SMS_MESSAGE       = u'sms.message'
+RESPONSE             = u'response'
+ACTION_DATA          = u'actionData'
+USER_PARAMS          = u'userParams'
+ACTIVE               = u'active'
+CARDS                = u'cards'
+X_AUTH_TOKEN         = u'X-Auth-Token'
+X_AUTH_TOKEN_VALUE   = u'MCAQExCTAHBgUrDgMCGjCCAlwGCSqGSIb3DQEHAaCCAk0EggJJeyJ0b2tlbiI6IHsibWV0aG9kcyI6IFsidG9rZW4iLCAicGFzc3dvcmQiXSwgInJvbGVzIjogW3siaWQiOiAiMjkxOWYzZTRjYTJlNGI3Mjg0OWJmZDAxZGIwZThiMWYiLCAibmFtZSI6ICJkNGNkNjcwOTNmMWQ0Y2U4OWNiODUwYWU3MWQ4NDgxNyNTdWJTZXJ2aWNlQWRtaW4ifV0sICJleHBpcmVzX2F0IjogIjIwMTUtMDItMDRUMTA6Mzg6NDcuODEyOTk1WiIsICJwcm9qZWN0IjogeyJkb21haW4iOiB7ImlkIjogImQ0Y2Q2NzA5M2YxZDRjZTg5Y2I4NTBhZTcxZDg0ODE3IiwgIm5hbWUiOiAiU21hcnRWYWxlbmNpYSJ9LCAiaWQiOiAiMjVkM2ViZDljMWIxNDE3ZDk5NGI5MGYzN2NmM2YxYmUiLCAibmFtZSI6ICIvRWxlY3RyaWNpZGFkIn0sICJjYXRhbG9nIjogW10sICJleHRyYXMiOiB7fSwgInVzZXIiOiB7ImRvbWFpbiI6IHsiaWQiOiAiZDRjZDY3MDkzZjFkNGNlODljYjg1MGFlNzFkODQ4MTciLCAibmFtZSI6ICJTbWFydFZhbGVuY2lhIn0sICJpZCI6ICJkOWQ1NGVjMjE1NjM0OWI4OTRlNTVmMjE2NWM1MmQ4MyIsICJuYW1lIjogIkFsaWNlIn0sICJpc3N1ZWRfYXQiOiAiMjAxNS0wMi0wNFQwOTozODo0OS4zMzM2MDBaIn19MYIBgTCCAX0CAQEwXDBXMQswCQYDVQQGEwJVUzEOMAwGA1UECAwFVW5zZXQxDjAMBgNVBAcMBVVuc2V0MQ4wDAYDVQQKDAVVbnNldDEYMBYGA1UEAwwPd3d3LmV4YW1wbGUuY29tAgEBMAcGBSsOAwIaMA0GCSqGSIb3DQEBAQUABIIBAJmYKdlwuXALebkqt'
+CONTEXT_LENGTH       = u'Content-Length'
+
+RULE_CARD_DICT = {NAME: None,
+                 ACTIVE: None,
+                 CARDS: []
+}
+
+CEP_MONGO_RULES_COLLECTION =u'rules'
 
 
 class Rules:
@@ -111,13 +182,17 @@ class Rules:
             value = "%s/%s/%s" % (self.cep_url,RULE_CARD_PATH, name)
         return value
 
-    def __create_headers(self, content="json"):
+    def __create_headers(self, operation=EPL):
         """
         create the header for different requests
         :param content: "xml" or "json"
         :return: headers dictionary
         """
-        return {HEADER_ACCEPT: HEADER_APPLICATION + content, HEADER_CONTENT_TYPE: HEADER_APPLICATION + content, HEADER_TENANT: self.tenant, HEADER_SERVICE_PATH: self.service_path}
+        content="json"
+        value = {HEADER_ACCEPT: HEADER_APPLICATION + content, HEADER_CONTENT_TYPE: HEADER_APPLICATION + content, HEADER_TENANT: self.tenant, HEADER_SERVICE_PATH: self.service_path}
+        if operation == VISUAL_RULES:
+            value[X_AUTH_TOKEN] = X_AUTH_TOKEN_VALUE
+        return value
 
     # -------------------------- EPL ----------------------------------------------------------------
 
@@ -175,7 +250,7 @@ class Rules:
         elif rule_type == POST_EPL_TYPE:
             return {URL:parameter_info}
 
-    def __generateTemplate (self, rule_type, template_info=None):
+    def __generateTemplate (self, template_info=None):
         """
         generate a new template according to the attributes number
         :param template_info: additional info in template
@@ -200,7 +275,7 @@ class Rules:
                    TEXT: EPL,
                    ACTION: {
                            TYPE: rule_type,
-                           TEMPLATE: self.__generateTemplate (rule_type, template_info),
+                           TEMPLATE: self.__generateTemplate (template_info),
                            PARAMETERS: self.parameters
                     }
         }
@@ -248,21 +323,24 @@ class Rules:
         """
         return self.rules_number
 
-    def delete_epl_rule (self, name=EMPTY):
+    def delete_one_rule (self, method, name=EMPTY):
         """
         Delete an epl rule
         :param name: rule name
         """
         if name != EMPTY: self.rule_name = name
-        self.resp = http_utils.request(http_utils.DELETE, url=self.__create_url(DELETE_EPL_RULE, self.rule_name), headers=self.__create_headers())
+        if method == EPL:
+            url=self.__create_url(DELETE_EPL_RULE, self.rule_name)
+        if method == VISUAL_RULES:
+            url=self.__create_url(DELETE_CARD_RULE, RULE_CARD_DICT[NAME])
+        self.resp = http_utils.request(http_utils.DELETE, url=url, headers=self.__create_headers())
 
-    def delete_rules_group(self, name):
+    def delete_rules_group(self, method, name):
         """
         delete all rules created
         """
-
         for i in range (0, self.rules_number):
-            self.delete_epl_rule(name+"_"+str(i)+"_"+self.rule_type)
+            self.delete_one_rule(method, name+"_"+str(i)+"_"+self.rule_type)
 
     def read_a_rule_name (self, name):
         """
@@ -277,6 +355,183 @@ class Rules:
         self.resp = http_utils.request(http_utils.GET, url=self.__create_url(GET_EPL_RULE), headers=self.__create_headers())
 
     # -------------------------- CARDS ------------------------------------------------------------
+
+    def __one_parameter (self, name, value):
+        """
+        create one parameter to userParams in action card
+        :return: dict with name and value
+        """
+        return {NAME:EMPTY.join(name), VALUE:EMPTY.join(value)}
+
+    def __generate_card_parameters (self, action_type, response, parameters):
+        """
+        generate the several parameters in all action card type
+        :param action_type: SendEmailAction | SendSmsAction
+        :param response: message in email or sms
+        :param parameters: mobile number or address email account
+        """
+        temp_list = []
+        email_parameters_list  = [{AC_MAIL_FROM: AC_MAIL_FROM_VALUE}, {AC_MAIL_TO: parameters}, {AC_MAIL_SUBJECT: AC_MAIL_SUBJ_VALUE}, {AC_MAIL_MESSAGE: response + " -- (Email rule)"}]
+        sms_parameters_list    = [{AC_SMS_TO: parameters}, {AC_SMS_MESSAGE: response + " -- (SMS rule)"}]
+        update_parameters_list = [{parameters: response}]
+
+        if action_type == AC_EMAIL_TYPE:
+            user_params = email_parameters_list
+        elif action_type == AC_SMS_TYPE:
+            user_params = sms_parameters_list
+        elif action_type == AC_UPDATE_TYPE:
+            user_params = update_parameters_list
+        for i in range(0, len(user_params)):
+            temp_list.append(self.__one_parameter (user_params[i].keys(), user_params[i].values()))
+        return  temp_list
+
+    def init_rule_card_dict(self):
+        """
+        Initialize the rule card dictionary
+        """
+        global RULE_CARD_DICT
+        RULE_CARD_DICT = {NAME: None,
+                          ACTIVE: None,
+                          CARDS: []
+        }
+
+    def create_sensor_card (self, **kwargs):
+        """
+        Create a new sensor card
+        :param id: card identifier used in connectedTo field
+        :param sensorCardType: sensor card type ( notUpdated | id | type | valueThreshold | attributeThreshold | EPL )
+        :param connectedTo: next card connected to this card
+        :param parameterValue: value to match
+        :param interval: Interval to verify
+        :param operator: GREATER_THAN|MINOR_THAN|EQUAL_TO|GREATER_OR_EQUAL_THAN|MINOR_OR_EQUAL_THAN |DIFFERENT_TO
+        :param dataType: used in valueThreshold and attributeThreshold cards. Possible values ( Quantity | Text )
+        :param measureName: name of property monitored
+       :return: sensor card dictionary
+        """
+        sc_id_card       = kwargs.get(ID, EMPTY)
+        sensor_card_type = kwargs.get(SENSOR_CARD_TYPE, EMPTY)
+        connected_to     = kwargs.get(CONNECTED_TO, EMPTY)
+        parameter_value  = kwargs.get(PARAMETER_VALUE, EMPTY)
+        interval         = kwargs.get(INTERVAL, EMPTY)
+        operator         = kwargs.get(OPERATOR, EMPTY)
+        measure_name     = kwargs.get(MEASURE_NAME, EMPTY)
+        data_type        = kwargs.get(DATA_TYPE, EMPTY)
+        parameter_name   = EMPTY
+
+        assert sensor_card_type == SC_NOT_UPDATED or sensor_card_type == SC_REGEXP or sensor_card_type == SC_TYPE or sensor_card_type == SC_VALUE_THRESHOLD or sensor_card_type == SC_ATTR_THRESHOLD or sensor_card_type == SC_CEP_EPL, \
+            "ERROR - Sensor Card type does not is allowed: %s" % (sensor_card_type)
+        if sensor_card_type == SC_NOT_UPDATED:
+            scope = SCOPE_LAST_MEASURE
+            operator = OP_EQUAL_TO
+        elif sensor_card_type == SC_REGEXP:
+            scope = SCOPE_XPATH
+            operator = OP_MATCH
+            parameter_name = ID
+        elif sensor_card_type == SC_TYPE:
+            scope = SCOPE_XPATH
+            parameter_name = TYPE
+            data_type = DATA_TYPE_TEXT
+        elif sensor_card_type == SC_VALUE_THRESHOLD or sensor_card_type == SC_ATTR_THRESHOLD:
+            scope = SCOPE_OBSERVATION
+            if sensor_card_type == SC_ATTR_THRESHOLD:
+                parameter_value = "${"+parameter_value+"}"
+        elif sensor_card_type == SC_CEP_EPL:
+            scope = SCOPE_OBSERVATION
+            operator = OP_EQUAL_TO
+            measure_name = EPL
+
+        sensor_card = {ID:sc_id_card,
+                       TYPE: SENSOR_CARD,
+                       SENSOR_CARD_TYPE: sensor_card_type,
+                       CONNECTED_TO: [connected_to],
+                       CONDITION_LIST: [{
+                            SCOPE: scope,
+                            PARAMETER_VALUE: parameter_value,
+                            PARAMETER_NAME:parameter_name,
+                            NOT: False,
+                            OPERATOR: operator
+                       }],
+                       TIME_DATA: {
+                           INTERVAL: interval,
+                           REPEAT: REPEAT_VALUE,
+                           CONTEXT: EMPTY
+                       },
+                       SENSOR_DATA: {
+                           MEASURE_NAME: measure_name,
+                            DATA_TYPE: data_type
+                       },
+                       CONFIG_DATA: {
+                       }
+        }
+        RULE_CARD_DICT [CARDS].append(sensor_card)
+
+    def create_action_card (self, **kwargs):
+        """
+        Create a new action card
+        :param id: card identifier used in connectedTo field
+        :param sensorCardType: action card type ( updateAttribute | SendSmsMibAction | SendEmailAction )
+        :param connectedTo: next card connected to this card
+        :param response: used by sms and email messages, and update attribute value
+        :param: parameters: used sms(mobile number), email (email.to) and update (attribute)
+        """
+        ac_id_card       = kwargs.get(ID,EMPTY)
+        action_card_type = kwargs.get(ACTION_CARD_TYPE, EMPTY)
+        connected_to     = kwargs.get(CONNECTED_TO, EMPTY)
+        response         = kwargs.get(RESPONSE, EMPTY)
+        parameters       = kwargs.get(PARAMETERS, EMPTY)
+
+        assert action_card_type == AC_EMAIL_TYPE or action_card_type == AC_SMS_TYPE or action_card_type == AC_UPDATE_TYPE, \
+            "ERROR - ActionCard type does not is allowed: %s" % (action_card_type)
+        action_card = {ID:ac_id_card,
+                       CONNECTED_TO:[connected_to],
+                       TYPE:ACTION_CARD,
+                       ACTION_DATA:{
+                                    USER_PARAMS: self.__generate_card_parameters (action_card_type, response, parameters),
+                                    NAME: action_card_type,
+                                    TYPE: action_card_type
+                                   }
+                       }
+        RULE_CARD_DICT [CARDS].append(action_card)
+
+    def create_time_card (self, **kwargs):
+        """
+        Create a new time card
+        :param id: card identifier used in connectedTo field
+        :param timeCardType: time card type ( timeElapsed )
+        :param connectedTo: next card connected to this card
+        :param interval: Interval to wait
+        """
+        tc_id_card   = kwargs.get(ID,EMPTY)
+        time_card_type = kwargs.get(TIME_CARD_TYPE, EMPTY)
+        interval     = kwargs.get(INTERVAL, EMPTY)
+        connected_to = kwargs.get(CONNECTED_TO, EMPTY)
+
+        assert time_card_type == TC_TIME_ELAPSED, \
+            "ERROR - TimeCard type does not is allowed: %s" % (time_card_type)
+        time_card = {ID:tc_id_card,
+                     TYPE: TIME_CARD,
+                     CONNECTED_TO: [connected_to],
+                     SENSOR_CARD_TYPE: time_card_type,
+                     TIME_DATA:{CONTEXT: ASSET,
+                                INTERVAL: interval,
+                                REPEAT: "0"
+                               },
+                     CONFIG_DATA: {TIME_TYPE: time_card_type}
+                    }
+        RULE_CARD_DICT [CARDS].append(time_card)
+
+    def create_rule_card (self, rule_name, active):
+        """
+        create a new card rule
+        :param rule_name: rule name
+        :param active: if is active or not (0 | 1)
+        :return: card rule dict
+        """
+        RULE_CARD_DICT[NAME]   = rule_name
+        RULE_CARD_DICT[ACTIVE] =  int(active)
+        payload = general_utils.convert_dict_to_str(RULE_CARD_DICT, general_utils.JSON)
+        self.resp = http_utils.request(http_utils.POST, url=self.__create_url(APPEND_CARD_RULE), headers=self.__create_headers(VISUAL_RULES), data=payload)
+        return RULE_CARD_DICT
 
     #---------------------- VALIDATIONS -----------------------------------------------------------
     def validate_HTTP_code(self, expected_status_code):
@@ -334,4 +589,30 @@ class Rules:
                     break
         assert resp,\
             "Error - name %s does not exist:  \n %s." % (self.prefix_name+"_"+str(i)+"_"+self.rule_type, str(self.resp.text))
+
+     # def init_mongo_driver (self, host, port, database, collection):
+
+    def validate_card_rule_in_mongo(self, driver):
+        """
+        Validate that card rule is created successfully in db
+        """
+        temp_name = None
+        collection_dict = driver.current_collection(CEP_MONGO_RULES_COLLECTION)
+        cursor =  driver.find_data(collection_dict, {NAME: RULE_CARD_DICT[NAME]})
+        for doc in cursor:
+            temp_name = doc[NAME]
+        assert temp_name == RULE_CARD_DICT[NAME], "The rule %s has not been created..." % (RULE_CARD_DICT[NAME])
+
+
+
+
+    # """
+    #    init mongo driver
+    #    :param host:
+    #    :param port:
+    #    :param database:
+    #    :param collection:
+    #    """
+    #    self.mongo = Mongo (host, port, database, collection)
+    #    self.mongo.connect()
 

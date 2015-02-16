@@ -24,10 +24,9 @@
 #
 
 
-
-# general constants
 from tools import general_utils, http_utils
 
+# general constants
 EMPTY   = u''
 XML     = u'xml'
 JSON    = u'json'

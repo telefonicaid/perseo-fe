@@ -130,7 +130,7 @@ def request (method, **kwargs):
         #print_response(resp)
         return resp
     except Exception, e:
-         print " ERROR IN REQUEST: %s  \nurl    : %s \nheaders: %s \npayload: %s" % (str(e), Url, str(Headers), Body)
+        assert not True,  " ERROR IN REQUEST: %s  \nurl    : %s \nheaders: %s \npayload: %s" % (str(e), Url, str(Headers), Body)
 
 def assert_status_code (expected, resp, Error_msg):
      """

@@ -33,7 +33,7 @@ from tools.notification_utils import Notifications
 from tools.rules_utils import Rules
 from tools.mock_utils import Mock
 
-#generals contants
+#generals constants
 DEFAULT                      = u'default'
 RANDOM                       = u'random'
 
@@ -131,6 +131,7 @@ class CEP:
         """
         resp =  http_utils.request(http_utils.GET, url=self.cep_url+"/check")
         http_utils.assert_status_code(http_utils.status_codes[http_utils.OK], resp, "ERROR - Perseo is not running...")
+        world.rules.init_rule_card_dict()  # Initialize the rule card dictionary
 
     def config_tenant_and_service(self, tenant, service_path):
         """
@@ -151,16 +152,26 @@ class CEP:
         elif service_path != DEFAULT: self.service_path = service_path
         world.rules.tenant_and_service(self.tenant, self.service_path)
 
+    def __generate_rule_name (self, rule_name):
+        """
+        generate rule name if it is not normal
+        """
+
+        if rule_name.find(RULE_NAME_RANDOM) >= 0:
+            rule_name_length = int (rule_name.split("= ")[1])
+            rule_name_temp = general_utils.string_generator(rule_name_length)
+        elif rule_name == RULE_NAME_LENGTH_ALLOWED:             rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH)
+        elif rule_name == RULE_NAME_LONGER_THAN_LENGTH_ALLOWED: rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH+1)
+        elif rule_name == DEFAULT:                              rule_name_temp = self.rule_name
+        else:
+            rule_name_temp = rule_name
+        return rule_name_temp
+
     def generate_EPL (self, rule_name, identity_type,  attributes_number, attribute_data_type, operation, value):
         """
         generate a EPL query dinamically.
         """
-        if rule_name.find(RULE_NAME_RANDOM) >= 0:
-            rule_name_length = int (rule_name.split("= ")[1])
-            self.rule_name = general_utils.string_generator(rule_name_length)
-        elif rule_name == RULE_NAME_LENGTH_ALLOWED:               self.rule_name = general_utils.string_generator(MAX_RULE_NAME_LENGTH)
-        elif rule_name == RULE_NAME_LONGER_THAN_LENGTH_ALLOWED: self.rule_name = general_utils.string_generator(MAX_RULE_NAME_LENGTH+1)
-        elif rule_name != DEFAULT:                              self.rule_name = rule_name
+        self.rule_name = self.__generate_rule_name(rule_name)
 
         if identity_type == MAX_IDENTITY_TYPE_LENGTH: self.identity_type = general_utils.string_generator(IDENTITY_TYPE_LENGTH_1024)
         elif identity_type != DEFAULT:                self.identity_type = identity_type
@@ -212,6 +223,20 @@ class CEP:
              if parameters == MOCK_IN_LOCALHOST: parameters = self.cep_rule_post_url + "/send/post"
         self.rule_type=rule_type
         return parameters
+
+    #   --------------  Visual Rules  -----------------------------
+    def new_visual_rule (self, rule_name, active):
+        """
+        create a new visual rule
+        :param rule_name:
+        :param active:
+        """
+        self.rule_name = self.__generate_rule_name(rule_name)
+        self.card_active = active
+        world.rules.create_rule_card(self.rule_name, self.card_active)
+
+
+    #   --------------  Validations  -----------------------------
 
     def validate_that_rule_was_triggered(self):
         """

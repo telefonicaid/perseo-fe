@@ -255,7 +255,7 @@ Feature: Append a new rule in Perseo manager
         Then I receive an "OK" http code
          And read all rules that exist in the list
          And Validate that all rules are found
-         And delete all rules created
+     #    And delete all rules created
     Examples:
       |rule_number|prefix_name|
       |1          |prefix_1   |

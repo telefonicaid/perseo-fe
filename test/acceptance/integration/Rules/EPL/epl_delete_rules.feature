@@ -54,17 +54,19 @@ Feature: Delete a rule in Perseo manager
       |post_name  |post       | (post rule)  |url - mock in localhost |
 
     @rule_name
-    Scenario Outline: try to delete a rule does not exist in Perseo manager
+    Scenario Outline: delete a rule with several names in Perseo manager
        Given Perseo manager is installed correctly to "delete"
          And configured with tenant "default" and service "default"
          And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
-         And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
+         And append a new rule with a rule type "sms", a template "(SMS rule)" and a parameters "123456789"
         When delete a rule created
         Then I receive an "OK" http code
          And Validate that rule name is deleted successfully
     Examples:
       |rule_name               |
-      |test_563                |
+      |test_345                |
+      |TEST_345                |
+      |test-345                |
       |sgvMpTs52nwuq25UsA3a    |
       |rulename length allowed |
       |rulename random = 988   |
