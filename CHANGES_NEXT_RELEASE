@@ -5,3 +5,5 @@ Fix error if parameter "type" exist in Update entity action (#30)
 Added 'twitter' action
 Changed 'update' action, any entity
 Do not allow 'id' and 'type' as attribute names
+Change parameter for POST action from 'URL' to 'url'
+
