@@ -23,6 +23,8 @@
 #   iot_support at tid.es
 #
 
+
+
 #Generals constants
 import time
 import general_utils
@@ -44,6 +46,7 @@ GET_UPDATE           = u'get/update'
 SMS_EPL_TYPE         = u'sms'
 EMAIL_EPL_TYPE       = u'email'
 UPDATE_EPL_TYPE      = u'update'
+POST_EPL_TYPE        = u'post'
 
 # response constants
 MESSAGE                  = u'message'
@@ -83,20 +86,25 @@ class Mock:
         """
         time.sleep(5) # delay for 5 secs
         self.resp = None
-        if rule_type == SMS_EPL_TYPE or rule_type == EMAIL_EPL_TYPE or rule_type == UPDATE_EPL_TYPE:
+        if rule_type == SMS_EPL_TYPE or rule_type == EMAIL_EPL_TYPE or rule_type == UPDATE_EPL_TYPE or rule_type == POST_EPL_TYPE:
             self.resp = http_utils.request(http_utils.GET, url=self.__create_url("get", rule_type))
             response = general_utils.convert_str_to_dict(self.resp.text,general_utils.JSON)
+        else:
+            return False
 
         if rule_type == SMS_EPL_TYPE:
-            attribute_value_position_init = response[MESSAGE].find ("<<<")+3
-            attribute_value_position_end  = response[MESSAGE].find (">>>")
-            if str(response[MESSAGE][attribute_value_position_init:attribute_value_position_end])  ==  attributes_value: return True
-        if rule_type == EMAIL_EPL_TYPE:
-            attribute_value_position_init = response[SMTP_DATA].find ("<<<")+3
-            attribute_value_position_end  = response[SMTP_DATA].find (">>>")
-            if str(response[SMTP_DATA][attribute_value_position_init:attribute_value_position_end])  ==  attributes_value: return True
-        if rule_type == UPDATE_EPL_TYPE:
-            if str(response[CONTEXT_ELEMENTS][0][ATTRIBUTES][0][VALUE])  ==  parameters[VALUE]: return True
+            resp_temp = response[MESSAGE]
+        elif rule_type == EMAIL_EPL_TYPE:
+            resp_temp = response[SMTP_DATA]
+        elif rule_type == POST_EPL_TYPE:
+            template_post = general_utils.convert_str_to_dict(response, general_utils.JSON)
+            resp_temp = template_post[MESSAGE]
+        elif rule_type == UPDATE_EPL_TYPE:
+            if str(response[CONTEXT_ELEMENTS][0][ATTRIBUTES][0][VALUE]) == parameters[VALUE]:return True
+
+        attribute_value_position_init = resp_temp.find ("<<<")+3
+        attribute_value_position_end  = resp_temp.find (">>>")
+        if str(resp_temp[attribute_value_position_init:attribute_value_position_end]) == attributes_value: return True
         return False
 
     def validate_that_rule_was_triggered(self, status):
@@ -107,18 +115,11 @@ class Mock:
 
     def reset_counters(self, rule_type):
        """
-       reset a counter in mock or all counters
-       :param rule_type: sms | email | update | all
+       reset a counter in mock
+       :param rule_type: sms | email | update | post |twitter
        """
-       if rule_type == SMS_EPL_TYPE or rule_type == "all":
-            self.resp = http_utils.request(http_utils.PUT, url=self.__create_url("reset", SMS_EPL_TYPE))
-            http_utils.assert_status_code(http_utils.status_codes[http_utils.OK], self.resp, "ERROR - sms reset in mock...")
-       if rule_type == EMAIL_EPL_TYPE or rule_type == "all":
-            self.resp = http_utils.request(http_utils.PUT, url=self.__create_url("reset", EMAIL_EPL_TYPE))
-            http_utils.assert_status_code(http_utils.status_codes[http_utils.OK], self.resp, "ERROR - email reset in mock...")
-       if rule_type == UPDATE_EPL_TYPE or rule_type == "all":
-            self.resp = http_utils.request(http_utils.PUT, url=self.__create_url("reset", UPDATE_EPL_TYPE))
-            http_utils.assert_status_code(http_utils.status_codes[http_utils.OK], self.resp, "ERROR - update reset in mock...")
+       self.resp = http_utils.request(http_utils.PUT, url=self.__create_url("reset", rule_type))
+       http_utils.assert_status_code(http_utils.status_codes[http_utils.OK], self.resp, "ERROR - "+rule_type+" reset in mock...")
 
     def get_counter_value(self, rule_type):
         """

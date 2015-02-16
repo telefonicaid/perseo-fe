@@ -23,6 +23,7 @@
 #   iot_support at tid.es
 #
 
+
 #
 #  Notes:
 #        * The @skip tag is to skip the scenarios that still are not developed or failed
@@ -46,10 +47,11 @@ Feature: Get a rule in Perseo manager
          And Validate that rule name is found
          And delete a rule created
     Examples:
-      |rule_name  |rule_type  |template_info |parameters        |
-      |SMS____name|sms        | (SMS rule)   |123456789         |
-      |EMAIL__name|email      | (Email rule) |aaaaaaa@bbbbbb.ccc|
-      |update_name|update     |              |warning           |
+      |rule_name  |rule_type  |template_info |parameters              |
+      |SMS____name|sms        | (SMS rule)   |123456789               |
+      |EMAIL__name|email      | (Email rule) |aaaaaaa@bbbbbb.ccc      |
+      |update_name|update     |              |warning                 |
+      |post_name  |post       | (post rule)  |url - mock in localhost |
 
     @multiples_rules
     Scenario Outline: get rules list in Perseo manager
@@ -57,7 +59,7 @@ Feature: Get a rule in Perseo manager
          And configured with tenant "default" and service "default"
          And an EPL with a rule name "default", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
          And create "<rule_number>" rules with prefix "<prefix_name>" and "sms" type
-        When all rules that exist in the list
+        When read all rules that exist in the list
         Then I receive an "OK" http code
          And Validate that all rules are found
          And delete all rules created

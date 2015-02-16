@@ -30,31 +30,32 @@
 #        * For to see "default" values, in properties.json file
 #
 
-Feature: Launch a notification if a rule is triggered in Perseo manager
+Feature: Launch an action if a rule is triggered in Perseo manager
     As a Perseo user
-    I want to be able to launch a notification if a rule is triggered in Perseo manager
+    I want to be able to launch a action (sms, email or update) if a rule is triggered in Perseo manager
     so that they become more functional and useful
 
     @happy_path
-    Scenario Outline: launch a notification if a rule is triggered in Perseo manager
+    Scenario Outline: launch a action if a rule is triggered in Perseo manager
        Given Perseo manager is installed correctly to "send"
          And configured with tenant "default" and service "default"
          And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "default", an attribute data type "default", an operation type "default" and value "1.5"
          And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
          And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
-        When receives a notification with attributes value "300", metadata value "True" and content "<content>"
+        When receives a notification with attributes value "300", metadata value "True" and content "json"
         Then I receive an "OK" http code
          And Validate that rule is triggered successfully
          And delete a rule created
     Examples:
-        |rule_name  |rule_type  |template_info |parameters        |content|
-        |SMS____name|sms        | (SMS rule)   |123456789         |json   |
-        |EMAIL__name|email      | (Email rule) |aaaaaaa@bbbbbb.ccc|json   |
-        |update_name|update     |              |warning           |json   |
+        |rule_name  |rule_type  |template_info |parameters              |
+        |SMS____name|sms        | (SMS rule)   |123456789               |
+        |EMAIL__name|email      | (Email rule) |aaaaaaa@bbbbbb.ccc      |
+        |update_name|update     |              |warning                 |
+        |post___name|post       | (post rule)  |url - mock in localhost |
 
 
     @multiples_rules
-    Scenario Outline: get rules list in Perseo manager
+    Scenario Outline: launch several actions if several rules are triggered in Perseo manager
        Given Perseo manager is installed correctly to "read"
          And configured with tenant "default" and service "default"
          And reset counters in mock "<rule_type>"
@@ -72,59 +73,105 @@ Feature: Launch a notification if a rule is triggered in Perseo manager
         |10         |prefix_10  |sms      |
         |50         |prefix_50  |sms      |
         |100        |prefix_100 |sms      |
-        |500        |prefix_500 |sms      |
         |1          |prefix_1   |email    |
         |5          |prefix_5   |email    |
         |10         |prefix_10  |email    |
         |50         |prefix_50  |email    |
-        |100        |prefix_100 |email    |
-        |500        |prefix_500 |email    |
         |1          |prefix_1   |update   |
         |5          |prefix_5   |update   |
         |10         |prefix_10  |update   |
         |50         |prefix_50  |update   |
         |100        |prefix_100 |update   |
-        |500        |prefix_500 |update   |
 
 
     @attributes_number
-    Scenario Outline: launch a notification if a rule is triggered in Perseo manager
+    Scenario Outline: launch an action if a rule is triggered in Perseo manager with several attributes
        Given Perseo manager is installed correctly to "send"
          And configured with tenant "default" and service "default"
          And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "<attributes_number>", an attribute data type "default", an operation type "default" and value "1.5"
          And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
          And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
-        When receives a notification with attributes value "300", metadata value "True" and content "<content>"
+        When receives a notification with attributes value "300", metadata value "True" and content "json"
         Then I receive an "OK" http code
          And Validate that rule is triggered successfully
          And delete a rule created
     Examples:
-        |rule_name  |attributes_number|rule_type  |template_info |parameters        |content|
-        |SMS____name|1                |sms        | (SMS rule)   |123456789         |json   |
-        |SMS____name|5                |sms        | (SMS rule)   |123456789         |json   |
-        |SMS____name|10               |sms        | (SMS rule)   |123456789         |json   |
-        |SMS____name|50               |sms        | (SMS rule)   |123456789         |json   |
-        |EMAIL__name|1                |email      | (Email rule) |aaaaaaa@bbbbbb.ccc|json   |
-        |EMAIL__name|5                |email      | (Email rule) |aaaaaaa@bbbbbb.ccc|json   |
-        |EMAIL__name|10               |email      | (Email rule) |aaaaaaa@bbbbbb.ccc|json   |
-        |EMAIL__name|50               |email      | (Email rule) |aaaaaaa@bbbbbb.ccc|json   |
-        |update_name|1                |update     |              |warning           |json   |
-        |update_name|5                |update     |              |warning           |json   |
-        |update_name|10               |update     |              |warning           |json   |
-        |update_name|50               |update     |              |warning           |json   |
+        |rule_name  |attributes_number|rule_type  |template_info |parameters              |
+        |SMS____name|1                |sms        | (SMS rule)   |123456789               |
+        |SMS____name|5                |sms        | (SMS rule)   |123456789               |
+        |SMS____name|10               |sms        | (SMS rule)   |123456789               |
+        |SMS____name|50               |sms        | (SMS rule)   |123456789               |
+        |EMAIL__name|1                |email      | (Email rule) |aaaaaaa@bbbbbb.ccc      |
+        |EMAIL__name|5                |email      | (Email rule) |aaaaaaa@bbbbbb.ccc      |
+        |EMAIL__name|10               |email      | (Email rule) |aaaaaaa@bbbbbb.ccc      |
+        |EMAIL__name|50               |email      | (Email rule) |aaaaaaa@bbbbbb.ccc      |
+        |update_name|1                |update     |              |warning                 |
+        |update_name|5                |update     |              |warning                 |
+        |update_name|10               |update     |              |warning                 |
+        |update_name|50               |update     |              |warning                 |
+        |post___name|1                |post       | (post rule)  |url - mock in localhost |
+        |post___name|5                |post       | (post rule)  |url - mock in localhost |
+        |post___name|10               |post       | (post rule)  |url - mock in localhost |
+        |post___name|50               |post       | (post rule)  |url - mock in localhost |
 
     @xml_format
-    Scenario Outline: launch a notification in xml format and the rule associated is not triggered in Perseo manager
+    Scenario Outline: not launch an action if notification is in xml format and the rule associated is not triggered in Perseo manager
        Given Perseo manager is installed correctly to "send"
          And configured with tenant "default" and service "default"
          And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "default", an attribute data type "default", an operation type "default" and value "1.5"
          And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
          And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
-       When  receives a notification with attributes value "300", metadata value "True" and content "<content>"
+       When  receives a notification with attributes value "300", metadata value "True" and content "xml"
         Then I receive an "Bad Request" http code
          And delete a rule created
     Examples:
-      |rule_name  |rule_type  |template_info |parameters        |content|
-      |SMS____name|sms        | (SMS rule)   |123456789         |xml    |
-      |EMAIL__name|email      | (Email rule) |aaaaaaa@bbbbbb.ccc|xml    |
-      |update_name|update     |              |warning           |xml    |
+      |rule_name  |rule_type  |template_info |parameters              |
+      |SMS____name|sms        | (SMS rule)   |123456789               |
+      |EMAIL__name|email      | (Email rule) |aaaaaaa@bbbbbb.ccc      |
+      |update_name|update     |              |warning                 |
+      |post___name|post       | (post rule)  |url - mock in localhost |
+
+    @rule_type_error
+    Scenario Outline: not trigger an notification because the rule type is wrong
+       Given Perseo manager is installed correctly to "send"
+         And configured with tenant "default" and service "default"
+         And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "default", an attribute data type "default", an operation type "default" and value "1.5"
+         And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
+         And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
+        When receives a notification with attributes value "300", metadata value "True" and content "json"
+        Then I receive an "OK" http code
+         And delete a rule created
+    Examples:
+        |rule_name   |rule_type |template_info |parameters        |
+        |SMS____name |rtert     | (SMS rule)   |123456789         |
+        |tester_1220 |          | (SMS rule)   |123456789         |
+        |tester_1230 |121212    | (SMS rule)   |123456789         |
+        |tester_1240 |#~&       | (SMS rule)   |123456789         |
+
+    @rule_parameters_error
+    Scenario Outline: not trigger an notification but the rule parameter is wrong
+       Given Perseo manager is installed correctly to "send"
+         And configured with tenant "default" and service "default"
+         And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "default", an attribute data type "default", an operation type "default" and value "1.5"
+         And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
+         And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
+        When receives a notification with attributes value "300", metadata value "True" and content "json"
+        Then I receive an "OK" http code
+         And delete a rule created
+    Examples:
+        |rule_name  |rule_type  |template_info |parameters        |
+        |SMS____name|sms      | (SMS rule)     |345rg             |
+        |SMS____name|sms      | (SMS rule)     |                  |
+        |SMS____name|sms      | (SMS rule)     |$%$%              |
+        |EMAIL__name|email    | (email rule)   |qwd-sddd@qd.com   |
+        |EMAIL__name|email    | (email rule)   | @qd.com          |
+        |EMAIL__name|email    | (email rule)   |                  |
+        |EMAIL__name|email    | (email rule)   | dfsdfsdf@        |
+        |EMAIL__name|email    | (email rule)   | dfd@.com         |
+        |EMAIL__name|email    | (email rule)   | dssd@qd          |
+        |EMAIL__name|email    | (email rule)   |                  |
+        |post___name|post     | (post rule)    |                  |
+        |post___name|post     | (post rule)    | htf://1.1.1.1    |
+        |post___name|post     | (post rule)    | http:1.1.1.1     |
+        |post___name|post     | (post rule)    | http://1.1.e.1   |
+

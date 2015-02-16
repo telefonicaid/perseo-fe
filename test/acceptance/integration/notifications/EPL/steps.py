@@ -23,6 +23,8 @@
 #   iot_support at tid.es
 #
 
+
+
 from lettuce import world, step
 
 
@@ -35,11 +37,12 @@ def cep_manager_is_installed_correctly(step, operation):
     :param step:
     """
     world.operation = operation
+    world.cep_requests.verify_CEP()
 
 @step (u'configured with tenant "([^"]*)" and service "([^"]*)"')
 def configured_with_tenant_and_service (self, tenant, service_path):
     """
-    congfigure the tenant and servicePath used
+    configure the tenant and servicePath used
     :param self:
     :param tenant:
     :param servicePath:
@@ -70,7 +73,7 @@ def append_a_new_rule_with_a_rule_type_a_template_and_a_parameters (step, rule_t
     :param template: additional info to template
     :param parameters: several parameters according to the type of rule
     """
-    world.cep_requests.set_rule_type(rule_type)
+    parameters = world.cep_requests.set_rule_type_and_parameters(rule_type, parameters)
     world.rules.create_epl_rule (rule_type, template_info, parameters, world.EPL)
 
 @step (u'an identity_id "([^"]*)", with attribute number "([^"]*)", attribute name "([^"]*)" and attribute type "([^"]*)"')
@@ -104,7 +107,7 @@ def create_rules_with_type (step, rule_number, prefix_name, rule_type):
     :param rule_type:
     """
     world.prefix_name=prefix_name
-    world.cep_requests.set_rule_type(rule_type)
+    world.cep_requests.set_rule_type_and_parameters(rule_type)
     world.rules.create_several_epl_rules (prefix_name, rule_number, rule_type)
 
 @step (u'create "([^"]*)" rules with "([^"]*)" type')
@@ -123,7 +126,7 @@ def delete_a_rule_created(step):
     delete a rule in rule manager
     :param step:
     """
-    world.rules.delete_epl_rule(world.rule_name)
+    world.rules.delete_epl_rule()
 
 @step (u'delete all rules created')
 def delete_group_rules_created (step):
