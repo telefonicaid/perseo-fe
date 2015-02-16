@@ -23,5 +23,12 @@
         "cep_card_active":8,
         "cep_retries_received_in_mock": 15,
         "cep_delay_to_retry": 15
+    },
+
+    "MongoDB": {
+        "mongo_host": "hostname",
+        "mongo_port": "27017",
+        "mongo_database": "test",
+        "mongo_collection": "rules"
     }
 }

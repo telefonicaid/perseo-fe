@@ -22,12 +22,12 @@
 # please contact with:
 #   iot_support at tid.es
 #
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
 
-
-# general constants
 from tools import general_utils, http_utils
 
+# general constants
 EMPTY   = u''
 XML     = u'xml'
 JSON    = u'json'

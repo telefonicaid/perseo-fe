@@ -22,6 +22,7 @@
 # please contact with:
 #   iot_support at tid.es
 #
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
 
 from lettuce import world, step
@@ -108,7 +109,7 @@ def delete_a_rule_created(step):
     delete a rule in rule manager
     :param step:
     """
-    world.rules.delete_epl_rule()
+    world.rules.delete_one_rule("EPL")
 
 @step (u'delete all rules created')
 def delete_group_rules_created (step):
@@ -116,7 +117,7 @@ def delete_group_rules_created (step):
     delete rules group
      :param step:
      """
-     world.rules.delete_rules_group(world.prefix_name)
+     world.rules.delete_rules_group("EPL", world.prefix_name)
 
 
 #----------------------------------------------------------------------------------------
