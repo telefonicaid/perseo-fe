@@ -22,7 +22,7 @@
 # please contact with:
 #   iot_support at tid.es
 #
-
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
 #
 #  Notes:
@@ -37,7 +37,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
   so that they become more functional and useful
 
   @happy_path
-  Scenario Outline: append a new rule in Perseo manager using card from portal with all cards
+  Scenario: append a new rule in Perseo manager using card from portal with all cards
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
      # Sensor cards
@@ -54,25 +54,19 @@ Feature: Append a new rule in Perseo manager using cards from portal
      # Time cards
     And create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
      # end cards
-    When append a new rule name "<rule_name>", activate "1"
+    When append a new rule name "test_1", activate "1"
     Then I receive an "Created" http code
     And Validate that rule name is created successfully in db
     And delete a rule created
-  Examples:
-    | rule_name |
-    | test_1    |
+
 
   @value_threshold_card_without_AC
-  Scenario Outline: try to append a new rule in Perseo manager using card from portal using only value threshold card without action card
+  Scenario: try to append a new rule in Perseo manager using card from portal using only value threshold card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
-    When append a new rule name "<rule_name>", activate "1"
+    And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "<value>" and connect to "card_5"
+    When append a new rule name "test0102", activate "1"
     Then I receive an "Bad Request" http code
-
-  Examples:
-    | rule_name | attribute_name | operator     | data_type |
-    | test0102  | temperature    | GREATER_THAN | Quantity  |
 
   @value_threshold_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only value threshold card and actions cards
@@ -98,15 +92,12 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_ 10  | sfdf_32&%85    | DIFFERENT_TO          | Text      | danger | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
 
   @attribute_threshold_card_without_AC
-  Scenario Outline: append a new rule in Perseo manager using card from portal using only attribute threshold card without action card
+  Scenario: append a new rule in Perseo manager using card from portal using only attribute threshold card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
-    When append a new rule name "<rule_name>", activate "1"
+    And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
+    When append a new rule name "test0101", activate "1"
     Then I receive an "Bad Request" http code
-  Examples:
-    | rule_name | attribute_name | operator     | data_type | value      |
-    | test0101  | temperature    | GREATER_THAN | Quantity  | temp_refer |
 
   @attribute_threshold_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only attribute threshold card and actions cards
@@ -132,15 +123,12 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_100  | sfdf_32&%85    | DIFFERENT_TO          | Text      | temp_refer | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
 
   @type_card_without_AC
-  Scenario Outline: append a new rule in Perseo manager using card from portal using only type card without action card
+  Scenario: append a new rule in Perseo manager using card from portal using only type card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
-    When append a new rule name "<rule_name>", activate "1"
+    And create a sensor card of type type, with "card_3", identity type "temperature",operator "EQUAL_TO" and connect to "card_4"
+    When append a new rule name "test0301", activate "1"
     Then I receive an "Bad Request" http code
-  Examples:
-    | rule_name | identity_type | operator |
-    | test0301  | temperature   | EQUAL_TO |
 
   @type_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only type card and action cards
@@ -227,15 +215,12 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test1200  | 10       | temperature    | 1        | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
 
   @epl_card_without_AC
-  Scenario Outline: append a new rule in Perseo manager using card from portal using only epl card without action card
+  Scenario: append a new rule in Perseo manager using card from portal using only epl card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
-    When append a new rule name "<rule_name>", activate "1"
+    And create a sensor card of epl type with id "card_6", epl query "were ewrwer werwe rwrwer  wer" and connect to "card_7"
+    When append a new rule name "test2000", activate "1"
     Then I receive an "Bad Request" http code
-  Examples:
-    | rule_name | epl_query                     |
-    | test2000  | were ewrwer werwe rwrwer  wer |
 
   @epl_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only epl card and action cards
@@ -254,15 +239,12 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test2200  | were ewrwer werwe rwrwer  wer | updateAttribute  | DANGER                                                | ALARM           |
 
   @elapsed_card_without_AC
-  Scenario Outline: append a new rule in Perseo manager using card from portal using only elapsed card without action card
+  Scenario: append a new rule in Perseo manager using card from portal using only elapsed card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
-    And create a time card of time elapsed type, with id "card_10", interval "<interval>" and connect to "card_11"
-    When append a new rule name "<rule_name>", activate "1"
+    And create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
+    When append a new rule name "test2000", activate "1"
     Then I receive an "Bad Request" http code
-  Examples:
-    | rule_name | interval |
-    | test2000  | 8        |
 
   @elapsed_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only elapsed card and action card

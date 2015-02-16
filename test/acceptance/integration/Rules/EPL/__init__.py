@@ -22,4 +22,5 @@
 # please contact with:
 #   iot_support at tid.es
 #
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
