@@ -604,15 +604,3 @@ class Rules:
         assert temp_name == RULE_CARD_DICT[NAME], "The rule %s has not been created..." % (RULE_CARD_DICT[NAME])
 
 
-
-
-    # """
-    #    init mongo driver
-    #    :param host:
-    #    :param port:
-    #    :param database:
-    #    :param collection:
-    #    """
-    #    self.mongo = Mongo (host, port, database, collection)
-    #    self.mongo.connect()
-

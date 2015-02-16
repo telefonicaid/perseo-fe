@@ -87,13 +87,13 @@ Feature: Append a new rule in Perseo manager using cards from portal
   Examples:
     | rule_name | attribute_name | operator              | data_type | value  | action           | response                                              | parameters      |
     | test01    | temperature    | GREATER_THAN          | Quantity  | 34     | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
-    | test02    | temperature    | MINOR_THAN            | Quantity  | 34.56  | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
+    | test02    | temperature    | MINOR_THAN            | Quantity  | 34.56  | SendSmsMibAction | body to response                                      | 123456789       |
     | test03    | temperature    | EQUAL_TO              | Quantity  | -34    | updateAttribute  | DANGER                                                | ALARM           |
-    | test04    | temperature    | GREATER_OR_EQUAL_THAN | Quantity  | -34.56 | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
-    | test05    | temperature    | MINOR_OR_EQUAL_THAN   | Quantity  | 0      | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
+    | test04    | temperature    | GREATER_OR_EQUAL_THAN | Quantity  | -34.56 | SendEmailAction  | the measure is: ${measure.value}                      | erwer@sdfsf.com |
+    | test05    | temperature    | MINOR_OR_EQUAL_THAN   | Quantity  | 0      | SendSmsMibAction | the latitude is: ${device_latitude}                   | 123456789       |
     | test06    | temperature    | DIFFERENT_TO          | Quantity  | 999999 | updateAttribute  | DANGER                                                | ALARM           |
-    | test07    | temperature    | EQUAL_TO              | Text      | danger | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
-    | test08    | temperature    | DIFFERENT_TO          | Text      | danger | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
+    | test07    | temperature    | EQUAL_TO              | Text      | danger | SendEmailAction  | the latitude is:${device_longitude}                   | erwer@sdfsf.com |
+    | test08    | temperature    | DIFFERENT_TO          | Text      | danger | SendSmsMibAction | etc, etc, etc.                                        | 123456789       |
     | test09    | sfdf_324455    | DIFFERENT_TO          | Text      | danger | updateAttribute  | DANGER                                                | ALARM           |
     | test_ 10  | sfdf_32&%85    | DIFFERENT_TO          | Text      | danger | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
 
@@ -120,8 +120,8 @@ Feature: Append a new rule in Perseo manager using cards from portal
     And delete a rule created
   Examples:
     | rule_name | attribute_name | operator              | data_type | value      | action           | response                                              | parameters      |
-    | test011   | temperature    | GREATER_THAN          | Quantity  | temp_refer | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
-    | test020   | temperature    | MINOR_THAN            | Quantity  | temp_refer | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
+    | test011   | temperature    | GREATER_THAN          | Quantity  | temp_refer | SendEmailAction  | email body                                            | erwer@sdfsf.com |
+    | test020   | temperature    | MINOR_THAN            | Quantity  | temp_refer | SendSmsMibAction | sms message body                                      | 123456789       |
     | test030   | temperature    | EQUAL_TO              | Quantity  | temp_refer | updateAttribute  | DANGER                                                | ALARM           |
     | test040   | temperature    | GREATER_OR_EQUAL_THAN | Quantity  | temp_refer | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
     | test050   | temperature    | MINOR_OR_EQUAL_THAN   | Quantity  | temp_refer | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
