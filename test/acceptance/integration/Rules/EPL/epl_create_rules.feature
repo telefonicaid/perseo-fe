@@ -22,12 +22,11 @@
 # please contact with:
 #   iot_support at tid.es
 #
-__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
-
+__author__ = 'Iván Arias León (ivan.ariasleon at telefonica dot com)'
 
 #
 #  Notes:
-#        * The @skip tag is to skip the scenarios that still are not developed or failed
+#        * The skip tag is to skip the scenarios that still are not developed or failed
 #            -tg=-skip
 #        * For to see "default" values, in properties.json file
 #
