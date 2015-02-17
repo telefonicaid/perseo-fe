@@ -22,6 +22,8 @@
 # please contact with:
 #   iot_support at tid.es
 #
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
+
 
 from lettuce import world, step
 
@@ -35,6 +37,7 @@ def cep_manager_is_installed_correctly(step, operation):
     :param step:
     """
     world.operation = operation
+    world.cep_requests.verify_CEP()
 
 @step (u'configured with tenant "([^"]*)" and service "([^"]*)"')
 def configured_with_tenant_and_service (self, tenant, service_path):
@@ -71,7 +74,7 @@ def append_a_new_rule_with_a_rule_type_a_template_and_a_parameters (step, rule_t
     :param template: additional info to template
     :param parameters: several parameters according to the type of rule
     """
-    world.cep_requests.set_rule_type(rule_type)
+    parameters = world.cep_requests.set_rule_type_and_parameters(rule_type, parameters)
     world.rules.create_epl_rule (rule_type, template_info, parameters, world.EPL)
 
 @step (u'create "([^"]*)" rules with prefix "([^"]*)" and "([^"]*)" type')
@@ -106,7 +109,7 @@ def delete_a_rule_created(step):
     delete a rule in rule manager
     :param step:
     """
-    world.rules.delete_epl_rule(world.rule_name)
+    world.rules.delete_one_rule("EPL")
 
 @step (u'delete all rules created')
 def delete_group_rules_created (step):
@@ -114,7 +117,7 @@ def delete_group_rules_created (step):
     delete rules group
      :param step:
      """
-     world.rules.delete_rules_group(world.prefix_name)
+     world.rules.delete_rules_group("EPL", world.prefix_name)
 
 
 #----------------------------------------------------------------------------------------

@@ -2,11 +2,11 @@
     "name": "blood_4",
     "text": "select *,\"blood_4\" as ruleName,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
     "action": {
-        "type": "Unknown axn type",
+        "type": "update",
         "template": "Meter ${Meter} has pression ${Pression}: ${ev__complejo__saludo} (GEN RULE)",
         "parameters": {
-            "to": "brox@tid.es",
-            "from": "brox@tid.es"
+            "name": "id",
+            "value": "ID_VALUE"
         }
     }
 }

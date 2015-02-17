@@ -71,9 +71,13 @@ Some examples:
     * logs_path: folder name to logs.
 
 - cep
-    * cep_url: perseo protocol, host and port used to connect cygnus (endpoint).
+    * cep_url: protocol, host and port used to connect to perseo (endpoint).
+    * cep_send_sms_url: protocol, host and port used to receive sms actions (endpoint).
+    * cep_send_email_url: protocol, host and port used to receive email actions (endpoint).
+    * cep_send_update_url: protocol, host and port used to receive update actions (endpoint).
+    * cep_rule_post_url: protocol, host and port used to receive post actions (endpoint).
     * cep_version: perseo version installed
-    * cep_ruleName_default: rule name by "default" value
+    * cep_rule_name_default: rule name by "default" value
     * cep_service_path_default: service path by "default" value
     * cep_tenant_default: tenant by "default" value
     * cep_identity_type: identity type by "default" value
@@ -83,6 +87,9 @@ Some examples:
     * cep_epl_attribute_data_type: data type in epl
     * cep_epl_operation: operator in epl
     * cep_epl_value: value in epl
+    * cep_retries_received_in_mock: number of retries to get counter values
+    * cep_delay_to_retry: time to delay in each retry
+
 
 ### tags
 

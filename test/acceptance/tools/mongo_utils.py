@@ -22,6 +22,10 @@
 # please contact with:
 #   iot_support at tid.es
 #
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
+
+
+
 from lettuce import world
 import pymongo
 
@@ -65,7 +69,6 @@ class Mongo:
         except Exception, e:
             print " ERROR - Accessing to collection %s in MongoDB...\n %s" % (name, str(e))
 
-
     def insert_data (self,collection, data):
         """
         Insert a new document in a collection
@@ -96,7 +99,7 @@ class Mongo:
 
     def drop_collection (self, collection):
         """
-
+        remove a collection in mongo db
         :param db:
         :param collection:
         """

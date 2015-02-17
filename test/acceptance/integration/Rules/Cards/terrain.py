@@ -29,7 +29,8 @@ from lettuce import world, after, before
 import time
 from tools.cep import CEP
 import tools.general_utils
-
+from tools.mongo_utils import Mongo
+import tools.mongo_utils
 
 @before.all
 def before_all_scenarios():
@@ -67,6 +68,12 @@ def before_each_scenario(scenario):
                              retry_delay = world.config['CEP']['cep_delay_to_retry']
     )
 
+    world.cep_mongo = Mongo (world.config['MongoDB']['mongo_host'],
+                             world.config['MongoDB']['mongo_port'],
+                             world.config['MongoDB']['mongo_database'],
+                             world.config['MongoDB']['mongo_collection']
+    )
+    world.cep_mongo.connect()
 
 @after.each_scenario
 def after_each_scenario(scenario):
@@ -74,7 +81,8 @@ def after_each_scenario(scenario):
     actions after each scenario
     :param scenario:
     """
-    pass
+    world.cep_mongo.disconnect()
+
 
 @after.all
 def after_all_scenarios(scenario):

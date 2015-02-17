@@ -26,7 +26,7 @@
 *                 message: sms data content                                            *
 *                                                                                      *
 *     http://<mock_host>:<http_port>/get/update                                        *
-*	        response: <200> Last update in Context Broker received                     *
+            response: <200> Last update in Context Broker received                     *
 *                                                                                      *
 *           Received data:                                                             *
 *                 contextElements:                                                     *
@@ -43,8 +43,8 @@
 *     http://<mock_host>:<http_port>/get/post                                          *
 *           response: <200> Last post action received                                  *
 *                                                                                      *
-*	        Received data:                                                             *
-*	               template: post action template content                              *
+*           Received data:                                                             *
+                   template: post action template content                              *
 *                                                                                      *
 *   SEND - POST operations                                                             *
 *   **********************                                                             *

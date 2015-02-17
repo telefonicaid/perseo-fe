@@ -22,6 +22,8 @@
 # please contact with:
 #   iot_support at tid.es
 #
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
+
 
 import string
 from lettuce import world
@@ -32,7 +34,7 @@ from tools.notification_utils import Notifications
 from tools.rules_utils import Rules
 from tools.mock_utils import Mock
 
-#generals contants
+#generals constants
 DEFAULT                      = u'default'
 RANDOM                       = u'random'
 
@@ -42,6 +44,7 @@ CEP_VERSION                  = u'version'
 CEP_SEND_SMS_URL             = u'send_sms_url'
 CEP_SEND_EMAIL_URL           = u'send_email_url'
 CEP_SEND_UPDATE_URL          = u'send_update_url'
+CEP_RULE_POST_URL            = u'rule_post_url'
 CEP_RULE_NAME_DEFAULT        = u'rule_name_default'
 CEP_TENANT_DEFAULT           = u'tenant_default'
 CEP_SERVICE_PATH_DEFAULT     = u'service_path_default'
@@ -53,17 +56,24 @@ CEP_EPL_ATTRIBUTES_DATA_TYPE = u'epl_attribute_data_type'
 CEP_EPL_OPERATION            = u'epl_operation'
 CEP_EPL_VALUE                = u'epl_value'
 CEP_CARD_ACTIVE              = u'card_active'
+CEP_RETRIES_RECEIVED_IN_MOCK = u'retries_number'
+CEP_DELAY_TO_RETRY           = u'retry_delay'
 
 # Headers constants
-MAX_TENANT_LENGTH = 20
-TENANT_LENGTH_ALLOWED = u'tenant length 20'
-TENANT_LONGER_THAN_ALLOWED = u'tenant longer than 20'
-MAX_SERVICE_PATH_LENGTH = 10
-SERVICE_PATH_LENGTH_ALLOWED_ONE_LEVEL = u'servicepath length 10 one level'
-SERVICE_PATH_LENGTH_ALLOWED_TEN_LEVEL = u'servicepath length 10 ten level'
+MAX_TENANT_LENGTH = 50
+TENANT_LENGTH_ALLOWED = u'tenant length 50'
+TENANT_LONGER_THAN_ALLOWED = u'tenant longer than 50'
+MAX_SERVICE_PATH_LENGTH = 50
+SERVICE_PATH_LENGTH_ALLOWED_ONE_LEVEL = u'servicepath length 50 one level'
+SERVICE_PATH_LENGTH_ALLOWED_TEN_LEVEL = u'servicepath length 50 ten level'
 CHARS_ALLOWED = string.ascii_letters + string.digits+ u'_'
-RULE_NAME_LENGTH_1024 = u'rulename length 1024'
+MAX_RULE_NAME_LENGTH  = 950
+RULE_NAME_LENGTH_ALLOWED = u'rulename length allowed'
+RULE_NAME_RANDOM         = u'rulename random'
+RULE_NAME_LONGER_THAN_LENGTH_ALLOWED = u'rulename longer than length allowed'
+MAX_IDENTITY_TYPE_LENGTH  = 1024
 IDENTITY_TYPE_LENGTH_1024 = u'identity Type length 1024'
+MOCK_IN_LOCALHOST = u'url - mock in localhost'
 
 # notifications constants
 perseo_notification_path      = u'/notices'
@@ -97,6 +107,7 @@ class CEP:
         self.cep_send_sms_url        = kwargs.get(CEP_SEND_SMS_URL, DEFAULT_VALUE)
         self.cep_send_email_url      = kwargs.get(CEP_SEND_EMAIL_URL, DEFAULT_VALUE)
         self.cep_send_update_url     = kwargs.get(CEP_SEND_UPDATE_URL, DEFAULT_VALUE)
+        self.cep_rule_post_url       = kwargs.get(CEP_RULE_POST_URL, DEFAULT_VALUE)
         self.cep_version             = kwargs.get(CEP_VERSION, DEFAULT_VALUE)
         self.rule_name               = kwargs.get(CEP_RULE_NAME_DEFAULT, DEFAULT_VALUE)
         self.tenant                  = kwargs.get(CEP_TENANT_DEFAULT, DEFAULT_VALUE)
@@ -109,9 +120,19 @@ class CEP:
         self.epl_operation           = kwargs.get(CEP_EPL_OPERATION, ">")
         self.epl_value               = kwargs.get(CEP_EPL_VALUE, "3")
         self.card_active             = kwargs.get(CEP_CARD_ACTIVE, "1")
+        self.retries_number          = kwargs.get(CEP_RETRIES_RECEIVED_IN_MOCK, 5)
+        self.retry_delay             = kwargs.get(CEP_DELAY_TO_RETRY, 10)
 
         world.rules                   = Rules (self.cep_url)
         world.mock                    = Mock (send_sms_url= self.cep_send_sms_url, send_email_url=self.cep_send_email_url, send_update_url=self.cep_send_update_url)
+
+    def verify_CEP (self):
+        """
+         verify if CEP is running
+        """
+        resp =  http_utils.request(http_utils.GET, url=self.cep_url+"/check")
+        http_utils.assert_status_code(http_utils.status_codes[http_utils.OK], resp, "ERROR - Perseo is not running...")
+        world.rules.init_rule_card_dict()  # Initialize the rule card dictionary
 
     def config_tenant_and_service(self, tenant, service_path):
         """
@@ -120,9 +141,9 @@ class CEP:
         :param service_path: service path
         """
         temp = ""
-        if tenant == TENANT_LENGTH_ALLOWED: self.tenant = general_utils.string_generator(MAX_TENANT_LENGTH, CHARS_ALLOWED)
+        if tenant == TENANT_LENGTH_ALLOWED:        self.tenant = general_utils.string_generator(MAX_TENANT_LENGTH, CHARS_ALLOWED)
         elif tenant == TENANT_LONGER_THAN_ALLOWED: self.tenant = general_utils.string_generator(MAX_TENANT_LENGTH+1, CHARS_ALLOWED)
-        elif tenant != DEFAULT: self.tenant = tenant
+        elif tenant != DEFAULT:                    self.tenant = tenant
 
         if service_path == SERVICE_PATH_LENGTH_ALLOWED_ONE_LEVEL: self.service_path = "/"+general_utils.string_generator(MAX_SERVICE_PATH_LENGTH, CHARS_ALLOWED)
         elif  service_path == SERVICE_PATH_LENGTH_ALLOWED_TEN_LEVEL:
@@ -132,12 +153,30 @@ class CEP:
         elif service_path != DEFAULT: self.service_path = service_path
         world.rules.tenant_and_service(self.tenant, self.service_path)
 
+    def __generate_rule_name (self, rule_name):
+        """
+        generate rule name if it is not normal
+        """
+
+        if rule_name.find(RULE_NAME_RANDOM) >= 0:
+            rule_name_length = int (rule_name.split("= ")[1])
+            rule_name_temp = general_utils.string_generator(rule_name_length)
+        elif rule_name == RULE_NAME_LENGTH_ALLOWED:             rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH)
+        elif rule_name == RULE_NAME_LONGER_THAN_LENGTH_ALLOWED: rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH+1)
+        elif rule_name == DEFAULT:                              rule_name_temp = self.rule_name
+        else:
+            rule_name_temp = rule_name
+        return rule_name_temp
+
     def generate_EPL (self, rule_name, identity_type,  attributes_number, attribute_data_type, operation, value):
         """
         generate a EPL query dinamically.
         """
-        if rule_name != DEFAULT: self.rule_name = rule_name
-        if identity_type != DEFAULT: self.identity_type = identity_type
+        self.rule_name = self.__generate_rule_name(rule_name)
+
+        if identity_type == MAX_IDENTITY_TYPE_LENGTH: self.identity_type = general_utils.string_generator(IDENTITY_TYPE_LENGTH_1024)
+        elif identity_type != DEFAULT:                self.identity_type = identity_type
+
         if attributes_number != DEFAULT: self.attributes_number = int (attributes_number)
         if attribute_data_type != DEFAULT: self.epl_attribute_data_type = attribute_data_type
         if operation != DEFAULT:  self.epl_operation = operation
@@ -177,11 +216,28 @@ class CEP:
         http_utils.assert_status_code(http_utils.status_codes[expected_status_code], resp, "Wrong status code received: %s. Expected: %s. \n\nBody content: %s" \
                                                                             % (str(resp.status_code), str(http_utils.status_codes[expected_status_code]), str(resp.text)))
 
-    def set_rule_type (self, rule_type):
+    def set_rule_type_and_parameters (self, rule_type, parameters=""):
         """
-        set rule type
+        set rule type and parameters
         """
+        if rule_type == "post":
+             if parameters == MOCK_IN_LOCALHOST: parameters = self.cep_rule_post_url + "/send/post"
         self.rule_type=rule_type
+        return parameters
+
+    #   --------------  Visual Rules  -----------------------------
+    def new_visual_rule (self, rule_name, active):
+        """
+        create a new visual rule
+        :param rule_name:
+        :param active:
+        """
+        self.rule_name = self.__generate_rule_name(rule_name)
+        self.card_active = active
+        world.rules.create_rule_card(self.rule_name, self.card_active)
+
+
+    #   --------------  Validations  -----------------------------
 
     def validate_that_rule_was_triggered(self):
         """
@@ -196,8 +252,15 @@ class CEP:
         """
         Validate that all rules were triggered successfully
         """
+        c=0
         self.rules_number = world.rules.get_rules_number()
-        time.sleep(5)
-        value = world.mock.get_counter_value(self.rule_type)
-        assert self.rules_number == value, "All notifications are not sent. Sent: %s and received: %s" % (str(self.rules_number), str(value))
+        for i in range(int(self.retries_number)):
+            value = world.mock.get_counter_value(self.rule_type)
+            if value == self.rules_number:
+                break
+            c+=1
+            print " WARN - Retry to get counter value in the mock. No: ("+ str(c)+")"
+            time.sleep(self.retry_delay)
+        if self.rules_number != value: world.rules.delete_rules_group(world.prefix_name)
+        assert self.rules_number == value, "ERROR - All notifications are not received. Sent: %s and received: %s" % (str(self.rules_number), str(value))
 

@@ -22,6 +22,8 @@
 # please contact with:
 #   iot_support at tid.es
 #
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
+
 
 #
 #  Notes:
@@ -46,11 +48,29 @@ Feature: Delete a rule in Perseo manager
          And Validate that rule name is deleted successfully
 
     Examples:
-      |rule_name  |rule_type  |template_info |parameters        |
-      |SMS____name|sms        | (SMS rule)   |123456789         |
-      |EMAIL__name|email      | (Email rule) |aaaaaaa@bbbbbb.ccc|
-      |update_name|update     |              |warning           |
+      |rule_name  |rule_type  |template_info |parameters              |
+      |SMS____name|sms        | (SMS rule)   |123456789               |
+      |EMAIL__name|email      | (Email rule) |aaaaaaa@bbbbbb.ccc      |
+      |update_name|update     |              |warning                 |
+      |post_name  |post       | (post rule)  |url - mock in localhost |
 
+    @rule_name
+    Scenario Outline: delete a rule with several names in Perseo manager
+       Given Perseo manager is installed correctly to "delete"
+         And configured with tenant "default" and service "default"
+         And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+         And append a new rule with a rule type "sms", a template "(SMS rule)" and a parameters "123456789"
+        When delete a rule created
+        Then I receive an "OK" http code
+         And Validate that rule name is deleted successfully
+    Examples:
+      |rule_name               |
+      |test_345                |
+      |TEST_345                |
+      |test-345                |
+      |sgvMpTs52nwuq25UsA3a    |
+      |rulename length allowed |
+      |rulename random = 988   |
 
     @rule_not_exist
     Scenario Outline: try to delete a rule does not exist in Perseo manager
@@ -62,11 +82,11 @@ Feature: Delete a rule in Perseo manager
          And Validate that rule name is not deleted
 
     Examples:
-      |rule_name  |
-      |test_563   |
+      |rule_name           |
+      |test_563            |
 
-    @rule_name_empty
-    Scenario Outline: try to delete a rule with rule name empty in Perseo manager
+    @rule_name_error
+    Scenario Outline: try to delete a rule with rule name error in Perseo manager
        Given Perseo manager is installed correctly to "delete"
          And configured with tenant "default" and service "default"
          And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
@@ -74,5 +94,19 @@ Feature: Delete a rule in Perseo manager
         Then I receive an "Not Found" http code
 
     Examples:
-      |rule_name  |
-      |           |
+      |rule_name                            |
+      |                                     |
+      |test/34                              |
+
+    @rule_name_too_longer
+    Scenario Outline: try to delete a rule with rule name error in Perseo manager
+       Given Perseo manager is installed correctly to "delete"
+         And configured with tenant "default" and service "default"
+         And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+        When delete a rule created
+        Then I receive an "OK" http code
+         And Validate that rule name is not deleted
+
+    Examples:
+      |rule_name                            |
+      |rulename longer than length allowed  |
