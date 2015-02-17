@@ -22,11 +22,11 @@
 # please contact with:
 #   iot_support at tid.es
 #
-__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
+__author__ = 'Iván Arias León (ivan.ariasleon at telefonica dot com)'
 
 #
 #  Notes:
-#        * The @skip tag is to skip the scenarios that still are not developed or failed
+#        * The skip tag is to skip the scenarios that still are not developed or failed
 #            -tg=-skip
 #        * For to see "default" values, in properties.json file
 #
@@ -36,7 +36,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
   I want to be able to append a new rule in Perseo manager using cards from portal
   so that they become more functional and useful
 
-  @happy_path
+  @happy_path @skip
   Scenario: append a new rule in Perseo manager using card from portal with all cards
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -201,7 +201,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test1300  | 34       | temper_23      | 12       | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
     | test1300  | 34       | temper_23      | 0        | updateAttribute  | DANGER                                                | ALARM           |
 
-  @not_updated_card_interval_not_allowed @BUG_53
+  @not_updated_card_interval_not_allowed @BUG_53 @skip
   Scenario Outline: append a new rule in Perseo manager using card from portal using only not updated card and action card but with interval not allowed
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
