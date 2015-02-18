@@ -8,5 +8,5 @@ Do not allow 'id' and 'type' as attribute names
 Change parameter for POST action from 'URL' to 'url'
 Fix error in VR for updateAction (#55)
 Fix validation rule name (#44, #15)
-Fix negative and zero chek intervals for NSR (#53)
+Fix negative and zero check intervals for NSR (#53)
 
