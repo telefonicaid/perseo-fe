@@ -7,4 +7,5 @@ Changed 'update' action, any entity
 Do not allow 'id' and 'type' as attribute names
 Change parameter for POST action from 'URL' to 'url'
 Fix error in VR for updateAction (#55)
+Fix validation rule name (#44, #15)
 

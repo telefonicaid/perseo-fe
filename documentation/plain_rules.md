@@ -24,6 +24,8 @@ The fields (all must be present) are
 * **text**: EPL statment for the rule engine in perseo-core
 * **action**: action to be performed by perseo if the rule is fired from the core
 
+The rule name must consist of the ASCII characters from A to Z, from a to z, digits (0-9), underscore (_) and dash (-). It can have a maximum length of 50 characters.
+
 ## EPL text
 The field ```text``` of the rule must be a valid EPL statement and additionally must honor several restrictions to match expectations of perseo and perseo-core.
 

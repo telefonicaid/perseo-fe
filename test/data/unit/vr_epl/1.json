@@ -55,13 +55,13 @@
                 "connectedTo": [ ]
             }
         ],
-        "name": "DCA Support",
+        "name": "DCA-Support",
         "service": "militar",
         "updateTime": "2014-01-14T15:19:57.952Z",
         "tenant": "unkownt"
     },
-    "name": "DCA Support",
-    "text": "select *,\"DCA Support\" as ruleName from pattern [every ev=iotEvent((cast(`Alarm`?, String)  !=  \"\"))]",
+    "name": "DCA-Support",
+    "text": "select *,\"DCA-Support\" as ruleName from pattern [every ev=iotEvent((cast(`Alarm`?, String)  !=  \"\"))]",
     "action": {
         "type": "email",
         "template": "DCA message${ev__device_latitude}${ev__device_longitude}${ev__measure__value}${ev__device__asset__name}",

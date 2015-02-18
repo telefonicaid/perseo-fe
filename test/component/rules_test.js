@@ -118,8 +118,28 @@ describe('Rules', function() {
                 done();
             });
         });
+
+        it('should return BAD REQUEST when POSTing a rule with an empty name', function(done) {
+            var rule = utilsT.loadExample('./test/data/bad_rules/rule_without_name.json');
+            rule.name = '';
+            clients.PostRule(rule, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                done();
+            });
+        });
+
         it('should return BAD REQUEST when POSTing a rule without action type', function(done) {
             var rule = utilsT.loadExample('./test/data/bad_rules/rule_without_action_type.json');
+            clients.PostRule(rule, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                done();
+            });
+        });
+        it('should return BAD REQUEST when POSTing a rule with invalid chars in name', function(done) {
+            var rule = utilsT.loadExample('./test/data/bad_rules/rule_without_name.json');
+            rule.name = 'caña';
             clients.PostRule(rule, function(error, data) {
                 should.not.exist(error);
                 data.should.have.property('statusCode', 400);
@@ -134,8 +154,27 @@ describe('Rules', function() {
                 done();
             });
         });
+
+        it('should return BAD REQUEST when POSTing a rule with a name too long', function(done) {
+            var rule = utilsT.loadExample('./test/data/bad_rules/rule_without_name.json');
+            rule.name = new Array(52).join('x');
+            clients.PostRule(rule, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                done();
+            });
+        });
         it('should return BAD REQUEST when POSTing a rule with update action and id attr', function(done) {
             var rule = utilsT.loadExample('./test/data/bad_rules/rule_update_action_id_attr.json');
+            clients.PostRule(rule, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                done();
+            });
+        });
+        it('should return BAD REQUEST when POSTing a rule with a name that is not a string', function(done) {
+            var rule = utilsT.loadExample('./test/data/bad_rules/rule_without_name.json');
+            rule.name = {x: 1};
             clients.PostRule(rule, function(error, data) {
                 should.not.exist(error);
                 data.should.have.property('statusCode', 400);
@@ -312,11 +351,11 @@ describe('Rules', function() {
             async.series([
                 utilsT.dropRulesCollection,
                 function(callback) {
-                        clients.GetAllRules(function(error, data) {
-                            should.not.exist(error);
-                            data.should.have.property('statusCode', 500);
-                            return callback(null);
-                        });
+                    clients.GetAllRules(function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 500);
+                        return callback(null);
+                    });
                 }
             ], function(error) {
                 should.not.exist(error);
