@@ -135,4 +135,10 @@ def validate_that_rule_name_is_created_successfully_in_db (step):
     """
     world.rules.validate_card_rule_in_mongo(world.cep_mongo)
 
+@step (u'Validate that rule name is deleted successfully in db')
+def validate_that_rule_name_is_deleted_successfully (step):
+    """
+    Validate that card rule is deleted successfully in db
+    """
+    world.rules.card_rule_does_not_exists_in_mongo(world.cep_mongo)
 

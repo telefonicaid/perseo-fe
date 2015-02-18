@@ -36,7 +36,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
   I want to be able to append a new rule in Perseo manager using cards from portal
   so that they become more functional and useful
 
-  @happy_path 
+  @happy_path
   Scenario: append a new rule in Perseo manager using card from portal with all cards
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
