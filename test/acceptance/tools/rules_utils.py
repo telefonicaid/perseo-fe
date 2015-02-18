@@ -71,7 +71,7 @@ TEMPLATE          = u'template'
 PARAMETERS        = u'parameters'
 TO                = u'to'
 FROM              = u'from'
-URL               = u'URL'
+URL               = u'url'
 MESSAGE           = u'message'
 
 # EPL operations
@@ -591,8 +591,6 @@ class Rules:
         assert resp,\
             "Error - name %s does not exist:  \n %s." % (self.prefix_name+"_"+str(i)+"_"+self.rule_type, str(self.resp.text))
 
-     # def init_mongo_driver (self, host, port, database, collection):
-
     def validate_card_rule_in_mongo(self, driver):
         """
         Validate that card rule is created successfully in db
@@ -604,4 +602,13 @@ class Rules:
             temp_name = doc[NAME]
         assert temp_name == RULE_CARD_DICT[NAME], "The rule %s has not been created..." % (RULE_CARD_DICT[NAME])
 
-
+    def card_rule_does_not_exists_in_mongo(self, driver):
+        """
+        Validate that card rule does not exists in db
+        """
+        collection_dict = driver.current_collection(CEP_MONGO_RULES_COLLECTION)
+        cursor =  driver.find_data(collection_dict, {NAME: RULE_CARD_DICT[NAME]})
+        for doc in cursor:
+            if doc[NAME] == RULE_CARD_DICT[NAME]:
+                return True
+        return False
