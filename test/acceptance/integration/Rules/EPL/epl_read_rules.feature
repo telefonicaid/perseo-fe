@@ -28,6 +28,7 @@ __author__ = 'Iván Arias León (ivan.ariasleon at telefonica dot com)'
 #
 #  Notes:
 #        * The skip tag is to skip the scenarios that still are not developed or failed
+#          always it is associated to an issue or bug
 #            -tg=-skip
 #        * For to see "default" values, in properties.json file
 #

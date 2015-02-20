@@ -60,20 +60,20 @@ CEP_RETRIES_RECEIVED_IN_MOCK = u'retries_number'
 CEP_DELAY_TO_RETRY           = u'retry_delay'
 
 # Headers constants
-MAX_TENANT_LENGTH = 50
-TENANT_LENGTH_ALLOWED = u'tenant length 50'
-TENANT_LONGER_THAN_ALLOWED = u'tenant longer than 50'
-MAX_SERVICE_PATH_LENGTH = 50
-SERVICE_PATH_LENGTH_ALLOWED_ONE_LEVEL = u'servicepath length 50 one level'
-SERVICE_PATH_LENGTH_ALLOWED_TEN_LEVEL = u'servicepath length 50 ten level'
-CHARS_ALLOWED = string.ascii_letters + string.digits+ u'_'
-MAX_RULE_NAME_LENGTH  = 950
-RULE_NAME_LENGTH_ALLOWED = u'rulename length allowed'
-RULE_NAME_RANDOM         = u'rulename random'
-RULE_NAME_LONGER_THAN_LENGTH_ALLOWED = u'rulename longer than length allowed'
-MAX_IDENTITY_TYPE_LENGTH  = 1024
-IDENTITY_TYPE_LENGTH_1024 = u'identity Type length 1024'
-MOCK_IN_LOCALHOST = u'url - mock in localhost'
+MAX_TENANT_LENGTH                     = 50
+TENANT_LENGTH_ALLOWED                 = u'tenant length allowed'
+TENANT_LONGER_THAN_ALLOWED            = u'tenant longer than length allowed'
+MAX_SERVICE_PATH_LENGTH               = 50
+SERVICE_PATH_LENGTH_ALLOWED_ONE_LEVEL = u'servicepath length allowed one level'
+SERVICE_PATH_LENGTH_ALLOWED_TEN_LEVEL = u'servicepath length allowed ten level'
+SERVICE_PATH_LONGER_THAN_ALLOWED      = u'service path longer than length allowed'
+MAX_RULE_NAME_LENGTH                  = 50
+RULE_NAME_LENGTH_ALLOWED              = u'rulename length allowed'
+RULE_NAME_RANDOM                      = u'rulename random'
+RULE_NAME_LONGER_THAN_LENGTH_ALLOWED  = u'rulename longer than length allowed'
+MAX_IDENTITY_TYPE_LENGTH              = 1024
+IDENTITY_TYPE_LENGTH_1024             = u'identity Type length 1024'
+MOCK_IN_LOCALHOST                     = u'url - mock in localhost'
 
 # notifications constants
 perseo_notification_path      = u'/notices'
@@ -140,15 +140,16 @@ class CEP:
         :param tenant: tenant (multi-channels)
         :param service_path: service path
         """
+        SERVICES_CHARS_ALLOWED = string.ascii_letters + string.digits +  u'_' # [a-zA-Z0-9_]+ regular expression
         temp = ""
-        if tenant == TENANT_LENGTH_ALLOWED:        self.tenant = general_utils.string_generator(MAX_TENANT_LENGTH, CHARS_ALLOWED)
-        elif tenant == TENANT_LONGER_THAN_ALLOWED: self.tenant = general_utils.string_generator(MAX_TENANT_LENGTH+1, CHARS_ALLOWED)
-        elif tenant != DEFAULT:                    self.tenant = tenant
+        if tenant == TENANT_LENGTH_ALLOWED: self.tenant = general_utils.string_generator(MAX_TENANT_LENGTH, SERVICES_CHARS_ALLOWED)
+        elif tenant == TENANT_LONGER_THAN_ALLOWED: self.tenant = general_utils.string_generator(MAX_TENANT_LENGTH+1, SERVICES_CHARS_ALLOWED)
+        elif tenant != DEFAULT: self.tenant = tenant
 
-        if service_path == SERVICE_PATH_LENGTH_ALLOWED_ONE_LEVEL: self.service_path = "/"+general_utils.string_generator(MAX_SERVICE_PATH_LENGTH, CHARS_ALLOWED)
-        elif  service_path == SERVICE_PATH_LENGTH_ALLOWED_TEN_LEVEL:
+        if service_path == SERVICE_PATH_LENGTH_ALLOWED_ONE_LEVEL: self.service_path = "/"+general_utils.string_generator(MAX_SERVICE_PATH_LENGTH, SERVICES_CHARS_ALLOWED)
+        elif service_path == SERVICE_PATH_LENGTH_ALLOWED_TEN_LEVEL:
             for i in range(0, MAX_SERVICE_PATH_LENGTH):
-                temp = temp + "/"+general_utils.string_generator(MAX_SERVICE_PATH_LENGTH, CHARS_ALLOWED)
+                temp = temp + "/"+general_utils.string_generator(MAX_SERVICE_PATH_LENGTH, SERVICES_CHARS_ALLOWED)
             self.service_path = temp
         elif service_path != DEFAULT: self.service_path = service_path
         world.rules.tenant_and_service(self.tenant, self.service_path)
@@ -157,12 +158,12 @@ class CEP:
         """
         generate rule name if it is not normal
         """
-
+        RULE_NAME_CHARS_ALLOWED=string.ascii_letters + string.digits + u'-'+u'_'  # [a-zA-Z0-9_-]+ regular expression
         if rule_name.find(RULE_NAME_RANDOM) >= 0:
             rule_name_length = int (rule_name.split("= ")[1])
-            rule_name_temp = general_utils.string_generator(rule_name_length)
-        elif rule_name == RULE_NAME_LENGTH_ALLOWED:             rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH)
-        elif rule_name == RULE_NAME_LONGER_THAN_LENGTH_ALLOWED: rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH+1)
+            rule_name_temp = general_utils.string_generator(rule_name_length, RULE_NAME_CHARS_ALLOWED)
+        elif rule_name == RULE_NAME_LENGTH_ALLOWED:             rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH, RULE_NAME_CHARS_ALLOWED)
+        elif rule_name == RULE_NAME_LONGER_THAN_LENGTH_ALLOWED: rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH+1, RULE_NAME_CHARS_ALLOWED)
         elif rule_name == DEFAULT:                              rule_name_temp = self.rule_name
         else:
             rule_name_temp = rule_name
@@ -239,16 +240,17 @@ class CEP:
 
     #   --------------  Validations  -----------------------------
 
-    def validate_that_rule_was_triggered(self):
+    def validate_that_rule_was_triggered(self, method):
         """
          Validate that rule is triggered successfully
         """
         self.attributes_value = self.notification.get_attributes_value()
         self.parameters=world.rules.get_parameters()
         status=world.mock.verify_response_mock (self.rule_type, self.attributes_value, self.parameters)
-        world.mock.validate_that_rule_was_triggered(status)
+        if not status: world.rules.delete_one_rule(self, method)
+        assert status, "ERROR - the rule %s has not been launched " % (str(self.rule_name))
 
-    def validate_that_all_rule_were_triggered(self):
+    def validate_that_all_rule_were_triggered(self, method):
         """
         Validate that all rules were triggered successfully
         """
@@ -261,6 +263,6 @@ class CEP:
             c+=1
             print " WARN - Retry to get counter value in the mock. No: ("+ str(c)+")"
             time.sleep(self.retry_delay)
-        if self.rules_number != value: world.rules.delete_rules_group(world.prefix_name)
+        if self.rules_number != value: world.rules.delete_rules_group(method, world.prefix_name)
         assert self.rules_number == value, "ERROR - All notifications are not received. Sent: %s and received: %s" % (str(self.rules_number), str(value))
 
