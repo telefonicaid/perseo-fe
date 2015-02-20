@@ -28,6 +28,7 @@ __author__ = 'Iván Arias León (ivan.ariasleon at telefonica dot com)'
 #
 #  Notes:
 #        * The skip tag is to skip the scenarios that still are not developed or failed
+#          always it is associated to an issue or bug
 #            -tg=-skip
 #        * For to see "default" values, in properties.json file
 #
@@ -70,7 +71,6 @@ Feature: Delete a rule in Perseo manager
       |test-345                |
       |sgvMpTs52nwuq25UsA3a    |
       |rulename length allowed |
-      |rulename random = 988   |
 
     @rule_not_exist
     Scenario Outline: try to delete a rule does not exist in Perseo manager
