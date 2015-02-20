@@ -99,7 +99,6 @@ def create_a_action_card_of_type_connect_to_a_response_and_a_parameters_ (step, 
 def create_a_time_card_of_time_elapsed_type_with_id_interval_and_connect_to (step, tc_id_card, interval, connected_to):
     world.rules.create_time_card (id=tc_id_card, timeCardType="timeElapsed", interval=interval, connectedTo=connected_to)
 
-
 @step (u'append a new rule name "([^"]*)", activate "([^"]*)"')
 def append_a_new_rule_name_activate (step, rule_name, active):
     """
@@ -109,6 +108,44 @@ def append_a_new_rule_name_activate (step, rule_name, active):
     :param active: if is active or not (0 | 1)
     """
     world.card_rule = world.cep_requests.new_visual_rule (rule_name, active)
+
+@step (u'create visual rules "([^"]*)" with prefix "([^"]*)", sensor cards and an action card "([^"]*)"')
+def create_visual_rules_with_sensor_cards_and_an_action_card (step, rule_number, prefix, action_card_type):
+    """
+    Create N visual rules with N sensor cards and an action card
+    :param step: append sensor cards into the visual rule, the format of the table is:
+                 | sensorCardType |
+                  values allowed: notUpdated, regexp, type, valueThreshold, attributeThreshold or ceprule
+    :param rule_number: number of visual rules created
+    :param action_card_type: action card used in all visual rules
+    """
+    world.prefix_name = prefix
+    world.rules.create_several_visual_rules(step, rule_number, prefix, action_card_type)
+
+@step (u'read all rules')
+def get_all_rules (step):
+    """
+    get all visual rules stored
+    :param step:
+    """
+    world.rules.get_all_visual_rules()
+
+@step (u'read a visual rule in perseo')
+def read_a_visual_rule_in_perseo (step):
+    """
+    get only one visual rule in perseo
+    :param step:
+    """
+    world.rules.get_one_visual_rules()
+
+@step (u'rule name "([^"]*)" to try to delete but it does not exists')
+def rule_name_to_try_to_delete_but_it_does_not_exists (step, name):
+    """
+    rule name to try to delete but it does not exists
+    :param step:
+    :param name: this name does not exists
+    """
+    world.rules.rule_name_to_try_to_delete_but_it_does_not_exists(name)
 
 #----------------------------------------------------------------------------------------
 @step(u'I receive an "([^"]*)" http code')
@@ -128,6 +165,14 @@ def delete_a_rule_created(step):
     """
     world.rules.delete_one_rule("visual_rules")
 
+@step (u'delete all rules created')
+def delete_group_rules_created (step):
+     """
+    delete rules group
+     :param step:
+     """
+     world.rules.delete_rules_group("visual_rules", world.prefix_name)
+
 @step (u'Validate that rule name is created successfully in db')
 def validate_that_rule_name_is_created_successfully_in_db (step):
     """
@@ -142,3 +187,10 @@ def validate_that_rule_name_is_deleted_successfully (step):
     """
     world.rules.card_rule_does_not_exists_in_mongo(world.cep_mongo)
 
+@step (u'validate that all visual rules are returned')
+def validate_that_all_visual_rules_are_returned (step):
+     """
+     validate that all visual rules are returned
+     :param step:
+     """
+     world.rules.validate_that_all_visual_rules_are_returned()

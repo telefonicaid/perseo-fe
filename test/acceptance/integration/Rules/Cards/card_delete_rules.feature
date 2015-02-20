@@ -27,6 +27,7 @@ __author__ = 'Iván Arias León (ivan.ariasleon at telefonica dot com)'
 #
 #  Notes:
 #        * The skip tag is to skip the scenarios that still are not developed or failed
+#          always it is associated to an issue or bug
 #            -tg=-skip
 #        * For to see "default" values, in properties.json file
 #
@@ -175,8 +176,7 @@ Feature: Delete a rule in Perseo manager from portal
   Scenario: delete a rule in Perseo manager from portal with value threshold and action cards
     Given Perseo manager is installed correctly to "delete"
     And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
-    And create a action card of "SendEmailAction" type, with id "card_7", response "response in email body ${measure.value}  ", parameters "erwer@sdfsf.com" and connect to "card_8"
+    And rule name "test_to_delete" to try to delete but it does not exists
     When delete a rule created
     Then I receive an "No Content" http code
     And Validate that rule name is deleted successfully in db
