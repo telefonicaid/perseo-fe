@@ -146,7 +146,7 @@ def rule_name_to_try_to_delete_but_it_does_not_exists (step, name):
     :param name: this name does not exists
     """
     world.rules.rule_name_to_try_to_delete_but_it_does_not_exists(name)
-    pass
+
 #----------------------------------------------------------------------------------------
 @step(u'I receive an "([^"]*)" http code')
 def i_receive_an_http_code (step, httpCode):
