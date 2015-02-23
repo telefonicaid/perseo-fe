@@ -11,8 +11,9 @@ In order to have perseo running, there are several basic pieces of information t
 * `config.smtp.port`: port for sending email.
 * `config.smtp.host`:  host for sending email.
 * `config.sms.URL`: URL for sending SMSs.
-* `config.sms.API_KEY`: API KEY for sending SMSs, if necessary.
-* `config.sms.API_SECRET`: API SECRET for sending SMSs, if necessary.
+* `config.sms.from`: Field `from` for the outgoing SMSs. Required by the SMPP Adapter.
+* `config.sms.API_KEY`: API KEY for sending SMSs, if necessary. Only for the SMPP Adapter simulator.
+* `config.sms.API_SECRET`: API SECRET for sending SMSs, if necessary. Only for the SMPP Adapter simulator.
 * `config.orion.URL`: URL for updating contexts at Orion (Context Broker).
 * `config.mongo.URL`: URL for connecting mongoDB.
 * `config.executionsTTL`: Time-To-Live for documents of action executions (seconds).
