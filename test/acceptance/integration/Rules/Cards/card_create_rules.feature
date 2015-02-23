@@ -60,7 +60,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     And Validate that rule name is created successfully in db
     And delete a rule created
 
-  @value_threshold_card_without_AC
+  @value_threshold_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only value threshold card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -91,7 +91,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_300009 | sfdf_324455    | DIFFERENT_TO          | Text      | danger | updateAttribute  | DANGER                                                | ALARM           |
     | test_300010 | sfdf_32&%85    | DIFFERENT_TO          | Text      | danger | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
 
-  @attribute_threshold_card_without_AC
+  @attribute_threshold_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only attribute threshold card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -122,7 +122,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_500009 | sfdf_324455    | DIFFERENT_TO          | Text      | temp_refer | updateAttribute  | DANGER                                                | ALARM           |
     | test_500010 | sfdf_32&%85    | DIFFERENT_TO          | Text      | temp_refer | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
 
-  @type_card_without_AC
+  @type_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only type card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -146,7 +146,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_700002 | temperature   | DIFFERENT_TO | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
     | test_700003 | temperature   | DIFFERENT_TO | updateAttribute  | DANGER                                                | ALARM           |
 
-  @id_card_without_AC
+  @id_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only id card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -171,7 +171,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_900003 | room_*      | updateAttribute  | DANGER                                                | ALARM           |
     | test_900004 | room.*      | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
 
-  @not_updated_card_without_AC
+  @not_updated_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only not updated card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -208,7 +208,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_210001 | -60      | temperature    | 10       | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
     | test_210002 | 0        | temperature    | 1        | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
 
-  @epl_card_without_AC
+  @epl_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only epl card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -232,7 +232,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_410002 | were ewrwer werwe rwrwer  wer | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
     | test_410003 | were ewrwer werwe rwrwer  wer | updateAttribute  | DANGER                                                | ALARM           |
 
-  @elapsed_card_without_AC
+  @elapsed_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only elapsed card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"

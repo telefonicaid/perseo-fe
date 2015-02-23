@@ -37,7 +37,7 @@ Feature: Update a rule in Perseo manager using cards from portal
   I want to be able to update a rule in Perseo manager using cards from portal
   so that they become more functional and useful
 
-  @value_threshold_card_without_AC
+  @value_threshold_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only value threshold card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -79,7 +79,7 @@ Feature: Update a rule in Perseo manager using cards from portal
     | test_20000000009 | sfdf_324455    | DIFFERENT_TO          | Text      | danger | updateAttribute  | DANGER                                                | ALARM           |
     | test_20000000010 | sfdf_32&%85    | DIFFERENT_TO          | Text      | danger | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
 
-  @attribute_threshold_card_without_AC
+  @attribute_threshold_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only attribute threshold card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -121,7 +121,7 @@ Feature: Update a rule in Perseo manager using cards from portal
     | test_40000000009 | sfdf_324455    | DIFFERENT_TO          | Text      | temp_refer | updateAttribute  | DANGER                                                | ALARM           |
     | test_40000000010 | sfdf_32&%85    | DIFFERENT_TO          | Text      | temp_refer | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
 
-  @type_card_without_AC
+  @type_card_without_action_card
   Scenario: ty to update a rule in Perseo manager using card from portal using only type card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -156,7 +156,7 @@ Feature: Update a rule in Perseo manager using cards from portal
     | test_60000000002 | temperature   | DIFFERENT_TO | SendSmsMibAction | sms body ${measure.value}   | 123456789       |
     | test_60000000003 | temperature   | DIFFERENT_TO | updateAttribute  | DANGER                      | ALARM           |
 
-  @id_card_without_AC
+  @id_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only id card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -192,7 +192,7 @@ Feature: Update a rule in Perseo manager using cards from portal
     | test_80000000003 | room_*      | updateAttribute  | DANGER                       | ALARM           |
     | test_80000000004 | room.*      | SendSmsMibAction | lemail body ${measure.value} | 123456789       |
 
-  @not_updated_card_without_AC
+  @not_updated_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only not updated card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -227,7 +227,7 @@ Feature: Update a rule in Perseo manager using cards from portal
     | test_01000000002 | 34       | temper_23      | 12       | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
     | test_01000000003 | 34       | temper_23      | 0        | updateAttribute  | DANGER                                                | ALARM           |
 
-  @epl_card_without_AC
+  @epl_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only epl card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -262,7 +262,7 @@ Feature: Update a rule in Perseo manager using cards from portal
     | test_21000000002 | were ewrwer werwe rwrwer  wer | SendSmsMibAction | sms body l${measure.value}  | 123456789       |
     | test_21000000003 | were ewrwer werwe rwrwer  wer | updateAttribute  | DANGER                      | ALARM           |
 
-  @elapsed_card_without_AC
+  @elapsed_card_without_action_card
   Scenario: try to update a new rule in Perseo manager using card from portal using only elapsed card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
