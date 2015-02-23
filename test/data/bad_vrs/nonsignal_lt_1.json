@@ -1,34 +1,8 @@
 {
-    "name": "VR_nonsignal_complex",
+    "name": "VR_nonsignal",
+    "service": 1052,
     "active": 1,
     "cards": [
-        {
-            "id": "card_6",
-            "type": "SensorCard",
-            "model": "ModeloTemperatura",
-            "sensorData": {
-                "measureName": "",
-                "phenomenonApp": "",
-                "phenomenon": "",
-                "dataType": "Text",
-                "uom": ""
-            },
-            "configData": {
-
-            },
-            "connectedTo": [
-                "card_11"
-            ],
-            "conditionList": [
-                {
-                    "scope": "XPATH",
-                    "not": false,
-                    "operator": "MATCH",
-                    "parameterName": "id",
-                    "parameterValue": "^value.*"
-                }
-            ]
-        },
         {
             "id": "card_11",
             "type": "SensorCard",
@@ -41,7 +15,7 @@
                 "uom": "celsius"
             },
             "timeData": {
-                "interval": "1",
+                "interval": 0.5,
                 "repeat": "0",
                 "context": "ASSET"
             },
@@ -50,7 +24,7 @@
                     "scope": "LAST_MEASURE",
                     "not": false,
                     "operator": "GREATER_THAN",
-                    "parameterValue": "5"
+                    "parameterValue": 0
                 }
             ],
             "connectedTo": [
