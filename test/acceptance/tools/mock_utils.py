@@ -108,12 +108,6 @@ class Mock:
         if str(resp_temp[attribute_value_position_init:attribute_value_position_end]) == attributes_value: return True
         return False
 
-    def validate_that_rule_was_triggered(self, status):
-        """
-        Validate that rule is triggered successfully
-        """
-        assert status, "ERROR - the rule  has not been launched \n        Body: %s" % (str(self.resp.text))
-
     def reset_counters(self, rule_type):
        """
        reset a counter in mock

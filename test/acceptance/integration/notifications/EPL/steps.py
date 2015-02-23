@@ -135,7 +135,7 @@ def delete_group_rules_created (step):
     delete rules group
      :param step:
      """
-     world.rules.delete_rules_group("EPL", world.prefix_name)
+     world.rules.delete_rules_group("EPL",world.prefix_name)
 
 #----------------------------------------------------------------------------------------
 @step(u'I receive an "([^"]*)" http code')
@@ -152,7 +152,7 @@ def validate_that_rule_is_triggered_successfully (step):
     Validate that rule is triggered successfully
     :param step:
     """
-    world.cep_requests.validate_that_rule_was_triggered()
+    world.cep_requests.validate_that_rule_was_triggered("EPL")
 
 @step (u'Validate that all rules are triggered successfully')
 def validate_that_all_rule_are_triggered_successfully (step):
@@ -160,6 +160,6 @@ def validate_that_all_rule_are_triggered_successfully (step):
     Validate that all rules were triggered successfully
     :param step:
     """
-    world.cep_requests.validate_that_all_rule_were_triggered()
+    world.cep_requests.validate_that_all_rule_were_triggered("EPL")
 
 

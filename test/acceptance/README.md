@@ -95,7 +95,10 @@ Some examples:
 
 You can to use multiples tags in each scenario, possibles tags used:
 
-    - happy_path, skip, errors_40x, etc
+    - happy_path, skip, errors_40x, etc.
+    - The skip tag is to skip the scenarios that still are not developed or failed
+      always it is associated to an issue or bug.
+            usage: -tg=-skip
 
 and to filter scenarios by these tags: see Tests execution section.
 

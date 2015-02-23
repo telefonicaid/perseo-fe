@@ -71,7 +71,7 @@ TEMPLATE          = u'template'
 PARAMETERS        = u'parameters'
 TO                = u'to'
 FROM              = u'from'
-URL               = u'URL'
+URL               = u'url'
 MESSAGE           = u'message'
 
 # EPL operations
@@ -116,6 +116,7 @@ INTERVAL             = u'interval'
 MEASURE_NAME         = u'measureName'
 DATA_TYPE            = u'dataType'
 DATA_TYPE_TEXT       = u'Text'
+DATA_TYPE_QUANTITY   = u'Quantity'
 SCOPE                = u'scope'
 SCOPE_LAST_MEASURE   = u'LAST_MEASURE'
 SCOPE_XPATH          = u'XPATH'
@@ -145,6 +146,7 @@ CARDS                = u'cards'
 X_AUTH_TOKEN         = u'X-Auth-Token'
 X_AUTH_TOKEN_VALUE   = u'tokenValue'
 CONTEXT_LENGTH       = u'Content-Length'
+COUNT                = u'count'
 
 RULE_CARD_DICT = {NAME: None,
                  ACTIVE: None,
@@ -323,25 +325,6 @@ class Rules:
         :return: int
         """
         return self.rules_number
-
-    def delete_one_rule (self, method, name=EMPTY):
-        """
-        Delete an epl rule
-        :param name: rule name
-        """
-        if name != EMPTY: self.rule_name = name
-        if method == EPL:
-            url=self.__create_url(DELETE_EPL_RULE, self.rule_name)
-        if method == VISUAL_RULES:
-            url=self.__create_url(DELETE_CARD_RULE, RULE_CARD_DICT[NAME])
-        self.resp = http_utils.request(http_utils.DELETE, url=url, headers=self.__create_headers())
-
-    def delete_rules_group(self, method, name):
-        """
-        delete all rules created
-        """
-        for i in range (0, self.rules_number):
-            self.delete_one_rule(method, name+"_"+str(i)+"_"+self.rule_type)
 
     def read_a_rule_name (self, name):
         """
@@ -529,10 +512,106 @@ class Rules:
         :return: card rule dict
         """
         RULE_CARD_DICT[NAME]   = rule_name
+        self.rule_name = RULE_CARD_DICT[NAME]
         RULE_CARD_DICT[ACTIVE] =  int(active)
         payload = general_utils.convert_dict_to_str(RULE_CARD_DICT, general_utils.JSON)
         self.resp = http_utils.request(http_utils.POST, url=self.__create_url(APPEND_CARD_RULE), headers=self.__create_headers(VISUAL_RULES), data=payload)
         return RULE_CARD_DICT
+
+    def create_several_visual_rules(self, step, rule_number, prefix, ac_card_type):
+        """
+        Create N visual rules with N sensor cards and an action card
+        :param step: append sensor cards into the visual rule [{"sensorCardType", "notUpdated"}, {"sensorCardType", "regexp"}]
+                     the format of the table is:
+                     | sensorCardType |
+                      values allowed: notUpdated, regexp, type, valueThreshold, attributeThreshold or ceprule
+        :param rule_number: number of visual rules created
+        :param action_card_type: action card used in all visual rules
+        """
+        assert len(step.hashes) > 0, "ERROR - it is necessary to append a sensor card." \
+                                     "\n   ex:\n      | sensorCardType |\n      | regexp           |" \
+                                     "\n     values allowed: notUpdated, regexp, type, valueThreshold, attributeThreshold or ceprule "
+        self.rules_number  = int(rule_number)
+        self.rule_type     = ac_card_type
+        sensor_card_type   = EMPTY
+        attribute_name     = u'temperature'
+        attribute_to_refer = u'temp_refer'
+        identity_id        = u'room1'
+        identity_type      = u'room'
+        epl_query          = u'sadada sadsadas asdasd asdasd'
+        for line in step.hashes:
+            # sensor cards
+            sensor_card_type = line[SENSOR_CARD_TYPE]
+            if sensor_card_type == SC_NOT_UPDATED:
+                self.create_sensor_card (sensorCardType=SC_NOT_UPDATED, id="card_1", interval="50", measureName=attribute_name, parameterValue="250", connectedTo="card_2")
+            elif sensor_card_type == SC_REGEXP:
+                self.create_sensor_card (sensorCardType=SC_REGEXP, id="card_2", parameterValue=identity_id, connectedTo="card_3")
+            elif sensor_card_type == SC_TYPE:
+                self.create_sensor_card (sensorCardType=SC_TYPE, id="card_3", parameterValue=identity_type, operator=OP_EQUAL_TO, connectedTo="card_4")
+            elif sensor_card_type == SC_VALUE_THRESHOLD:
+                self.create_sensor_card (sensorCardType=SC_VALUE_THRESHOLD, id="card_4",  measureName=attribute_name, operator=OP_GREATER_THAN, dataType=DATA_TYPE_QUANTITY, parameterValue="1",  connectedTo="card_5")
+            elif sensor_card_type == SC_ATTR_THRESHOLD:
+                self.create_sensor_card (sensorCardType=SC_ATTR_THRESHOLD, id="card_5",  measureName=attribute_name, operator=OP_GREATER_THAN, dataType=DATA_TYPE_QUANTITY, parameterValue=attribute_to_refer,  connectedTo="card_6")
+            elif sensor_card_type == SC_CEP_EPL:
+                self.create_sensor_card (sensorCardType=SC_CEP_EPL, id="card_6",  parameterValue=epl_query,  connectedTo="card_7")
+            # action card
+            if ac_card_type == AC_EMAIL_TYPE:
+                response = "response in email body ${measure.value}"
+                parameters = "sdfsdfsd@dfdsfds.com"
+            elif ac_card_type == AC_SMS_TYPE:
+                response = "response in sms body ${measure.value}"
+                parameters = "1234567890"
+            elif ac_card_type == AC_UPDATE_TYPE:
+                response = "DANGER"
+                parameters = "ALARM"
+            self.create_action_card (id="card_7", actionCardType=ac_card_type, connectedTo="card_8", response=response, parameters=parameters)
+        # multiples rules
+        for i in range(int(self.rules_number)):
+            self.create_rule_card(prefix+"_"+str(i)+"_"+self.rule_type, "1")
+
+    def get_all_visual_rules(self):
+        """
+        get all visual rules stored
+        """
+        self.resp = http_utils.request(http_utils.GET, url=self.__create_url(GET_CARD_RULE), headers=self.__create_headers(VISUAL_RULES))
+
+    def get_one_visual_rules(self, name=EMPTY):
+        """
+        get only visual rule
+        :param name:
+        """
+        if name != EMPTY: self.rule_name = name
+        self.resp = http_utils.request(http_utils.GET, url=self.__create_url(DELETE_CARD_RULE, self.rule_name), headers=self.__create_headers())
+
+    def rule_name_to_try_to_delete_but_it_does_not_exists (self, name):
+        """
+        rule name to try to delete but it does not exists
+        :param name: this name does not exists
+        """
+        self.rule_name = name
+
+    #---------------------- DELETE ----------------------------------------------------------------
+    def delete_one_rule(self, method, name=EMPTY):
+        """
+        Delete an rule (epl or visual rule)
+        :param method: method used. Values allowed (EPL or visual_rules)
+        :param name: rule name
+        """
+        if name != EMPTY: self.rule_name = name
+        if method == EPL:
+            url=self.__create_url(DELETE_EPL_RULE, self.rule_name)
+        if method == VISUAL_RULES:
+            if name == EMPTY: self.rule_name = RULE_CARD_DICT[NAME]
+            url=self.__create_url(DELETE_CARD_RULE, self.rule_name)
+        self.resp = http_utils.request(http_utils.DELETE, url=url, headers=self.__create_headers())
+
+
+    def delete_rules_group(self, method, prefix):
+        """
+        delete all rules created with a prefix and a rule type in a method (EPL or visual_rules)
+        """
+        for i in range (0, self.rules_number):
+            self.delete_one_rule(method, prefix+"_"+str(i)+"_"+self.rule_type)
 
     #---------------------- VALIDATIONS -----------------------------------------------------------
     def validate_HTTP_code(self, expected_status_code):
@@ -591,8 +670,6 @@ class Rules:
         assert resp,\
             "Error - name %s does not exist:  \n %s." % (self.prefix_name+"_"+str(i)+"_"+self.rule_type, str(self.resp.text))
 
-     # def init_mongo_driver (self, host, port, database, collection):
-
     def validate_card_rule_in_mongo(self, driver):
         """
         Validate that card rule is created successfully in db
@@ -604,4 +681,21 @@ class Rules:
             temp_name = doc[NAME]
         assert temp_name == RULE_CARD_DICT[NAME], "The rule %s has not been created..." % (RULE_CARD_DICT[NAME])
 
+    def card_rule_does_not_exists_in_mongo(self, driver):
+        """
+        Validate that card rule does not exists in db
+        """
+        collection_dict = driver.current_collection(CEP_MONGO_RULES_COLLECTION)
+        cursor =  driver.find_data(collection_dict, {NAME: RULE_CARD_DICT[NAME]})
+        for doc in cursor:
+            if doc[NAME] == RULE_CARD_DICT[NAME]:
+                return True
+        return False
 
+    def validate_that_all_visual_rules_are_returned(self):
+        """
+        validate that all visual rules are returned
+        """
+        dict_temp = general_utils.convert_str_to_dict(self.resp.text, general_utils.JSON)
+        if dict_temp.has_key (COUNT):
+            assert str(dict_temp [COUNT]) == str(self.rules_number), "ERROR - all visual rules have not been returned.\n    sent: %s\n    stored:%s" % (str(self.rules_number), str(dict_temp [COUNT]))

@@ -108,7 +108,8 @@ config.smtp = {
 config.sms = {
     URL : 'http://locahost/smsoutbound',
     API_KEY : '',
-    API_SECRET: ''
+    API_SECRET: '',
+    from: 'tel:22012;phone-context=+34'
 };
 
 /**
