@@ -55,7 +55,7 @@ class Mongo:
             client = pymongo.MongoClient(mongo_uri)
             db = client.get_default_database()
         except Exception, e:
-             print " ERROR - Connecting to MongoDB...\n %s " % (str(e))
+             assert False, " ERROR - Connecting to MongoDB...\n %s " % (str(e))
 
     def current_collection(self, name):
         """
@@ -67,7 +67,7 @@ class Mongo:
         try:
             return db[name]
         except Exception, e:
-            print " ERROR - Accessing to collection %s in MongoDB...\n %s" % (name, str(e))
+            assert False, " ERROR - Accessing to collection %s in MongoDB...\n %s" % (name, str(e))
 
     def insert_data (self,collection, data):
         """
@@ -76,7 +76,7 @@ class Mongo:
         try:
             collection.insert(data)
         except Exception, e:
-            print " ERROR - Inserting data into %s in MongoDB...\n %s" % (str(collection), str(e))
+            assert False, " ERROR - Inserting data into %s in MongoDB...\n %s" % (str(collection), str(e))
 
     def update_data (self,collection, query, data):
         """
@@ -85,7 +85,7 @@ class Mongo:
         try:
             collection.update(query, data)
         except Exception, e:
-            print " ERROR - Updating data in a collection %s in MongoDB...\n %s" % (collection, str(e))
+            assert False, " ERROR - Updating data in a collection %s in MongoDB...\n %s" % (collection, str(e))
 
     def find_data (self, collection, query):
         """
@@ -95,7 +95,7 @@ class Mongo:
         try:
             return collection.find(query)
         except Exception, e:
-            print " ERROR - Searching data from a collection %s in MongoDB...\n %s" % (collection, str(e))
+            assert False, " ERROR - Searching data from a collection %s in MongoDB...\n %s" % (collection, str(e))
 
     def drop_collection (self, collection):
         """
@@ -107,7 +107,7 @@ class Mongo:
         try:
             db.drop_collection(collection)
         except Exception, e:
-            print " ERROR - Deleting a collection %s in MongoDB...\n %s" % (collection, str(e))
+            assert False, " ERROR - Deleting a collection %s in MongoDB...\n %s" % (collection, str(e))
 
     def disconnect (self):
         """
@@ -117,5 +117,5 @@ class Mongo:
         try:
             client.close()
         except Exception, e:
-             print " ERROR - Disconnecting to MongoDB...\n %s " % (str(e))
+             assert False, " ERROR - Disconnecting to MongoDB...\n %s " % (str(e))
 

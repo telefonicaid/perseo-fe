@@ -51,8 +51,8 @@ Feature: get rules in Perseo manager from portal
   Examples:
     | rule_name     | attribute_name | operator     | data_type | value | action           | response                                              | parameters      |
     | test_00000001 | temperature    | GREATER_THAN | Quantity  | 34    | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
-    | test_00000002 | temperature    | MINOR_THAN   | Quantity  | 34.56 | SendSmsMibAction | body to response                                      | 123456789       |
-    | test_00000003 | temperature    | EQUAL_TO     | Quantity  | -34   | updateAttribute  | DANGER                                                | ALARM           |
+  #  | test_00000002 | temperature    | MINOR_THAN   | Quantity  | 34.56 | SendSmsMibAction | body to response                                      | 123456789       |
+  #  | test_00000003 | temperature    | EQUAL_TO     | Quantity  | -34   | updateAttribute  | DANGER                                                | ALARM           |
 
   @attribute_threshold_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only attribute threshold card and actions cards
@@ -93,7 +93,8 @@ Feature: get rules in Perseo manager from portal
     Given Perseo manager is installed correctly to "get"
     And configured with tenant "my_tenant" and service "/my_service"
     And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
-    And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"    When append a new rule name "<rule_name>", activate "1"
+    And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
+    When append a new rule name "<rule_name>", activate "1"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
     Then I receive an "OK" http code
@@ -156,6 +157,7 @@ Feature: get rules in Perseo manager from portal
   Examples:
     | rules_number | prefix    |
     | 1            | vrules_1  |
+    | 5           | vrules_5  |
     | 10           | vrules_10 |
     | 50           | vrules_50  |
     | 100          | vrules_100 |

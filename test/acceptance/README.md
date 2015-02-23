@@ -90,6 +90,12 @@ Some examples:
     * cep_retries_received_in_mock: number of retries to get counter values
     * cep_delay_to_retry: time to delay in each retry
 
+- mongoDB:
+    * mongo_host: mongo host used by Perseo
+    * mongo_port: mongo port used by Perseo
+    * mongo_database: mongo database used by Perseo
+    * mongo_collection: mongo collection to store the rules
+
 
 ### tags
 

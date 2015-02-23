@@ -107,7 +107,7 @@ def append_a_new_rule_name_activate (step, rule_name, active):
     :param rule_name: rule name
     :param active: if is active or not (0 | 1)
     """
-    world.card_rule = world.cep_requests.new_visual_rule (rule_name, active)
+    world.cep_requests.new_visual_rule (rule_name, active)
 
 @step (u'create visual rules "([^"]*)" with prefix "([^"]*)", sensor cards and an action card "([^"]*)"')
 def create_visual_rules_with_sensor_cards_and_an_action_card (step, rule_number, prefix, action_card_type):
@@ -146,6 +146,15 @@ def rule_name_to_try_to_delete_but_it_does_not_exists (step, name):
     :param name: this name does not exists
     """
     world.rules.rule_name_to_try_to_delete_but_it_does_not_exists(name)
+
+@step (u'update a visual rule "([^"]*)"')
+def update_a_visual_rule (step, rule_name):
+    """
+    update a visual rule existent
+    :param step:
+    :param rule_name: rule name existent
+    """
+    world.rules.update_a_visual_rule(rule_name)
 
 #----------------------------------------------------------------------------------------
 @step(u'I receive an "([^"]*)" http code')
