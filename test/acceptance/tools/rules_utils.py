@@ -310,7 +310,7 @@ class Rules:
         elif rule_type == EMAIL_EPL_TYPE:  parameters    = "xxxxxx@fffff.com"
         elif rule_type == UPDATE_EPL_TYPE:  parameters    = "danger"
         for i in range (0, self.rules_number):
-            self.rule_name = self.prefix_name+"_"+str(i)+"_"+self.rule_type
+            self.rule_name = "%s_%s_%s" % (self.prefix_name, str(i), self.rule_type)
             epl = self.generate_EPL (self.rule_name, self.identity_type, self.attributes_number, self.epl_attribute_data_type, self.epl_operation, self.epl_value)
             self.create_epl_rule (self.rule_type, template_info, parameters, epl)
 
@@ -573,7 +573,7 @@ class Rules:
         temp_dict = {}
         for i in range(int(self.rules_number)):
             temp_dict = RULE_CARD_DICT
-            self.create_rule_card(prefix+"_"+str(i)+"_"+self.rule_type, "1")   # the dictionary is initialized when finished to create a rule
+            self.create_rule_card("%s_%s_%s" % (prefix, str(i), self.rule_type), "1")   # the dictionary is initialized when finished to create a rule
             RULE_CARD_DICT = temp_dict                                         # restore the same dictionary to repeat multiples rules, only change the name
 
 
@@ -623,7 +623,7 @@ class Rules:
         delete all rules created with a prefix and a rule type in a method (EPL or visual_rules)
         """
         for i in range (0, self.rules_number):
-            self.delete_one_rule(method, prefix+"_"+str(i)+"_"+self.rule_type)
+            self.delete_one_rule(method, "%s_%s_%s" % (prefix, str(i), self.rule_type))
 
     #---------------------- VALIDATIONS -----------------------------------------------------------
     def validate_HTTP_code(self, expected_status_code):
@@ -650,7 +650,6 @@ class Rules:
         """
         dict_temp = general_utils.convert_str_to_dict(self.resp.text,general_utils.JSON)
          #1 exist rule before delete  - 0 rule does not exist before delete
-
         assert  dict_temp[DATA][0] == exist,\
             "ERROR - the rule %s does not exist..." % (self.rule_name)
 
@@ -676,11 +675,11 @@ class Rules:
         for i in range (0, self.rules_number):       # review each rule created
             resp = False
             for j in range(0, len(dict_temp[DATA])):  # against each element in DB, returned in the response
-                if dict_temp[DATA][j][NAME] == self.prefix_name+"_"+str(i)+"_"+self.rule_type:
+                if dict_temp[DATA][j][NAME] == "%s_%s_%s" % (self.prefix_name, str(i), self.rule_type):
                     resp = True
                     break
         assert resp,\
-            "Error - name %s does not exist:  \n %s." % (self.prefix_name+"_"+str(i)+"_"+self.rule_type, str(self.resp.text))
+            "Error - name %s_%s_%s does not exist:  \n %s." % (self.prefix_name, str(i), self.rule_type, str(self.resp.text))
 
     def validate_card_rule_in_mongo(self, driver):
         """
