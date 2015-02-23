@@ -543,13 +543,6 @@ class Rules:
         identity_type      = u'room'
         epl_query          = u'sadada sadsadas asdasd asdasd'
 
-
-        """
-      | sensorCardType |
-      | valueThreshold |
-      | regexp         |
-      | type           |
-        """
         for line in step.hashes:
             # sensor cards
             sensor_card_type = line[SENSOR_CARD_TYPE]
