@@ -51,8 +51,8 @@ Feature: get rules in Perseo manager from portal
   Examples:
     | rule_name     | attribute_name | operator     | data_type | value | action           | response                                              | parameters      |
     | test_00000001 | temperature    | GREATER_THAN | Quantity  | 34    | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
-  #  | test_00000002 | temperature    | MINOR_THAN   | Quantity  | 34.56 | SendSmsMibAction | body to response                                      | 123456789       |
-  #  | test_00000003 | temperature    | EQUAL_TO     | Quantity  | -34   | updateAttribute  | DANGER                                                | ALARM           |
+    | test_00000002 | temperature    | MINOR_THAN   | Quantity  | 34.56 | SendSmsMibAction | body to response                                      | 123456789       |
+    | test_00000003 | temperature    | EQUAL_TO     | Quantity  | -34   | updateAttribute  | DANGER                                                | ALARM           |
 
   @attribute_threshold_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only attribute threshold card and actions cards
