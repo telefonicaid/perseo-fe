@@ -60,7 +60,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     And Validate that rule name is created successfully in db
     And delete a rule created
 
-  @value_threshold_card_without_AC
+  @value_threshold_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only value threshold card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
@@ -91,8 +91,8 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_300009 | sfdf_324455    | DIFFERENT_TO          | Text      | danger | updateAttribute  | DANGER                                                | ALARM           |
     | test_300010 | sfdf_32&%85    | DIFFERENT_TO          | Text      | danger | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
 
-  @attribute_threshold_card_without_AC
-  Scenario: append a new rule in Perseo manager using card from portal using only attribute threshold card without action card
+  @attribute_threshold_card_without_action_card
+  Scenario: try to append a new rule in Perseo manager using card from portal using only attribute threshold card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
     And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
@@ -122,8 +122,8 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_500009 | sfdf_324455    | DIFFERENT_TO          | Text      | temp_refer | updateAttribute  | DANGER                                                | ALARM           |
     | test_500010 | sfdf_32&%85    | DIFFERENT_TO          | Text      | temp_refer | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
 
-  @type_card_without_AC
-  Scenario: append a new rule in Perseo manager using card from portal using only type card without action card
+  @type_card_without_action_card
+  Scenario: try to append a new rule in Perseo manager using card from portal using only type card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
     And create a sensor card of type type, with "card_3", identity type "temperature",operator "EQUAL_TO" and connect to "card_4"
@@ -146,8 +146,8 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_700002 | temperature   | DIFFERENT_TO | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
     | test_700003 | temperature   | DIFFERENT_TO | updateAttribute  | DANGER                                                | ALARM           |
 
-  @id_card_without_AC
-  Scenario: append a new rule in Perseo manager using card from portal using only id card without action card
+  @id_card_without_action_card
+  Scenario: try to append a new rule in Perseo manager using card from portal using only id card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
     And create a sensor card of id type, with id "card_2", identity id "room1" and connect to "card_3"
@@ -171,8 +171,8 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_900003 | room_*      | updateAttribute  | DANGER                                                | ALARM           |
     | test_900004 | room.*      | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
 
-  @not_updated_card_without_card
-  Scenario: append a new rule in Perseo manager using card from portal using only not updated card without action card
+  @not_updated_card_without_action_card
+  Scenario: try to append a new rule in Perseo manager using card from portal using only not updated card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
     And create a sensor card of notUpdated type with id "card_1", verify interval "40", attribute name "temperature", max time without update "30" and connect to "card_2"
@@ -196,7 +196,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_110003 | 34       | temper_23      | 0        | updateAttribute  | DANGER                                                | ALARM           |
 
   @not_updated_card_interval_not_allowed @BUG_53 @skip
-  Scenario Outline: append a new rule in Perseo manager using card from portal using only not updated card and action card but with interval not allowed
+  Scenario Outline: try to append a new rule in Perseo manager using card from portal using only not updated card and action card but with interval not allowed
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
     And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
@@ -205,11 +205,11 @@ Feature: Append a new rule in Perseo manager using cards from portal
     Then I receive an "Bad Request" http code
   Examples:
     | rule_name   | interval | attribute_name | max_time | action           | response                                              | parameters      |
-    | test_210001 | 60       | temperature    | 10       | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
-    | test_210002 | 10       | temperature    | 1        | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
+    | test_210001 | -60      | temperature    | 10       | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
+    | test_210002 | 0        | temperature    | 1        | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
 
-  @epl_card_without_AC
-  Scenario: append a new rule in Perseo manager using card from portal using only epl card without action card
+  @epl_card_without_action_card
+  Scenario: try to append a new rule in Perseo manager using card from portal using only epl card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
     And create a sensor card of epl type with id "card_6", epl query "were ewrwer werwe rwrwer  wer" and connect to "card_7"
@@ -232,8 +232,8 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_410002 | were ewrwer werwe rwrwer  wer | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
     | test_410003 | were ewrwer werwe rwrwer  wer | updateAttribute  | DANGER                                                | ALARM           |
 
-  @elapsed_card_without_AC
-  Scenario: append a new rule in Perseo manager using card from portal using only elapsed card without action card
+  @elapsed_card_without_action_card
+  Scenario: try to append a new rule in Perseo manager using card from portal using only elapsed card without action card
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
     And create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"

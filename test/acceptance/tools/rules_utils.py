@@ -40,10 +40,11 @@ RULES_EPL_PATH       = u'rules'
 RULE_CARD_PATH       = u'm2m/vrules'
 APPEND_EPL_RULE      = u'append_epl_rule'
 APPEND_CARD_RULE     = u'append_card_rule'
-DELETE_EPL_RULE      = u'delete_epl_rule'
-DELETE_CARD_RULE     = u'delete_card_rule'
+DELETE_EPL_RULE      = u'EPL'
+DELETE_CARD_RULE     = u'visual_rules'
 GET_EPL_RULE         = u'get_epl_rule'
 GET_CARD_RULE        = u'get_card_rule'
+UPDATE_CARD_RULE     = u'update_card_rule'
 
 
 # Headers constants
@@ -181,7 +182,7 @@ class Rules:
             value = "%s/%s/%s" % (self.cep_url, RULES_EPL_PATH, name)
         if operation == APPEND_CARD_RULE:
             value = "%s/%s" % (self.cep_url,RULE_CARD_PATH)
-        if operation == DELETE_CARD_RULE or operation == GET_CARD_RULE:
+        if operation == DELETE_CARD_RULE or operation == GET_CARD_RULE or operation == UPDATE_CARD_RULE:
             value = "%s/%s/%s" % (self.cep_url,RULE_CARD_PATH, name)
         return value
 
@@ -309,7 +310,7 @@ class Rules:
         elif rule_type == EMAIL_EPL_TYPE:  parameters    = "xxxxxx@fffff.com"
         elif rule_type == UPDATE_EPL_TYPE:  parameters    = "danger"
         for i in range (0, self.rules_number):
-            self.rule_name = self.prefix_name+"_"+str(i)+"_"+self.rule_type
+            self.rule_name = "%s_%s_%s" % (self.prefix_name, str(i), self.rule_type)
             epl = self.generate_EPL (self.rule_name, self.identity_type, self.attributes_number, self.epl_attribute_data_type, self.epl_operation, self.epl_value)
             self.create_epl_rule (self.rule_type, template_info, parameters, epl)
 
@@ -508,7 +509,7 @@ class Rules:
         """
         create a new card rule
         :param rule_name: rule name
-        :param active: if is active or not (0 | 1)
+        :param active: if is active ("1") or not ("0")
         :return: card rule dict
         """
         RULE_CARD_DICT[NAME]   = rule_name
@@ -516,7 +517,7 @@ class Rules:
         RULE_CARD_DICT[ACTIVE] =  int(active)
         payload = general_utils.convert_dict_to_str(RULE_CARD_DICT, general_utils.JSON)
         self.resp = http_utils.request(http_utils.POST, url=self.__create_url(APPEND_CARD_RULE), headers=self.__create_headers(VISUAL_RULES), data=payload)
-        return RULE_CARD_DICT
+        self.init_rule_card_dict()
 
     def create_several_visual_rules(self, step, rule_number, prefix, ac_card_type):
         """
@@ -528,9 +529,11 @@ class Rules:
         :param rule_number: number of visual rules created
         :param action_card_type: action card used in all visual rules
         """
+
         assert len(step.hashes) > 0, "ERROR - it is necessary to append a sensor card." \
                                      "\n   ex:\n      | sensorCardType |\n      | regexp           |" \
                                      "\n     values allowed: notUpdated, regexp, type, valueThreshold, attributeThreshold or ceprule "
+        global RULE_CARD_DICT
         self.rules_number  = int(rule_number)
         self.rule_type     = ac_card_type
         sensor_card_type   = EMPTY
@@ -539,6 +542,7 @@ class Rules:
         identity_id        = u'room1'
         identity_type      = u'room'
         epl_query          = u'sadada sadsadas asdasd asdasd'
+
         for line in step.hashes:
             # sensor cards
             sensor_card_type = line[SENSOR_CARD_TYPE]
@@ -566,8 +570,12 @@ class Rules:
                 parameters = "ALARM"
             self.create_action_card (id="card_7", actionCardType=ac_card_type, connectedTo="card_8", response=response, parameters=parameters)
         # multiples rules
+        temp_dict = {}
         for i in range(int(self.rules_number)):
-            self.create_rule_card(prefix+"_"+str(i)+"_"+self.rule_type, "1")
+            temp_dict = RULE_CARD_DICT
+            self.create_rule_card("%s_%s_%s" % (prefix, str(i), self.rule_type), "1")   # the dictionary is initialized when finished to create a rule
+            RULE_CARD_DICT = temp_dict                                         # restore the same dictionary to repeat multiples rules, only change the name
+
 
     def get_all_visual_rules(self):
         """
@@ -590,6 +598,16 @@ class Rules:
         """
         self.rule_name = name
 
+    def update_a_visual_rule(self, rule_name):
+        """
+        update a visual rule existent
+        """
+        RULE_CARD_DICT[NAME]   = rule_name
+        self.rule_name = RULE_CARD_DICT[NAME]
+        payload = general_utils.convert_dict_to_str(RULE_CARD_DICT, general_utils.JSON)
+        self.resp = http_utils.request(http_utils.PUT, url=self.__create_url(UPDATE_CARD_RULE, self.rule_name), headers=self.__create_headers(VISUAL_RULES), data=payload)
+        return RULE_CARD_DICT
+
     #---------------------- DELETE ----------------------------------------------------------------
     def delete_one_rule(self, method, name=EMPTY):
         """
@@ -598,20 +616,14 @@ class Rules:
         :param name: rule name
         """
         if name != EMPTY: self.rule_name = name
-        if method == EPL:
-            url=self.__create_url(DELETE_EPL_RULE, self.rule_name)
-        if method == VISUAL_RULES:
-            if name == EMPTY: self.rule_name = RULE_CARD_DICT[NAME]
-            url=self.__create_url(DELETE_CARD_RULE, self.rule_name)
-        self.resp = http_utils.request(http_utils.DELETE, url=url, headers=self.__create_headers())
-
+        self.resp = http_utils.request(http_utils.DELETE, url=self.__create_url(method, self.rule_name), headers=self.__create_headers())
 
     def delete_rules_group(self, method, prefix):
         """
         delete all rules created with a prefix and a rule type in a method (EPL or visual_rules)
         """
         for i in range (0, self.rules_number):
-            self.delete_one_rule(method, prefix+"_"+str(i)+"_"+self.rule_type)
+            self.delete_one_rule(method, "%s_%s_%s" % (prefix, str(i), self.rule_type))
 
     #---------------------- VALIDATIONS -----------------------------------------------------------
     def validate_HTTP_code(self, expected_status_code):
@@ -638,7 +650,6 @@ class Rules:
         """
         dict_temp = general_utils.convert_str_to_dict(self.resp.text,general_utils.JSON)
          #1 exist rule before delete  - 0 rule does not exist before delete
-
         assert  dict_temp[DATA][0] == exist,\
             "ERROR - the rule %s does not exist..." % (self.rule_name)
 
@@ -664,11 +675,11 @@ class Rules:
         for i in range (0, self.rules_number):       # review each rule created
             resp = False
             for j in range(0, len(dict_temp[DATA])):  # against each element in DB, returned in the response
-                if dict_temp[DATA][j][NAME] == self.prefix_name+"_"+str(i)+"_"+self.rule_type:
+                if dict_temp[DATA][j][NAME] == "%s_%s_%s" % (self.prefix_name, str(i), self.rule_type):
                     resp = True
                     break
         assert resp,\
-            "Error - name %s does not exist:  \n %s." % (self.prefix_name+"_"+str(i)+"_"+self.rule_type, str(self.resp.text))
+            "Error - name %s_%s_%s does not exist:  \n %s." % (self.prefix_name, str(i), self.rule_type, str(self.resp.text))
 
     def validate_card_rule_in_mongo(self, driver):
         """

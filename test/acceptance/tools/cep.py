@@ -237,7 +237,6 @@ class CEP:
         self.card_active = active
         world.rules.create_rule_card(self.rule_name, self.card_active)
 
-
     #   --------------  Validations  -----------------------------
 
     def validate_that_rule_was_triggered(self, method):
