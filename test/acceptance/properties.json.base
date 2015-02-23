@@ -8,6 +8,7 @@
         "cep_send_sms_url": "<protocol>://<host>:<port>",
         "cep_send_email_url": "<protocol>://<host>:<port>",
         "cep_send_update_url": "<protocol>://<host>:<port>",
+        "cep_rule_post_url": "<protocol>://<host>:<port>",
         "cep_version": "X.Y.z",
         "cep_rule_name_default": "name",
         "cep_tenant_default": "unknownT",
@@ -19,6 +20,15 @@
         "cep_epl_attribute_data_type": "float",
         "cep_epl_operation": ">",
         "cep_epl_value":"1.5",
-        "cep_card_active":8
+        "cep_card_active":8,
+        "cep_retries_received_in_mock": 15,
+        "cep_delay_to_retry": 15
+    },
+
+    "MongoDB": {
+        "mongo_host": "hostname",
+        "mongo_port": "27017",
+        "mongo_database": "test",
+        "mongo_collection": "rules"
     }
 }

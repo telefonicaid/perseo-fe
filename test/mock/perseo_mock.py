@@ -1,27 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+# Copyright 2014 Telefonica Investigación y Desarrollo, S.A.U
 #
-# This file is part of perseo-fe
+# This file is part of perseo
 #
-# perseo-fe is free software: you can redistribute it and/or
+# perseo is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the License,
 # or (at your option) any later version.
 #
-# perseo-fe is distributed in the hope that it will be useful,
+# perseo is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public
-# License along with perseo-fe.
-# If not, see http://www.gnu.org/licenses/.
+# License along with perseo.
+# If not, seehttp://www.gnu.org/licenses/.
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid dot es
+#   Ivan Arias (ivan.ariasleon@telefonica.com)
 #
 import BaseHTTPServer
 import smtpd
@@ -56,14 +56,17 @@ class FakeSMTPServer(smtpd.SMTPServer):
         print mock_config.SMTP_MSG_ADDRESSED_TO, body_email[mock_config.SMTP_RCPTTOS]
         print mock_config.SMTP_MSG_LENGTH, len(body_email[mock_config.SMTP_DATA])
         if mock_config.MORE_INFO:   # -i option
+            print mock_config.SMTP_COUNTER, str(body_email[mock_config.SMTP_COUNTER])
             print mock_config.SMTP_MSG_ADDRESSED_FROM, body_email[mock_config.SMTP_MAILFROM]
             print mock_config.SMTP_DATA_INFO, str(body_email[mock_config.SMTP_DATA])
-            print mock_config.SMTP_COUNTER, str(body_email[mock_config.SMTP_COUNTER])
+
 
 body_sms    = mock_config.INITIAL_SMS_MSG
 body_update = mock_config.INITIAL_UPDATE_MSG
+body_post   = mock_config.INITIAL_POST_MSG
 sms_number    = 0
 update_number = 0
+post_number = 0
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """A http server"""
@@ -71,7 +74,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
        """
        Respond to a POST request.
        """
-       global body_sms, body_update, sms_number, update_number
+       global body_sms, body_update, body_post, sms_number, update_number, post_number
        try:
            #POST response - socket hang up
            s.send_response(mock_config.OK)
@@ -83,75 +86,85 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
            length = int(s.headers[mock_config.CONTENT_LENGTH])
            body = s.rfile.read(length)
            print mock_config.ONE_LINE
-           if s.path.find(mock_config.SEND_SMS) >= 0:
+           if s.path.find(mock_config.SEND_SMS) >= 0:   # /send/sms
                body_sms = str(body)
                sms_number = sms_number+1
                print body_sms
-           elif s.path.find(mock_config.SEND_UPDATE) >= 0:
+               if mock_config.MORE_INFO:   # -i option
+                  print "sms counter: " + str(sms_number)
+           elif s.path.find(mock_config.SEND_UPDATE) >= 0:  # /send/update
                body_update = str(body)
                update_number = update_number+1
                print body_update
+               if mock_config.MORE_INFO:   # -i option
+                   print "update counter: " + str(update_number)
+           elif s.path.find(mock_config.SEND_POST) >= 0:  # /send/post
+               body_post = str(body)
+               post_number = post_number+1
+               print body_post
+               if mock_config.MORE_INFO:   # -i option
+                   print "post counter: " + str(post_number)
        except Exception, e:
-           print mock_config.WARN + mock_config.CONTENT_LENGTH_WARN_MSG
+           print "WARN - "+ str(e)
+           #print mock_config.WARN + mock_config.CONTENT_LENGTH_WARN_MSG
 
     def do_GET(s):
         """
         Respond to a GET request.
         """
-        global body_sms, body_update, sms_number, update_number
+        global body_sms, body_update, sms_number, update_number, body_post, post_number
+        body_temp = u''
+        #gets
         s.send_response(mock_config.OK)
         s.send_header(mock_config.CONTENT_TYPE, mock_config.APPLICATION_JSON)
         if s.path.find(mock_config.GET_EMAIL) >= 0:     # /get/email
-            bodyDict = json.dumps(dict(body_email))
-            s.send_header(mock_config.CONTENT_LENGTH, len (str(bodyDict)))
-            s.end_headers()
-            s.wfile.write(bodyDict)
+            body_temp = json.dumps(dict(body_email))
         elif s.path.find(mock_config.GET_SMS) >= 0:      # /get/sms
-            s.send_header(mock_config.CONTENT_LENGTH, len (str(body_sms)))
-            s.end_headers()
-            s.wfile.write(str(body_sms))
+            body_temp = body_sms
         elif  s.path.find(mock_config.GET_UPDATE) >= 0:   # /get/update
-            s.send_header(mock_config.CONTENT_LENGTH, len (str(body_update)))
-            s.end_headers()
-            s.wfile.write(str(body_update))
+            body_temp = body_update
+        elif  s.path.find(mock_config.GET_POST) >= 0:   # /get/post
+            body_temp = body_post
+
+        #counters
         elif  s.path.find(mock_config.COUNTER_EMAIL) >= 0:   # /counter/email
             body_temp = "email counter: " + str(body_email[mock_config.SMTP_COUNTER])
-            s.send_header(mock_config.CONTENT_LENGTH, len (str(body_temp)))
-            s.end_headers()
-            s.wfile.write(str(body_temp))
         elif  s.path.find(mock_config.COUNTER_SMS) >= 0:   # /counter/sms
             body_temp = "sms counter: " + str(sms_number)
-            s.send_header(mock_config.CONTENT_LENGTH, len (str(body_temp)))
-            s.end_headers()
-            s.wfile.write(str(body_temp))
-        elif s.path.find(mock_config.COUNTER_UPDATE) >= 0:   # /counter/updates
+        elif s.path.find(mock_config.COUNTER_UPDATE) >= 0:   # /counter/update
             body_temp = "update counter: " + str(update_number)
-            s.send_header(mock_config.CONTENT_LENGTH, len (str(body_temp)))
-            s.end_headers()
-            s.wfile.write(str(body_temp))
+        elif s.path.find(mock_config.COUNTER_POST) >= 0:   # /counter/post
+            body_temp = "post counter: " + str(post_number)
+
+        s.send_header(mock_config.CONTENT_LENGTH, len (str(body_temp)))
+        s.end_headers()
+        s.wfile.write(str(body_temp))
 
     def do_PUT (s):
         """
         Respond to a PUT request.
         """
-        text=" counter is reset..."
-        global sms_number, update_number
+        text = " counter is reset..."
+        sub_str_path = s.path[len ("/reset/"):]
+        global sms_number, update_number, body_sms, body_update, post_number, body_post
         s.send_response(mock_config.OK)
+
         if s.path.find(mock_config.RESET_EMAIL) >= 0:      #/reset/email
             body_email[mock_config.SMTP_COUNTER] = 0
-            s.send_header(mock_config.CONTENT_LENGTH, len(text)+5)
-            s.end_headers()
-            s.wfile.write("Email"+text)
+            body_email[mock_config.SMTP_DATA] = mock_config.INITIAL_EMAIL_MSG
         elif s.path.find(mock_config.RESET_SMS) >= 0:      # /reset/sms
             sms_number = 0
-            s.send_header(mock_config.CONTENT_LENGTH, len(text)+3)
-            s.end_headers()
-            s.wfile.write("SMS"+text)
-        elif s.path.find(mock_config.RESET_UPDATE) >= 0:   # /reset/updates
+            body_sms = mock_config.INITIAL_SMS_MSG
+        elif s.path.find(mock_config.RESET_UPDATE) >= 0:   # /reset/update
             update_number = 0
-            s.send_header(mock_config.CONTENT_LENGTH, len(text)+6)
-            s.end_headers()
-            s.wfile.write("Update"+text)
+            body_update = mock_config.INITIAL_UPDATE_MSG
+        elif s.path.find(mock_config.RESET_POST) >= 0:   # /reset/post
+            post_number = 0
+            body_post = mock_config.INITIAL_POST_MSG
+
+        s.send_header(mock_config.CONTENT_LENGTH, len(text)+len(sub_str_path))
+        s.end_headers()
+        s.wfile.write(sub_str_path+text)
 
 
 if __name__ == "__main__":

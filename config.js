@@ -60,7 +60,7 @@ config.slaveDelay = 500;
  * DB Configuration.
  */
 config.mongo = {
-    url : 'mongodb://localhost:27017/test'
+    url : 'mongodb://localhost:27017/cep'
 };
 
 /**
@@ -106,7 +106,7 @@ config.smtp = {
  * SMS endpoint options
  */
 config.sms = {
-    URL : '',
+    URL : 'http://locahost/smsoutbound',
     API_KEY : '',
     API_SECRET: '',
     from: 'tel:22012;phone-context=+34'

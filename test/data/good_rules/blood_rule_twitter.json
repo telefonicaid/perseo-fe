@@ -1,0 +1,15 @@
+{
+    "name": "blood_twitter",
+    "text": "select *,\"blood_twitter\" as ruleName, ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+    "action":{
+        "type":"twitter",
+        "template":"Meter ${Meter} has pression ${Pression}.",
+        "parameters":{
+            "consumer_key": "xx",
+            "consumer_secret": "xx",
+            "access_token_key": "xx",
+            "access_token_secret": "xx"
+        }
+    }
+}
+

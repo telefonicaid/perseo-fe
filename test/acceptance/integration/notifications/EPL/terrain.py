@@ -22,6 +22,9 @@
 # please contact with:
 #   iot_support at tid.es
 #
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
+
+
 
 from lettuce import world, after, before
 import time
@@ -49,6 +52,7 @@ def before_each_scenario(scenario):
                              send_sms_url = world.config['CEP']['cep_send_sms_url'],
                              send_email_url = world.config['CEP']['cep_send_email_url'],
                              send_update_url = world.config['CEP']['cep_send_update_url'],
+                             rule_post_url = world.config['CEP']['cep_rule_post_url'],
                              version = world.config['CEP']['cep_version'],
                              rule_name_default = world.config['CEP']['cep_rule_name_default'],
                              tenant_default = world.config['CEP']['cep_tenant_default'],
@@ -60,7 +64,10 @@ def before_each_scenario(scenario):
                              epl_attribute_data_type = world.config['CEP']['cep_epl_attribute_data_type'],
                              epl_operation = world.config['CEP']['cep_epl_operation'],
                              epl_value = world.config['CEP']['cep_epl_value'],
-                             card_active = world.config['CEP']['cep_card_active']
+                             card_active = world.config['CEP']['cep_card_active'],
+                             retries_number = world.config['CEP']['cep_retries_received_in_mock'],
+                             retry_delay = world.config['CEP']['cep_delay_to_retry']
+
     )
 
     world.notification = Notifications(world.config['CEP']['cep_url']

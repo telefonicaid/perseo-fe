@@ -18,10 +18,12 @@
 # License along with perseo-fe.
 # If not, see http://www.gnu.org/licenses/.
 #
-# For those usages not covered by the GNU Affero General Public License please contact:
-#  iot_support at tid.es
+# For those usages not covered by the GNU Affero General Public License
+# please contact with:
+#   iot_support at tid.es
 #
-#
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
+
 
 import requests
 
@@ -78,10 +80,10 @@ def print_request(method, url, headers, body):
     :param body: body used
     """
     print "------------------------------ Request ----------------------------------------------"
-    print "url: (" + str(method) + "  " + str(url)+")"
-    print "\nHeader: (" + str(headers) + ")\n"
+    print "url: " + str(method) + "  " + str(url)+""
+    print "\nHeader: " + str(headers) + "\n"
     if body is not None:
-        print "\nBody: ("  + str(body) + ")\n\n"
+        print "\nBody: "  + str(body) + "\n\n"
     print "----------------------------- End request ---------------------------------------------\n\n\n\n"
 
 def print_response(response):
@@ -92,7 +94,7 @@ def print_response(response):
     print "---------------------------------- Response ----------------------------------------------"
     print "status code: " + str(response.status_code)
     print "\nHeader: " + str(response.headers)
-    print "\nBody: (" + str(response.text) + ")\n\n\n"
+    print "\nBody: " + str(response.text) + "\n\n\n"
     print "--------------------------------- End Response --------------------------------------------"
 
 def request (method, **kwargs):
@@ -107,7 +109,7 @@ def request (method, **kwargs):
     :param verify: if the SSL is verified
     :return: response (code, headers and body)
 
-    Note: two lines are comments because is only to debug, the first show the request and the second, show the response
+    Note: two lines are comments because is only to debug, the first show the request and the second, show the response in each request
 
     """
     try:
@@ -129,7 +131,7 @@ def request (method, **kwargs):
         #print_response(resp)
         return resp
     except Exception, e:
-         print " ERROR IN REQUEST: %s  \nurl    : %s \nheaders: %s \npayload: %s" % (str(e), Url, str(Headers), Body)
+        assert not True,  " ERROR IN REQUEST: %s  \nurl    : %s \nheaders: %s \npayload: %s" % (str(e), Url, str(Headers), Body)
 
 def assert_status_code (expected, resp, Error_msg):
      """
