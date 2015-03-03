@@ -29,12 +29,12 @@
         {
             "type": "ActionCard",
             "actionData": {
-                "userParams": [
+                "userParams":
                     {
                         "name": "attribute to update",
                         "value": "value for attribute"
                     }
-                ],
+                ,
                 "name": "action card  name",
                 "type": "updateAttribute"
             },
