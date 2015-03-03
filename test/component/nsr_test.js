@@ -41,7 +41,7 @@ describe('Entity', function() {
         var entities = [
                 {_id: {id: 'eA', servicePath: DEFAULT_SERVICE, type: 'type e1'}, attrs: [
                     {name: 'at', value: 1, modDate: 0},
-                    {name: 'other', vlaue: 1, modDate: 0}
+                    {name: 'other', value: 'this is a value', modDate: 0}
                 ]},
                 {_id: {id: 'eB', servicePath: DEFAULT_SERVICE, type: 'type e2'}, attrs: [
                     {name: 'at', value: 2, modDate: Date.now() / 1000 - 30 * 60}

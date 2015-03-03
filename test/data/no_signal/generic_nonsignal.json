@@ -75,7 +75,7 @@
                     },
                     {
                         "name": "mail.message",
-                        "value": "${id}  (${type}) lleva ${reportInterval}, desde ${lastTime} sin hablar"
+                        "value": "${id}  (${type}) lleva ${reportInterval}, desde ${lastTime} sin hablar\nat=${at}"
                     }
                 ],
                 "name": "email",
