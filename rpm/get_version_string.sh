@@ -62,17 +62,17 @@ get_version_string()
         ;;
         develop)
            ## if we are in develop use the total count of commits
-           version=$(git describe --tags --long --match */KO)
+           version=$(git describe --tags --long --match *-KO)
            echo "${version%/*}-${version#*KO-}"
         ;;
         release)
            version=$(get_branch)
-           version=$(git describe --tags --long --match ${version#release/*}/KO)
+           version=$(git describe --tags --long --match ${version#release/*}-KO)
            echo "${version%/*}-${version#*KO-}"
         ;;
         other)
             ## We are in detached mode, use the last KO tag
-            version=$(git describe --tags --long --match */KO)
+            version=$(git describe --tags --long --match *-KO)
             echo "${version%/*}-${version#*KO-}"
         ;;
         *)
