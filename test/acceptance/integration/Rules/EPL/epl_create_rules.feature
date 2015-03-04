@@ -69,7 +69,7 @@ Feature: Append a new rule in Perseo manager
     | test_34               |
     | tenant length allowed |
 
-  @tenant_error @BUG_29
+  @tenant_error @BUG__ISSUE_29
   Scenario Outline: try to append a new rule with differents values in the tenant
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "<tenant>" and service "default"
@@ -106,7 +106,7 @@ Feature: Append a new rule in Perseo manager
     | /test34_2                            |
     | servicepath length allowed one level |
 
-  @service_path_error @BUG_32
+  @service_path_error @BUG__ISSUE_32
   Scenario Outline: try to append a new rule with differents values in the service path
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "tenant" and service "<service_path>"

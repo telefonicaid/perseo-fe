@@ -41,10 +41,10 @@ def cep_manager_is_installed_correctly(step, operation):
     world.cep_requests.verify_CEP()
 
 @step (u'configured with tenant "([^"]*)" and service "([^"]*)"')
-def configured_with_tenant_and_service (self, tenant, service_path):
+def configured_with_tenant_and_service (step, tenant, service_path):
     """
     configure the tenant and servicePath used
-    :param self:
+    :param step:
     :param tenant:
     :param servicePath:
     """
@@ -69,6 +69,7 @@ def a_EPL_with_a_rule_name_an_identity_Id_an_attribute_type_attributes_Number_an
 def append_a_new_rule_with_a_rule_type_a_template_and_a_parameters (step, rule_type, template_info, parameters):
     """
     Create a new rule
+    :param template_info:
     :param step:
     :param rule_type: (SMS, email, update, twitter)
     :param template: additional info to template
@@ -78,16 +79,25 @@ def append_a_new_rule_with_a_rule_type_a_template_and_a_parameters (step, rule_t
     world.rules.create_epl_rule (rule_type, template_info, parameters, world.EPL)
 
 @step (u'an identity_id "([^"]*)", with attribute number "([^"]*)", attribute name "([^"]*)" and attribute type "([^"]*)"')
-def a_tenant_service_path_resource_with_attribute_number_and_attribute_name (step, identity_id, attribute_number, attribute_name, attribute_type):
+def a_tenant_service_path_resource_with_attribute_number_and_attribute_name (step, identity_id, attribute_number, attributes_name, attribute_type):
     """
-    send a notification
+    configuration to notifications
+    :param step:
+    :param identity_id:
+    :param attribute_number:
+    :param attributes_name:
+    :param attribute_type:
     """
-    world.cep_requests.notif_configuration(identity_id, attribute_number, attribute_name, attribute_type)
+    world.cep_requests.notif_configuration(identity_id=identity_id, attribute_number=attribute_number, attributes_name=attributes_name, attribute_type=attribute_type)
 
 @step (u'receives a notification with attributes value "([^"]*)", metadata value "([^"]*)" and content "([^"]*)"')
 def receives_a_notification_with_attributes_value_metadata_value_and_content (step, attribute_value, metadata_value, content):
     """
     store notification values in ckan
+    :param step:
+    :param attribute_value:
+    :param metadata_value:
+    :param content:
     """
     world.resp = world.cep_requests.received_notification(attribute_value, metadata_value, content)
 
@@ -95,6 +105,7 @@ def receives_a_notification_with_attributes_value_metadata_value_and_content (st
 def reset_counters_in_mock (step, rule_type):
     """
     reset counters (sms, email, update
+    :param rule_type:
     :param step:
     """
     world.mock.reset_counters(rule_type)
@@ -103,23 +114,14 @@ def reset_counters_in_mock (step, rule_type):
 def create_rules_with_type (step, rule_number, prefix_name, rule_type):
     """
     Create N rules with a rule type
+    :param prefix_name:
     :param step:
     :param rule_number:
     :param rule_type:
     """
     world.prefix_name=prefix_name
-    world.cep_requests.set_rule_type_and_parameters(rule_type)
-    world.rules.create_several_epl_rules (prefix_name, rule_number, rule_type)
-
-@step (u'create "([^"]*)" rules with "([^"]*)" type')
-def create_rules_with_type (step, rule_number,  rule_type):
-    """
-    Create N rules with a rule type
-    :param step:
-    :param rule_number:
-    :param rule_type:
-    """
-    world.rules.create_several_epl_rules (rule_number, rule_type)
+    parameters = world.cep_requests.set_rule_type_and_parameters(rule_type)
+    world.rules.create_several_epl_rules (prefix_name, rule_number, rule_type, parameters)
 
 @step (u'delete a rule created')
 def delete_a_rule_created(step):

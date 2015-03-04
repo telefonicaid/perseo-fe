@@ -73,10 +73,11 @@ RULE_NAME_RANDOM                      = u'rulename random'
 RULE_NAME_LONGER_THAN_LENGTH_ALLOWED  = u'rulename longer than length allowed'
 MAX_IDENTITY_TYPE_LENGTH              = 1024
 IDENTITY_TYPE_LENGTH_1024             = u'identity Type length 1024'
-MOCK_IN_LOCALHOST                     = u'url - mock in localhost'
+URL_MOCK                              = u'url - mock'
 
 # notifications constants
 perseo_notification_path      = u'/notices'
+NOTIFICATION                  = u'notification'
 
 class CEP:
     """
@@ -157,6 +158,7 @@ class CEP:
     def __generate_rule_name (self, rule_name):
         """
         generate rule name if it is not normal
+        :param rule_name:
         """
         RULE_NAME_CHARS_ALLOWED=string.ascii_letters + string.digits + u'-'+u'_'  # [a-zA-Z0-9_-]+ regular expression
         if rule_name.find(RULE_NAME_RANDOM) >= 0:
@@ -172,6 +174,12 @@ class CEP:
     def generate_EPL (self, rule_name, identity_type,  attributes_number, attribute_data_type, operation, value):
         """
         generate a EPL query dinamically.
+        :param rule_name:
+        :param identity_type:
+        :param attributes_number:
+        :param attribute_data_type:
+        :param operation:
+        :param value:
         """
         self.rule_name = self.__generate_rule_name(rule_name)
 
@@ -184,14 +192,31 @@ class CEP:
         if value != DEFAULT: self.epl_value = value
         return world.rules.generate_EPL(self.rule_name, self.identity_type, self.attributes_number, self.epl_attribute_data_type, self.epl_operation, self.epl_value)
 
-    def notif_configuration(self, identity_id,attribute_number, attributes_name, attribute_type):
+    def set_action_card_config (self, rule_type, response, parameters):
+        """
+        configuration to action card
+        :param rule_type:
+        :param response:
+        :param parameters:
+        """
+        self.rule_type = rule_type
+        self.response = response
+        self.parameters = parameters
+
+    def notif_configuration(self, **kwargs):
         """
         configuration to notifications
+        :param identity_type: identity type used in notifications (OPTIONAL)
+        :param identity_id: identity id used in notifications  (OPTIONAL)
+        :param attribute_number: attribute number used in notifications  (OPTIONAL)
+        :param attribute_name: attribute number used in notifications  (OPTIONAL)
+        :param attribute_type: attribute type used in notifications  (OPTIONAL)
         """
-        if identity_id != DEFAULT: self.identity_id = identity_id
-        if attribute_number != DEFAULT: self.attribute_number = attribute_number
-        if attributes_name != DEFAULT: self.attributes_name = attributes_name
-        if attribute_type != DEFAULT: self.attribute_type = attribute_type
+        self.identity_id = kwargs.get("identity_id", self.identity_id)
+        self.identity_type = kwargs.get("identity_type",  self.identity_type)
+        self.attributes_number = kwargs.get("attribute_number",  self.attributes_number)
+        self.attributes_name = kwargs.get("attributes_name",  "temperature")
+        self.attribute_type = kwargs.get("attribute_type",  "celcius")
 
     def received_notification(self, attributes_value, metadata_value, content):
         """
@@ -202,16 +227,18 @@ class CEP:
         """
         self.content = content
         self.metadata_value = metadata_value
+        self.attributes_value = attributes_value
         metadata_attribute_number = 1
         self.notification = Notifications (self.cep_url+perseo_notification_path,tenant=self.tenant, service_path=self.service_path, content=self.content)
         if self.metadata_value:
             self.notification.create_metadatas_attribute(metadata_attribute_number, RANDOM, RANDOM, RANDOM)
-        self.notification.create_attributes (self.attributes_number, self.attributes_name, self.attribute_type, attributes_value)
+        self.notification.create_attributes (self.attributes_number, self.attributes_name, self.attribute_type, self.attributes_value)
         return self.notification.send_notification(self.identity_id, self.identity_type)
 
     def validate_HTTP_code(self, expected_status_code, resp):
         """
         validate http status code
+        :param resp: response from server
         :param expected_status_code: Http code expected
         """
         http_utils.assert_status_code(http_utils.status_codes[expected_status_code], resp, "Wrong status code received: %s. Expected: %s. \n\nBody content: %s" \
@@ -220,11 +247,44 @@ class CEP:
     def set_rule_type_and_parameters (self, rule_type, parameters=""):
         """
         set rule type and parameters
+        :param rule_type:
+        :param parameters:
+        :return parameters (string)
         """
-        if rule_type == "post":
-             if parameters == MOCK_IN_LOCALHOST: parameters = self.cep_rule_post_url + "/send/post"
+        if rule_type == "post" and (parameters == URL_MOCK or parameters == u''):
+            parameters = self.cep_rule_post_url + "/send/post"
         self.rule_type=rule_type
         return parameters
+
+    def get_tenant(self):
+        """
+        get tenant (service) string
+        :return: string
+        """
+        return self.tenant
+
+    def get_service_path(self):
+        """
+        get service_path (sub-services) string
+        :return: string
+        """
+        return self.service_path
+
+    def delays_seconds (self, sec):
+        """
+        waiting N seconds after validate if the rule is triggered
+        :param sec:
+        """
+        time.sleep(float(sec))
+
+    def get_attribute_value_from_mongo(self, driver):
+        """
+        get attribute value from orion mongo
+        :param driver: Mongo class into mongo_utils.py
+        :return string
+        """
+        cursor = driver.find_data({})
+        return cursor[0]["attrs"][0]["value"]
 
     #   --------------  Visual Rules  -----------------------------
     def new_visual_rule (self, rule_name, active):
@@ -241,17 +301,24 @@ class CEP:
 
     def validate_that_rule_was_triggered(self, method):
         """
-         Validate that rule is triggered successfully
+         Validate that a rule is triggered successfully
+        :param method:
         """
-        self.attributes_value = self.notification.get_attributes_value()
-        self.parameters=world.rules.get_parameters()
-        status=world.mock.verify_response_mock (self.rule_type, self.attributes_value, self.parameters)
-        if not status: world.rules.delete_one_rule(self, method)
-        assert status, "ERROR - the rule %s has not been launched " % (str(self.rule_name))
+        if hasattr(self, NOTIFICATION):                        # if there is any notification
+            self.attributes_value = self.notification.get_attributes_value()
+            self.parameters_value=world.rules.get_parameters_value()
+        else:                                                    # used in no-signal (not update card)
+            self.attributes_value = self.get_attribute_value_from_mongo(world.cep_orion_mongo)
+            self.parameters_value= self.get_attribute_value_from_mongo(world.cep_orion_mongo)
+
+        status=world.mock.verify_response_mock (self.rule_type, self.attributes_value, self.parameters_value)
+        if not status: world.rules.delete_one_rule(method)
+        assert status, "ERROR - the rule %s has not been received in mock " % (str(self.rule_name))
 
     def validate_that_all_rule_were_triggered(self, method):
         """
         Validate that all rules were triggered successfully
+        :param method:
         """
         c=0
         self.rules_number = world.rules.get_rules_number()

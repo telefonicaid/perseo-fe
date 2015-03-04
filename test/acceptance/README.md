@@ -96,15 +96,24 @@ Some examples:
     * mongo_database: mongo database used by Perseo
     * mongo_collection: mongo collection to store the rules
 
+- mongoOrion:
+    * mongo_host: mongo host used by Mongo-Orion fake
+    * mongo_port: mongo port used by Mongo-Orion fake
+    * mongo_database: mongo database used by Mongo-Orion fake
+    * mongo_collection: mongo collection to store the context in Mongo-Orion
+     Note: These are used mainly to simulate a Context Broker Mongo with  "Not Updated" functionality.
+         We create a context in this mongo where will be verified if an attribute is updated on a given interval.
 
 ### tags
 
 You can to use multiples tags in each scenario, possibles tags used:
 
     - happy_path, skip, errors_40x, etc.
-    - The skip tag is to skip the scenarios that still are not developed or failed
+    - The "skip" tag is to skip the scenarios that still are not developed or failed
       always it is associated to an issue or bug.
             usage: -tg=-skip
+    - the "only_develop" tag is used to verify releases that has not all funcionabilities. discards the scenarios tagged
+            usage: -tg=-only_develop
 
 and to filter scenarios by these tags: see Tests execution section.
 

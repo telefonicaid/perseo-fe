@@ -155,10 +155,10 @@ Feature: get rules in Perseo manager from portal
     And validate that all visual rules are returned
     And delete all rules created
   Examples:
-    | rules_number | prefix    |
-    | 1            | vrules_1  |
-    | 5           | vrules_5  |
-    | 10           | vrules_10 |
+    | rules_number | prefix     |
+    | 1            | vrules_1   |
+    | 5            | vrules_5   |
+    | 10           | vrules_10  |
     | 50           | vrules_50  |
     | 100          | vrules_100 |
     | 500          | vrules_500 |

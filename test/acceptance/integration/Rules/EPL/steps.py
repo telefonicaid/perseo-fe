@@ -40,10 +40,10 @@ def cep_manager_is_installed_correctly(step, operation):
     world.cep_requests.verify_CEP()
 
 @step (u'configured with tenant "([^"]*)" and service "([^"]*)"')
-def configured_with_tenant_and_service (self, tenant, service_path):
+def configured_with_tenant_and_service (step, tenant, service_path):
     """
     congfigure the tenant and servicePath used
-    :param self:
+    :param step:
     :param tenant:
     :param servicePath:
     """
@@ -64,7 +64,6 @@ def a_EPL_with_a_rule_name_an_identity_Id_an_attribute_type_attributes_Number_an
     world.rule_name = rule_name
     world.EPL = world.cep_requests.generate_EPL (rule_name, identity_type, attributes_number, attribute_type, operation, value)
 
-
 @step (u'append a new rule with a rule type "([^"]*)", a template "([^"]*)" and a parameters "([^"]*)"')
 def append_a_new_rule_with_a_rule_type_a_template_and_a_parameters (step, rule_type, template_info, parameters):
     """
@@ -81,6 +80,7 @@ def append_a_new_rule_with_a_rule_type_a_template_and_a_parameters (step, rule_t
 def create_rules_with_type (step, rule_number, prefix_name, rule_type):
     """
     Create N rules with a rule type
+    :param prefix_name:
     :param step:
     :param rule_number:
     :param rule_type:
@@ -118,7 +118,6 @@ def delete_group_rules_created (step):
      :param step:
      """
      world.rules.delete_rules_group("EPL", world.prefix_name)
-
 
 #----------------------------------------------------------------------------------------
 @step(u'I receive an "([^"]*)" http code')

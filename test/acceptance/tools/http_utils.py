@@ -80,10 +80,11 @@ def print_request(method, url, headers, body):
     :param body: body used
     """
     print "------------------------------ Request ----------------------------------------------"
-    print "url: " + str(method) + "  " + str(url)+""
-    print "\nHeader: " + str(headers) + "\n"
-    if body is not None:
-        print "\nBody: "  + str(body) + "\n\n"
+    print "url: " + str(method) + "  " + str(url)+"\n"
+    if headers is not None:
+        print "Header: " + str(headers) + "\n"
+    if body != EMPTY:
+        print "Body: "  + str(body) + "\n\n\n"
     print "----------------------------- End request ---------------------------------------------\n\n\n\n"
 
 def print_response(response):
@@ -91,10 +92,14 @@ def print_response(response):
     Show response in console
     :param response: http code, header and body returned
     """
+    body = response.text
+    headers = response.headers
     print "---------------------------------- Response ----------------------------------------------"
-    print "status code: " + str(response.status_code)
-    print "\nHeader: " + str(response.headers)
-    print "\nBody: " + str(response.text) + "\n\n\n"
+    print "status code: " + str(response.status_code) + "\n"
+    if headers is not None:
+        print "Header: " + str(headers) + "\n"
+    if body != EMPTY:
+        print "Body: " + str(body) + "\n\n\n"
     print "--------------------------------- End Response --------------------------------------------"
 
 def request (method, **kwargs):

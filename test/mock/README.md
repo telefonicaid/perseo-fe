@@ -166,7 +166,8 @@ We recommend to change in `config.js`
     config.sms = {
         URL : 'http://<mock host>:<http port>/send/sms',
         API_KEY : '',
-        API_SECRET: ''
+        API_SECRET: '',
+        from: ''
     };
 ```
 

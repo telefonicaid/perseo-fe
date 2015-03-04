@@ -43,11 +43,14 @@ GET_SMS              = u'get/sms'
 GET_EMAIL            = u'get/email'
 GET_UPDATE           = u'get/update'
 
-# EPL operations
+# actions type
 SMS_EPL_TYPE         = u'sms'
 EMAIL_EPL_TYPE       = u'email'
 UPDATE_EPL_TYPE      = u'update'
 POST_EPL_TYPE        = u'post'
+EMAIL_CARD_TYPE      = u'SendEmailAction'
+SMS_CARD_TYPE        = u'SendSmsMibAction'
+UPDATE_CARD_TYPE     = u'updateAttribute'
 
 # response constants
 MESSAGE                  = u'message'
@@ -75,23 +78,26 @@ class Mock:
 
         """
         create the url for different requests
+        :param rule_type: ms | email | update | post |twitter
         :param operation: several operations such as get, counter, etc
         :return: request url
         """
         value = "%s/%s/%s" % (self.send_update_url, operation, rule_type)
         return value
 
-    def verify_response_mock (self, rule_type, attributes_value, parameters):
+    def verify_response_mock (self, rule_type, attributes_value, parameters_value):
         """
         verify the response returned from mock
         """
-        time.sleep(5) # delay for 5 secs
+        time.sleep(5) # delay for 5 secs, waiting to arrived the
         self.resp = None
+        if rule_type == EMAIL_CARD_TYPE: rule_type = EMAIL_EPL_TYPE
+        if rule_type == SMS_CARD_TYPE: rule_type = SMS_EPL_TYPE
+        if rule_type == UPDATE_CARD_TYPE: rule_type = UPDATE_EPL_TYPE
         if rule_type == SMS_EPL_TYPE or rule_type == EMAIL_EPL_TYPE or rule_type == UPDATE_EPL_TYPE or rule_type == POST_EPL_TYPE:
             self.resp = http_utils.request(http_utils.GET, url=self.__create_url("get", rule_type))
             response = general_utils.convert_str_to_dict(self.resp.text,general_utils.JSON)
-        else:
-            return False
+        else: return False
 
         if rule_type == SMS_EPL_TYPE:
             resp_temp = response[MESSAGE]
@@ -101,11 +107,18 @@ class Mock:
             template_post = general_utils.convert_str_to_dict(response, general_utils.JSON)
             resp_temp = template_post[MESSAGE]
         elif rule_type == UPDATE_EPL_TYPE:
-            if str(response[CONTEXT_ELEMENTS][0][ATTRIBUTES][0][VALUE]) == parameters[VALUE]:return True
+            try:
+                if str(response[CONTEXT_ELEMENTS][0][ATTRIBUTES][0][VALUE]) == parameters_value: return True
+                else: return False
+            except Exception, e:
+                assert False, " ERROR - %s does not exists.\n Probably the rule has not been triggered." % (str(e))
 
         attribute_value_position_init = resp_temp.find ("<<<")+3
         attribute_value_position_end  = resp_temp.find (">>>")
-        if str(resp_temp[attribute_value_position_init:attribute_value_position_end]) == attributes_value: return True
+        try:
+            if str(resp_temp[attribute_value_position_init:attribute_value_position_end]) == attributes_value: return True
+        except Exception, e:
+            assert False, " ERROR - %s does not exists.\n Probably the rule has not been triggered." % (str(e))
         return False
 
     def reset_counters(self, rule_type):
@@ -119,12 +132,13 @@ class Mock:
     def get_counter_value(self, rule_type):
         """
         get counter value in a rule type
-        :param rule_type: sms | email | update
+        :param rule_type: sms | email | update | twitter
         :return: int
         """
         resp = http_utils.request(http_utils.GET, url=self.__create_url("counter", rule_type))
         resp_split = resp.text.split (": ")
         return int(resp_split [1])
+
 
 
 
