@@ -78,11 +78,11 @@ def append_a_new_rule_with_a_rule_type_a_template_and_a_parameters (step, rule_t
     world.rules.create_epl_rule (rule_type, template_info, parameters, world.EPL)
 
 @step (u'an identity_id "([^"]*)", with attribute number "([^"]*)", attribute name "([^"]*)" and attribute type "([^"]*)"')
-def a_tenant_service_path_resource_with_attribute_number_and_attribute_name (step, identity_id, attribute_number, attribute_name, attribute_type):
+def a_tenant_service_path_resource_with_attribute_number_and_attribute_name (step, identity_id, attribute_number, attributes_name, attribute_type):
     """
-    send a notification
+    configuration to notifications
     """
-    world.cep_requests.notif_configuration(identity_id, attribute_number, attribute_name, attribute_type)
+    world.cep_requests.notif_configuration(identity_id=identity_id, attribute_number=attribute_number, attributes_name=attributes_name, attribute_type=attribute_type)
 
 @step (u'receives a notification with attributes value "([^"]*)", metadata value "([^"]*)" and content "([^"]*)"')
 def receives_a_notification_with_attributes_value_metadata_value_and_content (step, attribute_value, metadata_value, content):
@@ -108,18 +108,8 @@ def create_rules_with_type (step, rule_number, prefix_name, rule_type):
     :param rule_type:
     """
     world.prefix_name=prefix_name
-    world.cep_requests.set_rule_type_and_parameters(rule_type)
-    world.rules.create_several_epl_rules (prefix_name, rule_number, rule_type)
-
-@step (u'create "([^"]*)" rules with "([^"]*)" type')
-def create_rules_with_type (step, rule_number,  rule_type):
-    """
-    Create N rules with a rule type
-    :param step:
-    :param rule_number:
-    :param rule_type:
-    """
-    world.rules.create_several_epl_rules (rule_number, rule_type)
+    parameters = world.cep_requests.set_rule_type_and_parameters(rule_type)
+    world.rules.create_several_epl_rules (prefix_name, rule_number, rule_type, parameters)
 
 @step (u'delete a rule created')
 def delete_a_rule_created(step):

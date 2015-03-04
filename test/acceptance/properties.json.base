@@ -28,7 +28,14 @@
     "MongoDB": {
         "mongo_host": "hostname",
         "mongo_port": "27017",
-        "mongo_database": "test",
+        "mongo_database": "cep",
         "mongo_collection": "rules"
+    },
+
+    "MongoOrion": {
+        "mongo_host": "hostname",
+        "mongo_port": "27017",
+        "mongo_database": "orion",
+        "mongo_collection": "entities"
     }
 }

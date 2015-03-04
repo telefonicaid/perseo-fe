@@ -63,10 +63,13 @@ def convert_str_to_dict (body, content):
     :param content: content type (json or xml)
     :return: dictionary
     """
-    if content == XML:
-        return xmltodict.parse(body)
-    else:
-        return json.loads(body)
+    try:
+        if content == XML:
+            return xmltodict.parse(body)
+        else:
+            return json.loads(body)
+    except Exception, e:
+        assert not True,  " ERROR - converting string to %s dictionary: \n%s \Exception error:\n%s" % (str(content), str(body), str(e))
 
 def convert_dict_to_str (body, content):
     """
@@ -75,10 +78,13 @@ def convert_dict_to_str (body, content):
     :param content: content type (json or xml)
     :return: string
     """
-    if content == XML:
-        return xmltodict.unparse(body)
-    else:
-        return json.dumps(body)
+    try:
+        if content == XML:
+            return xmltodict.unparse(body)
+        else:
+            return json.dumps(body)
+    except Exception, e:
+        assert not True,  " ERROR - converting %s dictionary to string: \n%s \Exception error:\n%s" % (str(content), str(body), str(e))
 
 def convert_str_to_list (text, separator):
     """
@@ -112,6 +118,18 @@ def generate_date_zulu():
     """
     generate date & time zulu
     ex: 2014-05-06T10:39:47.696Z
+    :return date-time zulu formatted
     """
     return str(time.strftime("%Y-%m-%dT%H:%M:%S.095Z"))
+
+
+def generate_timestamp():
+    """
+    generate timestamp
+    ex: 1425373697
+    :return  timestamp
+    """
+    return time.time()
+
+
 
