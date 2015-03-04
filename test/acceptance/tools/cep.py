@@ -158,6 +158,7 @@ class CEP:
     def __generate_rule_name (self, rule_name):
         """
         generate rule name if it is not normal
+        :param rule_name:
         """
         RULE_NAME_CHARS_ALLOWED=string.ascii_letters + string.digits + u'-'+u'_'  # [a-zA-Z0-9_-]+ regular expression
         if rule_name.find(RULE_NAME_RANDOM) >= 0:
@@ -173,6 +174,12 @@ class CEP:
     def generate_EPL (self, rule_name, identity_type,  attributes_number, attribute_data_type, operation, value):
         """
         generate a EPL query dinamically.
+        :param rule_name:
+        :param identity_type:
+        :param attributes_number:
+        :param attribute_data_type:
+        :param operation:
+        :param value:
         """
         self.rule_name = self.__generate_rule_name(rule_name)
 
@@ -188,6 +195,9 @@ class CEP:
     def set_action_card_config (self, rule_type, response, parameters):
         """
         configuration to action card
+        :param rule_type:
+        :param response:
+        :param parameters:
         """
         self.rule_type = rule_type
         self.response = response
@@ -228,6 +238,7 @@ class CEP:
     def validate_HTTP_code(self, expected_status_code, resp):
         """
         validate http status code
+        :param resp: response from server
         :param expected_status_code: Http code expected
         """
         http_utils.assert_status_code(http_utils.status_codes[expected_status_code], resp, "Wrong status code received: %s. Expected: %s. \n\nBody content: %s" \
@@ -236,6 +247,9 @@ class CEP:
     def set_rule_type_and_parameters (self, rule_type, parameters=""):
         """
         set rule type and parameters
+        :param rule_type:
+        :param parameters:
+        :return parameters (string)
         """
         if rule_type == "post" and (parameters == URL_MOCK or parameters == u''):
             parameters = self.cep_rule_post_url + "/send/post"
@@ -259,13 +273,15 @@ class CEP:
     def delays_seconds (self, sec):
         """
         waiting N seconds after validate if the rule is triggered
+        :param sec:
         """
         time.sleep(float(sec))
 
     def get_attribute_value_from_mongo(self, driver):
         """
         get attribute value from orion mongo
-        :param driver:
+        :param driver: Mongo class into mongo_utils.py
+        :return string
         """
         cursor = driver.find_data({})
         return cursor[0]["attrs"][0]["value"]
@@ -286,6 +302,7 @@ class CEP:
     def validate_that_rule_was_triggered(self, method):
         """
          Validate that a rule is triggered successfully
+        :param method:
         """
         if hasattr(self, NOTIFICATION):                        # if there is any notification
             self.attributes_value = self.notification.get_attributes_value()
@@ -301,6 +318,7 @@ class CEP:
     def validate_that_all_rule_were_triggered(self, method):
         """
         Validate that all rules were triggered successfully
+        :param method:
         """
         c=0
         self.rules_number = world.rules.get_rules_number()

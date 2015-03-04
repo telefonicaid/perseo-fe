@@ -96,6 +96,7 @@ class Mongo:
     def insert_data(self, data):
         """
         Insert a new document in a collection
+        :param data:
         """
         try:
             self.current_collection.insert(data)
@@ -105,6 +106,8 @@ class Mongo:
     def update_data(self, data, query={}):
         """
         update a document in a collection using a query
+        :param data:
+        :param query:
         """
         try:
             self.current_collection.update(query, data)
@@ -114,6 +117,7 @@ class Mongo:
     def find_data(self, query={}):
         """
         find a set of data in the current collection using a collection
+        :param query:
         :return: cursor
         """
         try:

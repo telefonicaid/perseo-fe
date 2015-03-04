@@ -78,6 +78,7 @@ class Mock:
 
         """
         create the url for different requests
+        :param rule_type: ms | email | update | post |twitter
         :param operation: several operations such as get, counter, etc
         :return: request url
         """
@@ -131,7 +132,7 @@ class Mock:
     def get_counter_value(self, rule_type):
         """
         get counter value in a rule type
-        :param rule_type: sms | email | update
+        :param rule_type: sms | email | update | twitter
         :return: int
         """
         resp = http_utils.request(http_utils.GET, url=self.__create_url("counter", rule_type))

@@ -40,10 +40,10 @@ def cep_manager_is_installed_correctly(step, operation):
     world.cep_requests.verify_CEP()
 
 @step (u'configured with tenant "([^"]*)" and service "([^"]*)"')
-def configured_with_tenant_and_service (self, tenant, service_path):
+def configured_with_tenant_and_service (step, tenant, service_path):
     """
     congfigure the tenant and servicePath used
-    :param self:
+    :param step:
     :param tenant:
     :param servicePath:
     """
@@ -80,6 +80,7 @@ def append_a_new_rule_with_a_rule_type_a_template_and_a_parameters (step, rule_t
 def create_rules_with_type (step, rule_number, prefix_name, rule_type):
     """
     Create N rules with a rule type
+    :param prefix_name:
     :param step:
     :param rule_number:
     :param rule_type:

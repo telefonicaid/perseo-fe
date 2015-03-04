@@ -43,7 +43,7 @@ def string_generator(size=10, chars=string.ascii_letters + string.digits):
         Method to create random strings
         :param size: define the string size
         :param chars: the characters to be use to create the string
-        return ''.join(random.choice(chars) for x in range(size))
+        :return random string
         """
         return ''.join(random.choice(chars) for x in range(size))
 
@@ -52,7 +52,7 @@ def number_generator (size=5, decimals="%0.1f"):
     Method to create random number
     :param decimals: decimal account
     :param size: define the number size
-    :return:
+    :return: random integer
     """
     return decimals % (random.random() * (10**size))
 
@@ -69,7 +69,7 @@ def convert_str_to_dict (body, content):
         else:
             return json.loads(body)
     except Exception, e:
-        assert not True,  " ERROR - converting string to %s dictionary: \n%s \Exception error:\n%s" % (str(content), str(body), str(e))
+        assert False,  " ERROR - converting string to %s dictionary: \n%s \Exception error:\n%s" % (str(content), str(body), str(e))
 
 def convert_dict_to_str (body, content):
     """
@@ -84,7 +84,7 @@ def convert_dict_to_str (body, content):
         else:
             return json.dumps(body)
     except Exception, e:
-        assert not True,  " ERROR - converting %s dictionary to string: \n%s \Exception error:\n%s" % (str(content), str(body), str(e))
+        assert False,  " ERROR - converting %s dictionary to string: \n%s \Exception error:\n%s" % (str(content), str(body), str(e))
 
 def convert_str_to_list (text, separator):
     """

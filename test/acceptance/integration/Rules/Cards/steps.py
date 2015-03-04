@@ -37,10 +37,10 @@ def cep_manager_is_installed_correctly(step, operation):
     world.cep_requests.verify_CEP()
 
 @step (u'configured with tenant "([^"]*)" and service "([^"]*)"')
-def configured_with_tenant_and_service (self, tenant, service_path):
+def configured_with_tenant_and_service (step, tenant, service_path):
     """
     configure the tenant and servicePath used
-    :param self:
+    :param step:
     :param tenant:
     :param servicePath:
     """
@@ -50,6 +50,12 @@ def configured_with_tenant_and_service (self, tenant, service_path):
 def create_a_sensor_card_of_notUpdated_type_connect_to_and_parameter_value (step, sc_id_card, interval, attribute_name, max_time_update, sc_connect_to):
     """
     create a new not updated card
+    :param step:
+    :param sc_id_card:
+    :param interval:
+    :param attribute_name:
+    :param max_time_update:
+    :param sc_connect_to:
     """
     world.rules.create_sensor_card (sensorCardType="notUpdated", id=sc_id_card, interval=interval, measureName=attribute_name, parameterValue=max_time_update, connectedTo=sc_connect_to)
 
@@ -57,6 +63,10 @@ def create_a_sensor_card_of_notUpdated_type_connect_to_and_parameter_value (step
 def create_a_sensor_card_of_id_type_connect_to_and_parameter_value (step, sc_id_card,  identity_id, sc_connect_to):
     """
     create a new id card
+    :param step:
+    :param sc_id_card:
+    :param identity_id:
+    :param sc_connect_to:
     """
     world.rules.create_sensor_card (sensorCardType="regexp", id=sc_id_card, parameterValue=identity_id, connectedTo=sc_connect_to)
 
@@ -64,6 +74,11 @@ def create_a_sensor_card_of_id_type_connect_to_and_parameter_value (step, sc_id_
 def create_a_sensor_card_of_id_type_connect_to_and_parameter_value (step, sc_id_card, identity_type, operator, sc_connect_to):
     """
     create a new type card
+    :param step:
+    :param sc_id_card:
+    :param identity_type:
+    :param operator:
+    :param sc_connect_to:
     """
     world.rules.create_sensor_card (sensorCardType="type", id=sc_id_card, parameterValue=identity_type, operator=operator, connectedTo=sc_connect_to)
 
@@ -71,6 +86,13 @@ def create_a_sensor_card_of_id_type_connect_to_and_parameter_value (step, sc_id_
 def create_a_sensor_card_of_value_threshold_type_connect_to_operator_attribute_name_and_parameter_value (step, sc_id_card, attribute_name, operator, data_type, parameter_value, sc_connect_to):
     """
     create a new value threshold card
+    :param step:
+    :param sc_id_card:
+    :param attribute_name:
+    :param operator:
+    :param data_type:
+    :param parameter_value:
+    :param sc_connect_to:
     """
     world.rules.create_sensor_card (sensorCardType="valueThreshold", id=sc_id_card,  measureName=attribute_name, operator=operator, dataType=data_type, parameterValue=parameter_value,  connectedTo=sc_connect_to)
 
@@ -78,6 +100,13 @@ def create_a_sensor_card_of_value_threshold_type_connect_to_operator_attribute_n
 def create_a_sensor_card_of_value_threshold_type_connect_to_operator_attribute_name_and_parameter_value (step, sc_id_card, attribute_name, operator, data_type, attribute_to_refer, sc_connect_to):
     """
     create a new attribute threshold card
+    :param step:
+    :param sc_id_card:
+    :param attribute_name:
+    :param operator:
+    :param data_type:
+    :param attribute_to_refer:
+    :param sc_connect_to:
     """
     world.rules.create_sensor_card (sensorCardType="attributeThreshold", id=sc_id_card,  measureName=attribute_name, operator=operator, dataType=data_type, parameterValue=attribute_to_refer,  connectedTo=sc_connect_to)
 
@@ -85,6 +114,10 @@ def create_a_sensor_card_of_value_threshold_type_connect_to_operator_attribute_n
 def create_a_sensor_card_of_epl_type_with_id_epl_query_and_connect_to (step, sc_id_card, epl_query, sc_connect_to):
      """
       create a new epl card
+     :param step:
+     :param sc_id_card:
+     :param epl_query:
+     :param sc_connect_to:
      """
      world.rules.create_sensor_card (sensorCardType="ceprule", id=sc_id_card,  parameterValue=epl_query,  connectedTo=sc_connect_to)
 
@@ -92,11 +125,25 @@ def create_a_sensor_card_of_epl_type_with_id_epl_query_and_connect_to (step, sc_
 def create_a_action_card_of_type_connect_to_a_response_and_a_parameters_ (step, ac_card_type, ac_id_card, response, parameters, connected_to):
     """
     create a new action card
+    :param step:
+    :param ac_card_type:
+    :param ac_id_card:
+    :param response:
+    :param parameters:
+    :param connected_to:
     """
     world.rules.create_action_card (id=ac_id_card, actionCardType=ac_card_type, connectedTo=connected_to, response=response, parameters=parameters)
 
 @step (u'create a time card of time elapsed type, with id "([^"]*)", interval "([^"]*)" and connect to "([^"]*)"')
 def create_a_time_card_of_time_elapsed_type_with_id_interval_and_connect_to (step, tc_id_card, interval, connected_to):
+    """
+
+
+    :param step:
+    :param tc_id_card:
+    :param interval:
+    :param connected_to:
+    """
     world.rules.create_time_card (id=tc_id_card, timeCardType="timeElapsed", interval=interval, connectedTo=connected_to)
 
 @step (u'append a new rule name "([^"]*)", activate "([^"]*)"')
@@ -113,6 +160,7 @@ def append_a_new_rule_name_activate (step, rule_name, active):
 def create_visual_rules_with_sensor_cards_and_an_action_card (step, rule_number, prefix, action_card_type):
     """
     Create N visual rules with N sensor cards and an action card
+    :param prefix: prefix used in rule name
     :param step: append sensor cards into the visual rule, the format of the table is:
                  | sensorCardType |
                   values allowed: notUpdated, regexp, type, valueThreshold, attributeThreshold or ceprule

@@ -208,7 +208,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     | test_110002 | 34       | temper_23      | 12       | SendSmsMibAction | ${device_latitude}${device_longitude}${measure.value} | 123456789       |
     | test_110003 | 34       | temper_23      | 0        | updateAttribute  | DANGER                                                | ALARM           |
 
-  @not_updated_card_interval_not_allowed @BUG_53
+  @not_updated_card_interval_not_allowed @BUG_ISSUE_53
   Scenario Outline: try to append a new rule in Perseo manager using card from portal using only not updated card and action card but with interval not allowed
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"

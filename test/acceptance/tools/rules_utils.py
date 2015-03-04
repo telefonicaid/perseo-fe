@@ -188,6 +188,7 @@ class Rules:
     def __create_headers(self, operation=EPL):
         """
         create the header for different requests
+        :param operation: EPL o visual_rules
         :return: headers dictionary
         """
         content = general_utils.JSON
@@ -267,6 +268,7 @@ class Rules:
     def create_epl_rule (self, rule_type, template_info, parameters, EPL):
         """
          Create a new epl rule
+        :param EPL: EPL query
         :param template_info: template info to sms or email types
         :param rule_type: rule type
         :param parameters: several parameter depending of rule type
@@ -298,6 +300,8 @@ class Rules:
     def create_several_epl_rules(self, prefix_name, rule_number, rule_type, parameters=EMPTY):
         """
         create N rules with the same rule type
+        :param prefix_name:
+        :param parameters:
         :param rule_number: quantity of rules created
         :param rule_type: rule type
         """
@@ -330,6 +334,7 @@ class Rules:
     def read_a_rule_name (self, name):
         """
          Read the rule name in perseo
+        :param name:
         """
         return  http_utils.request(http_utils.GET, url=self.__create_url(GET_EPL_RULE, name), headers=self.__create_headers())
 
@@ -344,6 +349,8 @@ class Rules:
     def __one_parameter (self, name, value):
         """
         create one parameter to userParams in action card
+        :param name: parameter name
+        :param value: parameter value
         :return: dict with name and value
         """
         return {NAME:EMPTY.join(name), VALUE:EMPTY.join(value)}
@@ -512,7 +519,6 @@ class Rules:
         create a new card rule
         :param rule_name: rule name
         :param active: if is active ("1") or not ("0")
-        :return: card rule dict
         """
         RULE_CARD_DICT[NAME]   = rule_name
         self.rule_name = RULE_CARD_DICT[NAME]
@@ -524,6 +530,8 @@ class Rules:
     def create_several_visual_rules(self, step, rule_number, prefix, ac_card_type):
         """
         Create N visual rules with N sensor cards and an action card
+        :param prefix: prefix used in rule name
+        :param ac_card_type: rule type in action card
         :param step: append sensor cards into the visual rule [{"sensorCardType", "notUpdated"}, {"sensorCardType", "regexp"}]
                      the format of the table is:
                      | sensorCardType |
@@ -595,13 +603,14 @@ class Rules:
     def rule_name_to_try_to_delete_but_it_does_not_exists (self, name):
         """
         rule name to try to delete but it does not exists
-        :param name: this name does not exists
+        :param name: rule name, generally, this name does not exists
         """
         self.rule_name = name
 
     def update_a_visual_rule(self, rule_name):
         """
         update a visual rule existent
+        :param rule_name:
         """
         RULE_CARD_DICT[NAME]   = rule_name
         self.rule_name = RULE_CARD_DICT[NAME]
@@ -630,6 +639,8 @@ class Rules:
     def delete_rules_group(self, method, prefix):
         """
         delete all rules created with a prefix and a rule type in a method (EPL or visual_rules)
+        :param method: method (EPL or visual_rules)
+        :param prefix: prefix used in rule name
         """
         for i in range (0, self.rules_number):
             self.delete_one_rule(method, "%s_%s_%s" % (prefix, str(i), self.rule_type))
@@ -646,8 +657,6 @@ class Rules:
     def validate_rule_response(self):
         """
         validate rule in response
-        :param name: rule name
-        :param code: http code
         """
         temp_dict=general_utils.convert_str_to_dict(self.resp.text,general_utils.JSON)
         assert temp_dict["error"] == None, \
@@ -656,9 +665,9 @@ class Rules:
     def validate_delete_rule (self, exist=1):
         """
         validate that the rule is deleted
+        :param exist: 1 exist rule before delete  - 0 rule does not exist before delete
         """
         dict_temp = general_utils.convert_str_to_dict(self.resp.text,general_utils.JSON)
-         #1 exist rule before delete  - 0 rule does not exist before delete
         assert  dict_temp[DATA][0] == exist,\
             "ERROR - the rule %s does not exist..." % (self.rule_name)
 
@@ -723,9 +732,13 @@ class Rules:
     def generate_context_fake_in_cep_mongo (self, driver, entity_id, entity_type, service_path, attribute_name, attribute_value, attribute_type="void"):
         """
         generate context fake in cep mongo that is used in not updated card (no-signal)
+        :param entity_id:
+        :param entity_type:
+        :param service_path:
+        :param attribute_name:
+        :param attribute_value:
+        :param attribute_type:
         :param driver: Mongo class into mongo_utils.py
-             database: database used (recommend orion by default)
-             collection: collection used (recommend entities by default)
         """
         ts = general_utils.generate_timestamp()
         CONTEXT_DATA = {'creDate': ts,
