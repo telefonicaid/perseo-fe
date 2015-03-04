@@ -91,15 +91,15 @@ Some examples:
     * cep_delay_to_retry: time to delay in each retry
 
 - mongoDB:
-    * mongo_host: mongo host used by Mongo-Perseo
-    * mongo_port: mongo port used by Mongo
+    * mongo_host: mongo host used by Perseo
+    * mongo_port: mongo port used by Perseo
     * mongo_database: mongo database used by Perseo
     * mongo_collection: mongo collection to store the rules
 
 - mongoOrion:
-    * mongo_host: mongo host used by Mongo-Orion
-    * mongo_port: mongo port used by Mongo-Orion
-    * mongo_database: mongo database used by Mongo-Orion
+    * mongo_host: mongo host used by Mongo-Orion fake
+    * mongo_port: mongo port used by Mongo-Orion fake
+    * mongo_database: mongo database used by Mongo-Orion fake
     * mongo_collection: mongo collection to store the context in Mongo-Orion
      Note: These are used mainly to simulate a Context Broker Mongo with  "Not Updated" functionality.
          We create a context in this mongo where will be verified if an attribute is updated on a given interval.

@@ -732,12 +732,12 @@ class Rules:
     def generate_context_fake_in_cep_mongo (self, driver, entity_id, entity_type, service_path, attribute_name, attribute_value, attribute_type="void"):
         """
         generate context fake in cep mongo that is used in not updated card (no-signal)
+        :param attribute_type:
         :param entity_id:
         :param entity_type:
         :param service_path:
         :param attribute_name:
         :param attribute_value:
-        :param attribute_type:
         :param driver: Mongo class into mongo_utils.py
         """
         ts = general_utils.generate_timestamp()
