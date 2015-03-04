@@ -68,8 +68,8 @@ get_version_string()
         release)
            version=$(get_branch)
            version=$(git describe --tags --long --match ${version#release/*}-KO)
-           echo "${version%/*}-${version#*KO-}"
-        ;;
+           echo "${version%-KO*}-${version#*KO-}"
+  ;;
         other)
             ## We are in detached mode, use the last KO tag
             version=$(git describe --tags --long --match *-KO)
@@ -112,7 +112,7 @@ is_pdi_compliant()
     "other")
        # Maybe we are on detached mode but also are compliant
        # See if there's a tag (annotated or not) describing a Kick Off
-        git describe --tags --match */KO >/dev/null 2>/dev/null
+        git describe --tags --match *-KO >/dev/null 2>/dev/null
         if [ $? -eq 0 ]; then
             echo 1
         else
@@ -124,7 +124,7 @@ is_pdi_compliant()
         # remove the leading release/ if necessary
         ver=${ver#release/*}
         # see if there's a tag (annotated or not) describing its Kick Off
-        git describe --tags --match ${ver}/KO >/dev/null 2>/dev/null
+        git describe --tags --match ${ver}-KO >/dev/null 2>/dev/null
         if [ $? -eq 0 ]; then
             echo 1
         else
@@ -133,7 +133,7 @@ is_pdi_compliant()
     ;;
     "develop")
         # see if there's a tag (annotated or not) describing a Kick Off
-        git describe --tags --match */KO >/dev/null 2>/dev/null
+        git describe --tags --match *-KO >/dev/null 2>/dev/null
         if [ $? -eq 0 ]; then
             echo 1
         else
