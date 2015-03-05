@@ -28,7 +28,7 @@ var should = require('should'),
     clients = require('../utils/clients'),
     testEnv = require('../utils/testEnvironment');
 
-describe('Notices', function() {
+describe('Version', function() {
     beforeEach(testEnv.commonBeforeEach);
     afterEach(testEnv.commonAfterEach);
 
