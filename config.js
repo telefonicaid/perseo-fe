@@ -42,7 +42,8 @@ config.endpoint = {
     actionsPath : '/actions/do',
     noticesPath : '/notices',
     vrPath : '/m2m/vrules',
-    checkPath : '/check'
+    checkPath : '/check',
+    versionPath : '/version'
 };
 
 /**
