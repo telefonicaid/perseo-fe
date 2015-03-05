@@ -1,2 +1,3 @@
+Fix entity's attributes in NSR action (#73)
 Fix #75 (undo #55) Params in updateAction is not an array
 
