@@ -14,11 +14,11 @@ This mock is used to simulate a behaviour of email client (smtp), sms client (sm
     *  usage: python perseo_mock.py <-u> <-sp=port> <-hp=port> <-i>                         *
     *           ex: python perseo_mock.py -sp=9999 -hp=9998 -i                              *
     *  parameters:                                                                          *
-    *         -u: show this usage.                                                          *
-    *         -h: help to request into the mock.                                            *
+    *        --u: show this usage.                                                          *
+    *        --h: help to request into the mock.                                            *
     *        -sp: change smtp port (by default is 9999).                                    *
     *        -hp: change http port (by default is 9998).                                    *
-    *         -i: show more info in console (by default is False).                          *
+    *        --i: show more info in console (by default is False).                          *
     *                                                                                       *
     *  Comments:                                                                            *
     *         In More Info: show Message addressed from and data.                           *
