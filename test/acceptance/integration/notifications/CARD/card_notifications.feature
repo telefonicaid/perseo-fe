@@ -120,7 +120,7 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
     | test_40000_card_002 | room.*      | SendSmsMibAction | temperature_0 attribute has value <<<${temperature_0}>>> and the identity id is room_1 | 123456789       |
     | test_40000_card_003 | room_.*     | updateAttribute  | DANGER                                                                                 | ALARM           |
 
-  @not_updated_card @skip @BUG_ISSUE_73
+  @not_updated_card @BUG_ISSUE_73
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only not_updated_card and actions cards
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "my_tenant" and service "/my_service"
