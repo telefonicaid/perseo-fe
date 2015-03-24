@@ -25,97 +25,130 @@
 __author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
 
-
-from lettuce import world
 import pymongo
 
 class Mongo:
-    client     = None
-    db         = None
-    host       = None
-    port       = None
-    database   = None
+    """
+    Mongo Management Class
+    """
 
+    def __init__(self,  mongo_host, mongo_port, mongo_database, mongo_collection=u''):
+        """
+        constructor class
+        :param mongo_host:  mongo hostname
+        :param mongo_port: mongo port
+        :param mongo_database: mongo current database
+        :param mongo_collection: mongo current collection
+        """
+        self.host = mongo_host
+        self.port = mongo_port
+        self.database_name = mongo_database
+        self.collection_name = mongo_collection
 
-    def __init__(self,  mongo_host, mongo_port, mongo_database, mongo_collection):
-        global host, port, database, collection
-        host = mongo_host
-        port = mongo_port
-        database = mongo_database
-        world.collection = mongo_collection
+    def choice_database(self, name):
+        """
+        Access to another database
+        :param name: database name
+        """
+        self.database_name = name
+
+    def get_current_database(self):
+        """
+        get current database
+        :return: string
+        """
+        return self.database_name
 
     def connect(self):
         """
-        connect to mongo db
-        :param mongo_uri: Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname
+        connect to mongo
+        Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname
         """
-        global client, db
-        mongo_uri = "mongodb://%s:%s/%s" % (host, port, database)
+        self.mongo_uri = "mongodb://%s:%s/%s" % (self.host, self.port, self.database_name)
         try:
-            client = pymongo.MongoClient(mongo_uri)
-            db = client.get_default_database()
+            self.client = pymongo.MongoClient(self.mongo_uri)
+            self.current_database = self.client.get_default_database()
+            if self.collection_name != u'':
+                self.current_collection = self.current_database[self.collection_name]
+            else:
+                return " WARN - the collection has not been selected..."
         except Exception, e:
              assert False, " ERROR - Connecting to MongoDB...\n %s " % (str(e))
 
-    def current_collection(self, name):
+    def choice_collection(self, name):
         """
-        Access to a collection in a db
-        :param db: db used
+        Access to another collection in the current database
         :param name: collection name
         """
-        global db
         try:
-            return db[name]
+            self.collection_name = name
+            self.current_collection = self.current_database[name]
         except Exception, e:
             assert False, " ERROR - Accessing to collection %s in MongoDB...\n %s" % (name, str(e))
 
-    def insert_data (self,collection, data):
+    def get_current_connection(self):
+        """
+        get current connection data (host, port, database. collection)
+        :return: collection dict
+        """
+        return self.current_collection
+
+    def insert_data(self, data):
         """
         Insert a new document in a collection
+        :param data:
         """
         try:
-            collection.insert(data)
+            self.current_collection.insert(data)
         except Exception, e:
-            assert False, " ERROR - Inserting data into %s in MongoDB...\n %s" % (str(collection), str(e))
+             assert False, " ERROR - Inserting data into %s in MongoDB...\n %s" % (str(self.current_collection), str(e))
 
-    def update_data (self,collection, query, data):
+    def update_data(self, data, query={}):
         """
-        update a document in a collection
+        update a document in a collection using a query
+        :param data:
+        :param query:
         """
         try:
-            collection.update(query, data)
+            self.current_collection.update(query, data)
         except Exception, e:
-            assert False, " ERROR - Updating data in a collection %s in MongoDB...\n %s" % (collection, str(e))
+             assert False, " ERROR - Updating data in a collection %s in MongoDB...\n %s" % (self.current_collection, str(e))
 
-    def find_data (self, collection, query):
+    def find_data(self, query={}):
         """
-        find a set of data in a collection
+        find a set of data in the current collection using a collection
+        :param query:
         :return: cursor
         """
         try:
-            return collection.find(query)
+            return self.current_collection.find(query)
         except Exception, e:
-            assert False, " ERROR - Searching data from a collection %s in MongoDB...\n %s" % (collection, str(e))
+            assert False, " ERROR - Searching data from a collection %s in MongoDB...\n %s" % (self.current_collection, str(e))
 
-    def drop_collection (self, collection):
+    def drop_collection(self):
         """
-        remove a collection in mongo db
-        :param db:
-        :param collection:
+         drop the current collection
         """
-        global db
         try:
-            db.drop_collection(collection)
+            self.current_database.drop_collection(self.collection_name)
         except Exception, e:
-            assert False, " ERROR - Deleting a collection %s in MongoDB...\n %s" % (collection, str(e))
+            assert False, " ERROR - Deleting a collection %s in MongoDB...\n %s" % (self.current_collection, str(e))
 
-    def disconnect (self):
+    def drop_database(self):
         """
-        disconnect to mongo db
+        remove the current database
         """
-        global client
         try:
-            client.close()
+            self.client.drop_database(self.database_name)
         except Exception, e:
-             assert False, " ERROR - Disconnecting to MongoDB...\n %s " % (str(e))
+            assert False, " ERROR - Deleting a database %s in MongoDB...\n %s" % (self.current_collection, str(e))
+
+    def disconnect(self):
+        """
+        disconnect to mongo
+        """
+        try:
+            self.client.close()
+        except Exception, e:
+             assert False, " ERROR - Disconnecting to MongoDB...\n %s\n%s " % (self.current_collection, str(e))
 

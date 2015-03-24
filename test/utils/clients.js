@@ -103,6 +103,11 @@ function PostAction(action, callback) {
     var url = util.format('http://%s:%s%s', config.endpoint.host, config.endpoint.port, config.endpoint.actionsPath);
     commonRequest('post', url, action, callback);
 }
+function GetVersion(callback) {
+    var url = util.format('http://%s:%s%s', config.endpoint.host,
+        config.endpoint.port, config.endpoint.versionPath);
+    commonRequest('get', url, null, callback);
+}
 
 module.exports.PostVR = PostVR;
 module.exports.DeleteVR = DeleteVR;
@@ -118,3 +123,5 @@ module.exports.GetAllRules = GetAllRules;
 module.exports.PostNotice = PostNotice;
 
 module.exports.PostAction = PostAction;
+
+module.exports.GetVersion = GetVersion;

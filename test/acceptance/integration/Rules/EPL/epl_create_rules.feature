@@ -69,7 +69,7 @@ Feature: Append a new rule in Perseo manager
     | test_34               |
     | tenant length allowed |
 
-  @tenant_error @BUG_29
+  @tenant_error @BUG__ISSUE_29
   Scenario Outline: try to append a new rule with differents values in the tenant
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "<tenant>" and service "default"
@@ -106,7 +106,7 @@ Feature: Append a new rule in Perseo manager
     | /test34_2                            |
     | servicepath length allowed one level |
 
-  @service_path_error @BUG_32
+  @service_path_error @BUG__ISSUE_32
   Scenario Outline: try to append a new rule with differents values in the service path
     Given Perseo manager is installed correctly to "append"
     And configured with tenant "tenant" and service "<service_path>"
@@ -239,6 +239,23 @@ Feature: Append a new rule in Perseo manager
     | tester_1220 | email     | (email rule)  | qwwqe@wewqe.com    |
     | tester_1330 | update    | (update rule) | sdfsdfsd           |
     | tester_1440 | post      | (post rule)   | http://10.10.10.10 |
+
+  @rule_type_error @issue35
+  Scenario Outline: try to append a new rule with rule types wrong
+    Given Perseo manager is installed correctly to "append"
+    And configured with tenant "default" and service "default"
+    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
+    Then I receive an "Bad Request" http code
+  Examples:
+    | rule_name    | rule_type | template_info | parameters         |
+    | tester_11001 |           | (SMS rule)    | 00123456789        |
+    | tester_11002 | SMS       | (SMS rule)    | 00123456789        |
+    | tester_11003 | fdsfsd    | (SMS rule)    | 00123456789        |
+    | tester_12204 | EMAIL     | (email rule)  | qwwqe@wewqe.com    |
+    | tester_13305 | UPDATE    | (update rule) | sdfsdfsd           |
+    | tester_14406 | POST      | (post rule)   | http://10.10.10.10 |
+    | tester_14407 | 11111     | (post rule)   | http://10.10.10.10 |
 
   @rule_parameters
   Scenario Outline: append a new rule with differents rule types

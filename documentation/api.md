@@ -45,3 +45,8 @@ CRUD for Visual Rules. Originally detailed in [DCA documentation](https://colabo
 | POST   | /m2m/vrules |
 | DELETE | /m2m/vrules/{id} |
 | PUT    | /m2m/vrules/{id} |
+
+### Version
+| Method | Path | Description|
+| ------ |:-----|-----------|
+| POST   | /version | Get version of perseo|

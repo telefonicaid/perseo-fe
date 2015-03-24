@@ -154,7 +154,6 @@ RULE_CARD_DICT = {NAME: None,
                  CARDS: []
 }
 
-CEP_MONGO_RULES_COLLECTION =u'rules'
 
 
 class Rules:
@@ -189,10 +188,10 @@ class Rules:
     def __create_headers(self, operation=EPL):
         """
         create the header for different requests
-        :param content: "xml" or "json"
+        :param operation: EPL o visual_rules
         :return: headers dictionary
         """
-        content="json"
+        content = general_utils.JSON
         value = {HEADER_ACCEPT: HEADER_APPLICATION + content, HEADER_CONTENT_TYPE: HEADER_APPLICATION + content, HEADER_TENANT: self.tenant, HEADER_SERVICE_PATH: self.service_path}
         if operation == VISUAL_RULES:
             value[X_AUTH_TOKEN] = X_AUTH_TOKEN_VALUE
@@ -269,10 +268,12 @@ class Rules:
     def create_epl_rule (self, rule_type, template_info, parameters, EPL):
         """
          Create a new epl rule
+        :param EPL: EPL query
         :param template_info: template info to sms or email types
         :param rule_type: rule type
         :param parameters: several parameter depending of rule type
         """
+        self.parameters_value = EMPTY
         self.parameters = {}
         self.parameters=self.__generate_parameters(rule_type, parameters)
         payload_dict = {NAME: self.rule_name,
@@ -286,6 +287,7 @@ class Rules:
 
         if rule_type == UPDATE_EPL_TYPE:  # update action does not use template
             del payload_dict [ACTION][TEMPLATE]
+            self.parameters_value = self.parameters [VALUE] #used in validations
         if rule_type == POST_EPL_TYPE:
               template_post = {MESSAGE: payload_dict[ACTION][TEMPLATE]}
               template_post_str = general_utils.convert_dict_to_str(template_post, general_utils.JSON)
@@ -295,9 +297,11 @@ class Rules:
         self.resp =  http_utils.request(http_utils.POST, url=self.__create_url(APPEND_EPL_RULE), headers=self.__create_headers(),data=payload)
         return self.resp
 
-    def create_several_epl_rules(self, prefix_name, rule_number, rule_type):
+    def create_several_epl_rules(self, prefix_name, rule_number, rule_type, parameters=EMPTY):
         """
         create N rules with the same rule type
+        :param prefix_name:
+        :param parameters:
         :param rule_number: quantity of rules created
         :param rule_type: rule type
         """
@@ -314,11 +318,11 @@ class Rules:
             epl = self.generate_EPL (self.rule_name, self.identity_type, self.attributes_number, self.epl_attribute_data_type, self.epl_operation, self.epl_value)
             self.create_epl_rule (self.rule_type, template_info, parameters, epl)
 
-    def get_parameters (self):
+    def get_parameters_value (self):
         """
         get parameters
         """
-        return self.parameters
+        return self.parameters_value
 
     def get_rules_number(self):
         """
@@ -330,6 +334,7 @@ class Rules:
     def read_a_rule_name (self, name):
         """
          Read the rule name in perseo
+        :param name:
         """
         return  http_utils.request(http_utils.GET, url=self.__create_url(GET_EPL_RULE, name), headers=self.__create_headers())
 
@@ -344,6 +349,8 @@ class Rules:
     def __one_parameter (self, name, value):
         """
         create one parameter to userParams in action card
+        :param name: parameter name
+        :param value: parameter value
         :return: dict with name and value
         """
         return {NAME:EMPTY.join(name), VALUE:EMPTY.join(value)}
@@ -355,17 +362,19 @@ class Rules:
         :param response: message in email or sms
         :param parameters: mobile number or address email account
         """
+        self.parameters_value = EMPTY
         temp_list = []
         email_parameters_list  = [{AC_MAIL_FROM: AC_MAIL_FROM_VALUE}, {AC_MAIL_TO: parameters}, {AC_MAIL_SUBJECT: AC_MAIL_SUBJ_VALUE}, {AC_MAIL_MESSAGE: response + " -- (Email rule)"}]
         sms_parameters_list    = [{AC_SMS_TO: parameters}, {AC_SMS_MESSAGE: response + " -- (SMS rule)"}]
-        update_parameters_list = [{parameters: response}]
+        update_parameters_list = {parameters: response}  # update action card is not a list
 
         if action_type == AC_EMAIL_TYPE:
             user_params = email_parameters_list
         elif action_type == AC_SMS_TYPE:
             user_params = sms_parameters_list
         elif action_type == AC_UPDATE_TYPE:
-            user_params = update_parameters_list
+            self.parameters_value = response
+            return self.__one_parameter (update_parameters_list.keys(), update_parameters_list.values())
         for i in range(0, len(user_params)):
             temp_list.append(self.__one_parameter (user_params[i].keys(), user_params[i].values()))
         return  temp_list
@@ -460,20 +469,20 @@ class Rules:
         :param: parameters: used sms(mobile number), email (email.to) and update (attribute)
         """
         ac_id_card       = kwargs.get(ID,EMPTY)
-        action_card_type = kwargs.get(ACTION_CARD_TYPE, EMPTY)
+        self.rule_type   = kwargs.get(ACTION_CARD_TYPE, EMPTY)
         connected_to     = kwargs.get(CONNECTED_TO, EMPTY)
         response         = kwargs.get(RESPONSE, EMPTY)
-        parameters       = kwargs.get(PARAMETERS, EMPTY)
+        self.parameters  = kwargs.get(PARAMETERS, EMPTY)
 
-        assert action_card_type == AC_EMAIL_TYPE or action_card_type == AC_SMS_TYPE or action_card_type == AC_UPDATE_TYPE, \
-            "ERROR - ActionCard type does not is allowed: %s" % (action_card_type)
+        assert self.rule_type == AC_EMAIL_TYPE or self.rule_type == AC_SMS_TYPE or self.rule_type == AC_UPDATE_TYPE, \
+            "ERROR - ActionCard type does not is allowed: %s" % (self.rule_type)
         action_card = {ID:ac_id_card,
                        CONNECTED_TO:[connected_to],
                        TYPE:ACTION_CARD,
                        ACTION_DATA:{
-                                    USER_PARAMS: self.__generate_card_parameters (action_card_type, response, parameters),
-                                    NAME: action_card_type,
-                                    TYPE: action_card_type
+                                    USER_PARAMS: self.__generate_card_parameters (self.rule_type, response, self.parameters),
+                                    NAME: self.rule_type,
+                                    TYPE: self.rule_type
                                    }
                        }
         RULE_CARD_DICT [CARDS].append(action_card)
@@ -510,7 +519,6 @@ class Rules:
         create a new card rule
         :param rule_name: rule name
         :param active: if is active ("1") or not ("0")
-        :return: card rule dict
         """
         RULE_CARD_DICT[NAME]   = rule_name
         self.rule_name = RULE_CARD_DICT[NAME]
@@ -522,6 +530,8 @@ class Rules:
     def create_several_visual_rules(self, step, rule_number, prefix, ac_card_type):
         """
         Create N visual rules with N sensor cards and an action card
+        :param prefix: prefix used in rule name
+        :param ac_card_type: rule type in action card
         :param step: append sensor cards into the visual rule [{"sensorCardType", "notUpdated"}, {"sensorCardType", "regexp"}]
                      the format of the table is:
                      | sensorCardType |
@@ -576,7 +586,6 @@ class Rules:
             self.create_rule_card("%s_%s_%s" % (prefix, str(i), self.rule_type), "1")   # the dictionary is initialized when finished to create a rule
             RULE_CARD_DICT = temp_dict                                         # restore the same dictionary to repeat multiples rules, only change the name
 
-
     def get_all_visual_rules(self):
         """
         get all visual rules stored
@@ -594,19 +603,28 @@ class Rules:
     def rule_name_to_try_to_delete_but_it_does_not_exists (self, name):
         """
         rule name to try to delete but it does not exists
-        :param name: this name does not exists
+        :param name: rule name, generally, this name does not exists
         """
         self.rule_name = name
 
     def update_a_visual_rule(self, rule_name):
         """
         update a visual rule existent
+        :param rule_name:
         """
         RULE_CARD_DICT[NAME]   = rule_name
         self.rule_name = RULE_CARD_DICT[NAME]
         payload = general_utils.convert_dict_to_str(RULE_CARD_DICT, general_utils.JSON)
         self.resp = http_utils.request(http_utils.PUT, url=self.__create_url(UPDATE_CARD_RULE, self.rule_name), headers=self.__create_headers(VISUAL_RULES), data=payload)
         return RULE_CARD_DICT
+
+    def get_not_updated_attr_value (self):
+        """
+        get attribute value in context fake to not updated (no-signal)
+        :return: string
+        """
+        return RULE_CARD_DICT [CARDS]
+
 
     #---------------------- DELETE ----------------------------------------------------------------
     def delete_one_rule(self, method, name=EMPTY):
@@ -621,6 +639,8 @@ class Rules:
     def delete_rules_group(self, method, prefix):
         """
         delete all rules created with a prefix and a rule type in a method (EPL or visual_rules)
+        :param method: method (EPL or visual_rules)
+        :param prefix: prefix used in rule name
         """
         for i in range (0, self.rules_number):
             self.delete_one_rule(method, "%s_%s_%s" % (prefix, str(i), self.rule_type))
@@ -637,8 +657,6 @@ class Rules:
     def validate_rule_response(self):
         """
         validate rule in response
-        :param name: rule name
-        :param code: http code
         """
         temp_dict=general_utils.convert_str_to_dict(self.resp.text,general_utils.JSON)
         assert temp_dict["error"] == None, \
@@ -647,9 +665,9 @@ class Rules:
     def validate_delete_rule (self, exist=1):
         """
         validate that the rule is deleted
+        :param exist: 1 exist rule before delete  - 0 rule does not exist before delete
         """
         dict_temp = general_utils.convert_str_to_dict(self.resp.text,general_utils.JSON)
-         #1 exist rule before delete  - 0 rule does not exist before delete
         assert  dict_temp[DATA][0] == exist,\
             "ERROR - the rule %s does not exist..." % (self.rule_name)
 
@@ -684,10 +702,10 @@ class Rules:
     def validate_card_rule_in_mongo(self, driver):
         """
         Validate that card rule is created successfully in db
+        :param driver: Mongo class into mongo_utils.py
         """
         temp_name = None
-        collection_dict = driver.current_collection(CEP_MONGO_RULES_COLLECTION)
-        cursor =  driver.find_data(collection_dict, {NAME: RULE_CARD_DICT[NAME]})
+        cursor =  driver.find_data({NAME: RULE_CARD_DICT[NAME]})
         for doc in cursor:
             temp_name = doc[NAME]
         assert temp_name == RULE_CARD_DICT[NAME], "The rule %s has not been created..." % (RULE_CARD_DICT[NAME])
@@ -695,9 +713,9 @@ class Rules:
     def card_rule_does_not_exists_in_mongo(self, driver):
         """
         Validate that card rule does not exists in db
+        :param driver: Mongo class into mongo_utils.py
         """
-        collection_dict = driver.current_collection(CEP_MONGO_RULES_COLLECTION)
-        cursor =  driver.find_data(collection_dict, {NAME: RULE_CARD_DICT[NAME]})
+        cursor =  driver.find_data({NAME: RULE_CARD_DICT[NAME]})
         for doc in cursor:
             if doc[NAME] == RULE_CARD_DICT[NAME]:
                 return True
@@ -710,3 +728,31 @@ class Rules:
         dict_temp = general_utils.convert_str_to_dict(self.resp.text, general_utils.JSON)
         if dict_temp.has_key (COUNT):
             assert str(dict_temp [COUNT]) == str(self.rules_number), "ERROR - all visual rules have not been returned.\n    sent: %s\n    stored:%s" % (str(self.rules_number), str(dict_temp [COUNT]))
+
+    def generate_context_fake_in_cep_mongo (self, driver, entity_id, entity_type, service_path, attribute_name, attribute_value, attribute_type="void"):
+        """
+        generate context fake in cep mongo that is used in not updated card (no-signal)
+        :param attribute_type:
+        :param entity_id:
+        :param entity_type:
+        :param service_path:
+        :param attribute_name:
+        :param attribute_value:
+        :param driver: Mongo class into mongo_utils.py
+        """
+        ts = general_utils.generate_timestamp()
+        CONTEXT_DATA = {'creDate': ts,
+                        '_id': {
+                            'type': entity_type,
+                            'id': entity_id,
+                            'servicePath': service_path},
+                        'attrs': [{
+                                      'creDate': ts,
+                                      'type': attribute_type,
+                                      'name': attribute_name,
+                                      'value': attribute_value,
+                                      'modDate': ts}],
+                        'modDate': ts}
+        # insert a context in mongo to simulate a context in orion
+        driver.insert_data(CONTEXT_DATA)
+

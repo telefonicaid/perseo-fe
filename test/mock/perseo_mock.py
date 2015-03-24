@@ -106,7 +106,6 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                    print "post counter: " + str(post_number)
        except Exception, e:
            print "WARN - "+ str(e)
-           #print mock_config.WARN + mock_config.CONTENT_LENGTH_WARN_MSG
 
     def do_GET(s):
         """
