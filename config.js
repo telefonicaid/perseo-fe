@@ -43,7 +43,7 @@ config.endpoint = {
     noticesPath : '/notices',
     vrPath : '/m2m/vrules',
     checkPath : '/check',
-    versionPath: '/version'
+    versionPath : '/version'
 };
 
 /**
