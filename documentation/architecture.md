@@ -53,7 +53,7 @@ Some actions consist on making an HTTP POST to an URL provided as parameter of t
 
 ### Authorization server
 
-The interaction with a Context Broker through a PEP proxy requires an access token that must be refreshed periodically. The "trust token" associated wiht a rule that executes an update-action must be exchanged by an "access token" at the Authorization Server, when the access token has expired.
+The interaction with a Context Broker through a PEP proxy requires an access token that must be refreshed periodically. The "trust token" associated with a rule that executes an update-action must be exchanged by an "access token" at the Authorization Server, when the access token has expired.
 
 <a name="Concepts"></a>
 ## Concepts
