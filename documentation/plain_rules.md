@@ -114,6 +114,7 @@ Updates an specified attribute of a given entity (in the Context Broker instance
 * type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that triggers the rule is usedi.e. `${type}`)
 * isPattern: optional, `false` by default
 * attrType: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is changed).
+* trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context Broker behind a PEP.
 
 The values of these fiels can be either literal values or use `${X}` substitution macros, where `X` may be:
 
