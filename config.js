@@ -90,8 +90,8 @@ config.perseoCore = {
  * NEXT EPL core options (with HA)
  */
 config.nextCore = {
-    rulesURL : 'http://demo-dca-be-01:8080/perseo-core/rules',
-    noticesURL : 'http://demo-dca-be-01:8080/perseo-core/events'
+    rulesURL : 'http://next-core:8080/perseo-core/rules',
+    noticesURL : 'http://next-core:8080/perseo-core/events'
 };
 
 
@@ -100,14 +100,14 @@ config.nextCore = {
  */
 config.smtp = {
     port : 25,
-    host : 'tid'
+    host : 'smtpserver'
 };
 
 /**
  * SMS endpoint options
  */
 config.sms = {
-    URL : 'http://locahost/smsoutbound',
+    URL : 'http://sms-endpoint/smsoutbound',
     API_KEY : '',
     API_SECRET: '',
     from: 'tel:22012;phone-context=+34'
@@ -117,7 +117,17 @@ config.sms = {
  * Orion (Context Broker) endpoint options
  */
 config.orion = {
-    URL : 'http://qa-orion-fe-02.hi.inet:1026/NGSI10/updateContext'
+        URL : 'http://orion-endpoint:1026/NGSI10/updateContext'
+};
+
+/**
+ * Authorization endpoint
+ */
+config.authentication = {
+    host: 'keystone',
+    port: '5001',
+    user: 'user',
+    password: 'password'
 };
 
 /**
@@ -148,4 +158,3 @@ config.DEFAULT_SERVICE= '/';
 config.DEFAULT_TENANT= 'unknownt';
 
 module.exports = config;
-

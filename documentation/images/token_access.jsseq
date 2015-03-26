@@ -1,0 +1,10 @@
+perseo->Context Broker&PEP: update entity
+Context Broker&PEP->perseo: authorization error (401)
+Note over perseo: Access token exired,\n use trust token from rule
+perseo->Auth Server: get access token
+Auth Server-->perseo:access token
+Note over perseo: use new access token
+perseo->Context Broker&PEP: update entity
+Context Broker&PEP-->perseo: ok
+perseo->mongodb:updateLastExecution
+mongodb-->perseo:ok

@@ -24,5 +24,11 @@ Options for HA:
 * `config.nextCore.rulesURL`: URL for management of EPL rules at *replicated* core. If set, the rules will be propagated to that one also.
 * `config.nextCore.noticesURL`: URL for processing events at *replicated* core rule engine. If set, the events will be propagated to that one also.
 
+Options for Authentication through PEP (for update action)
+* `config.authentication.host`: host (keyStone) to exchange trust tokens for access tokens
+* `config.authentication.port`: port,
+* `config.authentication.user`: provisioned user for CEP in Keystone
+* `config.authentication.password`: provisioned password for CEP in Keystone
+
 
 URL format for mongoDB could be found at http://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html
