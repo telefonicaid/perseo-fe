@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# perseo         Start/Stop the PEP Proxy
+# perseo         Start/Stop Perseo
 #
 # chkconfig: 2345 99 60
 # description: perseo-fe
