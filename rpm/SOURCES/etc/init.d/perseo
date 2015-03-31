@@ -6,7 +6,7 @@
 # description: perseo-fe
 ### BEGIN INIT INFO
 # Provides: perseo
-# Required-Start: $local_fs $syslog
+# Required-Start: $local_fs $syslog mongod tomcat
 # Required-Stop: $local_fs $syslog
 # Default-Start:  345
 # Default-Stop: 90
