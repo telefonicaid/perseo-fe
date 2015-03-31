@@ -93,11 +93,11 @@ def __usage():
     print " *  usage: python perseo_mock.py <-u> <-sp=port> <-hp=port> <-i>                        *"
     print " *           ex: python perseo_mock.py -sp=9999 -hp=9998 -i                             *"
     print " *  parameters:                                                                         *"
-    print " *         -u: show this usage.                                                         *"
-    print " *         -h: help to request into the mock.                                           *"
+    print " *        --u: show this usage.                                                         *"
+    print " *        --h: help to request into the mock.                                           *"
     print " *        -sp: change smtp port (by default is 9999).                                   *"
     print " *        -hp: change http port (by default is 9998).                                   *"
-    print " *         -i: show more info in console (by default is False).                         *"
+    print " *        --i: show more info in console (by default is False).                         *"
     print " *                                                                                      *"
     print " *  Comments:                                                                           *"
     print " *         In More Info: show Message addressed from and data.                          *"
@@ -145,8 +145,8 @@ def configuration (arguments):
     """
     global SMTP_PORT, HTTP_PORT,  MORE_INFO
     for i in range(len(arguments)):
-        if arguments[i].find('-u') >= 0: __usage()
-        if arguments[i].find('-h') >= 0: __help()
+        if arguments[i].find('--u') >= 0: __usage()
+        if arguments[i].find('--h') >= 0: __help()
         try:
             if arguments[i].find('-sp') >= 0:
                  error_msg = "smtp port parameter"
@@ -154,7 +154,7 @@ def configuration (arguments):
             if arguments[i].find('-hp') >= 0:
                  error_msg = "http port parameter"
                  HTTP_PORT = int (str(arguments[i]).split("=")[1])
-            if arguments[i].find('-i') >= 0:
+            if arguments[i].find('--i') >= 0:
                  error_msg = "More info parameter"
                  MORE_INFO = True
         except Exception, e:

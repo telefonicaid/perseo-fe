@@ -55,10 +55,11 @@ Alarm ID | Severity | Description | Action
 [DEL_RULE](#del_rule)|Major|Deleting a rule at core is failing.|Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path.
 [PUT_RULE](#put_rule)|Major|Updating a rule at core is failing.|Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path.
 [POST_EVENT](#post_event)|Critical|Sending an event to core is failing.|Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path.
-[EXEC_ACTION](#exec_action)|Critical|Trying to execute an action is failing. (The endpoint can be Orion for update actions or the SMS Gateway for sending SMS)|Check HTTP connectivity to endpoint from perseo. Check the endpoint is working properly
-[EXEC_EMAIL](#exec_email)|Critical|Trying to execute an email action is failing.|Check the configured SMTP Server is accesible and working properly
-[CHECK_MASTER](#check_master)|Major|A "slave" perseo has lost visibility of master.|Check the configured SMTP Server is accesible and working properly
-[DATABASE](#database)|Critical|There is a problem in connection to DB. It can be the perseo database or the Orion database (accessed by no-signal checker|Check configured mongoDB is up and running and is accesible from perseo. Check that databases exist in mongoDB.
+[EXEC_ACTION](#exec_action)|Critical|Trying to execute an action is failing. (The endpoint can be Orion for update actions or the SMS Gateway for sending SMS)|Check HTTP connectivity to endpoint from perseo. Check the endpoint is working properly.
+[EXEC_EMAIL](#exec_email)|Critical|Trying to execute an email action is failing.|Check the configured SMTP Server is accessible and working properly.
+[CHECK_MASTER](#check_master)|Major|A "slave" perseo has lost visibility of master.|Check the configured SMTP Server is accessible and working properly.
+[DATABASE](#database)|Critical|There is a problem in connection to DB. It can be the perseo database or the Orion database (accessed by no-signal checker|Check configured mongoDB is up and running and is accessible from perseo. Check that databases exist in mongoDB.
+[AUTH](#auth)|Major|There is a problem in connection to Keystone. Update-actions to Orion through PEP are not working|Check HTTP connectivity to Keystone. Check provisioned user and roles/grants.
 
 <a name="start"></a>
 ### Alarm START
@@ -170,7 +171,7 @@ ____
 
 **Description**: Trying to execute an email action is failing.
 
-**Action**: Check the configured SMTP Server is accesible and working properly
+**Action**: Check the configured SMTP Server is accessible and working properly
 ____
 <a name="check_master"></a>
 ### Alarm CHECK_MASTER
@@ -183,7 +184,7 @@ ____
 
 **Description**: A "slave" perseo has lost visibility of master.
 
-**Action**: Check perseo-master is up and running and is accesible from perseo-slave
+**Action**: Check perseo-master is up and running and is accessible from perseo-slave
 
 ____
 <a name="database"></a>
@@ -197,6 +198,21 @@ ____
 
 **Description**: There is a problem in connection to DB. It can be the perseo database or the Orion database (accessed by no-signal checker)
 
-**Action**: Check configured mongoDB is up and running and is accesible from perseo. Check that databases exist.
+**Action**: Check configured mongoDB is up and running and is accessible from perseo. Check that databases exist.
+
+____
+<a name="auth"></a>
+### Alarm AUTH
+
+**Severity**: Major
+
+**Detection strategy:** `lvl`:`ERROR` `msg`:`error retrieving token from Keystone`
+
+**Stop condition**: `lvl`:`INFO` `msg`:`token generated successfully`
+
+**Description**: There is a problem in connection to Keystone. Update-actions to Orion through PEP are not working.
+
+**Action**: Check HTTP connectivity to Keystone. Check provisioned user and roles/grants.
+
 
 

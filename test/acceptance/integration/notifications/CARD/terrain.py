@@ -25,11 +25,14 @@
 __author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
 
+
 from lettuce import world, after, before
 import time
 from tools.cep import CEP
 import tools.general_utils
+from tools.notification_utils import Notifications
 from tools.mongo_utils import Mongo
+
 
 @before.all
 def before_all_scenarios():
@@ -65,15 +68,17 @@ def before_each_scenario(scenario):
                              card_active = world.config['CEP']['cep_card_active'],
                              retries_number = world.config['CEP']['cep_retries_received_in_mock'],
                              retry_delay = world.config['CEP']['cep_delay_to_retry']
-    )
-
-    world.cep_mongo = Mongo (world.config['MongoDB']['mongo_host'],
-                             world.config['MongoDB']['mongo_port'],
-                             world.config['MongoDB']['mongo_database'],
-                             world.config['MongoDB']['mongo_collection']
 
     )
-    world.cep_mongo.connect()
+
+    world.notification = Notifications(world.config['CEP']['cep_url'])
+
+    world.cep_orion_mongo = Mongo (world.config['MongoOrion']['mongo_host'],
+                                   world.config['MongoOrion']['mongo_port'],
+                                   world.config['MongoOrion']['mongo_database'],
+                                   world.config['MongoOrion']['mongo_collection']
+    )
+
 
 @after.each_scenario
 def after_each_scenario(scenario):
@@ -81,8 +86,7 @@ def after_each_scenario(scenario):
     actions after each scenario
     :param scenario:
     """
-    world.cep_mongo.disconnect()
-
+    pass
 
 @after.all
 def after_all_scenarios(scenario):

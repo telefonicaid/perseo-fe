@@ -192,6 +192,24 @@ Feature: Update a rule in Perseo manager using cards from portal
     | test_80000000003 | room_*      | updateAttribute  | DANGER                       | ALARM           |
     | test_80000000004 | room.*      | SendSmsMibAction | lemail body ${measure.value} | 123456789       |
 
+  @id_card_error
+  Scenario Outline: try to update a rule created previously in Perseo manager using card from portal using only id card and actions cards
+    Given Perseo manager is installed correctly to "append"
+    And configured with tenant "my_tenant" and service "/my_service"
+    # create a new visual rule
+    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
+    And append a new rule name "<rule_name>", activate "1"
+    # update the same visual rule with an action card
+    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "parameter_changed" and connect to "card_8"
+    When update a visual rule "<rule_name>"
+    Then I receive an "Bad Request" http code
+  Examples:
+    | rule_name        | identity_id | action           | response                    | parameters      |
+    | test_80000000005 | *****       | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
+    | test_80000000006 | r[1-        | SendSmsMibAction | sms body ${measure.value}   | 123456789       |
+
   @not_updated_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only not updated card without action card
     Given Perseo manager is installed correctly to "append"

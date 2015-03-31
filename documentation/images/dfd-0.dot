@@ -7,6 +7,7 @@ digraph dfd0 {
 	oriondb[label="Orion DB"] [shape=box];
 	http[label="HTTP Server"] [shape=box];
 	portal[label="Portal"] [shape=box];
+	auth[label="Auth server"] [shape=box];
 
 	perseo -> sms [label="action"];
 	perseo -> smtp [label="action"];
@@ -16,6 +17,8 @@ digraph dfd0 {
 	portal -> perseo [label="rules"];
 	perseo -> portal [label="rules"];
 	oriondb -> perseo [label="entity"];
+	perseo -> auth [label="trust token"];
+	auth -> perseo [label="access token"];
 
 	{ rank=uno; sms smtp http  }
 	{ rank=two; orion oriondb portal }

@@ -114,8 +114,9 @@ Updates an specified attribute of a given entity (in the Context Broker instance
 * type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that triggers the rule is usedi.e. `${type}`)
 * isPattern: optional, `false` by default
 * attrType: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is changed).
+* trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context Broker behind a PEP.
 
-The values of these fiels can be either literal values or use `${X}` substitution macros, where `X` may be:
+The values of these fields can be either literal values or use `${X}` substitution macros (except trust), where `X` may be:
 
 * `id` for the id of the entity that triggers the rule. As example, if we want the entity with "id" `sensor1` to update the entity with "id" `sensor1_friend` we should set the `id` field in `parameters` with the value `"${id}_friend"`
 * `type` for the type of the entity that triggers the rule
@@ -133,6 +134,10 @@ The values of these fiels can be either literal values or use `${X}` substitutio
     }
 ```
 The `name` parameter cannot take `id` or `type` as a value. Those values always refer to the entity's id and the entity's type and not to an attribute with any of those names. Trying to create such action will return an error.
+
+First time an update action using trust token is triggered, Perseo interacts with Keystone to get the temporal auth token corresponding to that trust token. This auth token is cached and used in every new update associated to the same action. Eventually, Perseo can receive a 401 Not Authorized due to auth token expiration. In that case, Perseo interacts again with Keystone to get a fresh auth token, then retries the update that causes the 401 (and the cache is refreshed with the new auth token for next updates).
+
+It could happen (in theory) that a just got auth token also produce a 401 Not authorized, however this would be an abnormal situation: Perseo logs the problem with the update but doesn't try to get a new one from Keystone. Next time Perseo triggers the action, the process may repeat, i.e. first update attemp fails with 401, Perseo requests a fresh auth token to Keystone, the second update attemp fails with 401, Perseo logs the problem and doesn't retry again.
 
 ### HTTP POST action
 Makes an HTTP POST to an URL specified in `url` inside `parameters`, sending a body built from `template`.

@@ -26,7 +26,7 @@ Database used by perseo for storing rules and executions of actions.
 
 ### Orion (Context Broker)
 
-Source of events from the entities it manages. Also, some actions perform an update of the entity that fired the action
+Source of events from the entities it manages. Also, some actions perform an update of the entity that fired the action. The Context Broker as a target of actions can be secured with a PEP proxy protecting
 
 ### Portal
 
@@ -51,6 +51,9 @@ Some actions send an email. It is done using an SMTP server configured in perseo
 
 Some actions consist on making an HTTP POST to an URL provided as parameter of the action. his URL can point to any host.
 
+### Authorization server
+
+The interaction with a Context Broker through a PEP proxy requires an access token that must be refreshed periodically. The "trust token" associated with a rule that executes an update-action must be exchanged by an "access token" at the Authorization Server, when the access token has expired.
 
 <a name="Concepts"></a>
 ## Concepts
@@ -260,3 +263,6 @@ In the following diagramas, Portal is depicted as the component managing rules (
 ### No-update action
 ![Imagen](images/nosignal.png)
 
+
+### Update action with token renewal
+![Imagen](images/token_access.png)
