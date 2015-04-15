@@ -48,8 +48,8 @@ Feature: Launch an action if a rule is triggered in Perseo manager
     And an identity_id "room2", with attribute number "1", attribute name "attrName" and attribute type "celcius"
     When receives a notification with attributes value "300", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And Validate that EPL rule is triggered successfully
+    And delete a EPL rule created
   Examples:
     | rule_name   | rule_type | template_info | parameters         |
     | SMS____name | sms       | (SMS rule)    | 123456789          |
@@ -63,12 +63,12 @@ Feature: Launch an action if a rule is triggered in Perseo manager
     And configured with tenant "unknownt" and service "/service"
     And reset counters in mock "<rule_type>"
     And an EPL with a rule name "rules", an identity type "room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1.5"
-    And create "<rule_number>" rules with prefix "<prefix_name>" and "<rule_type>" type
+    And create "<rule_number>" notification rules with prefix "<prefix_name>" and "<rule_type>" type
     And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
     When receives a notification with attributes value "300", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And Validate that all rules are triggered successfully
-    And delete all rules created
+    And Validate that all EPL rules are triggered successfully
+    And delete all EPL rules created
   Examples:
     | rule_number | prefix_name | rule_type |
     | 1           | prefix_1    | sms       |
@@ -99,8 +99,8 @@ Feature: Launch an action if a rule is triggered in Perseo manager
     And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
     When receives a notification with attributes value "300", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And Validate that EPL rule is triggered successfully
+    And delete a EPL rule created
   Examples:
     | rule_name   | attributes_number | rule_type | template_info | parameters         |
     | SMS____name | 1                 | sms       | (SMS rule)    | 123456789          |
@@ -129,7 +129,7 @@ Feature: Launch an action if a rule is triggered in Perseo manager
     And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
     When  receives a notification with attributes value "300", metadata value "True" and content "xml"
     Then I receive an "Bad Request" http code
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name   | rule_type | template_info | parameters              |
     | SMS____name | sms       | (SMS rule)    | 123456789               |
@@ -147,7 +147,7 @@ Feature: Launch an action if a rule is triggered in Perseo manager
     And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
     When receives a notification with attributes value "300", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name   | rule_type | template_info | parameters |
     | SMS____name | rtert     | (SMS rule)    | 123456789  |
@@ -164,7 +164,7 @@ Feature: Launch an action if a rule is triggered in Perseo manager
     And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
     When receives a notification with attributes value "300", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name   | rule_type | template_info | parameters      |
     | SMS____name | sms       | (SMS rule)    | 345rg           |

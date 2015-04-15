@@ -45,9 +45,9 @@ Feature: Get a rule in Perseo manager
     And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
     When Read the rule name in perseo
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is found
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name   | rule_type | template_info | parameters              |
     | SMS____name | sms       | (SMS rule)    | 123456789               |
@@ -62,9 +62,9 @@ Feature: Get a rule in Perseo manager
     And an EPL with a rule name "default", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     And create "<rule_number>" rules with prefix "<prefix_name>" and "sms" type
     When read all rules that exist in the list
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that all rules are found
-    And delete all rules created
+    And delete all EPL rules created
   Examples:
     | rule_number | prefix_name |
     | 1           | prefix_1    |

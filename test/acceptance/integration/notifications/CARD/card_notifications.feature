@@ -49,8 +49,8 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
     And an identity id "room2" and an identity type "room" with attribute number "1", attribute name "temperature" and attribute type "celcius"
     When receives a notification with attributes value "<notification_value>", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And Validate that visual rule is triggered successfully
+    And delete a visual rule created
   Examples:
     | rule_name           | operator     | attribute_value | notification_value | action           | response                                                                  | parameters      |
     | test_10000_card_001 | GREATER_THAN | 3400            | 3401               | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>>  -- (Email rule) | erwer@sdfsf.com |
@@ -69,8 +69,8 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
     And an identity id "room2" and an identity type "room" with attribute number "2", attribute name "temperature" and attribute type "celcius"
     When receives a notification with attributes value "250", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And Validate that visual rule is triggered successfully
+    And delete a visual rule created
   Examples:
     | rule_name           | action           | response                                                                                                                    | parameters      |
     | test_20000_card_001 | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> \n it is the same value to temperature_1 attribute -- (Email rule) | erwer@sdfsf.com |
@@ -89,8 +89,8 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
     And an identity id "room2" and an identity type "<identity_type_notif>" with attribute number "1", attribute name "temperature" and attribute type "celcius"
     When receives a notification with attributes value "250", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And Validate that visual rule is triggered successfully
+    And delete a visual rule created
   Examples:
     | rule_name           | identity_type_notif | operator     | action           | response                                                                                    | parameters      |
     | test_30000_card_001 | house               | EQUAL_TO     | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> and the identity type is house     | erwer@sdfsf.com |
@@ -112,8 +112,8 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
     And an identity id "room_1" and an identity type "room" with attribute number "1", attribute name "temperature" and attribute type "celcius"
     When receives a notification with attributes value "250", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And Validate that visual rule is triggered successfully
+    And delete a visual rule created
   Examples:
     | rule_name           | identity_id | action           | response                                                                               | parameters      |
     | test_40000_card_001 | room_1      | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> and the identity id is room_1 | erwer@sdfsf.com |
@@ -130,8 +130,8 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When waiting "65" seconds to verify orion contexts
-    Then Validate that rule is triggered successfully
-    And delete a rule created
+    Then Validate that visual rule is triggered successfully
+    And delete a visual rule created
     And delete orion database fake
   Examples:
     | rule_name           | identity_id | interval | max_time_WO_update | action           | response                                                                                            | parameters          |
@@ -153,8 +153,8 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
     And an identity id "<identity_id>" and an identity type "<identity_type>" with attribute number "1", attribute name "temperature" and attribute type "celcius"
     When receives a notification with attributes value "<notification_value>", metadata value "True" and content "json"
     Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And Validate that visual rule is triggered successfully
+    And delete a visual rule created
   Examples:
     | rule_name           | operator     | attribute_value | identity_id | identity_type | notification_value | action           | response                                                                  | parameters      |
     | test_10000_card_001 | GREATER_THAN | 3400            | room_1      | house         | 3401               | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>>  -- (Email rule) | erwer@sdfsf.com |

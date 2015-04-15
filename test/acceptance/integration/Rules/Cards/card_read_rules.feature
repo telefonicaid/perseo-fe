@@ -45,9 +45,9 @@ Feature: get rules in Perseo manager from portal
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    And delete a visual rule created
   Examples:
     | rule_name     | attribute_name | operator     | data_type | value | action           | response                                              | parameters      |
     | test_00000001 | temperature    | GREATER_THAN | Quantity  | 34    | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
@@ -62,9 +62,9 @@ Feature: get rules in Perseo manager from portal
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    And delete a visual rule created
   Examples:
     | rule_name     | attribute_name | operator     | data_type | value      | action           | response                          | parameters      |
     | test_10000001 | temperature    | GREATER_THAN | Quantity  | temp_refer | SendEmailAction  | email body ${measure.value}       | erwer@sdfsf.com |
@@ -79,9 +79,9 @@ Feature: get rules in Perseo manager from portal
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    And delete a visual rule created
   Examples:
     | rule_name     | identity_type | operator     | action           | response                    | parameters      |
     | test_20000001 | temperature   | EQUAL_TO     | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -97,9 +97,9 @@ Feature: get rules in Perseo manager from portal
     When append a new rule name "<rule_name>", activate "1"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    And delete a visual rule created
   Examples:
     | rule_name     | identity_id | action           | response                    | parameters      |
     | test_30000001 | room1       | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -114,9 +114,9 @@ Feature: get rules in Perseo manager from portal
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    And delete a visual rule created
   Examples:
     | rule_name     | interval | attribute_name | max_time | action           | response                    | parameters      |
     | test_40000001 | 40       | temperature    | 30       | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -131,9 +131,9 @@ Feature: get rules in Perseo manager from portal
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    And delete a visual rule created
   Examples:
     | rule_name     | epl_query                            | action           | response                    | parameters      |
     | test_50000001 | were ewrwer werwe rwrwer  wer        | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -151,9 +151,9 @@ Feature: get rules in Perseo manager from portal
       | regexp         |
       | type           |
     When read all rules
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And validate that all visual rules are returned
-    And delete all rules created
+    And delete all visual rules created
   Examples:
     | rules_number | prefix     |
     | 1            | vrules_1   |

@@ -43,9 +43,9 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is created successfully
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name   | rule_type | template_info | parameters              |
     | SMS____name | sms       | (SMS rule)    | 123456789               |
@@ -59,9 +59,9 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "<tenant>" and service "default"
     And an EPL with a rule name "name_test", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is created successfully
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | tenant                |
     | test                  |
@@ -75,7 +75,7 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "<tenant>" and service "default"
     And an EPL with a rule name "name_test", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "Bad Request" http code
+    Then I receive an "Bad Request" http code in rules request
   Examples:
     | tenant                            |
     | test-34                           |
@@ -95,9 +95,9 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "<service_path>"
     And an EPL with a rule name "name_test", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is created successfully
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | service_path                         |
     | /                                    |
@@ -112,7 +112,7 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "tenant" and service "<service_path>"
     And an EPL with a rule name "name_test", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "Bad Request" http code
+    Then I receive an "Bad Request" http code in rules request
   Examples:
     | service_path                            |
     | test                                    |
@@ -134,9 +134,9 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "<attribute_number>", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is created successfully
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name    | attribute_number |
     | tester_10000 | 1                |
@@ -150,9 +150,9 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is created successfully
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name               |
     | test                    |
@@ -170,7 +170,7 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "Bad Request" http code
+    Then I receive an "Bad Request" http code in rules request
   Examples:
     | rule_name                           |
     |                                     |
@@ -189,9 +189,9 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "<rule_name>", an identity type "<identity_type>", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is created successfully
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name | identity_type             |
     | test_02   | teste                     |
@@ -213,9 +213,9 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "<attribute_type>", an operation type "<operation>" and value "<value>"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is created successfully
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name  | attribute_type | operation | value    |
     | tester_100 | float          | >         | 1.4      |
@@ -230,9 +230,9 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is created successfully
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name   | rule_type | template_info | parameters         |
     | tester_1100 | sms       | (SMS rule)    | 00123456789        |
@@ -246,7 +246,7 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    Then I receive an "Bad Request" http code
+    Then I receive an "Bad Request" http code in rules request
   Examples:
     | rule_name    | rule_type | template_info | parameters         |
     | tester_11001 |           | (SMS rule)    | 00123456789        |
@@ -263,9 +263,9 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And Validate that rule name is created successfully
-    And delete a rule created
+    And delete a EPL rule created
   Examples:
     | rule_name    | rule_type | template_info | parameters                   |
     | tester_11000 | sms       | (SMS rule)    | 0034123456789                |
@@ -286,10 +286,10 @@ Feature: Append a new rule in Perseo manager
     And configured with tenant "default" and service "default"
     And an EPL with a rule name "default", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     When create "<rule_number>" rules with prefix "<prefix_name>" and "sms" type
-    Then I receive an "OK" http code
+    Then I receive an "OK" http code in rules request
     And read all rules that exist in the list
     And Validate that all rules are found
-    And delete all rules created
+    And delete all EPL rules created
   Examples:
     | rule_number | prefix_name |
     | 1           | prefix_1    |
@@ -306,6 +306,6 @@ Feature: Append a new rule in Perseo manager
     And an EPL with a rule name "name_exist", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
     And append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "Bad Request" http code
-    And delete a rule created
+    Then I receive an "Bad Request" http code in rules request
+    And delete a EPL rule created
 
