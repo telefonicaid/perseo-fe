@@ -51,7 +51,7 @@
             }
         ],
         "name": "Regla",
-        "service": "militar",
+        "subservice": "militar",
         "updateTime": "2014-03-26T11:30:12.722Z",
         "tenant": "unkownt"
     },
@@ -66,6 +66,6 @@
             "subject": "UserProp"
         }
     },
-    "service": "militar",
+    "subservice": "militar",
     "tenant": "unkownt"
 }

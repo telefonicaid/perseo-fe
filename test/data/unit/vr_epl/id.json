@@ -59,7 +59,7 @@
             }
         ],
         "updateTime": "2014-05-06T10:39:47.696Z",
-        "service": "/",
+        "subservice": "/",
         "tenant": "unkownt"
     },
     "name": "ReglaId",
@@ -73,6 +73,6 @@
             "subject": "calor"
         }
     },
-    "service": "/",
+    "subservice": "/",
     "tenant": "unkownt"
 }

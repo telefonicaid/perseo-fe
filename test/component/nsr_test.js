@@ -31,7 +31,7 @@ var
     clients = require('../utils/clients'),
     executionsStore = require('../../lib/models/executionsStore'),
     DEFAULT_TENANT = 'unknownt',
-    DEFAULT_SERVICE = '/';
+    DEFAULT_SUBSERVICE = '/';
 
 describe('Entity', function() {
     beforeEach(testEnv.commonBeforeEach);
@@ -39,14 +39,14 @@ describe('Entity', function() {
 
     describe('#alertFunc()', function() {
         var entities = [
-                {_id: {id: 'eA', servicePath: DEFAULT_SERVICE, type: 'type e1'}, attrs: [
+                {_id: {id: 'eA', servicePath: DEFAULT_SUBSERVICE, type: 'type e1'}, attrs: [
                     {name: 'at', value: 1, modDate: 0},
                     {name: 'other', value: 'this is a value', modDate: 0}
                 ]},
-                {_id: {id: 'eB', servicePath: DEFAULT_SERVICE, type: 'type e2'}, attrs: [
+                {_id: {id: 'eB', servicePath: DEFAULT_SUBSERVICE, type: 'type e2'}, attrs: [
                     {name: 'at', value: 2, modDate: Date.now() / 1000 - 30 * 60}
                 ]},
-                {_id: {id: 'eC', servicePath: DEFAULT_SERVICE, type: 'type e3'}, attrs: [
+                {_id: {id: 'eC', servicePath: DEFAULT_SUBSERVICE, type: 'type e3'}, attrs: [
                     {name: 'at', value: 3, modDate: -1}
                 ]}
             ],
@@ -72,7 +72,7 @@ describe('Entity', function() {
                     setTimeout(cb, 1.25 * checkInterval * 60e3);
                 }, function(cb) {
                     async.eachSeries(entities, function(entity) {
-                        executionsStore.LastTime(DEFAULT_TENANT, DEFAULT_SERVICE, rule.name, entity._id.id,
+                        executionsStore.LastTime(DEFAULT_TENANT, DEFAULT_SUBSERVICE, rule.name, entity._id.id,
                             function(error, time) {
                                 should.not.exist(error);
                                 time.should.not.be.equal(0);

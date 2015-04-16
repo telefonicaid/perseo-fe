@@ -51,7 +51,7 @@
             }
         ],
         "updateTime": "2013-11-15T12:07:40.772Z",
-        "service": "militar",
+        "subservice": "militar",
         "tenant": "unkownt"
     },
     "name": "DoorControlSMS",
@@ -63,6 +63,6 @@
             "to": "12345678"
         }
     },
-    "service": "militar",
+    "subservice": "militar",
     "tenant": "unkownt"
 }

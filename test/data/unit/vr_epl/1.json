@@ -56,7 +56,7 @@
             }
         ],
         "name": "DCA-Support",
-        "service": "militar",
+        "subservice": "militar",
         "updateTime": "2014-01-14T15:19:57.952Z",
         "tenant": "unkownt"
     },
@@ -71,6 +71,6 @@
             "subject": "DCA message"
         }
     },
-    "service": "militar",
+    "subservice": "militar",
     "tenant": "unkownt"
 }

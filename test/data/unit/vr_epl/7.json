@@ -58,7 +58,7 @@
             }
         ],
         "updateTime": "2014-05-06T10:39:47.696Z",
-        "service": "militar",
+        "subservice": "militar",
         "tenant": "unkownt"
     },
     "name": "ReglaRegExp",
@@ -72,6 +72,6 @@
             "subject": "calor"
         }
     },
-    "service": "militar",
+    "subservice": "militar",
     "tenant": "unkownt"
 }

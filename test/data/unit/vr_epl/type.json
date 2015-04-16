@@ -59,7 +59,7 @@
             }
         ],
         "updateTime": "2014-05-06T10:39:47.696Z",
-        "service": "SERVICE/PATH/subpath/y más",
+        "subservice": "SERVICE/PATH/subpath/y más",
         "tenant": "SERVICIO"
     },
     "name": "ReglaType",
@@ -73,6 +73,6 @@
             "subject": "calor"
         }
     },
-    "service": "SERVICE/PATH/subpath/y más",
+    "subservice": "SERVICE/PATH/subpath/y más",
     "tenant": "UnkownT"
 }
