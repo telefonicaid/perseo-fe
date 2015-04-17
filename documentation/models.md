@@ -94,9 +94,10 @@ The collection 'executions' stores information about the sucessfully executed ac
 Fields:
 * **_id** *ObjectId*: unique object id used by mongoDB
 * **id**  *string*: entity id that fired the rule
+* **name** *string*: name fo the fired rule
+* **notice** *string*: notice id that fired the rule
 * **service** *string* : service which the fired rule belongs to.
 * **subservice** *string*: subservice which the fired rule belongs to.
-* **notice** *string*: notice id that fired the rule
 * **lastTime** *Date object*: timestamp of the execution
 
 Example
