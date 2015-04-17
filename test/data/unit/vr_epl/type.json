@@ -60,7 +60,7 @@
         ],
         "updateTime": "2014-05-06T10:39:47.696Z",
         "subservice": "SERVICE/PATH/subpath/y más",
-        "tenant": "SERVICIO"
+        "service": "SERVICIO"
     },
     "name": "ReglaType",
     "text": "select *,\"ReglaType\" as ruleName from pattern [every ev=iotEvent((cast(`type`?, String)  =  \"valueForType\"))]",
@@ -74,5 +74,5 @@
         }
     },
     "subservice": "SERVICE/PATH/subpath/y más",
-    "tenant": "UnkownT"
+    "service": "UnkownT"
 }

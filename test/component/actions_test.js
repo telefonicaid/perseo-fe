@@ -207,7 +207,7 @@ describe('Actions', function() {
                     });
                 },
                 function(callback) {
-                    executionsStore.LastTime(action.ev.tenant, action.ev.subservice, rule.name, action.ev.id,
+                    executionsStore.LastTime(action.ev.service, action.ev.subservice, rule.name, action.ev.id,
                         function(error, time) {
                             should.not.exist(error);
                             time.should.not.be.equal(0);
@@ -240,7 +240,7 @@ describe('Actions', function() {
                     });
                 },
                 function(callback) {
-                    executionsStore.LastTime(action.ev.tenant, action.ev.subservice, rule.name, action.ev.id,
+                    executionsStore.LastTime(action.ev.service, action.ev.subservice, rule.name, action.ev.id,
                         function(error, time) {
                             should.not.exist(error);
                             time.should.not.be.equal(0);
@@ -258,7 +258,7 @@ describe('Actions', function() {
                     });
                 },
                 function(callback) {
-                    executionsStore.LastTime(action.ev.tenant, action.ev.subservice, rule.name, action.ev.id,
+                    executionsStore.LastTime(action.ev.service, action.ev.subservice, rule.name, action.ev.id,
                         function(error, time) {
                             should.not.exist(error);
                             time.should.be.equal(lastTime);

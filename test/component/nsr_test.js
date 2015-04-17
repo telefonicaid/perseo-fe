@@ -30,7 +30,7 @@ var
     testEnv = require('../utils/testEnvironment'),
     clients = require('../utils/clients'),
     executionsStore = require('../../lib/models/executionsStore'),
-    DEFAULT_TENANT = 'unknownt',
+    DEFAULT_SERVICE = 'unknownt',
     DEFAULT_SUBSERVICE = '/';
 
 describe('Entity', function() {
@@ -57,8 +57,8 @@ describe('Entity', function() {
             var start = Date.now();
             async.series([
                 function(cb) {
-                    utilsT.createEntitiesCollection.bind({}, DEFAULT_TENANT),
-                        async.eachSeries(entities, utilsT.addEntity.bind({}, DEFAULT_TENANT), cb);
+                    utilsT.createEntitiesCollection.bind({}, DEFAULT_SERVICE),
+                        async.eachSeries(entities, utilsT.addEntity.bind({}, DEFAULT_SERVICE), cb);
                 },
                 function(callback) {
                     clients.PostVR(rule, function(error, data) {
@@ -72,7 +72,7 @@ describe('Entity', function() {
                     setTimeout(cb, 1.25 * checkInterval * 60e3);
                 }, function(cb) {
                     async.eachSeries(entities, function(entity) {
-                        executionsStore.LastTime(DEFAULT_TENANT, DEFAULT_SUBSERVICE, rule.name, entity._id.id,
+                        executionsStore.LastTime(DEFAULT_SERVICE, DEFAULT_SUBSERVICE, rule.name, entity._id.id,
                             function(error, time) {
                                 should.not.exist(error);
                                 time.should.not.be.equal(0);

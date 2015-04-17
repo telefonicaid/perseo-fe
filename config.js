@@ -155,6 +155,6 @@ config.executionsTTL = 1 * 24 * 60 * 60;
  * @type {{}}
  */
 config.DEFAULT_SUBSERVICE= '/';
-config.DEFAULT_TENANT= 'unknownt';
+config.DEFAULT_SERVICE= 'unknownt';
 
 module.exports = config;
