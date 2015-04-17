@@ -161,13 +161,13 @@ describe('VisualRules', function() {
         });
     });
     describe('#GetVR()', function() {
-        /*  it('should return not found when getting a nonexistent rule', function (done) {
-         clients.GetVR('a very strange rule to exist', function (error, data) {
-         should.not.exist(error);
-         data.should.have.property('statusCode', 404);
-         return done();
-         });
-         }); */
+        it('should return not found when getting a nonexistent rule', function(done) {
+            clients.GetVR('a very strange rule to exist', function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 404);
+                return done();
+            });
+        });
         it('should return a rule when it exists', function(done) {
             var rule = utilsT.loadExample('./test/data/good_vrs/visual_rule_1.json');
             async.series([

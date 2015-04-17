@@ -59,8 +59,8 @@
             }
         ],
         "updateTime": "2014-05-06T10:39:47.696Z",
-        "service": "SERVICE/PATH/subpath/y más",
-        "tenant": "SERVICIO"
+        "subservice": "SERVICE/PATH/subpath/y más",
+        "service": "SERVICIO"
     },
     "name": "ReglaType",
     "text": "select *,\"ReglaType\" as ruleName from pattern [every ev=iotEvent((cast(`type`?, String)  =  \"valueForType\"))]",
@@ -73,6 +73,6 @@
             "subject": "calor"
         }
     },
-    "service": "SERVICE/PATH/subpath/y más",
-    "tenant": "UnkownT"
+    "subservice": "SERVICE/PATH/subpath/y más",
+    "service": "UnkownT"
 }

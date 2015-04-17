@@ -58,8 +58,8 @@
             }
         ],
         "updateTime": "2014-05-06T10:39:47.696Z",
-        "service": "militar",
-        "tenant": "unkownt"
+        "subservice": "militar",
+        "service": "unkownt"
     },
     "name": "ReglaRegExp",
     "text": "select *,\"ReglaRegExp\" as ruleName from pattern [every ev=iotEvent((cast(`temperature`?, String)  regexp  \"5{2,3}\"))]",
@@ -72,6 +72,6 @@
             "subject": "calor"
         }
     },
-    "service": "militar",
-    "tenant": "unkownt"
+    "subservice": "militar",
+    "service": "unkownt"
 }

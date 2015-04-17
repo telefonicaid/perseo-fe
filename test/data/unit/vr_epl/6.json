@@ -56,9 +56,9 @@
             }
         ],
         "name": "DCASupport",
-        "service": "militar",
+        "subservice": "militar",
         "updateTime": "2014-01-14T15:19:57.952Z",
-        "tenant": "unkownt"
+        "service": "unkownt"
     },
     "name": "DCASupport",
     "text": "select *,\"DCASupport\" as ruleName from pattern [every ev=iotEvent((cast(`Alarm`?, String)  !=  \"\"))]",
@@ -71,6 +71,6 @@
             "subject": "DCA message"
         }
     },
-    "service": "militar",
-    "tenant": "unkownt"
+    "subservice": "militar",
+    "service": "unkownt"
 }

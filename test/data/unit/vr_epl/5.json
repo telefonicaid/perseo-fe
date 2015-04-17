@@ -58,8 +58,8 @@
             }
         ],
         "updateTime": "2014-05-06T10:39:47.696Z",
-        "service": "militar",
-        "tenant": "A Very ImportanT Tenant"
+        "subservice": "militar",
+        "service": "A Very ImportanT Tenant"
     },
     "name": "Regla-1",
     "text": "select *,\"Regla-1\" as ruleName from pattern [every ev=iotEvent((cast(cast(`temperature`?, String), float)  >  cast(cast(`absurdo__valor`?, String), float)))]",
@@ -72,6 +72,6 @@
             "subject": "calor"
         }
     },
-    "service": "militar",
-    "tenant": "A Very ImportanT Tenant"
+    "subservice": "militar",
+    "service": "A Very ImportanT Tenant"
 }

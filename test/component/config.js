@@ -27,8 +27,7 @@ var async = require('async'),
     should = require('should'),
     clients = require('../utils/clients'),
     utilsT = require('../utils/utilsT'),
-    testEnv = require('../utils/testEnvironment'),
-    rules = require('../../lib/models/rules');
+    testEnv = require('../utils/testEnvironment');
 
 function postRuleOK(done) {
     var cases = utilsT.loadDirExamples('./test/data/good_rules');
@@ -75,19 +74,19 @@ describe('Config', function() {
         it('should return OK when posting a notice', postNoticeOK);
     });
     describe('#With next core only for rules', function() {
-        utilsT.getConfig().nextCore = {rulesURL: "http://averyfarwayhost:1234"};
+        utilsT.getConfig().nextCore = {rulesURL: 'http://averyfarwayhost:1234'};
         it('should return OK when posting a rule', postRuleOK);
         it('should return OK when posting a notice', postNoticeOK);
     });
     describe('#With next core only for notices', function() {
-        utilsT.getConfig().nextCore = {noticesURL: "http://averyfarwayhost:1234"};
+        utilsT.getConfig().nextCore = {noticesURL: 'http://averyfarwayhost:1234'};
         it('should return OK when posting a rule', postRuleOK);
         it('should return OK when posting a notice', postNoticeOK);
     });
     describe('#With next core for notices and rules', function() {
         utilsT.getConfig().nextCore = {
-            noticesURL: "http://averyfarwayhost:1234",
-            rulesURL: "http://averyfarwayhost:1234"};
+            noticesURL: 'http://averyfarwayhost:1234',
+            rulesURL: 'http://averyfarwayhost:1234'};
         it('should return OK when posting a rule', postRuleOK);
         it('should return OK when posting a notice', postNoticeOK);
     });
