@@ -2,7 +2,7 @@
 ## Collections
 ### Rules
 The collection 'rules' stores information about the rules  to be sent to the core. It includes the VisualRule passed in
-by the Portal for giving it back when the Portal request it
+by the Portal for giving it back when the Portal requests it
 
 Fields:
 * **_id** *ObjectId*: unique object id used by mongoDB
@@ -10,7 +10,7 @@ Fields:
 * **service** *string* : service which the rule belongs to.
 * **subservice** *string*: subservice which the rule belongs to.
 * **tex** *string*: EPL sentence for the rule, to be propagated to core
-* **action** *object*: action to be executed whe the rule is fired. Each action type has different field set as described in [Plain rules](plain_rules.md#actions)
+* **action** *object*: action to be executed when the rule is fired. Each action type has different field set as described in [Plain rules](plain_rules.md#actions)
     * **type** ( *string* ): type of action.
 * **VR** *object*: VisualRule object passed in by the Portal
 * **nosignal** *object*: no signal condition for nosignal rules
