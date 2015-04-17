@@ -31,7 +31,6 @@ Example:
 		"name" : "ReglaId",
 		"active" : 1,
 		"cards" : [
-		<< ... >>
 			],
 		"updateTime" : "2014-05-06T10:39:47.696Z",
 		"subservice" : "/",
@@ -61,7 +60,7 @@ Example no-signal rule
 		"name" : "VR_nonsignal_complex",
 		"active" : 1,
 		"cards" : [
-		<< ... >>
+
 			],
 		"updateTime" : "2014-03-26T14:29:40.561Z",
 		"subservice" : "/",
