@@ -60,26 +60,18 @@
         {
             "type": "ActionCard",
             "actionData": {
+                "name": "sms",
+                "type": "SendSmsMibAction",
                 "userParams": [
                     {
-                        "name": "mail.from",
-                        "value": "brox@tid.es"
+                        "name": "sms.to",
+                        "value": "12345678"
                     },
                     {
-                        "name": "mail.to",
-                        "value": "brox@tid.es"
-                    },
-                    {
-                        "name": "mail.subject",
-                        "value": "Sin señal"
-                    },
-                    {
-                        "name": "mail.message",
-                        "value": "${id}  (${type}) lleva ${reportInterval}, desde ${lastTime} sin hablar\nat=${at}"
+                        "name": "sms.message",
+                        "value": "${device.asset.UserProps.threshold.major} message"
                     }
-                ],
-                "name": "email",
-                "type": "SendEmailAction"
+                ]
             },
             "id": "card_12",
             "connectedTo": [ ]
