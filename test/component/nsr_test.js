@@ -24,6 +24,7 @@
 'use strict';
 
 var
+    util = require('util'),
     async = require('async'),
     should = require('should'),
     utilsT = require('../utils/utilsT'),
@@ -52,6 +53,7 @@ describe('Entity', function() {
             ],
             checkInterval = 1,
             rule = utilsT.loadExample('./test/data/no_signal/generic_nonsignal.json');
+        utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
         this.timeout(2 * checkInterval * 60e3);
         it('should return silent entities', function(done) {
             var start = Date.now();
@@ -70,7 +72,8 @@ describe('Entity', function() {
                 function(cb) {
                     // wait checker set at AddNSRule to wake up, created by POST of VR
                     setTimeout(cb, 1.25 * checkInterval * 60e3);
-                }, function(cb) {
+                },
+                function(cb) {
                     async.eachSeries(entities, function(entity) {
                         executionsStore.LastTime(DEFAULT_SERVICE, DEFAULT_SUBSERVICE, rule.name, entity._id.id,
                             function(error, time) {
