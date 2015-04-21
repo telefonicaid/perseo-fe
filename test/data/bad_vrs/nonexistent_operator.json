@@ -1,0 +1,61 @@
+{
+    "active": 1,
+    "cards": [
+        {
+            "id": "card_173",
+            "type": "SensorCard",
+            "model": "Bianchi",
+            "sensorData": {
+                "measureName": "Alarm",
+                "phenomenonApp": "urn:x-ogc:def:phenomenon:Bianchi:1.0:Alarm",
+                "phenomenon": "urn:x-ogc:def:phenomenon:IDAS:1.0:alarm",
+                "dataType": "Text"
+            },
+            "configData": {
+
+            },
+            "connectedTo": [
+                "card_174"
+            ],
+            "conditionList": [
+                {
+                    "scope": "OBSERVATION",
+                    "parameterValue": "",
+                    "not": false,
+                    "operator": "Supercalifragilisticexpialidocious"
+                }
+            ]
+        },
+        {
+            "type": "ActionCard",
+            "actionData": {
+                "userParams": [
+                    {
+                        "name": "mail.from",
+                        "value": "dca_support@tid.es"
+                    },
+                    {
+                        "name": "mail.to",
+                        "value": "b.tjtm@tid.es; jsanhuez@erictel.com; ricardo.rossi@telefonica.com"
+                    },
+                    {
+                        "name": "mail.subject",
+                        "value": "DCA message"
+                    },
+                    {
+                        "name": "mail.message",
+                        "value": "DCA message${device_latitude}${device_longitude}${measure.value}${device.asset.name}"
+                    }
+                ],
+                "name": "email",
+                "type": "SendEmailAction"
+            },
+            "id": "card_174",
+            "connectedTo": [ ]
+        }
+    ],
+    "name": "DCA-Support",
+    "service": 1052,
+    "updateTime": "2014-01-14T15:19:57.952Z"
+}
+
