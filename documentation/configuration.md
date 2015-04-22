@@ -17,6 +17,8 @@ In order to have perseo running, there are several basic pieces of information t
 * `config.orion.URL`: URL for updating contexts at Orion (Context Broker).
 * `config.mongo.URL`: URL for connecting mongoDB.
 * `config.executionsTTL`: Time-To-Live for documents of action executions (seconds).
+* `config.checkDB.delay`:  Number of milliseconds to check DB connection.
+* `config.checkDB.reportInterval`:  Number of milliseconds to report a problem with DB connection in logs.
 
 Options for HA:
 * `config.isMaster`: `true` if this one is the master or `false` it it is the slave.
