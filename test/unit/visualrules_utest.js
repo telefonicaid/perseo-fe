@@ -41,5 +41,37 @@ describe('VisualRules', function() {
             });
         });
     });
+    describe('#errorOp()', function() {
+        it('should return null with valid operators', function() {
+            var cases = [
+                'GREATER_THAN',
+                'EQUAL_TO',
+                'MINOR_THAN',
+                'DIFFERENT_TO',
+                'GREATER_OR_EQUAL_THAN',
+                'MINOR_OR_EQUAL_THAN',
+                'MATCH'];
+            cases.forEach(function(c) {
+                var errOp = visualRules.errorOperator(c);
+                should(errOp).be.null;
+            });
+        });
+        it('should return an error with invalid operators', function() {
+            var cases = [
+                'GREATER_THA',
+                'equal_to',
+                '<',
+                '',
+                null,
+                undefined,
+                42,
+                {}
+            ];
+            cases.forEach(function(c) {
+                var errOp = visualRules.errorOperator(c);
+                errOp.should.be.an.instanceOf(visualRules.errors.UnknownOperator);
+            });
+        });
+    });
 });
 
