@@ -1,6 +1,6 @@
 {
   "name": "perseo",
-  "version": "0.4.1-next",
+  "version": "0.5.0-next",
   "dependencies": {
     "async": {
       "version": "0.9.0",
@@ -658,24 +658,14 @@
       }
     },
     "twitter": {
-      "version": "1.0.3",
-      "from": "twitter@",
-      "resolved": "https://registry.npmjs.org/twitter/-/twitter-1.0.3.tgz",
+      "version": "1.2.5",
+      "from": "twitter@1.2.5",
+      "resolved": "https://registry.npmjs.org/twitter/-/twitter-1.2.5.tgz",
       "dependencies": {
-        "cookies": {
-          "version": "0.5.0",
-          "from": "cookies@>=0.1.6",
-          "resolved": "https://registry.npmjs.org/cookies/-/cookies-0.5.0.tgz"
-        },
-        "keygrip": {
-          "version": "1.0.1",
-          "from": "keygrip@>=0.1.7",
-          "resolved": "https://registry.npmjs.org/keygrip/-/keygrip-1.0.1.tgz"
-        },
-        "oauth": {
-          "version": "0.9.12",
-          "from": "oauth@>=0.8.4",
-          "resolved": "https://registry.npmjs.org/oauth/-/oauth-0.9.12.tgz"
+        "deep-extend": {
+          "version": "0.3.3",
+          "from": "deep-extend@^0.3.2",
+          "resolved": "https://registry.npmjs.org/deep-extend/-/deep-extend-0.3.3.tgz"
         }
       }
     },

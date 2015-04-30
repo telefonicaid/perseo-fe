@@ -52,7 +52,7 @@
     "nodemailer": "^1.1.1",
     "nodemailer-smtp-transport": "^0.1.12",
     "request": "^2.39.0",
-    "twitter": "^1.0.3",
+    "twitter": "^1.2.5",
     "uuid": "^1.4.1"
   }
 }
