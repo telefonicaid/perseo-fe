@@ -94,7 +94,7 @@ The field `parameters` include a field `to` with the number to send the message 
 
 ### email action
 
-Sends an email to the recipient set in the action parameters, with the body mail build from the `template` field. A field `to` in `parameters` sets the recipient and a field `from`sets the sender's email address.
+Sends an email to the recipient set in the action parameters, with the body mail build from the `template` field. A field `to` in `parameters` sets the recipient and a field `from`sets the sender's email address. Also the subject of the email can be set in the field `subject` in `parameters`. 
 
 ```json
  "action": {
@@ -103,6 +103,7 @@ Sends an email to the recipient set in the action parameters, with the body mail
         "parameters": {
             "to": "someone@telefonica.com",
             "from": "cep@system.org"
+            "subject": "It's The End Of The World As We Know It (And I Feel Fine)"
         }
     }
 ```
