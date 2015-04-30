@@ -27,13 +27,13 @@ __author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 import string
 from lettuce import world
 import time
-import http_utils
-import general_utils
+from http_utils import *
+from general_utils import string_generator
 from tools.notification_utils import Notifications
 from tools.rules_utils import Rules
 from tools.mock_utils import Mock
 
-#generals constants
+# generals constants
 DEFAULT = u'default'
 RANDOM = u'random'
 
@@ -75,9 +75,12 @@ IDENTITY_TYPE_LENGTH_1024 = u'identity Type length 1024'
 URL_MOCK = u'url - mock'
 
 # notifications constants
-perseo_notification_path = u'/notices'
+PERSEO_NOTIFICATION_PATH = u'/notices'
 NOTIFICATION = u'notification'
 
+# Names allowed
+RULE_NAME_CHARS_ALLOWED = string.ascii_letters + string.digits + u'-' + u'_'  # [a-zA-Z0-9_-]+ regular expression
+SERVICES_CHARS_ALLOWED = string.ascii_letters + string.digits + u'_'  # [a-zA-Z0-9_]+ regular expression
 
 class CEP:
     """
@@ -111,7 +114,7 @@ class CEP:
         self.cep_rule_post_url = kwargs.get(CEP_RULE_POST_URL, DEFAULT_VALUE)
         self.cep_version = kwargs.get(CEP_VERSION, DEFAULT_VALUE)
         self.rule_name = kwargs.get(CEP_RULE_NAME_DEFAULT, DEFAULT_VALUE)
-        self.tenant = kwargs.get(CEP_TENANT_DEFAULT, DEFAULT_VALUE)
+        self.service = kwargs.get(CEP_TENANT_DEFAULT, DEFAULT_VALUE)
         self.service_path = kwargs.get(CEP_SERVICE_PATH_DEFAULT, DEFAULT_VALUE)
         self.identity_type = kwargs.get(CEP_IDENTITY_TYPE_DEFAULT, DEFAULT_VALUE)
         self.identity_id = kwargs.get(CEP_IDENTITY_ID_DEFAULT, DEFAULT_VALUE)
@@ -124,17 +127,13 @@ class CEP:
         self.retries_number = kwargs.get(CEP_RETRIES_RECEIVED_IN_MOCK, 5)
         self.retry_delay = kwargs.get(CEP_DELAY_TO_RETRY, 10)
 
-        world.rules = Rules(self.cep_url)
-        world.mock = Mock(send_sms_url=self.cep_send_sms_url, send_email_url=self.cep_send_email_url,
-                          send_update_url=self.cep_send_update_url)
 
-    def verify_CEP(self):
+    def verify_cep(self):
         """
          verify if CEP is running
         """
-        resp = http_utils.request(http_utils.GET, url=self.cep_url + "/check")
-        http_utils.assert_status_code(http_utils.status_codes[http_utils.OK], resp, "ERROR - Perseo is not running...")
-        world.rules.init_rule_card_dict()  # Initialize the rule card dictionary
+        resp = request('GET', url=self.cep_url + "/check")
+        assert_status_code(status_codes['OK'], resp, "ERROR - Perseo is not running...")
 
     def config_tenant_and_service(self, tenant, service_path):
         """
@@ -142,45 +141,43 @@ class CEP:
         :param tenant: tenant (multi-channels)
         :param service_path: service path
         """
-        SERVICES_CHARS_ALLOWED = string.ascii_letters + string.digits + u'_'  # [a-zA-Z0-9_]+ regular expression
         temp = ""
         if tenant == TENANT_LENGTH_ALLOWED:
-            self.tenant = general_utils.string_generator(MAX_TENANT_LENGTH, SERVICES_CHARS_ALLOWED)
+            self.service = string_generator(MAX_TENANT_LENGTH, SERVICES_CHARS_ALLOWED)
         elif tenant == TENANT_LONGER_THAN_ALLOWED:
-            self.tenant = general_utils.string_generator(MAX_TENANT_LENGTH + 1, SERVICES_CHARS_ALLOWED)
+            self.service = string_generator(MAX_TENANT_LENGTH + 1, SERVICES_CHARS_ALLOWED)
         elif tenant != DEFAULT:
-            self.tenant = tenant
+            self.service = tenant
 
         if service_path == SERVICE_PATH_LENGTH_ALLOWED_ONE_LEVEL:
-            self.service_path = "/" + general_utils.string_generator(MAX_SERVICE_PATH_LENGTH, SERVICES_CHARS_ALLOWED)
+            self.service_path = "/" + string_generator(MAX_SERVICE_PATH_LENGTH, SERVICES_CHARS_ALLOWED)
         elif service_path == SERVICE_PATH_LENGTH_ALLOWED_TEN_LEVEL:
             for i in range(0, MAX_SERVICE_PATH_LENGTH):
-                temp = temp + "/" + general_utils.string_generator(MAX_SERVICE_PATH_LENGTH, SERVICES_CHARS_ALLOWED)
+                temp = temp + "/" + string_generator(MAX_SERVICE_PATH_LENGTH, SERVICES_CHARS_ALLOWED)
             self.service_path = temp
         elif service_path != DEFAULT:
             self.service_path = service_path
-        world.rules.tenant_and_service(self.tenant, self.service_path)
+        world.rules.set_tenant_and_service(self.service, self.service_path)
 
     def __generate_rule_name(self, rule_name):
         """
         generate rule name if it is not normal
         :param rule_name:
         """
-        RULE_NAME_CHARS_ALLOWED = string.ascii_letters + string.digits + u'-' + u'_'  # [a-zA-Z0-9_-]+ regular expression
         if rule_name.find(RULE_NAME_RANDOM) >= 0:
             rule_name_length = int(rule_name.split("= ")[1])
-            rule_name_temp = general_utils.string_generator(rule_name_length, RULE_NAME_CHARS_ALLOWED)
+            rule_name_temp = string_generator(rule_name_length, RULE_NAME_CHARS_ALLOWED)
         elif rule_name == RULE_NAME_LENGTH_ALLOWED:
-            rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH, RULE_NAME_CHARS_ALLOWED)
+            rule_name_temp = string_generator(MAX_RULE_NAME_LENGTH, RULE_NAME_CHARS_ALLOWED)
         elif rule_name == RULE_NAME_LONGER_THAN_LENGTH_ALLOWED:
-            rule_name_temp = general_utils.string_generator(MAX_RULE_NAME_LENGTH + 1, RULE_NAME_CHARS_ALLOWED)
+            rule_name_temp = string_generator(MAX_RULE_NAME_LENGTH + 1, RULE_NAME_CHARS_ALLOWED)
         elif rule_name == DEFAULT:
             rule_name_temp = self.rule_name
         else:
             rule_name_temp = rule_name
         return rule_name_temp
 
-    def generate_EPL(self, rule_name, identity_type, attributes_number, attribute_data_type, operation, value):
+    def generate_epl(self, rule_prefix, identity_type, attributes_number, attribute_data_type, operation, value):
         """
         generate a EPL query dinamically.
         :param rule_name:
@@ -190,19 +187,26 @@ class CEP:
         :param operation:
         :param value:
         """
-        self.rule_name = self.__generate_rule_name(rule_name)
-
+        rule_name_generated = self.__generate_rule_name(rule_prefix)
         if identity_type == MAX_IDENTITY_TYPE_LENGTH:
-            self.identity_type = general_utils.string_generator(IDENTITY_TYPE_LENGTH_1024)
-        elif identity_type != DEFAULT:
-            self.identity_type = identity_type
+            identity_type_generated = string_generator(IDENTITY_TYPE_LENGTH_1024)
+        else:
+            identity_type_generated = identity_type
 
-        if attributes_number != DEFAULT: self.attributes_number = int(attributes_number)
-        if attribute_data_type != DEFAULT: self.epl_attribute_data_type = attribute_data_type
-        if operation != DEFAULT:  self.epl_operation = operation
-        if value != DEFAULT: self.epl_value = value
-        return world.rules.generate_EPL(self.rule_name, self.identity_type, self.attributes_number,
-                                        self.epl_attribute_data_type, self.epl_operation, self.epl_value)
+        if attributes_number != DEFAULT:
+            attributes_number_int = int(attributes_number)
+        else:
+            attributes_number_int = 1
+        if attribute_data_type == DEFAULT:
+            attribute_data_type = 'float'
+        if operation == DEFAULT:
+            operation = '>'
+        if value == DEFAULT:
+            value = '3'
+        if identity_type == 'default':
+            identity_type_generated = 'Room'
+        return world.rules.generate_epl(rule_name_generated, identity_type_generated, attributes_number_int,
+                                        attribute_data_type, operation, value), rule_name_generated
 
     def set_action_card_config(self, rule_type, response, parameters):
         """
@@ -232,7 +236,7 @@ class CEP:
 
     def received_notification(self, attributes_value, metadata_value, content):
         """
-        notifications
+        Notifications
         :param attributes_value: attribute value
         :param metadata_value: metadata value (true or false)
         :param content: xml or json
@@ -241,7 +245,7 @@ class CEP:
         self.metadata_value = metadata_value
         self.attributes_value = attributes_value
         metadata_attribute_number = 1
-        self.notification = Notifications(self.cep_url + perseo_notification_path, tenant=self.tenant,
+        self.notification = Notifications(self.cep_url + PERSEO_NOTIFICATION_PATH, tenant=self.service,
                                           service_path=self.service_path, content=self.content)
         if self.metadata_value:
             self.notification.create_metadatas_attribute(metadata_attribute_number, RANDOM, RANDOM, RANDOM)
@@ -255,10 +259,10 @@ class CEP:
         :param resp: response from server
         :param expected_status_code: Http code expected
         """
-        http_utils.assert_status_code(http_utils.status_codes[expected_status_code], resp,
-                                      "Wrong status code received: %s. Expected: %s. \n\nBody content: %s" \
-                                      % (str(resp.status_code), str(http_utils.status_codes[expected_status_code]),
-                                         str(resp.text)))
+        assert_status_code(status_codes[expected_status_code], resp,
+                           "Wrong status code received: %s. Expected: %s. \n\nBody content: %s" \
+                           % (str(resp.status_code), str(status_codes[expected_status_code]),
+                              str(resp.text)))
 
     def set_rule_type_and_parameters(self, rule_type, parameters=""):
         """
@@ -267,7 +271,7 @@ class CEP:
         :param parameters:
         :return parameters (string)
         """
-        if rule_type == "post" and (parameters == URL_MOCK or parameters == u''):
+        if rule_type == "post" and (parameters == URL_MOCK or parameters == ''):
             parameters = self.cep_rule_post_url + "/send/post"
         self.rule_type = rule_type
         return parameters
@@ -277,7 +281,7 @@ class CEP:
         get tenant (service) string
         :return: string
         """
-        return self.tenant
+        return self.service
 
     def get_service_path(self):
         """
@@ -286,6 +290,7 @@ class CEP:
         """
         return self.service_path
 
+    @staticmethod
     def delays_seconds(self, sec):
         """
         waiting N seconds after validate if the rule is triggered
@@ -293,6 +298,7 @@ class CEP:
         """
         time.sleep(float(sec))
 
+    @staticmethod
     def get_attribute_value_from_mongo(self, driver):
         """
         get attribute value from orion mongo
@@ -303,31 +309,30 @@ class CEP:
         return cursor[0]["attrs"][0]["value"]
 
     #   --------------  Visual Rules  -----------------------------
-    def new_visual_rule(self, rule_name, active):
+    def new_visual_rule(self, rule_name, active, cards):
         """
         create a new visual rule
         :param rule_name:
         :param active:
         """
-        self.rule_name = self.__generate_rule_name(rule_name)
-        self.card_active = active
-        world.rules.create_rule_card(self.rule_name, self.card_active)
+        name_generated = self.__generate_rule_name(rule_name)
+        return world.rules.create_rule_card(name_generated, active, cards)
 
     #   --------------  Validations  -----------------------------
 
-    def validate_that_rule_was_triggered(self, method):
+    def validate_that_rule_was_triggered(self, method, rule_type, parameters):
         """
-         Validate that a rule is triggered successfully
+        Validate that a rule is triggered successfully
         :param method:
         """
         if hasattr(self, NOTIFICATION):  # if there is any notification
             self.attributes_value = self.notification.get_attributes_value()
-            self.parameters_value = world.rules.get_parameters_value()
+            self.parameters_value = world.rules.generate_parameters(rule_type, parameters)
         else:  # used in no-signal (not update card)
             self.attributes_value = self.get_attribute_value_from_mongo(world.cep_orion_mongo)
             self.parameters_value = self.get_attribute_value_from_mongo(world.cep_orion_mongo)
 
-        status = world.mock.verify_response_mock(self.rule_type, self.attributes_value, self.parameters_value)
+        status = world.mock.verify_response_mock(rule_type, self.attributes_value, self.parameters_value)
         if not status:
             world.rules.delete_one_rule(method)
         assert status, "ERROR - the rule %s has not been received in mock " % (str(self.rule_name))
@@ -346,7 +351,8 @@ class CEP:
             c += 1
             print " WARN - Retry to get counter value in the mock. No: (" + str(c) + ")"
             time.sleep(self.retry_delay)
-        if self.rules_number != value: world.rules.delete_rules_group(method, world.prefix_name)
+        if self.rules_number != value:
+            world.rules.delete_rules_group(method, world.prefix_name)
         assert self.rules_number == value, "ERROR - All notifications are not received. Sent: %s and received: %s" % (
-        str(self.rules_number), str(value))
+            str(self.rules_number), str(value))
 

@@ -20,87 +20,83 @@
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid.es
+# iot_support at tid.es
 #
-__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
+from tools.http_utils import request
 
+__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
 from tools import general_utils, http_utils
 
-# general constants
-EMPTY   = u''
-XML     = u'xml'
-JSON    = u'json'
-RANDOM  = u'random'
 
 # headers constants
-HEADER_ACCEPT                             = u'Accept'
-HEADER_CONTENT_TYPE                       = u'Content-Type'
-HEADER_APPLICATION                        = u'application/'
-HEADER_TENANT                             = u'Fiware-Service'
-HEADER_SERVICE_PATH                       = u'Fiware-ServicePath'
-HEADER_USER_AGENT                         = u'User-Agent'
+HEADER_ACCEPT = u'Accept'
+HEADER_CONTENT_TYPE = u'Content-Type'
+HEADER_APPLICATION = u'application/'
+HEADER_TENANT = u'Fiware-Service'
+HEADER_SERVICE_PATH = u'Fiware-ServicePath'
+HEADER_USER_AGENT = u'User-Agent'
 
 # notifications init constants
-POST                                      = u'POST'
-NOTIF_USER_AGENT                          = u'notif_user_agent'
-NOTIF_USER_AGENT_DEFAULT                  = u'orion/0.10.0'
-NOTIF_TENANT_DEFAULT                      = u'tenant'
-NOTIF_SERVICE_PATH_DEFAULT                = u'service_path'
-NOTIF_CONTENT                             = u'content'
+POST = u'POST'
+NOTIF_USER_AGENT = u'notif_user_agent'
+NOTIF_USER_AGENT_DEFAULT = u'orion/0.10.0'
+NOTIF_TENANT_DEFAULT = u'tenant'
+NOTIF_SERVICE_PATH_DEFAULT = u'service_path'
+NOTIF_CONTENT = u'content'
 
 # notification fields request constants
-NOTIFY_CONTEXT_REQUEST                    = u'notifyContextRequest'
-CONTEXT_RESPONSE_LIST                     = u'contextResponseList'
-CONTEXT_ELEMENT_RESPONSE                  = u'contextElementResponse'
-CONTEXT_ELEMENT                           = u'contextElement'
-CONTEXT_ATTRIBUTE_LIST                    = u'contextAttributeList'
-CONTEXT_ATTRIBUTE                         = u'contextAttribute'
-CONTEXT_RESPONSES                         = u'contextResponses'
-ATTRIBUTES                                = u'attributes'
-ENTITY_ID                                 = u'entityId'
-ID                                        = u'id'
-TYPE                                      = u'type'
-ENTITY_TYPE_XML                           = u'@type'
-ENTITY_PATTERN                            = u'@isPattern'
-PATTERN_JSON                              = u'isPattern'
-PATTERN_VALUE                             = u'false'
-SUBSCRIPTION_ID                           = u'subscriptionId'
-SUBSCRIPTION_ID_VALUE                     = u'51c0ac9ed714fb3b37d7d5a8'
-ORIGINATOR                                = u'originator'
-ORIGINATOR_VALUE                          = u'localhost'
-STATUS_CODE                               = u'statusCode'
-CODE                                      = u'code'
-CODE_VALUE                                = u'200'
-REASON_PHRASE                             = u'reasonPhrase'
-REASON_PHRASE_VALUE                       = u'OK'
-CONTEXT_METADATA                          = u'contextMetadata'
-METADATA                                  = u'metadata'
-METADATAS                                 = u'metadatas'
-NAME                                      = u'name'
-VALUE                                     = u'value'
-CONTENT_VALUE                             = u'contextValue'
+NOTIFY_CONTEXT_REQUEST = u'notifyContextRequest'
+CONTEXT_RESPONSE_LIST = u'contextResponseList'
+CONTEXT_ELEMENT_RESPONSE = u'contextElementResponse'
+CONTEXT_ELEMENT = u'contextElement'
+CONTEXT_ATTRIBUTE_LIST = u'contextAttributeList'
+CONTEXT_ATTRIBUTE = u'contextAttribute'
+CONTEXT_RESPONSES = u'contextResponses'
+ATTRIBUTES = u'attributes'
+ENTITY_ID = u'entityId'
+ID = u'id'
+TYPE = u'type'
+ENTITY_TYPE_XML = u'@type'
+ENTITY_PATTERN = u'@isPattern'
+PATTERN_JSON = u'isPattern'
+PATTERN_VALUE = u'false'
+SUBSCRIPTION_ID = u'subscriptionId'
+SUBSCRIPTION_ID_VALUE = u'51c0ac9ed714fb3b37d7d5a8'
+ORIGINATOR = u'originator'
+ORIGINATOR_VALUE = u'localhost'
+STATUS_CODE = u'statusCode'
+CODE = u'code'
+CODE_VALUE = u'200'
+REASON_PHRASE = u'reasonPhrase'
+REASON_PHRASE_VALUE = u'OK'
+CONTEXT_METADATA = u'contextMetadata'
+METADATA = u'metadata'
+METADATAS = u'metadatas'
+NAME = u'name'
+VALUE = u'value'
+CONTENT_VALUE = u'contextValue'
 
 NOTIFICATION = {
-    XML: {
-            NOTIFY_CONTEXT_REQUEST: {
-                CONTEXT_RESPONSE_LIST: {
-                    CONTEXT_ELEMENT_RESPONSE: {
-                        CONTEXT_ELEMENT: {
-                            CONTEXT_ATTRIBUTE_LIST: {
-                                CONTEXT_ATTRIBUTE: []
-                            }
+    'xml': {
+        NOTIFY_CONTEXT_REQUEST: {
+            CONTEXT_RESPONSE_LIST: {
+                CONTEXT_ELEMENT_RESPONSE: {
+                    CONTEXT_ELEMENT: {
+                        CONTEXT_ATTRIBUTE_LIST: {
+                            CONTEXT_ATTRIBUTE: []
                         }
                     }
                 }
             }
+        }
     },
-    JSON: {
-            CONTEXT_RESPONSES: [{
-                  CONTEXT_ELEMENT: {
-                      ATTRIBUTES: []
-                  }
-            }]
+    'json': {
+        CONTEXT_RESPONSES: [{
+                                CONTEXT_ELEMENT: {
+                                    ATTRIBUTES: []
+                                }
+                            }]
     }
 }
 
@@ -117,47 +113,70 @@ class Notifications:
         :param user_agent: User-Agent header used in notification request (OPTIONAL)
         :param tenant_default: Fiware_Service header. Tenant by default used in notification request (OPTIONAL)
         :param service_path: Fiware_ServicePath header. Service path by default used in notification request (OPTIONAL)
-        :param content: Content_Type and Accept headers (xml | json) (OPTIONAL)
+        :param content: Content_Type and Accept headers ('xml' | json) (OPTIONAL)
         """
         self.endpoint_url = notif_endpoint_url
         self.user_agent = kwargs.get(NOTIF_USER_AGENT, NOTIF_USER_AGENT_DEFAULT)
         self.tenant = kwargs.get(NOTIF_TENANT_DEFAULT.lower(), NOTIF_TENANT_DEFAULT)
         self.service_path = kwargs.get(NOTIF_SERVICE_PATH_DEFAULT.lower(), NOTIF_SERVICE_PATH_DEFAULT)
-        self.content = kwargs.get(NOTIF_CONTENT, JSON)
+        self.content = kwargs.get(NOTIF_CONTENT, 'json')
         self.attrs = []
         self.metadatas = None
+        self.attributes_number = None
+        self.attributes_metadata_number = None
+        self.attributes_name = None
+        self.attribute_type = None
+        self.identity_id = None
+        self.identity_type = None
+        self.attributes_value = None
 
-    def  __create_headers(self):
+    def __create_headers(self):
         """
         create the header for different requests
         :return: headers dictionary
         """
-        return {HEADER_ACCEPT: HEADER_APPLICATION + self.content, HEADER_CONTENT_TYPE  : HEADER_APPLICATION + self.content, HEADER_TENANT: self.tenant, HEADER_USER_AGENT: self.user_agent, HEADER_SERVICE_PATH: self.service_path}
+        return {
+            HEADER_ACCEPT: HEADER_APPLICATION + self.content,
+            HEADER_CONTENT_TYPE: HEADER_APPLICATION + self.content, HEADER_TENANT: self.tenant,
+            HEADER_USER_AGENT: self.user_agent, HEADER_SERVICE_PATH: self.service_path
+        }
 
-    def __insert_identity_id_and_identity_type (self, identity_id, identity_type):
+    def __build_request(self, identity_id, identity_type):
         """
         insert several fields in the request:
             - identityId, identityType, pattern, subscriptionId, originator and statusCode
         """
-        if self.content == XML:
-            NOTIFICATION [XML][NOTIFY_CONTEXT_REQUEST][SUBSCRIPTION_ID] = SUBSCRIPTION_ID_VALUE
-            NOTIFICATION [XML][NOTIFY_CONTEXT_REQUEST][ORIGINATOR] = ORIGINATOR_VALUE
-            NOTIFICATION [XML][NOTIFY_CONTEXT_REQUEST][CONTEXT_RESPONSE_LIST][CONTEXT_ELEMENT_RESPONSE][CONTEXT_ELEMENT][ENTITY_ID]= {ENTITY_TYPE_XML: identity_type, ENTITY_PATTERN: PATTERN_VALUE, ID: identity_id}
-            NOTIFICATION [XML][NOTIFY_CONTEXT_REQUEST][CONTEXT_RESPONSE_LIST][CONTEXT_ELEMENT_RESPONSE][STATUS_CODE] = {CODE: CODE_VALUE, REASON_PHRASE: REASON_PHRASE_VALUE}
+        if self.content == 'xml':
+            NOTIFICATION['xml'][NOTIFY_CONTEXT_REQUEST][SUBSCRIPTION_ID] = SUBSCRIPTION_ID_VALUE
+            NOTIFICATION['xml'][NOTIFY_CONTEXT_REQUEST][ORIGINATOR] = ORIGINATOR_VALUE
+            NOTIFICATION['xml'][NOTIFY_CONTEXT_REQUEST][CONTEXT_RESPONSE_LIST][CONTEXT_ELEMENT_RESPONSE][
+                CONTEXT_ELEMENT][ENTITY_ID] = {
+                ENTITY_TYPE_XML: identity_type,
+                ENTITY_PATTERN: PATTERN_VALUE,
+                ID: identity_id
+            }
+            NOTIFICATION['xml'][NOTIFY_CONTEXT_REQUEST][CONTEXT_RESPONSE_LIST][CONTEXT_ELEMENT_RESPONSE][
+                STATUS_CODE] = {
+                CODE: CODE_VALUE, REASON_PHRASE: REASON_PHRASE_VALUE}
         else:
-            NOTIFICATION [JSON][SUBSCRIPTION_ID] = SUBSCRIPTION_ID_VALUE
-            NOTIFICATION [JSON][ORIGINATOR] = ORIGINATOR_VALUE
-            NOTIFICATION [JSON][CONTEXT_RESPONSES][0][CONTEXT_ELEMENT][ID] = identity_id
-            NOTIFICATION [JSON][CONTEXT_RESPONSES][0][CONTEXT_ELEMENT][TYPE] =  identity_type
-            NOTIFICATION [JSON][CONTEXT_RESPONSES][0][CONTEXT_ELEMENT][PATTERN_JSON] = PATTERN_VALUE
-            NOTIFICATION [JSON][CONTEXT_RESPONSES][0][STATUS_CODE] = {CODE: CODE_VALUE, REASON_PHRASE: REASON_PHRASE_VALUE}
+            NOTIFICATION['json'][SUBSCRIPTION_ID] = SUBSCRIPTION_ID_VALUE
+            NOTIFICATION['json'][ORIGINATOR] = ORIGINATOR_VALUE
+            NOTIFICATION['json'][CONTEXT_RESPONSES][0][CONTEXT_ELEMENT][ID] = identity_id
+            NOTIFICATION['json'][CONTEXT_RESPONSES][0][CONTEXT_ELEMENT][TYPE] = identity_type
+            NOTIFICATION['json'][CONTEXT_RESPONSES][0][CONTEXT_ELEMENT][PATTERN_JSON] = PATTERN_VALUE
+            NOTIFICATION['json'][CONTEXT_RESPONSES][0][STATUS_CODE] = {
+                CODE: CODE_VALUE,
+                REASON_PHRASE: REASON_PHRASE_VALUE
+            }
 
-    def __create_payload(self):
+    def __create_payload(self, identity_id, identity_type):
         """
         generate payload to Notifications
         """
-        if self.content == XML:
-            NOTIFICATION[self.content][NOTIFY_CONTEXT_REQUEST][CONTEXT_RESPONSE_LIST][CONTEXT_ELEMENT_RESPONSE][CONTEXT_ELEMENT][CONTEXT_ATTRIBUTE_LIST][CONTEXT_ATTRIBUTE] = self.attrs
+        self.__build_request(identity_id, identity_type)
+        if self.content == 'xml':
+            NOTIFICATION[self.content][NOTIFY_CONTEXT_REQUEST][CONTEXT_RESPONSE_LIST][CONTEXT_ELEMENT_RESPONSE][
+                CONTEXT_ELEMENT][CONTEXT_ATTRIBUTE_LIST][CONTEXT_ATTRIBUTE] = self.attrs
         else:
             NOTIFICATION[self.content][CONTEXT_RESPONSES][0][CONTEXT_ELEMENT][ATTRIBUTES] = self.attrs
         return general_utils.convert_dict_to_str(NOTIFICATION[self.content], self.content)
@@ -170,34 +189,40 @@ class Notifications:
         :param value: metadata value (OPTIONAL: random)
         :return: metadata dictionary
         """
-        if name == RANDOM:
+        if name == 'random':
             name = 'name_' + general_utils.string_generator(4)
-        if type == RANDOM:
+        if type == 'random':
             type = 'type_' + general_utils.string_generator(4)
-        if value == RANDOM:
+        if value == 'random':
             value = general_utils.string_generator(4)
-        return {NAME: name, TYPE: type, VALUE: value}
+        return {
+            NAME: name,
+            TYPE: type,
+            VALUE: value
+        }
 
-    def __append_attribute(self, name, type, value, metadatas):
+    def __build_attribute(self, name, type, value, metadatas):
         """
-         create a attribute
+        Create a attribute
         :param name: attribute name (OPTIONAL: random)
         :param type: attribute type (OPTIONAL: random)
         :param value: attribute value (OPTIONAL: random)
         :param metadata: metadata attribute
         :return: attribute dictionary
         """
-        if self.content == XML:
+        if self.content == 'xml':
             dict_temp = {NAME: name, TYPE: type, CONTENT_VALUE: value}
-            if metadatas != None: dict_temp[METADATA] = metadatas
+            if metadatas is not None:
+                dict_temp['metadata'] = metadatas
         else:
-            dict_temp =  {NAME: name, TYPE: type, VALUE: value}
-            if metadatas != None: dict_temp[METADATAS] = metadatas
+            dict_temp = {NAME: name, TYPE: type, VALUE: value}
+            if metadatas is not None:
+                dict_temp['metadata'] = metadatas
         return dict_temp
 
-    #  ---  public methods  ---- #
+    # ---  public methods  ---- #
 
-    def create_metadatas_attribute (self, number, name, type, value):
+    def create_metadatas_attribute(self, number, name, type, value):
         """
         append the metadatas list
         :param number: quantity metadatas per attributes
@@ -207,52 +232,42 @@ class Notifications:
         :return: metadatas attribute list
         """
         self.attributes_metadata_number = number
-        if self.attributes_metadata_number <= 0: return None
-        contextMetadatasList = []
+        if self.attributes_metadata_number <= 0:
+            return None
+        context_metadata_list = []
         for i in range(int(self.attributes_metadata_number)):
-            contextMetadatasList.append(self.__new_metadata(name, type, value))
-        if self.content == XML:
-            self.metadatas = {CONTEXT_METADATA:contextMetadatasList}
+            context_metadata_list.append(self.__new_metadata(name, type, value))
+        if self.content == 'xml':
+            self.metadatas = {CONTEXT_METADATA: context_metadata_list}
         else:
-            self.metadatas = contextMetadatasList
+            self.metadatas = context_metadata_list
         return self.metadatas
 
-    def create_attributes (self, number, name, type, value):
+    def create_attributes(self, number, name, type, value):
         """
-        create attributes to Notifications
-        :return attributes list
+        Create attributes to Notifications, the attributes will be the same except by the name the number times given
+        :param number: Number of attributes repeated
+        :param name: Prefix name of the attributes
+        :param type: Type of the attributes
+        :param value: value of the attributes
         """
         self.attrs = []
-        self.attributes_number = number
-        if name == RANDOM:
+        if name == 'random':
             self.attributes_name = 'name_' + general_utils.string_generator(4)
         else:
             self.attributes_name = name
-        if type == RANDOM:
+        if type == 'random':
             self.attribute_type = 'type_' + general_utils.string_generator(4)
         else:
             self.attribute_type = type
-        if value == RANDOM:
+        if value == 'random':
             self.attributes_value = general_utils.string_generator(4)
         else:
             self.attributes_value = value
-        for i in range(0,int(self.attributes_number)):
-            self.attrs.append(self.__append_attribute(self.attributes_name+"_"+str(i), self.attribute_type, self.attributes_value, self.metadatas))
-        return self.attrs
-
-    def get_attributes_name(self):
-        """
-        Get attribute name
-        :return: string
-        """
-        return self.attributes_name
-
-    def get_attributes_value(self):
-        """
-         Get attribute value
-        :return: string
-        """
-        return self.attributes_value
+        for i in range(0, int(number)):
+            self.attrs.append(
+                self.__build_attribute(self.attributes_name + "_" + str(i), self.attribute_type, self.attributes_value,
+                                        self.metadatas))
 
     def send_notification(self, identity_id, identity_type):
         """
@@ -265,41 +280,39 @@ class Notifications:
         """
         assert len(self.attrs) != 0, \
             " ERROR - It is necessary to create the attributes previously. See create_attributes() method... "
-        self.identity_id = identity_id
-        self.identity_type = identity_type
-        self.__insert_identity_id_and_identity_type (self.identity_id, self.identity_type)
-        payload = self.__create_payload()
-        return  http_utils.request(http_utils.POST, url=self.endpoint_url, headers=self.__create_headers(), data=payload)
+        payload = self.__create_payload(identity_id, identity_type)
+        return request('POST', url=self.endpoint_url, headers=self.__create_headers(), data=payload)
 
-    def get_attributes (self):
+
+    def get_attributes_value(self):
+        """
+         Get attribute value
+        :return: string
+        """
+        return self.attributes_value
+
+    def get_attributes(self):
         """
         Get attributes
         :return: attributes dictionary
         """
         return self.attrs
 
-    def get_attributes_number (self):
+    def get_attributes_number(self):
         """
         Get attributes number
         :return: attributes number
         """
-        return self.attributes_number
+        return len(self.attrs)
 
-    def get_identities (self):
-        """
-        Get identityId and IdentityTpe
-        :return: identityId and IdentityTpe duple
-        """
-        return self.identity_id, self.identity_type
-
-    def get_services (self):
+    def get_services(self):
         """
         Get Service (tenant) and servicePath
         :return: service (tenant) and servicePath duple
         """
         return self.tenant, self.service_path
 
-    def get_attributes_metadata_number (self):
+    def get_attributes_metadata_number(self):
         """
         Get metadata attributes number
         :return: metadata attributes number

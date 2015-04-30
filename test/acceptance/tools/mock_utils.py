@@ -26,10 +26,10 @@ __author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
 
 
-#Generals constants
+# Generals constants
 import time
-import general_utils
-import http_utils
+from general_utils import *
+from http_utils import *
 
 EMPTY = u''
 
@@ -38,7 +38,7 @@ SEND_SMS_URL = u'send_sms_url'
 SEND_EMAIL_URL = u'send_email_url'
 SEND_UPDATE_URL = u'send_update_url'
 
-#url constants
+# url constants
 GET_SMS = u'get/sms'
 GET_EMAIL = u'get/email'
 GET_UPDATE = u'get/update'
@@ -78,44 +78,42 @@ class Mock:
         self.resp = None
 
     def __create_url(self, operation, rule_type):
-
         """
         create the url for different requests
         :param rule_type: ms | email | update | post |twitter
         :param operation: several operations such as get, counter, etc
         :return: request url
         """
-        #TODO: Si se usa el constructor con send_update_url vacio, que es posible, la url se construye mal
-        value = "%s/%s/%s" % (self.send_update_url, operation, rule_type)
-        return value
+        # TODO: Si se usa el constructor con send_update_url vacio, que es posible, la url se construye mal
+        return "{send_update_url}/{operation}/{rule_type}".format(send_update_url=self.send_update_url,
+                                                                  operation=operation, rule_type=rule_type)
 
     def verify_response_mock(self, rule_type, attributes_value, parameters_value):
         """
         verify the response returned from mock
-        If the rule type is update_epl compare with pareameters value, if the type is other, with attributes value
+        If the rule type is update_epl compare with parameters value, if the type is other, with attributes value
         """
         time.sleep(5)  # delay for 5 secs, waiting to arrived the
-        # Transform from CARD to EPL
-        if rule_type == EMAIL_CARD_TYPE:
-            rule_type = EMAIL_EPL_TYPE
-        if rule_type == SMS_CARD_TYPE:
-            rule_type = SMS_EPL_TYPE
-        if rule_type == UPDATE_CARD_TYPE:
-            rule_type = UPDATE_EPL_TYPE
-        # There is no post type in cards
-        if rule_type == SMS_EPL_TYPE or rule_type == EMAIL_EPL_TYPE or rule_type == UPDATE_EPL_TYPE or rule_type == POST_EPL_TYPE:
-            self.resp = http_utils.request(http_utils.GET, url=self.__create_url("get", rule_type))
-            response = general_utils.convert_str_to_dict(self.resp.text, general_utils.JSON)
-        else:
+        if rule_type not in [EMAIL_CARD_TYPE, EMAIL_EPL_TYPE, SMS_CARD_TYPE, SMS_EPL_TYPE, POST_EPL_TYPE,
+                             UPDATE_CARD_TYPE, UPDATE_EPL_TYPE]:
+            print "exit because rule_type"
             return False
-        if rule_type == SMS_EPL_TYPE:
-            resp_temp = response[MESSAGE]
-        elif rule_type == EMAIL_EPL_TYPE:
-            resp_temp = response[SMTP_DATA]
-        elif rule_type == POST_EPL_TYPE:
-            template_post = general_utils.convert_str_to_dict(response, general_utils.JSON)
-            resp_temp = template_post[MESSAGE]
-        elif rule_type == UPDATE_EPL_TYPE:
+        else:
+            # Transform from CARD to EPL
+            if rule_type == EMAIL_CARD_TYPE:
+                rule_type = EMAIL_EPL_TYPE
+            if rule_type == SMS_CARD_TYPE:
+                rule_type = SMS_EPL_TYPE
+            if rule_type == UPDATE_CARD_TYPE:
+                rule_type = UPDATE_EPL_TYPE
+
+        # Get the info from the mock
+        self.resp = request('GET', url=self.__create_url("get", rule_type))
+        response = convert_str_to_dict(self.resp.text, 'json')
+        print response
+        print rule_type
+        print parameters_value
+        if rule_type == UPDATE_EPL_TYPE:
             try:
                 if str(response[CONTEXT_ELEMENTS][0][ATTRIBUTES][0][VALUE]) == parameters_value:
                     return True
@@ -123,7 +121,18 @@ class Mock:
                     return False
             except Exception, e:
                 assert False, " ERROR - %s does not exists.\n Probably the rule has not been triggered." % (str(e))
+        else:
+            if rule_type == SMS_EPL_TYPE:
+                resp_temp = response[MESSAGE]
+            elif rule_type == EMAIL_EPL_TYPE:
+                resp_temp = response[SMTP_DATA]
+            elif rule_type == POST_EPL_TYPE:
+                template_post = convert_str_to_dict(response, 'json')
+                resp_temp = template_post[MESSAGE]
+            else:
+                raise ValueError('The rule_type "{rule_type}" is not supported'.format(rule_type=rule_type))
 
+        # Get the attribute from the string
         attribute_value_position_init = resp_temp.find("<<<") + 3
         attribute_value_position_end = resp_temp.find(">>>")
         try:
@@ -138,9 +147,9 @@ class Mock:
         reset a counter in mock
         :param rule_type: sms | email | update | post |twitter
         """
-        self.resp = http_utils.request(http_utils.PUT, url=self.__create_url("reset", rule_type))
-        http_utils.assert_status_code(http_utils.status_codes[http_utils.OK], self.resp,
-                                      "ERROR - " + rule_type + " reset in mock...")
+        self.resp = request('PUT', url=self.__create_url("reset", rule_type))
+        assert_status_code(status_codes['OK'], self.resp,
+                           "ERROR - " + rule_type + " reset in mock...")
 
     def get_counter_value(self, rule_type):
         """
@@ -148,7 +157,7 @@ class Mock:
         :param rule_type: sms | email | update | twitter
         :return: int
         """
-        resp = http_utils.request(http_utils.GET, url=self.__create_url("counter", rule_type))
+        resp = request('GET', url=self.__create_url("counter", rule_type))
         resp_split = resp.text.split(": ")
         return int(resp_split[1])
 

@@ -20,13 +20,27 @@
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid.es
+# iot_support at tid.es
 #
-__author__ = 'Jon Calderin Goñi <jon.caldering@gmail.com>'
 
-from integration.common_steps import *
-from integration.steps_lib.mock import *
-from integration.steps_lib.notifications import *
-from integration.steps_lib.epl import *
-from integration.steps_lib.rules import *
-from integration.steps_lib.validations import *
+__author__ = 'Jon Calderín Goñi <jon.caldering@gmail.com>'
+
+from lettuce import step, world
+
+# Background
+@step('perseo-fe is up and running')
+def perseo_fe_is_up_and_running(step):
+    """
+    Check if perseo answer to the version in ok
+    :param step:
+    :return:
+    """
+    assert world.cep.version().status_code == 200
+    world.cards = []
+    world.rules = []
+
+@step('validate the http code of the response is "([^"]*)"')
+def i_receive_an_http_code_in_rules_request(step, code):
+    assert world.resp.status_code == int(code), \
+        'The code received from cep is "{code_received}" and the expected is "{code_expected}"'.format(
+        code_received=world.resp.status_code, code_expected=code)

@@ -20,13 +20,8 @@
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid.es
+# iot_support at tid.es
 #
-__author__ = 'Jon Calderin Goñi <jon.caldering@gmail.com>'
 
-from integration.common_steps import *
-from integration.steps_lib.mock import *
-from integration.steps_lib.notifications import *
-from integration.steps_lib.epl import *
-from integration.steps_lib.rules import *
-from integration.steps_lib.validations import *
+__author__ = 'Jon Calderín Goñi <jon.caldering@gmail.com>'
+from lettuce import step, world

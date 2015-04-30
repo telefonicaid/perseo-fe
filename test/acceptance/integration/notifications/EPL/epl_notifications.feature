@@ -33,157 +33,165 @@ __author__ = 'Iván Arias León (ivan.ariasleon at telefonica dot com)'
 #            -tg=-skip
 #        * For to see "default" values, in properties.json file
 #
-
+@epl_notifications
 Feature: Launch an action if a rule is triggered in Perseo manager
   As a Perseo user
   I want to be able to launch a action (sms, email or update) if a rule is triggered in Perseo manager
   so that they become more functional and useful
 
-  @happy_path
-  Scenario Outline: launch a action if a rule is triggered in Perseo manager
-    Given Perseo manager is installed correctly to "send"
-    And configured with tenant "unknownt" and service "/service"
-    And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1.5"
-    And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    And an identity_id "room2", with attribute number "1", attribute name "attrName" and attribute type "celcius"
-    When receives a notification with attributes value "300", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that EPL rule is triggered successfully
-    And delete a EPL rule created
-  Examples:
-    | rule_name   | rule_type | template_info | parameters         |
-    | SMS____name | sms       | (SMS rule)    | 123456789          |
-    | EMAIL__name | email     | (Email rule)  | aaaaaaa@bbbbbb.ccc |
-    | update_name | update    |               | warning            |
-    | post___name | post      | (post rule)   | url - mock         |
+  @happy_path @action_if_the_rule_is_satisfied
+  Scenario: Launch an action if a rule is triggered with entity type and id (does not matter the action)
+    # Gen EPL
+    Given an EPL sentence with name "sms_rule"
+    And the entity_id "room2" for the EPL
+    And the entity_type "Room" for the EPL
+    And the attributes for the EPL
+      | attribute_id | attribute_value_type | attribute_operation | attribute_value |
+      | temperature  | float                | >                   | 1.5             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the sms action with text "the new temperature is ${temperature}" and number "666999666"
+    And with the epl generated and the action, append a new rule in perseo with name "sms_rule"
+    # Notification
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room2" and type "Room" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value |
+      | temperature  | celcius        | 300                 |
+    When the notification is sent to perseo
+    Then the mock receive the number "1" of actions "sms"
+    And the mock receive this part of text "the new temperature is 300" in the action "sms"
 
-  @multiples_rules
-  Scenario Outline: launch several actions if several rules are triggered in Perseo manager
-    Given Perseo manager is installed correctly to "read"
-    And configured with tenant "unknownt" and service "/service"
-    And reset counters in mock "<rule_type>"
-    And an EPL with a rule name "rules", an identity type "room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1.5"
-    And create "<rule_number>" notification rules with prefix "<prefix_name>" and "<rule_type>" type
-    And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
-    When receives a notification with attributes value "300", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that all EPL rules are triggered successfully
-    And delete all EPL rules created
-  Examples:
-    | rule_number | prefix_name | rule_type |
-    | 1           | prefix_1    | sms       |
-    | 5           | prefix_5    | sms       |
-    | 10          | prefix_10   | sms       |
-    | 50          | prefix_50   | sms       |
-    | 100         | prefix_100  | sms       |
-    | 1           | prefix_1    | email     |
-    | 5           | prefix_5    | email     |
-    | 10          | prefix_10   | email     |
-    | 1           | prefix_1    | update    |
-    | 5           | prefix_5    | update    |
-    | 10          | prefix_10   | update    |
-    | 50          | prefix_50   | update    |
-    | 100         | prefix_100  | update    |
-    | 1           | prefix_1    | post      |
-    | 5           | prefix_5    | post      |
-    | 10          | prefix_10   | post      |
-    | 50          | prefix_50   | post      |
-    | 100         | prefix_100  | post      |
+  @satisfied_some_attributes
+  Scenario: Launch an action if a rule with two attributes is satisfied with one notice
+    # Gen EPL
+    Given an EPL sentence with name "sms_rule"
+    And the entity_type "Room" for the EPL
+    And the attributes for the EPL
+      | attribute_id | attribute_value_type | attribute_operation | attribute_value |
+      | temperature  | float                | >                   | 1.5             |
+      | speed        | float                | >                   | 100             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the sms action with text "the new temperature is ${temperature}" and number "666999666"
+    And with the epl generated and the action, append a new rule in perseo with name "sms_rule"
+    # Notification
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room2" and type "Room" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value |
+      | temperature  | celcius        | 300                 |
+      | speed        | kms per our    | 300                 |
+    When the notification is sent to perseo
+    Then the mock receive the number "1" of actions "sms"
+    And the mock receive this part of text "the new temperature is 300" in the action "sms"
 
-  @attributes_number
-  Scenario Outline: launch an action if a rule is triggered in Perseo manager with several attributes
-    Given Perseo manager is installed correctly to "send"
-    And configured with tenant "unknownt" and service "/service"
-    And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "<attributes_number>", an attribute data type "float", an operation type ">" and value "1.5"
-    And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
-    When receives a notification with attributes value "300", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that EPL rule is triggered successfully
-    And delete a EPL rule created
-  Examples:
-    | rule_name   | attributes_number | rule_type | template_info | parameters         |
-    | SMS____name | 1                 | sms       | (SMS rule)    | 123456789          |
-    | SMS____name | 5                 | sms       | (SMS rule)    | 123456789          |
-    | SMS____name | 10                | sms       | (SMS rule)    | 123456789          |
-    | SMS____name | 50                | sms       | (SMS rule)    | 123456789          |
-    | EMAIL__name | 1                 | email     | (Email rule)  | aaaaaaa@bbbbbb.ccc |
-    | EMAIL__name | 5                 | email     | (Email rule)  | aaaaaaa@bbbbbb.ccc |
-    | EMAIL__name | 10                | email     | (Email rule)  | aaaaaaa@bbbbbb.ccc |
-    | EMAIL__name | 50                | email     | (Email rule)  | aaaaaaa@bbbbbb.ccc |
-    | update_name | 1                 | update    |               | warning            |
-    | update_name | 5                 | update    |               | warning            |
-    | update_name | 10                | update    |               | warning            |
-    | update_name | 50                | update    |               | warning            |
-    | post___name | 1                 | post      | (post rule)   | url - mock         |
-    | post___name | 5                 | post      | (post rule)   | url - mock         |
-    | post___name | 10                | post      | (post rule)   | url - mock         |
-    | post___name | 50                | post      | (post rule)   | url - mock         |
+  @satisfied_separate_part_rules
+  Scenario: Do not launch an action if a rule with two attributes is satisfied with two notices
+    # Gen EPL
+    Given an EPL sentence with name "sms_rule"
+    And the entity_type "Room" for the EPL
+    And the attributes for the EPL
+      | attribute_id | attribute_value_type | attribute_operation | attribute_value |
+      | temperature  | float                | >                   | 1.5             |
+      | speed        | float                | >                   | 100             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the sms action with text "the new temperature is ${temperature}" and number "666999666"
+    And with the epl generated and the action, append a new rule in perseo with name "sms_rule"
+    # Notification
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room2" and type "Room" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value |
+      | temperature  | celcius        | 300                 |
+    When the notification is sent to perseo
+    # Notification 2
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room2" and type "Room" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value |
+      | speed        | kms per our    | 300                 |
+    When the notification is sent to perseo
+    Then the mock receive the number "0" of actions "sms"
 
-  @xml_format
-  Scenario Outline: not launch an action if notification is in xml format and the rule associated is not triggered in Perseo manager
-    Given Perseo manager is installed correctly to "send"
-    And configured with tenant "unknownt" and service "/service"
-    And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1.5"
-    And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
-    When  receives a notification with attributes value "300", metadata value "True" and content "xml"
-    Then I receive an "Bad Request" http code
-    And delete a EPL rule created
-  Examples:
-    | rule_name   | rule_type | template_info | parameters              |
-    | SMS____name | sms       | (SMS rule)    | 123456789               |
-    | EMAIL__name | email     | (Email rule)  | aaaaaaa@bbbbbb.ccc      |
-    | update_name | update    |               | warning                 |
-    | post___name | post      | (post rule)   | url - mock              |
-    | post___name | post      | (post rule)   | url - mock in localhost |
 
-  @rule_type_error @issue35
-  Scenario Outline: not trigger an notification because the rule type is wrong
-    Given Perseo manager is installed correctly to "send"
-    And configured with tenant "unknownt" and service "/service"
-    And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1.5"
-    And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
-    When receives a notification with attributes value "300", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And delete a EPL rule created
-  Examples:
-    | rule_name   | rule_type | template_info | parameters |
-    | SMS____name | rtert     | (SMS rule)    | 123456789  |
-    | tester_1220 |           | (SMS rule)    | 123456789  |
-    | tester_1230 | 121212    | (SMS rule)    | 123456789  |
-    | tester_1240 | #~&       | (SMS rule)    | 123456789  |
+  @several_rules
+  Scenario Outline: Launch several actions if several rules are satisfied
+    # Gen EPL
+    Given an EPL sentence with name "rule_prefix_name"
+    And the entity_type "Room" for the EPL
+    And the attributes for the EPL
+      | attribute_id | attribute_value_type | attribute_operation | attribute_value |
+      | temperature  | float                | >                   | 1.5             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the sms action with text "the new temperature is ${temperature}" and number "666999666"
+    And with the epl generated and the action, append an amount of "<rule_number>" rules in perseo with prefix name "rule_prefix_name"
+    # Notification
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room2" and type "Room" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value |
+      | temperature  | celcius        | 300                 |
+    When the notification is sent to perseo
+    Then the mock receive the number "<rule_number>" of actions "sms"
 
-  @rule_parameters_error
-  Scenario Outline: not trigger an notification but the rule parameter is wrong
-    Given Perseo manager is installed correctly to "send"
-    And configured with tenant "unknownt" and service "/service"
-    And an EPL with a rule name "<rule_name>", an identity type "room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1.5"
-    And append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    And an identity_id "room2", with attribute number "4", attribute name "attrName" and attribute type "celcius"
-    When receives a notification with attributes value "300", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And delete a EPL rule created
   Examples:
-    | rule_name   | rule_type | template_info | parameters      |
-    | SMS____name | sms       | (SMS rule)    | 345rg           |
-    | SMS____name | sms       | (SMS rule)    |                 |
-    | SMS____name | sms       | (SMS rule)    | $%$%            |
-    | EMAIL__name | email     | (email rule)  | qwd-sddd@qd.com |
-    | EMAIL__name | email     | (email rule)  | @qd.com         |
-    | EMAIL__name | email     | (email rule)  |                 |
-    | EMAIL__name | email     | (email rule)  | dfsdfsdf@       |
-    | EMAIL__name | email     | (email rule)  | dfd@.com        |
-    | EMAIL__name | email     | (email rule)  | dssd@qd         |
-    | EMAIL__name | email     | (email rule)  |                 |
-    | post___name | post      | (post rule)   |                 |
-    | post___name | post      | (post rule)   | htf://1.1.1.1   |
-    | post___name | post      | (post rule)   | http:1.1.1.1    |
-    | post___name | post      | (post rule)   | http://1.1.e.1  |
-    | post___name | post      | (post rule)   |                 |
-    | post___name | post      | (post rule)   | htf://1.1.1.1   |
-    | post___name | post      | (post rule)   | http:1.1.1.1    |
-    | post___name | post      | (post rule)   | http://1.1.e.1  |
+    | rule_number |
+    | 1           |
+    | 5           |
+    | 10          |
+    | 50          |
+    | 100         |
+
+  @several_attributes
+  Scenario Outline: Launch an action if a rule is satisfied with several attributes
+    # Gen EPL
+    Given an EPL sentence with name ""
+    And the entity_type "Room" for the EPL
+    And a number of "<attributes_number>" equal attributes for the EPL with the following data
+      | attribute_id_prefix | attribute_value_type | attribute_operation | attribute_value |
+      | temperature         | float                | >                   | 1.5             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the sms action with text "the new temperature is ${temperature}" and number "666999666"
+    And with the epl generated and the action, append a new rule in perseo with name "sms_rule"
+    # Notification
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room" and type "Room" with the amount of "<attributes_number>" equal attributes with the following data
+      | attribute_id_prefix | attribute_type | attribute_new_value |
+      | temperature         | celcius        | 300                 |
+    When the notification is sent to perseo
+    Then the mock receive the number "1" of actions "sms"
+
+  Examples:
+    | attributes_number |
+    | 1                 |
+    | 5                 |
+    | 10                |
+    | 50                |
+
+
+  Scenario Outline: Check there is no notifications if the rule is not satisfied because multiple reasons
+    # Gen EPL
+    Given an EPL sentence with name "sms_rule"
+    And the entity_type "Room" for the EPL
+    And the entity_id "room" for the EPL
+    And the attributes for the EPL
+      | attribute_id | attribute_value_type | attribute_operation | attribute_value |
+      | temperature  | float                | >                   | 1.5             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the sms action with text "the new temperature is ${temperature}" and number "666999666"
+    And with the epl generated and the action, append a new rule in perseo with name "sms_rule"
+    # Notification
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "<entity_id>" and type "<entity_type>" with the following attributes
+      | attribute_id   | attribute_type | attribute_new_value |
+      | <attribute_id> | celcius        | <attribute_value>   |
+    When the notification is sent to perseo
+    Then the mock receive the number "0" of actions "sms"
+  Examples:
+    | entity_id | entity_type | attribute_id       | attribute_value |
+    | bad_id    | Room        | temperature        | 300             |
+    | room      | Room2       | temperature        | 300             |
+    | room      | Room        | diferent_attribute | 300             |
+    | room      | Room        | temperature        | 1.4             |
 
 

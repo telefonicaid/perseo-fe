@@ -40,12 +40,10 @@ Feature: Append a new rule in Perseo manager
   @happy_path
   Scenario Outline: append a new rule in Perseo manager
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And an EPL with a rule name "<rule_name>", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    Then I receive an "OK" http code in rules request
-    And Validate that rule name is created successfully
-    And delete a EPL rule created
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
   Examples:
     | rule_name   | rule_type | template_info | parameters              |
     | SMS____name | sms       | (SMS rule)    | 123456789               |
@@ -56,28 +54,26 @@ Feature: Append a new rule in Perseo manager
   @tenant
   Scenario Outline: append a new rule with differents values in the tenant
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "<tenant>" and service "default"
-    And an EPL with a rule name "name_test", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And set service "<service>" and service path "/"
+    And an EPL with a rule name "name_test", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code in rules request
-    And Validate that rule name is created successfully
-    And delete a EPL rule created
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
   Examples:
-    | tenant                |
+    | service                |
     | test                  |
     | test34                |
     | test_34               |
-    | tenant length allowed |
+    | 12345678901234567890123456789012345678901234567890 |
 
   @tenant_error @BUG__ISSUE_29
   Scenario Outline: try to append a new rule with differents values in the tenant
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "<tenant>" and service "default"
-    And an EPL with a rule name "name_test", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    Given set service "<service>" and service path "/"
+    And an EPL with a rule name "name_test", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "Bad Request" http code in rules request
+    Then I receive an "400" http code in rules request
   Examples:
-    | tenant                            |
+    | service                            |
     | test-34                           |
     | test 34                           |
     | test(34)                          |
@@ -87,32 +83,30 @@ Feature: Append a new rule in Perseo manager
     | test.34                           |
     | test/34                           |
     | test\34                           |
-    | tenant longer than length allowed |
+    | 0123456789012345678901234567890123456789012345678901234567890 |
 
   @service_path
   Scenario Outline: append a new rule with differents values in the service path
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "<service_path>"
-    And an EPL with a rule name "name_test", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And set service "service" and service path "<service_path>"
+    And an EPL with a rule name "name_test", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code in rules request
-    And Validate that rule name is created successfully
-    And delete a EPL rule created
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
   Examples:
     | service_path                         |
     | /                                    |
     | /test                                |
     | /test34                              |
     | /test34_2                            |
-    | servicepath length allowed one level |
+    | /01234567890123456789012345678901234567890123456789 |
 
   @service_path_error @BUG__ISSUE_32
   Scenario Outline: try to append a new rule with differents values in the service path
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "tenant" and service "<service_path>"
-    And an EPL with a rule name "name_test", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    Given set service "service" and service path "<service_path>"
+    And an EPL with a rule name "name_test", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "Bad Request" http code in rules request
+    Then I receive an "400" http code in rules request
   Examples:
     | service_path                            |
     | test                                    |
@@ -126,33 +120,30 @@ Feature: Append a new rule in Perseo manager
     | /test#34                                |
     | /test.34                                |
     | /test\34                                |
-    | service path longer than length allowed |
+    | /012345678901234567890123456789012345678901234567890 |
 
-  @attribute_number
-  Scenario Outline: append a new rule with differents attributes quantities
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "<attribute_number>", an attribute data type "default", an operation type "default" and value "default"
-    When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code in rules request
-    And Validate that rule name is created successfully
-    And delete a EPL rule created
-  Examples:
-    | rule_name    | attribute_number |
-    | tester_10000 | 1                |
-    | tester_11000 | 5                |
-    | tester_12000 | 10               |
-    | tester_13000 | 50               |
+#  @attribute_number
+#  Scenario Outline: append a new rule with differents attributes quantities
+#    Given Perseo manager is installed correctly to "append"
+#    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "<attribute_number>", an attribute data type "default", an operation type "default" and value "default"
+#    When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
+#    Then I receive an "OK" http code in rules request
+#    And Validate that rule name is created successfully
+#    And delete a EPL rule created
+#  Examples:
+#    | rule_name    | attribute_number |
+#    | tester_10000 | 1                |
+#    | tester_11000 | 5                |
+#    | tester_12000 | 10               |
+#    | tester_13000 | 50               |
 
   @rule_name
   Scenario Outline: append a new rule with differents values in the rule_name
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And an EPL with a rule name "<rule_name>", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code in rules request
-    And Validate that rule name is created successfully
-    And delete a EPL rule created
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
   Examples:
     | rule_name               |
     | test                    |
@@ -162,15 +153,14 @@ Feature: Append a new rule in Perseo manager
     | test_34                 |
     | test-34                 |
     | TEST45                  |
-    | rulename length allowed |
+    | 01234567890123456789012345678901234567890 |
 
   @rule_name_error @BUG15 @BUG44
   Scenario Outline: try to append a new rule with wrong values in the rule_name
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And an EPL with a rule name "<rule_name>", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "Bad Request" http code in rules request
+    Then I receive an "400" http code in rules request
   Examples:
     | rule_name                           |
     |                                     |
@@ -181,17 +171,15 @@ Feature: Append a new rule in Perseo manager
     | test.34                             |
     | test\34                             |
     | test/34                             |
-    | rulename longer than length allowed |
+    | 01234567890123456789012345678901234567890123456789012 |
 
   @identity_type_name
   Scenario Outline: append a new rule with differents values in the identity Type
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "<rule_name>", an identity type "<identity_type>", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And an EPL with a rule name "<rule_name>", an identity type "<identity_type>", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code in rules request
-    And Validate that rule name is created successfully
-    And delete a EPL rule created
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
   Examples:
     | rule_name | identity_type             |
     | test_02   | teste                     |
@@ -205,17 +193,15 @@ Feature: Append a new rule in Perseo manager
     | test_10   | teste#34                  |
     | test_11   | teste.34                  |
     | test_13   | teste\34                  |
-    | test_14   | identity Type length 1024 |
+    | test_14   | 01234567890123456789012345678901234567890 |
 
   @attribute_type
   Scenario Outline: append a new rule with differents attributes type, operation type and values
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "<attribute_type>", an operation type "<operation>" and value "<value>"
+    And an EPL with a rule name "<rule_name>", an identity type "Room", an attributes Number "1", an attribute data type "<attribute_type>", an operation type "<operation>" and value "<value>"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "OK" http code in rules request
-    And Validate that rule name is created successfully
-    And delete a EPL rule created
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
   Examples:
     | rule_name  | attribute_type | operation | value    |
     | tester_100 | float          | >         | 1.4      |
@@ -227,12 +213,10 @@ Feature: Append a new rule in Perseo manager
   @rule_type
   Scenario Outline: append a new rule with differents rule types
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And an EPL with a rule name "<rule_name>", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    Then I receive an "OK" http code in rules request
-    And Validate that rule name is created successfully
-    And delete a EPL rule created
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
   Examples:
     | rule_name   | rule_type | template_info | parameters         |
     | tester_1100 | sms       | (SMS rule)    | 00123456789        |
@@ -241,31 +225,28 @@ Feature: Append a new rule in Perseo manager
     | tester_1440 | post      | (post rule)   | http://10.10.10.10 |
 
   @rule_type_error @issue35
-  Scenario Outline: try to append a new rule with rule types wrong
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
-    When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    Then I receive an "Bad Request" http code in rules request
-  Examples:
-    | rule_name    | rule_type | template_info | parameters         |
-    | tester_11001 |           | (SMS rule)    | 00123456789        |
-    | tester_11002 | SMS       | (SMS rule)    | 00123456789        |
-    | tester_11003 | fdsfsd    | (SMS rule)    | 00123456789        |
-    | tester_12204 | EMAIL     | (email rule)  | qwwqe@wewqe.com    |
-    | tester_13305 | UPDATE    | (update rule) | sdfsdfsd           |
-    | tester_14406 | POST      | (post rule)   | http://10.10.10.10 |
-    | tester_14407 | 11111     | (post rule)   | http://10.10.10.10 |
+#  Scenario Outline: try to append a new rule with rule types wrong
+#    Given Perseo manager is installed correctly to "append"
+#    And an EPL with a rule name "<rule_name>", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
+#    When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
+#    Then I receive an "400" http code in rules request
+#  Examples:
+#    | rule_name    | rule_type | template_info | parameters         |
+#    | tester_11001 |           | (SMS rule)    | 00123456789        |
+#    | tester_11002 | SMS       | (SMS rule)    | 00123456789        |
+#    | tester_11003 | fdsfsd    | (SMS rule)    | 00123456789        |
+#    | tester_12204 | EMAIL     | (email rule)  | qwwqe@wewqe.com    |
+#    | tester_13305 | UPDATE    | (update rule) | sdfsdfsd           |
+#    | tester_14406 | POST      | (post rule)   | http://10.10.10.10 |
+#    | tester_14407 | 11111     | (post rule)   | http://10.10.10.10 |
 
   @rule_parameters
   Scenario Outline: append a new rule with differents rule types
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "<rule_name>", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And an EPL with a rule name "<rule_name>", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type ">" and value "1"
     When append a new rule with a rule type "<rule_type>", a template "<template_info>" and a parameters "<parameters>"
-    Then I receive an "OK" http code in rules request
-    And Validate that rule name is created successfully
-    And delete a EPL rule created
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
   Examples:
     | rule_name    | rule_type | template_info | parameters                   |
     | tester_11000 | sms       | (SMS rule)    | 0034123456789                |
@@ -283,29 +264,25 @@ Feature: Append a new rule in Perseo manager
   @multiple_rules
   Scenario Outline: appends multiples rules  in Perseo manager
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "default", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And an EPL with a rule name "default", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type "<" and value "1"
     When create "<rule_number>" rules with prefix "<prefix_name>" and "sms" type
-    Then I receive an "OK" http code in rules request
+    Then I receive an "200" http code in rules request
     And read all rules that exist in the list
     And Validate that all rules are found
-    And delete all EPL rules created
   Examples:
     | rule_number | prefix_name |
     | 1           | prefix_1    |
-    | 5           | prefix_5    |
-    | 10          | prefix_10   |
-    | 50          | prefix_50   |
-    | 100         | prefix_100  |
-    | 500         | prefix_500  |
+#    | 5           | prefix_5    |
+#    | 10          | prefix_10   |
+#    | 50          | prefix_50   |
+#    | 100         | prefix_100  |
+#    | 500         | prefix_500  |
 
   @rule_exist
   Scenario: append a new rule with same name that other existing
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "default" and service "default"
-    And an EPL with a rule name "name_exist", an identity type "default", an attributes Number "default", an attribute data type "default", an operation type "default" and value "default"
+    And an EPL with a rule name "name_exist", an identity type "Room", an attributes Number "1", an attribute data type "float", an operation type "<" and value "1"
     And append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
     When append a new rule with a rule type "sms", a template " (SMS rule)" and a parameters "123456789"
-    Then I receive an "Bad Request" http code in rules request
-    And delete a EPL rule created
+    Then I receive an "400" http code in rules request
 

@@ -25,3 +25,5 @@
 __author__ = 'Jon Calderin Goñi <jon.caldering@gmail.com>'
 
 from integration.common_steps import *
+from integration.steps_lib.mock import *
+from integration.steps_lib.notifications import *

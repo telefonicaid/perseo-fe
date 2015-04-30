@@ -40,17 +40,22 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
   @happy_path @value_threshold_card
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only value threshold card and an action card
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "unknownt" and service "/"
     # create a new visual rule
     And create a sensor card of value threshold type, with id "card_4", attribute name "temperature_0", operator "<operator>", data type "Quantity", parameter value "<attribute_value>" and connect to "card_5"
     And create a action card of "<action>" type, with id "card_5", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # notifications
-    And an identity id "room2" and an identity type "room" with attribute number "1", attribute name "temperature" and attribute type "celcius"
-    When receives a notification with attributes value "<notification_value>", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that visual rule is triggered successfully
-    And delete a visual rule created
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room" and type "Room" with the following attributes
+      | attribute_id  | attribute_type | attribute_new_value  |
+      | temperature_0 | celcius        | <notification_value> |
+    When the notification is sent to perseo
+    Then the mock receive the action "<action>"
+
+#    And an identity id "room2" and an identity type "room" with attribute number "1", attribute name "temperature" and attribute type "celcius"
+#    When receives a notification with attributes value "<notification_value>", metadata value "True" and content "json"
+#    Then I receive an "200" http code
+#    And Validate that visual rule is triggered successfully
   Examples:
     | rule_name           | operator     | attribute_value | notification_value | action           | response                                                                  | parameters      |
     | test_10000_card_001 | GREATER_THAN | 3400            | 3401               | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>>  -- (Email rule) | erwer@sdfsf.com |
@@ -60,7 +65,6 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
   @attribute_threshold_card
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only attribute threshold card and actions cards
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
     And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature_0", operator "EQUAL_TO", data type "Quantity", attribute to refer "temperature_1" and connect to "card_6"
     And create a action card of "<action>" type, with id "card_6", response "<response>", parameters "<parameters>" and connect to "card_8"
@@ -68,9 +72,8 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
     # notifications
     And an identity id "room2" and an identity type "room" with attribute number "2", attribute name "temperature" and attribute type "celcius"
     When receives a notification with attributes value "250", metadata value "True" and content "json"
-    Then I receive an "OK" http code
+    Then I receive an "200" http code
     And Validate that visual rule is triggered successfully
-    And delete a visual rule created
   Examples:
     | rule_name           | action           | response                                                                                                                    | parameters      |
     | test_20000_card_001 | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> \n it is the same value to temperature_1 attribute -- (Email rule) | erwer@sdfsf.com |
@@ -80,17 +83,23 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
   @type_card
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only type card and actions cards
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
     And create a sensor card of type type, with "card_3", identity type "house",operator "<operator>" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # notifications
-    And an identity id "room2" and an identity type "<identity_type_notif>" with attribute number "1", attribute name "temperature" and attribute type "celcius"
-    When receives a notification with attributes value "250", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that visual rule is triggered successfully
-    And delete a visual rule created
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room" and type "<identity_type_notif>" with the following attributes
+      | attribute_id  | attribute_type | attribute_new_value  |
+      | temperature_0 | celcius        | 100 |
+    When the notification is sent to perseo
+    Then the mock receive the action "<action>"
+
+#    And an identity id "room2" and an identity type "<identity_type_notif>" with attribute number "1", attribute name "temperature" and attribute type "celcius"
+#    When receives a notification with attributes value "250", metadata value "True" and content "json"
+#    Then I receive an "OK" http code
+#    And Validate that visual rule is triggered successfully
+#    And delete a visual rule created
   Examples:
     | rule_name           | identity_type_notif | operator     | action           | response                                                                                    | parameters      |
     | test_30000_card_001 | house               | EQUAL_TO     | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> and the identity type is house     | erwer@sdfsf.com |
@@ -103,17 +112,22 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
   @id_card
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only id-regexp card and actions cards
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
      # create a new visual rule
     And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
      # notifications
-    And an identity id "room_1" and an identity type "room" with attribute number "1", attribute name "temperature" and attribute type "celcius"
-    When receives a notification with attributes value "250", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that visual rule is triggered successfully
-    And delete a visual rule created
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room_1" and type "Room" with the following attributes
+      | attribute_id  | attribute_type | attribute_new_value  |
+      | temperature_0 | celcius        | 100 |
+    When the notification is sent to perseo
+    Then the mock receive the action "<action>"
+#    And an identity id "room_1" and an identity type "room" with attribute number "1", attribute name "temperature" and attribute type "celcius"
+#    When receives a notification with attributes value "250", metadata value "True" and content "json"
+#    Then I receive an "OK" http code
+#    And Validate that visual rule is triggered successfully
+#    And delete a visual rule created
   Examples:
     | rule_name           | identity_id | action           | response                                                                               | parameters      |
     | test_40000_card_001 | room_1      | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> and the identity id is room_1 | erwer@sdfsf.com |
@@ -123,7 +137,6 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
   @not_updated_card @BUG_ISSUE_73
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only not_updated_card and actions cards
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     And generate context orion fake with entity id "<identity_id>", entity type "room", attribute name "alarm", attribute value "danger" and attribute type "void"
      # create a new visual rule
     And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "alarm", max time without update "<max_time_WO_update>" and connect to "card_2"
@@ -142,7 +155,6 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
   @several_cards
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using value threshold, id and type cards and an action card
     Given Perseo manager is installed correctly to "append"
-    And configured with tenant "unknownt" and service "/"
     # create a new visual rule
     And create a sensor card of value threshold type, with id "card_4", attribute name "temperature_0", operator "<operator>", data type "Quantity", parameter value "<attribute_value>" and connect to "card_5"
     And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
@@ -150,11 +162,18 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
     And create a action card of "<action>" type, with id "card_5", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # notifications
-    And an identity id "<identity_id>" and an identity type "<identity_type>" with attribute number "1", attribute name "temperature" and attribute type "celcius"
-    When receives a notification with attributes value "<notification_value>", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that visual rule is triggered successfully
-    And delete a visual rule created
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "<identity_id>" and type "<identity_type>" with the following attributes
+      | attribute_id  | attribute_type | attribute_new_value  |
+      | temperature_0 | celcius        | <notification_value> |
+    When the notification is sent to perseo
+    Then the mock receive the action "<action>"
+
+#    And an identity id "<identity_id>" and an identity type "<identity_type>" with attribute number "1", attribute name "temperature" and attribute type "celcius"
+#    When receives a notification with attributes value "<notification_value>", metadata value "True" and content "json"
+#    Then I receive an "OK" http code
+#    And Validate that visual rule is triggered successfully
+#    And delete a visual rule created
   Examples:
     | rule_name           | operator     | attribute_value | identity_id | identity_type | notification_value | action           | response                                                                  | parameters      |
     | test_10000_card_001 | GREATER_THAN | 3400            | room_1      | house         | 3401               | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>>  -- (Email rule) | erwer@sdfsf.com |

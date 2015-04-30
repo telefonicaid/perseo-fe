@@ -29,12 +29,8 @@ import random
 import string
 import time
 import xmltodict
+import xml.dom.minidom
 
-
-# general constants
-EMPTY = u''
-XML = u'xml'
-JSON = u'json'
 
 
 def string_generator(size=10, chars=string.ascii_letters + string.digits):
@@ -65,7 +61,7 @@ def convert_str_to_dict(body, content):
     :return: dictionary
     """
     try:
-        if content == XML:
+        if content == 'xml':
             return xmltodict.parse(body)
         else:
             return json.loads(body)
@@ -82,7 +78,7 @@ def convert_dict_to_str(body, content):
     :return: string
     """
     try:
-        if content == XML:
+        if content == 'xml':
             return xmltodict.unparse(body)
         else:
             return json.dumps(body)
@@ -138,6 +134,26 @@ def generate_timestamp():
     :return  timestamp
     """
     return time.time()
+
+
+def check_type(object, type):
+        """
+        Check if the object is an instance of type
+        :param object:
+        :param type:
+        :return:
+        """
+        if not isinstance(object, type):
+            raise ValueError('The attribute "{object}" is not an instance of "{type}"')
+
+def pretty(json_pret):
+        try:
+            return json.dumps(json_pret, sort_keys=True, indent=4, separators=(',', ': '))
+        except Exception as e:
+            try:
+                return xml.dom.minidom.parse(json_pret).toprettyxml()
+            except Exception:
+                return json_pret
 
 
 
