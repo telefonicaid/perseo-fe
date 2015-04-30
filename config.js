@@ -169,6 +169,17 @@ config.DEFAULT_SERVICE= 'unknownt';
 config.checkDB = {
     delay: 2000,
     reportInterval: 15e3
-}
+};
+
+/**
+ * Rest base for changing access to twitter
+ *
+ * It should not be changed in normal conditions
+ *
+ * restBase:  URL
+ * @type {String}
+ *
+ */
+config.restBase = null;
 
 module.exports = config;
