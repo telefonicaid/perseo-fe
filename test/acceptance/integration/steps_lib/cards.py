@@ -27,7 +27,7 @@ __author__ = 'Jon Calderín Goñi <jon.caldering@gmail.com>'
 from lettuce import step, world
 
 
-@step('a Not Updated sensor card')
+@step('a Not Updated \(no-signal\) sensor card')
 def a_not_updated_sensor_card(step):
     """
       | id     | interval | attribute_name | max_time_without_update | connected_to |
@@ -91,6 +91,7 @@ def create_a_action_card_of_group1_type_with_id_group2_response_group3_parameter
     else:
         raise ValueError('The action card type "{action_type}" is not supported'.format(action_type=action_type))
 
+
 @step('create a sms action card with id "([^"]*)" text "([^"]*)" telephone number "([^"]*)" and connected to "([^"]*)"')
 def create_a_sms_action_card_with_id_text_number_and_connected_to(step, card_id, sms_text, telephone_number, connected_to):
     """
@@ -104,6 +105,7 @@ def create_a_sms_action_card_with_id_text_number_and_connected_to(step, card_id,
     """
     world.cards.append(world.cards_utils.create_action_sms_card(card_id, card_id, [connected_to], telephone_number, sms_text))
 
+
 @step('create an email action card with id "([^"]*)" from "([^"]*)" to "([^"]*)" subject "([^"]*)" body "([^"]*)" and connected to "([^"]*)"')
 def create_an_email_action_card_with_id_text_number_and_connected_to(step, card_id, from_, to, subject, body, connected_to):
     """
@@ -116,6 +118,7 @@ def create_an_email_action_card_with_id_text_number_and_connected_to(step, card_
     :return:
     """
     world.cards.append(world.cards_utils.create_action_email_card(card_id, card_id, [connected_to], from_, to, subject, body))
+
 
 @step('create an update action card with id "([^"]*)" for attribute "([^"]*)" value "([^"]*)" and connected to "([^"]*)"')
 def create_an_update_action_card_with_id_text_number_and_connected_to(step, card_id, attribute, value, connected_to):
@@ -131,8 +134,6 @@ def create_an_update_action_card_with_id_text_number_and_connected_to(step, card
     world.cards.append(world.cards_utils.create_action_update_card(card_id, card_id, [connected_to], attribute, value))
 
 
-
 @step('create a time card of time elapsed type, with id "([^"]*)", interval "([^"]*)" and connect to "([^"]*)"')
-def create_a_time_card_of_time_elapsed_type_with_id_group1_interval_group2_and_connect_to_group3(step, id, interval,
-                                                                                                 connected_to):
+def create_a_time_card_of_time_elapsed_type_with_id_group1_interval_group2_and_connect_to_group3(step, id, interval, connected_to):
     world.cards.append(world.cards_utils.create_time_enlapsed_card(id, [connected_to], interval))

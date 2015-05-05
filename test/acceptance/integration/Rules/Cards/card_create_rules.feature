@@ -58,7 +58,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
     And Validate that rule name is created successfully in db
     And validate that rule name is created successfully in perseo-core
 
-  @value_threshold_card_without_action_card 
+  @value_threshold_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only value threshold card without action card
     Given create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "<value>" and connect to "card_5"
     When append a new rule name "test_100001", activate "1"

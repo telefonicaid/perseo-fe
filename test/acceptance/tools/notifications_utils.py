@@ -4,6 +4,9 @@ from dict2xml import dict2xml
 
 
 class ContextElement(object):
+    """
+    Class that represent a Context Broker context element
+    """
     def __init__(self, ce_id, ce_type, is_pattern=False):
         self.context_element = {
             'attributes': [],
@@ -25,6 +28,7 @@ class ContextElement(object):
 
 class NotificationsUtils(object):
     """
+    Class that represent a Context Broker notification
     {
       "subscriptionId" : "51c0ac9ed714fb3b37d7d5a8",
       "originator" : "localhost",
@@ -52,6 +56,12 @@ class NotificationsUtils(object):
     """
 
     def __init__(self, subscription_id, originator):
+        """
+        Initialize the notification from Context Broker
+        :param subscription_id:
+        :param originator:
+        :return:
+        """
         self.notification = {
             'subscriptionId': subscription_id,
             'originator': originator,
@@ -59,6 +69,13 @@ class NotificationsUtils(object):
         }
 
     def add_context_response(self, context_element, code=200, reason_phrase="OK"):
+        """
+        Given a context element created before, built a response and add to the notification
+        :param context_element:
+        :param code:
+        :param reason_phrase:
+        :return:
+        """
         self.notification['contextResponses'].append({'contextElement': context_element,
                                                       'statusCode': {
                                                           'code': code,
@@ -67,7 +84,14 @@ class NotificationsUtils(object):
                                                       })
 
     def get_notification_payload(self):
+        """
+        Get the notification built
+        :return:
+        """
         return self.notification
 
     def get_notification_xml_payload(self):
+        """
+        Get the notification built in xml format
+        """
         return dict2xml(self.notification)
