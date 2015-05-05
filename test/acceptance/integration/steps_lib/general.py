@@ -22,6 +22,21 @@
 # please contact with:
 # iot_support at tid.es
 #
+from tools.general_utils import pretty
 
 __author__ = 'Jon Calderín Goñi <jon.caldering@gmail.com>'
 from lettuce import step, world
+from time import sleep
+
+
+
+@step('waiting "([^"]*)" seconds to verify orion contexts')
+def waiting_seconds_to_verify_orion_contexts(step, seconds):
+    """
+    Wait a given number of seconds
+    :param step:
+    :param seconds:
+    :return:
+    """
+    world.log.debug('Waiting {seconds} seconds'.format(seconds=seconds))
+    sleep(int(seconds))

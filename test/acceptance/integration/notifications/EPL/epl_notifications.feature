@@ -39,6 +39,10 @@ Feature: Launch an action if a rule is triggered in Perseo manager
   I want to be able to launch a action (sms, email or update) if a rule is triggered in Perseo manager
   so that they become more functional and useful
 
+  Background:
+    Given perseo-fe is up and running
+
+
   @happy_path @action_if_the_rule_is_satisfied
   Scenario: Launch an action if a rule is triggered with entity type and id (does not matter the action)
     # Gen EPL

@@ -40,6 +40,8 @@ class Cep(object):
                  mongo_host,
                  mongo_port,
                  mongo_db,
+                 mongo_orion_db_prefix,
+                 mongo_orion_db_collection,
                  cep_core_host,
                  cep_core_port,
                  version_url='/version',
@@ -60,6 +62,9 @@ class Cep(object):
         self.service = service
         self.service_path = service_path
         self.mongo = Mongo(mongo_host, mongo_port, mongo_db)
+        self.mongo_cep_db = mongo_db
+        self.mongo_orion_db = '{mongo_orion_db_prefix}-{service}'.format(mongo_orion_db_prefix=mongo_orion_db_prefix, service=service).lower()
+        self.mongo_orion_db_collection = mongo_orion_db_collection
         self.version_url = self.cep_url + version_url
         self.notifications_url = self.cep_url + notifications_url
         self.plain_rules_url = self.cep_url + plain_rules_url
@@ -166,8 +171,9 @@ class Cep(object):
 
     # Mongo
 
-    def __connect_mongo(self):
+    def __connect_mongo_rules(self):
         self.mongo.connect()
+        self.mongo.choice_database(self.mongo_cep_db)
         self.mongo.choice_collection('rules')
 
     def __turn_from_mongo_to_python(self, result):
@@ -177,41 +183,56 @@ class Cep(object):
         return list_results
 
     def get_rule_from_mongo(self, name):
-        self.__connect_mongo()
+        self.__connect_mongo_rules()
         result = self.__turn_from_mongo_to_python(self.mongo.find_data({'name': name}))
         self.mongo.disconnect()
         return result
 
     def list_rules_from_mongo(self):
-        self.__connect_mongo()
+        self.__connect_mongo_rules()
         result = self.__turn_from_mongo_to_python(self.mongo.find_data({}))
         self.mongo.disconnect()
         return result
 
     def delete_rule_in_mongo(self, name):
+        self.__connect_mongo_rules()
         rule = self.get_rule_from_mongo(name)
         if len(rule) > 1:
+            self.mongo.disconnect()
             raise ValueError('There is more than one rule in the database with the name "{name}". '
                              'The result for the query is {result}'.format(name=name, result=rule))
         elif len(rule) == 0:
             print 'There is no rule to delete'
+            self.mongo.disconnect()
             return True
         else:
             self.mongo.remove({'_id': rule[0]['_id']})
+            self.mongo.disconnect()
             return True
 
     def create_rule_in_mongo(self, rule):
-        self.__connect_mongo()
+        self.__connect_mongo_rules()
         self.mongo.insert_data(rule)
         self.mongo.disconnect()
         return True
 
+    def create_entity_orion_mongo(self, entity_structure):
+        self.log.debug('Creating in db {mongo_orion_db} in the collection {mongo_orion_db_collection} the structure: {entity_structure}'.format(mongo_orion_db=self.mongo_orion_db, mongo_orion_db_collection=self.mongo_orion_db_collection, entity_structure=entity_structure))
+        self.mongo.connect()
+        self.mongo.choice_database(self.mongo_orion_db)
+        self.mongo.choice_collection(self.mongo_orion_db_collection)
+        self.mongo.insert_data(entity_structure)
+        self.mongo.disconnect()
+
     def reset_db(self):
         self.mongo.connect()
+        self.mongo.choice_database(self.mongo_cep_db)
         self.mongo.choice_collection('rules')
         self.mongo.remove_collection()
         self.mongo.choice_collection('executions')
         self.mongo.remove_collection()
+        self.mongo.choice_database(self.mongo_orion_db)
+        self.mongo.drop_database()
         self.mongo.disconnect()
 
 

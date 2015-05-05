@@ -47,7 +47,7 @@ Feature: Launch an action if a rule is triggered in Perseo manager
     # Validate
     Then validate the http code of the response is "400"
 
-  @xml_format @act
+  @xml_format
   Scenario: Not launch an action if notification is in xml format
  # Gen EPL
     Given an EPL sentence with name "<rule_name>"

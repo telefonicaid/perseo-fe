@@ -55,7 +55,9 @@ class Mongo:
         Access to another database
         :param name: database name
         """
+        self.disconnect()
         self.database_name = name
+        self.connect()
 
     def get_current_database(self):
         """

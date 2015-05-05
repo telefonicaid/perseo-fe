@@ -55,6 +55,8 @@ def before_all_scenarios():
                     mongo_host=world.config['MongoDB']['host'],
                     mongo_port=world.config['MongoDB']['port'],
                     mongo_db=world.config['MongoDB']['database'],
+                    mongo_orion_db_prefix=world.config['MongoOrion']['mongo_database'],
+                    mongo_orion_db_collection=world.config['MongoOrion']['mongo_collection'],
                     cep_core_host=world.config['CEP-CORE']['host'],
                     cep_core_port=world.config['CEP-CORE']['port'],
                     log_instance=world.log,

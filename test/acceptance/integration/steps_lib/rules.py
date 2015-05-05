@@ -58,6 +58,13 @@ from tools.general_utils import pretty
 #     world.log.debug("Creating a plain rule in cep with the payload: \n {payload}".format(payload=pretty(plain_rule_payload)))
 #     world.resp = world.cep.create_plain_rule(world.rules[len(world.rules) - 1])
 
+@step('append a new rule name "([^"]*)", activate "([^"]*)"')
+def append_a_new_rule_name_group1_activate_group2(step, name, active):
+    world.rules.append(world.rules_utils.create_card_rule(name, active, world.cards))
+    world.cards = []
+    world.log.debug('Creating the visual rule: \n {visual_rule}'.format(visual_rule=pretty(world.rules[len(world.rules)-1])))
+    world.resp = world.cep.create_visual_rule(world.rules[len(world.rules) - 1])
+
 @step('set the post action with payload "([^"]*)" and url "([^"]*)"')
 def set_the_post_action_with_payload_and_url(step, payload, url):
     """
@@ -196,3 +203,37 @@ def with_the_epl_generated_and_the_action_append_an_amount_of_rules_in_perseo_wi
 #         world.rule_name = new_name
 #         # Create a new plain rule with the EPL
 #         when_append_a_new_rule_with_a_rule_type_a_template_a_parameters(step, type, '', parameter)
+
+@step('delete a visual rule created')
+def delete_a_visual_rule_created(step):
+    world.resp = world.cep.delete_visual_rule(world.rules[len(world.rules) - 1]['name'])
+
+
+@step('read a visual rule in perseo')
+def read_a_visual_rule_in_perseo(step):
+    world.resp = world.cep.get_visual_rule(world.rules[len(world.rules) - 1]['name'])
+
+
+@step('create visual rules "([^"]*)" with prefix "([^"]*)", sensor cards and an action card "([^"]*)"')
+def create_visual_rules_group1_with_prefix_group2_sensor_cards_and_an_action_card_group3(step, number, prefix, action):
+    sensor_types = []
+    for hash in step.hashes:
+        sensor_types.append(hash['sensorCardType'])
+    for i in range(0, int(number)):
+        name = prefix + str(i)
+        world.rules.append(world.rules_utils.util_create_card_rule_with_some_sensor_types(sensor_types, action, name))
+        world.resp = world.cep.create_visual_rule(world.rules[len(world.rules) - 1])
+        assert world.resp.status_code == 201, 'There was an error creating the visual rule: \n {visual_rule}'.format(
+            visual_rule=pretty(world.rules[len(world.rules) - 1]))
+
+
+@step('list all rules')
+def read_all_rules(step):
+    world.resp = world.cep.list_visual_rules()
+
+
+@step('update a visual rule "([^"]*)"')
+def update_a_visual_rule_group1(step, name):
+    world.rules.append(world.rules_utils.create_card_rule(name, '1', world.cards))
+    world.cards = []
+    world.resp = world.cep.update_visual_rule(name, world.rules[len(world.rules) - 1])

@@ -30,6 +30,7 @@ import string
 import time
 import xmltodict
 import xml.dom.minidom
+import datetime
 
 
 
@@ -133,7 +134,8 @@ def generate_timestamp():
     ex: 1425373697
     :return  timestamp
     """
-    return time.time()
+    yesterday = time.time() - datetime.timedelta(1).total_seconds()
+    return yesterday
 
 
 def check_type(object, type):
@@ -156,4 +158,35 @@ def pretty(json_pret):
                 return json_pret
 
 
+def generate_context_fake_in_cep_mongo(entity_id, entity_type, service_path, attribute_name,
+                                           attribute_value, attribute_type="void"):
+        """
+        generate context fake in cep mongo that is used in not updated card (no-signal)
+        :param attribute_type:
+        :param entity_id:
+        :param entity_type:
+        :param service_path:
+        :param attribute_name:
+        :param attribute_value:
+        :param driver: Mongo class into mongo_utils.py
+        """
+        ts = generate_timestamp()
+        context_data = {'creDate': ts,
+                        '_id': {
+                            'type': entity_type,
+                            'id': entity_id,
+                            'servicePath': service_path},
+                        'attrs': [{
+                                      'creDate': ts,
+                                      'type': attribute_type,
+                                      'name': attribute_name,
+                                      'value': attribute_value,
+                                      'modDate': ts}],
+                        'modDate': ts}
+        # insert a context in mongo to simulate a context in orion
+        return context_data
 
+
+
+if __name__ == '__main__':
+    print generate_timestamp()

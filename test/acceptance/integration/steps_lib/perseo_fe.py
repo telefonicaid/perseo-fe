@@ -20,18 +20,16 @@
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid.es
+# iot_support at tid.es
 #
-__author__ = 'Jon Calderin Goñi <jon.caldering@gmail.com>'
 
-from integration.common_steps import *
-from integration.steps_lib import cards
-from integration.steps_lib import database
-from integration.steps_lib import epl
-from integration.steps_lib import general
-from integration.steps_lib import mock
-from integration.steps_lib import notifications
-from integration.steps_lib import perseo_core
-from integration.steps_lib import perseo_fe
-from integration.steps_lib import rules
-from integration.steps_lib import validations
+__author__ = 'Jon Calderín Goñi <jon.caldering@gmail.com>'
+from lettuce import step, world
+
+@step('set service "([^"]*)" and service path "([^"]*)"')
+def set_service_and_subservice(step, service, service_path):
+    world.cep.set_service_and_servicepath(service, service_path)
+
+@step('configured with service "([^"]*)" and service path "([^"]*)"')
+def configured_with_service_and_service_path(step, service, service_path):
+    world.cep.set_service_and_servicepath(service, service_path)

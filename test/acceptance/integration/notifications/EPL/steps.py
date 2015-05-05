@@ -25,8 +25,13 @@
 __author__ = 'Jon Calderin Goñi <jon.caldering@gmail.com>'
 
 from integration.common_steps import *
-from integration.steps_lib.mock import *
-from integration.steps_lib.notifications import *
-from integration.steps_lib.epl import *
-from integration.steps_lib.rules import *
-from integration.steps_lib.validations import *
+from integration.steps_lib import cards
+from integration.steps_lib import database
+from integration.steps_lib import epl
+from integration.steps_lib import general
+from integration.steps_lib import mock
+from integration.steps_lib import notifications
+from integration.steps_lib import perseo_core
+from integration.steps_lib import perseo_fe
+from integration.steps_lib import rules
+from integration.steps_lib import validations

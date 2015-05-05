@@ -25,3 +25,14 @@
 
 __author__ = 'Jon Calderín Goñi <jon.caldering@gmail.com>'
 from lettuce import step, world
+
+
+@step('validate that rule name is created successfully in perseo-core')
+def validate_that_rule_name_is_created_successfully_in_perseo_core(step):
+    """
+    Get the las rule added to the list, and check if its created in preseo-core
+    :param step:
+    :return:
+    """
+    service, servicepath = world.cep.get_service_and_servicepath()
+    assert 'error' not in world.cep.get_perseo_core_rule('{name}@{service}{servicepath}'.format(name=world.rules[len(world.rules)-1]['name'], service=service.lower(), servicepath=servicepath.lower())).json()

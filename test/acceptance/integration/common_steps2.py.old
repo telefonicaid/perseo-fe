@@ -376,8 +376,7 @@ def create_visual_rules_with_sensor_cards_and_an_action_card(step, rules_number,
     world.rules.create_several_visual_rules(step, rules_number, prefix, action_card_type)
 
 
-@step(
-    u'generate context orion fake with entity id "([^"]*)", entity type "([^"]*)", attribute name "([^"]*)", attribute value "([^"]*)" and attribute type "([^"]*)"')
+@step( u'generate context orion fake with entity id "([^"]*)", entity type "([^"]*)", attribute name "([^"]*)", attribute value "([^"]*)" and attribute type "([^"]*)"')
 def generate_context_orion_fake_with_entity_id_entity_type_attribute_name_attribute_value_and_attribute_type(step,
                                                                                                              entity_id,
                                                                                                              entity_type,

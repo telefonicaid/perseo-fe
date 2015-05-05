@@ -39,9 +39,8 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @happy_path
   Scenario: append a new rule in Perseo manager using card from portal with all cards
-    Given Perseo manager is installed correctly to "append"
      # Sensor cards
-    And create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
+    #Given create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
     And create a sensor card of id type, with id "card_2", identity id "room2" and connect to "card_3"
     And create a sensor card of type type, with "card_3", identity type "room",operator "DIFFERENT_TO" and connect to "card_4"
     And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
@@ -57,18 +56,17 @@ Feature: Append a new rule in Perseo manager using cards from portal
     When append a new rule name "test_000001", activate "1"
     Then I receive an "201" http code in rules request
     And Validate that rule name is created successfully in db
+    And validate that rule name is created successfully in perseo-core
 
-  @value_threshold_card_without_action_card
+  @value_threshold_card_without_action_card 
   Scenario: try to append a new rule in Perseo manager using card from portal using only value threshold card without action card
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "<value>" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "<value>" and connect to "card_5"
     When append a new rule name "test_100001", activate "1"
     Then I receive an "400" http code in rules request
 
   @value_threshold_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only value threshold card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     Then I receive an "201" http code in rules request
@@ -88,15 +86,13 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @attribute_threshold_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only attribute threshold card without action card
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
     When append a new rule name "test_400001", activate "1"
     Then I receive an "400" http code in rules request
 
   @attribute_threshold_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only attribute threshold card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     Then I receive an "201" http code in rules request
@@ -116,15 +112,13 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @type_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only type card without action card
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of type type, with "card_3", identity type "temperature",operator "EQUAL_TO" and connect to "card_4"
+    Given create a sensor card of type type, with "card_3", identity type "temperature",operator "EQUAL_TO" and connect to "card_4"
     When append a new rule name "test_600001", activate "1"
     Then I receive an "400" http code in rules request
 
   @type_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only type card and action cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
+    Given create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     Then I receive an "201" http code in rules request
@@ -137,15 +131,13 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @id_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only id card without action card
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of id type, with id "card_2", identity id "room1" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "room1" and connect to "card_3"
     When append a new rule name "test_800001", activate "1"
     Then I receive an "400" http code in rules request
 
   @id_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only id card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     Then I receive an "201" http code in rules request
@@ -159,8 +151,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @id_card_error
   Scenario Outline: try to a new rule in Perseo manager using card from portal using only id card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     Then I receive an "400" http code in rules request
@@ -171,15 +162,13 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @not_updated_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only not updated card without action card
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of notUpdated type with id "card_1", verify interval "40", attribute name "temperature", max time without update "30" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "40", attribute name "temperature", max time without update "30" and connect to "card_2"
     When append a new rule name "test_010001", activate "1"
     Then I receive an "400" http code in rules request
 
   @not_updated_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only not updated card ant actions cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     Then I receive an "201" http code in rules request
@@ -192,8 +181,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @not_updated_card_interval_not_allowed @BUG_ISSUE_53
   Scenario Outline: try to append a new rule in Perseo manager using card from portal using only not updated card and action card but with interval not allowed
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     Then I receive an "400" http code in rules request
@@ -204,15 +192,13 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @epl_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only epl card without action card
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of epl type with id "card_6", epl query "were ewrwer werwe rwrwer  wer" and connect to "card_7"
+    Given create a sensor card of epl type with id "card_6", epl query "were ewrwer werwe rwrwer  wer" and connect to "card_7"
     When append a new rule name "test_310001", activate "1"
     Then I receive an "400" http code in rules request
 
   @epl_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only epl card and action cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
+    Given create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     Then I receive an "201" http code in rules request
@@ -225,15 +211,13 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @elapsed_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only elapsed card without action card
-    Given Perseo manager is installed correctly to "append"
-    And create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
+    Given create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
     When append a new rule name "test_510001", activate "1"
     Then I receive an "400" http code in rules request
 
   @elapsed_card
   Scenario Outline: append a new rule in Perseo manager using card from portal using only elapsed card and action card
-    Given Perseo manager is installed correctly to "append"
-    And create a time card of time elapsed type, with id "card_10", interval "<interval>" and connect to "card_11"
+    Given create a time card of time elapsed type, with id "card_10", interval "<interval>" and connect to "card_11"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     Then I receive an "201" http code in rules request
@@ -246,8 +230,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @several_cards
   Scenario Outline: append a new rule in Perseo manager using card from portal using attribute threshold, id, type cards and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
     And create a sensor card of id type, with id "card_2", identity id "room2" and connect to "card_3"
     And create a sensor card of type type, with "card_3", identity type "room",operator "DIFFERENT_TO" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
@@ -262,8 +245,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @several_cards
   Scenario Outline: append a new rule in Perseo manager using card from portal using value threshold, id, type cards and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
     And create a sensor card of id type, with id "card_2", identity id "room2" and connect to "card_3"
     And create a sensor card of type type, with "card_3", identity type "room",operator "DIFFERENT_TO" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
@@ -278,8 +260,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
 
   @several_cards
   Scenario Outline: append a new rule in Perseo manager using card from portal using not updated, id, type cards and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
     And create a sensor card of id type, with id "card_2", identity id "room_*" and connect to "card_3"
     And create a sensor card of type type, with "card_3", identity type "room",operator "DIFFERENT_TO" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
