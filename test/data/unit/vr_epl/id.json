@@ -59,8 +59,8 @@
             }
         ],
         "updateTime": "2014-05-06T10:39:47.696Z",
-        "service": "/",
-        "tenant": "unkownt"
+        "subservice": "/",
+        "service": "unkownt"
     },
     "name": "ReglaId",
     "text": "select *,\"ReglaId\" as ruleName from pattern [every ev=iotEvent((cast(`id`?, String)  regexp  \"^value.*\"))]",
@@ -73,6 +73,6 @@
             "subject": "calor"
         }
     },
-    "service": "/",
-    "tenant": "unkownt"
+    "subservice": "/",
+    "service": "unkownt"
 }

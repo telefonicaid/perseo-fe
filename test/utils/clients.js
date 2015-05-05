@@ -31,8 +31,8 @@ var util = require('util'),
 function commonRequest(method, url, object, callback) {
     var options = {};
     options.headers = {};
-    options.headers[constants.TENANT_HEADER] = config.DEFAULT_TENANT;
     options.headers[constants.SERVICE_HEADER] = config.DEFAULT_SERVICE;
+    options.headers[constants.SUBSERVICE_HEADER] = config.DEFAULT_SUBSERVICE;
     options.url = url;
     if (object) {
         options.json = object;

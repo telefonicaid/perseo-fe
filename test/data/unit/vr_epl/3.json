@@ -51,9 +51,9 @@
             }
         ],
         "name": "Regla",
-        "service": "militar",
+        "subservice": "militar",
         "updateTime": "2014-03-26T11:30:12.722Z",
-        "tenant": "unkownt"
+        "service": "unkownt"
     },
     "name": "Regla",
     "text": "select *,\"Regla\" as ruleName from pattern [every ev=iotEvent((cast(`device__asset__UserProps__MyProp1`?, String)  =  \"UserValue1\"))]",
@@ -66,6 +66,6 @@
             "subject": "UserProp"
         }
     },
-    "service": "militar",
-    "tenant": "unkownt"
+    "subservice": "militar",
+    "service": "unkownt"
 }

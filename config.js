@@ -149,12 +149,26 @@ config.collections = {
 config.executionsTTL = 1 * 24 * 60 * 60;
 
 /**
- * Constants for missing header fields for service (Fiware-servicepath) DEFAULT_SERVICE
+ * Constants for missing header fields for service (Fiware-servicepath) DEFAULT_SUBSERVICE
  * and tenant (Fiware-service) DEFAULT_TENANT
  *
  * @type {{}}
  */
-config.DEFAULT_SERVICE= '/';
-config.DEFAULT_TENANT= 'unknownt';
+config.DEFAULT_SUBSERVICE= '/';
+config.DEFAULT_SERVICE= 'unknownt';
+
+/**
+ * CheckDB configuration
+ *
+ * delay Number of milliseconds to check DB connection
+ * @type {Number}
+ *
+ * reportInterval Number of milliseconds to report a problem with DB connection in logs
+ * @type {Number}
+ */
+config.checkDB = {
+    delay: 2000,
+    reportInterval: 15e3
+}
 
 module.exports = config;
