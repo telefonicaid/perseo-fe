@@ -147,7 +147,7 @@ Feature: Launch an action if a rule is triggered in Perseo manager
   @several_attributes
   Scenario Outline: Launch an action if a rule is satisfied with several attributes
     # Gen EPL
-    Given an EPL sentence with name ""
+    Given an EPL sentence with name "sms_rule"
     And the entity_type "Room" for the EPL
     And a number of "<attributes_number>" equal attributes for the EPL with the following data
       | attribute_id_prefix | attribute_value_type | attribute_operation | attribute_value |
