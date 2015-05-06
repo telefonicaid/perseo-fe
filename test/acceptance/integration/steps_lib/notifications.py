@@ -63,7 +63,7 @@ def add_to_the_notification_an_entity_with_id_and_type_with_the_attributes(step,
         world.log.debug('Add attribute to the context element with attribute id "{attribute_id}", attribute type "{attribute_type}" and attirbute new value "{attribute_new_value}"'.format(attribute_id=row['attribute_id'], attribute_type=row['attribute_type'], attribute_new_value=row['attribute_new_value']))
         context_element.add_attribute(row['attribute_id'], row['attribute_type'], row['attribute_new_value'])
     # Add the context element to the notification
-    world.notification.add_context_response(context_element.get_context_element())
+    world.notification.add_context_response(context_element)
 
 @step('add to the notification an entity with id "([^"]*)" and type "([^"]*)" with the amount of "([^"]*)" equal attributes with the following data')
 def add_to_the_notification_an_entity_with_id_and_type_with_the_amount_of_equal_attributes_with_the_following_data(step, entity_id, entity_type, attributes_number):
