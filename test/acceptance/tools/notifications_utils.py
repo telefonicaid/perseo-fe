@@ -76,7 +76,7 @@ class NotificationsUtils(object):
         :param reason_phrase:
         :return:
         """
-        self.notification['contextResponses'].append({'contextElement': context_element,
+        self.notification['contextResponses'].append({'contextElement': context_element.get_context_element(),
                                                       'statusCode': {
                                                           'code': code,
                                                           'reasonPhrase': reason_phrase
