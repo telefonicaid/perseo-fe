@@ -37,126 +37,148 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
   I want to be able to launch a action (sms, email or update) if a visual rule is triggered in Perseo manager
   so that they become more functional and useful
 
+  Background:
+    Given perseo-fe is up and running
+
+
   @happy_path @value_threshold_card
-  Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only value threshold card and an action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "unknownt" and service "/"
+  Scenario Outline: Launch an action if a visual rule is triggered in Perseo manager using only value threshold card and an action card
     # create a new visual rule
-    And create a sensor card of value threshold type, with id "card_4", attribute name "temperature_0", operator "<operator>", data type "Quantity", parameter value "<attribute_value>" and connect to "card_5"
-    And create a action card of "<action>" type, with id "card_5", response "<response>", parameters "<parameters>" and connect to "card_8"
-    And append a new rule name "<rule_name>", activate "1"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "<condition>", data type "Quantity", parameter value "<attribute_value>" and connect to "card_5"
+    And create a sms action card with id "card_5" text "The new value is ${temperature}" telephone number "666999666" and connected to ""
+    And append a new rule name "value_threshold", activate "1"
     # notifications
-    And an identity id "room2" and an identity type "room" with attribute number "1", attribute name "temperature" and attribute type "celcius"
-    When receives a notification with attributes value "<notification_value>", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room" and type "Room" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value  |
+      | temperature  | celcius        | <notification_value> |
+    When the notification is sent to perseo
+    Then the mock receive the number "1" of actions "sms"
+    And the mock receive this part of text "The new value is" in the action "sms"
+
   Examples:
-    | rule_name           | operator     | attribute_value | notification_value | action           | response                                                                  | parameters      |
-    | test_10000_card_001 | GREATER_THAN | 3400            | 3401               | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>>  -- (Email rule) | erwer@sdfsf.com |
-    | test_10000_card_002 | MINOR_THAN   | 240             | 239                | SendSmsMibAction | temperature_0 attribute has value <<<${temperature_0}>>>  -- (sms rule)   | 123456789       |
-    | test_10000_card_003 | EQUAL_TO     | 300             | 300                | updateAttribute  | danger                                                                    | ALARM           |
+    | condition    | attribute_value | notification_value |
+    | GREATER_THAN | 3400            | 3401               |
+    | MINOR_THAN   | 240             | 239                |
+    | EQUAL_TO     | 300             | 300                |
 
   @attribute_threshold_card
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only attribute threshold card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature_0", operator "EQUAL_TO", data type "Quantity", attribute to refer "temperature_1" and connect to "card_6"
-    And create a action card of "<action>" type, with id "card_6", response "<response>", parameters "<parameters>" and connect to "card_8"
-    And append a new rule name "<rule_name>", activate "1"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "<condition>", data type "Quantity", attribute to refer "temperature_value" and connect to "card_6"
+    And create a sms action card with id "card_6" text "The attribute_value is ${temperature} and the attribute_threshold value is ${temperature_value}" telephone number "666999666" and connected to ""
+    And append a new rule name "attribute_threshold", activate "1"
     # notifications
-    And an identity id "room2" and an identity type "room" with attribute number "2", attribute name "temperature" and attribute type "celcius"
-    When receives a notification with attributes value "250", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room" and type "Room" with the following attributes
+      | attribute_id      | attribute_type | attribute_new_value                  |
+      | temperature       | celcius        | <attribute_value>                    |
+      | temperature_value | celcius        | <notification_refer_attribute_value> |
+    When the notification is sent to perseo
+    Then the mock receive the number "1" of actions "sms"
+    And the mock receive this part of text "The attribute_value is <attribute_value> and the attribute_threshold value is <notification_refer_attribute_value>" in the action "sms"
+
   Examples:
-    | rule_name           | action           | response                                                                                                                    | parameters      |
-    | test_20000_card_001 | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> \n it is the same value to temperature_1 attribute -- (Email rule) | erwer@sdfsf.com |
-    | test_20000_card_002 | SendSmsMibAction | temperature_0 attribute has value <<<${temperature_0}>>> \n it is the same value to temperature_1 attribute-- (sms rule)    | 123456789       |
-    | test_20000_card_003 | updateAttribute  | DANGER                                                                                                                      | ALARM           |
+    | condition    | attribute_value | notification_refer_attribute_value |
+    | GREATER_THAN | 3401            | 3400                               |
+    | MINOR_THAN   | 239             | 240                                |
+    | EQUAL_TO     | 300             | 300                                |
 
   @type_card
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only type card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of type type, with "card_3", identity type "house",operator "<operator>" and connect to "card_4"
-    And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
-    And append a new rule name "<rule_name>", activate "1"
+    Given create a sensor card of type type, with "card_3", identity type "Room",operator "<condition>" and connect to "card_4"
+    And create a sms action card with id "card_4" text "The new temperature is ${temperature}" telephone number "666999666" and connected to ""
+    And append a new rule name "type", activate "1"
     # notifications
-    And an identity id "room2" and an identity type "<identity_type_notif>" with attribute number "1", attribute name "temperature" and attribute type "celcius"
-    When receives a notification with attributes value "250", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room" and type "<entity_type>" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value |
+      | temperature  | celcius        | 300                 |
+    When the notification is sent to perseo
+    Then the mock receive the number "1" of actions "sms"
+    And the mock receive this part of text "The new temperature is 300" in the action "sms"
+
   Examples:
-    | rule_name           | identity_type_notif | operator     | action           | response                                                                                    | parameters      |
-    | test_30000_card_001 | house               | EQUAL_TO     | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> and the identity type is house     | erwer@sdfsf.com |
-    | test_30000_card_002 | house               | EQUAL_TO     | SendSmsMibAction | temperature_0 attribute has value <<<${temperature_0}>>> and the identity type is house     | 123456789       |
-    | test_30000_card_003 | house               | EQUAL_TO     | updateAttribute  | DANGER                                                                                      | ALARM           |
-    | test_30000_card_004 | car                 | DIFFERENT_TO | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> and the identity type is not house | erwer@sdfsf.com |
-    | test_30000_card_005 | car                 | DIFFERENT_TO | SendSmsMibAction | temperature_0 attribute has value <<<${temperature_0}>>> and the identity type is not house | 123456789       |
-    | test_30000_card_006 | car                 | DIFFERENT_TO | updateAttribute  | DANGER                                                                                      | ALARM           |
+    | entity_type | condition    |
+    | Room        | EQUAL_TO     |
+    | NoRoom      | DIFFERENT_TO |
 
   @id_card
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only id-regexp card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
      # create a new visual rule
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
-    And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
-    And append a new rule name "<rule_name>", activate "1"
-     # notifications
-    And an identity id "room_1" and an identity type "room" with attribute number "1", attribute name "temperature" and attribute type "celcius"
-    When receives a notification with attributes value "250", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    Given create a sensor card of id type, with id "card_2", identity id "<entity_id>" and connect to "card_3"
+    And create a sms action card with id "card_3" text "The new temperature is ${temperature}" telephone number "666999666" and connected to ""
+    And append a new rule name "id_regex", activate "1"
+    # notifications
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "Room_1" and type "Room" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value |
+      | temperature  | celcius        | 300                 |
+    When the notification is sent to perseo
+    Then the mock receive the number "1" of actions "sms"
+    And the mock receive this part of text "The new temperature is 300" in the action "sms"
   Examples:
-    | rule_name           | identity_id | action           | response                                                                               | parameters      |
-    | test_40000_card_001 | room_1      | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>> and the identity id is room_1 | erwer@sdfsf.com |
-    | test_40000_card_002 | room.*      | SendSmsMibAction | temperature_0 attribute has value <<<${temperature_0}>>> and the identity id is room_1 | 123456789       |
-    | test_40000_card_003 | room_.*     | updateAttribute  | DANGER                                                                                 | ALARM           |
+    | entity_id |
+    | Room_1    |
+    | Room.*    |
+    | Room_.*   |
 
   @not_updated_card @BUG_ISSUE_73
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only not_updated_card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And generate context orion fake with entity id "<identity_id>", entity type "room", attribute name "alarm", attribute value "danger" and attribute type "void"
-     # create a new visual rule
+    Given generate context orion fake with entity id "room_1", entity type "room", attribute name "alarm", attribute value "danger" and attribute type "void"
+    # create a new visual rule
     And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "alarm", max time without update "<max_time_WO_update>" and connect to "card_2"
-    And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
-    And append a new rule name "<rule_name>", activate "1"
+    And create a sms action card with id "card_2" text "The attribute alarm with value: ${alarm} is not updated :${reportInterval} ${lastTime}" telephone number "666999666" and connected to ""
+    # And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
+    And append a new rule name "not_updated", activate "1"
     When waiting "65" seconds to verify orion contexts
-    Then Validate that rule is triggered successfully
-    And delete a rule created
-    And delete orion database fake
+    Then the mock receive the number "1" of actions "sms"
+    And the mock receive this part of text "The attribute alarm with value: danger is not updated" in the action "sms"
+
   Examples:
-    | rule_name           | identity_id | interval | max_time_WO_update | action           | response                                                                                            | parameters          |
-    | test_50000_card_001 | room_1      | 1        | 10                 | SendEmailAction  | ALARM attribute has value <<<${alarm}>>> in the interval ${reportInterval} to last time ${lastTime} | noupdated@rules.com |
-    | test_50000_card_002 | room_2      | 1        | 10                 | SendSmsMibAction | ALARM attribute has value <<<${alarm}>>> , entity id ${id} and entity type ${type}                  | 123456789           |
-    | test_50000_card_003 | room_3      | 1        | 10                 | updateAttribute  | danger                                                                                              | ALARM               |
+    | interval | max_time_WO_update |
+    | 1        | 1                  |
+
+
+  @not_updated_card
+  Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only not_updated_card with more than one attributes not updated and actions cards
+    Given generate context orion fake with entity id "room_1", entity type "room", attribute name "alarm", attribute value "danger" and attribute type "void"
+    Given generate context orion fake with entity id "room_2", entity type "room", attribute name "alarm", attribute value "danger" and attribute type "void"
+    # create a new visual rule
+    And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "alarm", max time without update "<max_time_WO_update>" and connect to "card_2"
+    And create a sms action card with id "card_2" text "The attribute alarm with value: ${alarm} is not updated :${reportInterval} ${lastTime}" telephone number "666999666" and connected to ""
+    And append a new rule name "not_updated", activate "1"
+    When waiting "65" seconds to verify orion contexts
+    Then the mock receive the number "2" of actions "sms"
+    And the mock receive this part of text "The attribute alarm with value: danger is not updated" in the action "sms"
+
+  Examples:
+    | interval | max_time_WO_update |
+    | 1        | 1                  |
 
   @several_cards
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using value threshold, id and type cards and an action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "unknownt" and service "/"
     # create a new visual rule
-    And create a sensor card of value threshold type, with id "card_4", attribute name "temperature_0", operator "<operator>", data type "Quantity", parameter value "<attribute_value>" and connect to "card_5"
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
-    And create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "EQUAL_TO" and connect to "card_4"
-    And create a action card of "<action>" type, with id "card_5", response "<response>", parameters "<parameters>" and connect to "card_8"
-    And append a new rule name "<rule_name>", activate "1"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "<condition>", data type "Quantity", parameter value "<attribute_value>" and connect to "card_5"
+    And create a sensor card of id type, with id "card_2", identity id "Room1" and connect to "card_3"
+    And create a sensor card of type type, with "card_3", identity type "<entity_type>",operator "<condition_type>" and connect to "card_4"
+    And create a sms action card with id "card_5" text "The attribute is ${temperature} the id ${id} and the type ${type}" telephone number "666999666" and connected to ""
+    And append a new rule name "value_id_type", activate "1"
     # notifications
-    And an identity id "<identity_id>" and an identity type "<identity_type>" with attribute number "1", attribute name "temperature" and attribute type "celcius"
-    When receives a notification with attributes value "<notification_value>", metadata value "True" and content "json"
-    Then I receive an "OK" http code
-    And Validate that rule is triggered successfully
-    And delete a rule created
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "Room1" and type "Room" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value  |
+      | temperature  | celcius        | <notification_value> |
+    When the notification is sent to perseo
+    Then the mock receive the number "1" of actions "sms"
+    And the mock receive this part of text "The attribute is <notification_value> the id Room1 and the type Room" in the action "sms"
+
   Examples:
-    | rule_name           | operator     | attribute_value | identity_id | identity_type | notification_value | action           | response                                                                  | parameters      |
-    | test_10000_card_001 | GREATER_THAN | 3400            | room_1      | house         | 3401               | SendEmailAction  | temperature_0 attribute has value <<<${temperature_0}>>>  -- (Email rule) | erwer@sdfsf.com |
-    | test_10000_card_002 | MINOR_THAN   | 240             | room_2      | room          | 239                | SendSmsMibAction | temperature_0 attribute has value <<<${temperature_0}>>>  -- (sms rule)   | 123456789       |
-    | test_10000_card_003 | EQUAL_TO     | 300             | room_3      | city          | 300                | updateAttribute  | danger                                                                    | ALARM           |
+    | condition    | attribute_value | notification_value | entity_type | condition_type |
+    | GREATER_THAN | 3400            | 3401               | Room        | EQUAL_TO       |
+    | MINOR_THAN   | 240             | 239                | Room        | EQUAL_TO       |
+    | EQUAL_TO     | 300             | 300                | Room        | EQUAL_TO       |
+    | GREATER_THAN | 3400            | 3401               | NoRoom      | DIFFERENT_TO   |
+    | MINOR_THAN   | 240             | 239                | NoRoom      | DIFFERENT_TO   |
+    | EQUAL_TO     | 300             | 300                | NoRoom      | DIFFERENT_TO   |

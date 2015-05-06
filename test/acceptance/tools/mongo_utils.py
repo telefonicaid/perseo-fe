@@ -27,6 +27,7 @@ __author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
 import pymongo
 
+
 class Mongo:
     """
     Mongo Management Class
@@ -44,13 +45,19 @@ class Mongo:
         self.port = mongo_port
         self.database_name = mongo_database
         self.collection_name = mongo_collection
+        self.mongo_uri = None
+        self.client = None
+        self.current_database = None
+        self.current_collection = None
 
     def choice_database(self, name):
         """
         Access to another database
         :param name: database name
         """
+        self.disconnect()
         self.database_name = name
+        self.connect()
 
     def get_current_database(self):
         """
@@ -112,7 +119,7 @@ class Mongo:
         try:
             self.current_collection.update(query, data)
         except Exception, e:
-             assert False, " ERROR - Updating data in a collection %s in MongoDB...\n %s" % (self.current_collection, str(e))
+            assert False, " ERROR - Updating data in a collection %s in MongoDB...\n %s" % (self.current_collection, str(e))
 
     def find_data(self, query={}):
         """
@@ -134,6 +141,24 @@ class Mongo:
         except Exception, e:
             assert False, " ERROR - Deleting a collection %s in MongoDB...\n %s" % (self.current_collection, str(e))
 
+    def remove_collection(self):
+        """
+         Remove (Empty) the current collection
+        """
+        try:
+            self.current_database[self.collection_name].remove()
+        except Exception, e:
+            assert False, " ERROR - Deleting a collection %s in MongoDB...\n %s" % (self.current_collection, str(e))
+
+    def remove(self, query):
+        """
+         Remove (Empty) the current collection
+        """
+        try:
+            self.current_database[self.collection_name].remove(query)
+        except Exception, e:
+            assert False, " ERROR - Deleting a collection %s in MongoDB...\n %s" % (self.current_collection, str(e))
+
     def drop_database(self):
         """
         remove the current database
@@ -150,5 +175,5 @@ class Mongo:
         try:
             self.client.close()
         except Exception, e:
-             assert False, " ERROR - Disconnecting to MongoDB...\n %s\n%s " % (self.current_collection, str(e))
+            assert False, " ERROR - Disconnecting to MongoDB...\n %s\n%s " % (self.current_collection, str(e))
 

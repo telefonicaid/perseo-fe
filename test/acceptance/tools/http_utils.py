@@ -20,56 +20,26 @@
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid.es
+# iot_support at tid.es
 #
 __author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
 
-
 import requests
 
-# constants
-POST       = u'POST'
-GET        = u'GET'
-PUT        = u'PUT'
-DELETE     = u'DELETE'
-EMPTY      = u''
+status_codes = {'OK': 200,
+                'Created': 201,
+                'No Content': 204,
+                'Moved Permanently': 301,
+                'Redirect': 307,
+                'Bad Request': 400,
+                'unauthorized': 401,
+                'Not Found': 404,
+                'Bad Method': 405,
+                'Not Acceptable': 406,
+                'Conflict': 409,
+                'Unsupported Media Type': 415,
+                'Internal Server Error': 500}
 
-# request parameters constants
-URL              = u'url'
-HEADERS          = u'headers'
-DATA             = u'data'
-PARAM            = u'param'
-ALLOW_REDIRECTS  = u'allow_redirects'
-VERIFY           = u'verify'
-
-#HTTP status code
-OK                     = u'OK'
-CREATED                = u'Created'
-REDIRECT               = u'Redirect'
-NO_CONTENT             = u'No Content'
-MOVED_PERMANENTLY      = u'Moved Permanently'
-BAD_REQUEST            = u'Bad Request'
-UNAUTHORIZED           = u'unauthorized'
-NOT_FOUND              = u'Not Found'
-BAD_METHOD             = u'Bad Method'
-NOT_ACCEPTABLE         = u'Not Acceptable'
-CONFLICT               = u'Conflict'
-UNSUPPORTED_MEDIA_TYPE = u'Unsupported Media Type'
-INTERNAL_SERVER_ERROR  = u'Internal Server Error'
-
-status_codes = {OK: 200,
-                CREATED: 201,
-                NO_CONTENT: 204,
-                MOVED_PERMANENTLY: 301,
-                REDIRECT: 307,
-                BAD_REQUEST: 400,
-                UNAUTHORIZED: 401,
-                NOT_FOUND: 404,
-                BAD_METHOD: 405,
-                NOT_ACCEPTABLE:406,
-                CONFLICT: 409,
-                UNSUPPORTED_MEDIA_TYPE: 415,
-                INTERNAL_SERVER_ERROR: 500}
 
 def print_request(method, url, headers, body):
     """
@@ -80,12 +50,13 @@ def print_request(method, url, headers, body):
     :param body: body used
     """
     print "------------------------------ Request ----------------------------------------------"
-    print "url: " + str(method) + "  " + str(url)+"\n"
+    print "url: " + str(method) + "  " + str(url) + "\n"
     if headers is not None:
         print "Header: " + str(headers) + "\n"
-    if body != EMPTY:
-        print "Body: "  + str(body) + "\n\n\n"
-    print "----------------------------- End request ---------------------------------------------\n\n\n\n"
+    if body != '':
+        print "Body: " + str(body) + "\n"
+    print "----------------------------- End request ---------------------------------------------\n\n"
+
 
 def print_response(response):
     """
@@ -98,11 +69,12 @@ def print_response(response):
     print "status code: " + str(response.status_code) + "\n"
     if headers is not None:
         print "Header: " + str(headers) + "\n"
-    if body != EMPTY:
-        print "Body: " + str(body) + "\n\n\n"
+    if body != '':
+        print "Body: " + str(body) + "\n"
     print "--------------------------------- End Response --------------------------------------------"
 
-def request (method, **kwargs):
+
+def request(method, **kwargs):
     """
     launch a request
     :param method: POST, GET, PUT, DELETE methods (MANDATORY)
@@ -117,33 +89,35 @@ def request (method, **kwargs):
     Note: two lines are comments because is only to debug, the first show the request and the second, show the response in each request
 
     """
+    url = kwargs.get('url', '')
+    headers = kwargs.get('headers', None)
+    body = kwargs.get('data', '')
+    parameters = kwargs.get('param', '')
+    redirect = kwargs.get('allow_redirects', True)
+    verifyssl = kwargs.get('verify', False)
     try:
-        Url = kwargs.get(URL, EMPTY)
-        Headers = kwargs.get(HEADERS, None)
-        Body = kwargs.get (DATA, EMPTY)
-        Parameters = kwargs.get (PARAM, EMPTY)
-        Redirect = kwargs.get(ALLOW_REDIRECTS, True)
-        VerifySSL = kwargs.get(VERIFY, False)
         #print_request(method, Url, Headers, Body)
-        if method == POST:
-            resp = requests.post(url=Url, headers=Headers, data=Body, params=Parameters, allow_redirects= Redirect, verify=VerifySSL)
-        elif method == GET:
-            resp = requests.get(url=Url, headers=Headers, data=Body, params=Parameters, allow_redirects= Redirect, verify=VerifySSL)
-        if method == PUT:
-            resp = requests.put(url=Url, headers=Headers, data=Body, params=Parameters, allow_redirects= Redirect, verify=VerifySSL)
-        if method == DELETE:
-            resp = requests.delete(url=Url, headers=Headers, data=Body, params=Parameters, allow_redirects= Redirect, verify=VerifySSL)
+        resp = requests.request(method.lower(), url=url, headers=headers, data=body, params=parameters,
+                                allow_redirects=redirect,
+                                verify=verifyssl)
         #print_response(resp)
         return resp
     except Exception, e:
-        assert not True,  " ERROR IN REQUEST: %s  \nurl    : %s \nheaders: %s \npayload: %s" % (str(e), Url, str(Headers), Body)
+        raise NameError(" ERROR IN REQUEST: {error}"
+                        "\nUrl\t: {url}"
+                        "\nHeaders: {headers}"
+                        "\nPayload: {body}".format(error=e, url=url, headers=headers, body=body))
 
-def assert_status_code (expected, resp, Error_msg):
-     """
-     Evaluate if the status code is the expected
-     :param resp: response body
-     :param Error_msg: message in error case
-     """
-     assert resp.status_code == int(expected), \
-        "%s:  \n HttpCode expected: %s \n HttpCode received: %s \n Body: %s" % (Error_msg, str(expected), str(resp.status_code), str(resp.text))
+
+def assert_status_code(expected, resp, error_msg):
+    """
+    Evaluate if the status code is the expected
+    :param resp: response body
+    :param error_msg: message in error case
+    """
+    assert resp.status_code == int(expected), \
+        "{error_msg}:" \
+        "\n HttpCode expected: {expected} " \
+        "\n HttpCode received: {received} " \
+        "\n Body: {body}".format(error_msg=error_msg, expected=expected, received=resp.status_code, body=resp.text)
 

@@ -39,15 +39,12 @@ Feature: get rules in Perseo manager from portal
 
   @happy_path @value_threshold_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only value threshold card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
   Examples:
     | rule_name     | attribute_name | operator     | data_type | value | action           | response                                              | parameters      |
     | test_00000001 | temperature    | GREATER_THAN | Quantity  | 34    | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
@@ -56,15 +53,13 @@ Feature: get rules in Perseo manager from portal
 
   @attribute_threshold_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only attribute threshold card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    
   Examples:
     | rule_name     | attribute_name | operator     | data_type | value      | action           | response                          | parameters      |
     | test_10000001 | temperature    | GREATER_THAN | Quantity  | temp_refer | SendEmailAction  | email body ${measure.value}       | erwer@sdfsf.com |
@@ -73,15 +68,13 @@ Feature: get rules in Perseo manager from portal
 
   @type_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only type card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
+    Given create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    
   Examples:
     | rule_name     | identity_type | operator     | action           | response                    | parameters      |
     | test_20000001 | temperature   | EQUAL_TO     | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -90,16 +83,14 @@ Feature: get rules in Perseo manager from portal
 
   @regexp_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only regexp card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    
   Examples:
     | rule_name     | identity_id | action           | response                    | parameters      |
     | test_30000001 | room1       | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -108,15 +99,13 @@ Feature: get rules in Perseo manager from portal
 
   @notUpdated_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only not updated card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    
   Examples:
     | rule_name     | interval | attribute_name | max_time | action           | response                    | parameters      |
     | test_40000001 | 40       | temperature    | 30       | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -125,15 +114,13 @@ Feature: get rules in Perseo manager from portal
 
   @epl_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only epl card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
+    Given create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And validate that all visual rules are returned
-    And delete a rule created
+    
   Examples:
     | rule_name     | epl_query                            | action           | response                    | parameters      |
     | test_50000001 | were ewrwer werwe rwrwer  wer        | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -142,24 +129,21 @@ Feature: get rules in Perseo manager from portal
 
   @multiples_rules
   Scenario Outline: read multiples visual rules in Perseo manager from portal
-    Given Perseo manager is installed correctly to "get"
-    And configured with tenant "my_tenant" and service "/my_service"
      # Sensor cards
-    And create visual rules "<rules_number>" with prefix "<prefix>", sensor cards and an action card "SendEmailAction"
+    Given create visual rules "<rules_number>" with prefix "<prefix>", sensor cards and an action card "SendEmailAction"
       | sensorCardType |
       | valueThreshold |
       | regexp         |
       | type           |
-    When read all rules
-    Then I receive an "OK" http code
-    And validate that all visual rules are returned
-    And delete all rules created
+    When list all rules
+    Then I receive an "200" http code in rules request
+    And validate that all visual rules are listed
   Examples:
     | rules_number | prefix     |
     | 1            | vrules_1   |
     | 5            | vrules_5   |
     | 10           | vrules_10  |
-    | 50           | vrules_50  |
-    | 100          | vrules_100 |
-    | 500          | vrules_500 |
+#    | 50           | vrules_50  |
+#    | 100          | vrules_100 |
+#    | 500          | vrules_500 |
 

@@ -39,10 +39,8 @@ Feature: Delete a rule in Perseo manager from portal
 
   @happy_path
   Scenario: delete a rule in Perseo manager from portal with all cards
-    Given Perseo manager is installed correctly to "delete"
-    And configured with tenant "my_tenant" and service "/my_service"
      # Sensor cards
-    And create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
     And create a sensor card of id type, with id "card_2", identity id "room2" and connect to "card_3"
     And create a sensor card of type type, with "card_3", identity type "room",operator "DIFFERENT_TO" and connect to "card_4"
     And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
@@ -56,19 +54,19 @@ Feature: Delete a rule in Perseo manager from portal
     And create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
      # end cards
     And append a new rule name "test_0001", activate "1"
-    When delete a rule created
-    Then I receive an "No Content" http code
+    And I receive an "201" http code in rules request
+    When delete a visual rule created
+    Then I receive an "204" http code in rules request
     And Validate that rule name is deleted successfully in db
 
   @notUpdated_card
   Scenario Outline: delete a rule in Perseo manager from portal with not updated and action cards
-    Given Perseo manager is installed correctly to "delete"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
     And create a action card of "<action_card>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
-    When delete a rule created
-    Then I receive an "No Content" http code
+    And I receive an "201" http code in rules request
+    When delete a visual rule created
+    Then I receive an "204" http code in rules request
     And Validate that rule name is deleted successfully in db
   Examples:
     | rule_name  | action_card      | response                                              | parameters      |
@@ -78,13 +76,12 @@ Feature: Delete a rule in Perseo manager from portal
 
   @id_card
   Scenario Outline: delete a rule in Perseo manager from portal with id and action cards
-    Given Perseo manager is installed correctly to "delete"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of id type, with id "card_2", identity id "room2" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "room2" and connect to "card_3"
     And create a action card of "<action_card>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
-    When delete a rule created
-    Then I receive an "No Content" http code
+    And I receive an "201" http code in rules request
+    When delete a visual rule created
+    Then I receive an "204" http code in rules request
     And Validate that rule name is deleted successfully in db
   Examples:
     | rule_name  | action_card      | response                                              | parameters      |
@@ -94,13 +91,12 @@ Feature: Delete a rule in Perseo manager from portal
 
   @type_card
   Scenario Outline: delete a rule in Perseo manager from portal with type and action cards
-    Given Perseo manager is installed correctly to "delete"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of type type, with "card_3", identity type "room",operator "DIFFERENT_TO" and connect to "card_4"
+    Given create a sensor card of type type, with "card_3", identity type "room",operator "DIFFERENT_TO" and connect to "card_4"
     And create a action card of "<action_card>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
-    When delete a rule created
-    Then I receive an "No Content" http code
+    And I receive an "201" http code in rules request
+    When delete a visual rule created
+    Then I receive an "204" http code in rules request
     And Validate that rule name is deleted successfully in db
   Examples:
     | rule_name  | action_card      | response                                              | parameters      |
@@ -110,13 +106,12 @@ Feature: Delete a rule in Perseo manager from portal
 
   @value_threshold_card
   Scenario Outline: delete a rule in Perseo manager from portal with value threshold and action cards
-    Given Perseo manager is installed correctly to "delete"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
     And create a action card of "<action_card>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
-    When delete a rule created
-    Then I receive an "No Content" http code
+    And I receive an "201" http code in rules request
+    When delete a visual rule created
+    Then I receive an "204" http code in rules request
     And Validate that rule name is deleted successfully in db
   Examples:
     | rule_name  | action_card      | response                                              | parameters      |
@@ -126,13 +121,12 @@ Feature: Delete a rule in Perseo manager from portal
 
   @attribute_threshold_card
   Scenario Outline: delete a rule in Perseo manager from portal with attribute threshold and action cards
-    Given Perseo manager is installed correctly to "delete"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temperature_refer" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temperature_refer" and connect to "card_6"
     And create a action card of "<action_card>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
-    When delete a rule created
-    Then I receive an "No Content" http code
+    And I receive an "201" http code in rules request
+    When delete a visual rule created
+    Then I receive an "204" http code in rules request
     And Validate that rule name is deleted successfully in db
   Examples:
     | rule_name  | action_card      | response                                              | parameters      |
@@ -142,13 +136,12 @@ Feature: Delete a rule in Perseo manager from portal
 
   @epl_card
   Scenario Outline: delete a rule in Perseo manager from portal with epl and action cards
-    Given Perseo manager is installed correctly to "delete"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a sensor card of epl type with id "card_6", epl query "sdfsdfsd dfsdfsdf sdfsdfsdf" and connect to "card_7"
+    Given create a sensor card of epl type with id "card_6", epl query "sdfsdfsd dfsdfsdf sdfsdfsdf" and connect to "card_7"
     And create a action card of "<action_card>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
-    When delete a rule created
-    Then I receive an "No Content" http code
+    And I receive an "201" http code in rules request
+    When delete a visual rule created
+    Then I receive an "204" http code in rules request
     And Validate that rule name is deleted successfully in db
   Examples:
     | rule_name  | action_card      | response                                              | parameters      |
@@ -158,13 +151,12 @@ Feature: Delete a rule in Perseo manager from portal
 
   @elapsed_card
   Scenario Outline: delete a rule in Perseo manager from portal with elapsed and action cards
-    Given Perseo manager is installed correctly to "delete"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
+    Given create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
     And create a action card of "<action_card>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
-    When delete a rule created
-    Then I receive an "No Content" http code
+    And I receive an "201" http code in rules request
+    When delete a visual rule created
+    Then I receive an "204" http code in rules request
     And Validate that rule name is deleted successfully in db
   Examples:
     | rule_name  | action_card      | response                                              | parameters      |
@@ -174,9 +166,7 @@ Feature: Delete a rule in Perseo manager from portal
 
   @rule_not_exist
   Scenario: delete a rule in Perseo manager from portal with value threshold and action cards
-    Given Perseo manager is installed correctly to "delete"
-    And configured with tenant "my_tenant" and service "/my_service"
-    And rule name "test_to_delete" to try to delete but it does not exists
-    When delete a rule created
-    Then I receive an "No Content" http code
+    Given append a new rule name "notExist", activate "1"
+    When delete a visual rule created
+    Then I receive an "204" http code in rules request
     And Validate that rule name is deleted successfully in db

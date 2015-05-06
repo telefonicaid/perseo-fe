@@ -20,43 +20,41 @@
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid.es
+# iot_support at tid.es
 #
 __author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
-
 
 import json
 import random
 import string
 import time
 import xmltodict
+import xml.dom.minidom
+import datetime
 
-
-# general constants
-EMPTY   = u''
-XML     = u'xml'
-JSON    = u'json'
 
 
 def string_generator(size=10, chars=string.ascii_letters + string.digits):
-        """
-        Method to create random strings
-        :param size: define the string size
-        :param chars: the characters to be use to create the string
-        :return random string
-        """
-        return ''.join(random.choice(chars) for x in range(size))
+    """
+    Method to create random strings
+    :param size: define the string size
+    :param chars: the characters to be use to create the string
+    :return random string
+    """
+    return ''.join(random.choice(chars) for x in range(size))
 
-def number_generator (size=5, decimals="%0.1f"):
+
+def number_generator(size=5, decimals="%0.1f"):
     """"
     Method to create random number
     :param decimals: decimal account
     :param size: define the number size
     :return: random integer
     """
-    return decimals % (random.random() * (10**size))
+    return decimals % (random.random() * (10 ** size))
 
-def convert_str_to_dict (body, content):
+
+def convert_str_to_dict(body, content):
     """
     Convert string to Dictionary
     :param body: String to convert
@@ -64,14 +62,16 @@ def convert_str_to_dict (body, content):
     :return: dictionary
     """
     try:
-        if content == XML:
+        if content == 'xml':
             return xmltodict.parse(body)
         else:
             return json.loads(body)
     except Exception, e:
-        assert False,  " ERROR - converting string to %s dictionary: \n%s \Exception error:\n%s" % (str(content), str(body), str(e))
+        assert False, " ERROR - converting string to {content} dictionary: \n{body} " \
+                      "\nException error:\n{error}".format(content=content, body=body, error=e)
 
-def convert_dict_to_str (body, content):
+
+def convert_dict_to_str(body, content):
     """
     Convert Dictionary to String
     :param body: dictionary to convert
@@ -79,14 +79,16 @@ def convert_dict_to_str (body, content):
     :return: string
     """
     try:
-        if content == XML:
+        if content == 'xml':
             return xmltodict.unparse(body)
         else:
             return json.dumps(body)
     except Exception, e:
-        assert False,  " ERROR - converting %s dictionary to string: \n%s \Exception error:\n%s" % (str(content), str(body), str(e))
+        assert False, " ERROR - converting {content} dictionary to string: \n{body} \n" \
+                      "Exception error:\n{error}".format(content=content, body=body, error=e)
 
-def convert_str_to_list (text, separator):
+
+def convert_str_to_list(text, separator):
     """
     Convert String to list
     :param text: text to convert
@@ -95,7 +97,8 @@ def convert_str_to_list (text, separator):
     """
     return text.split(separator)
 
-def convert_list_to_string (list, separator):
+
+def convert_list_to_string(list, separator):
     """
     Convert  List to String
     :param text: list to convert
@@ -104,7 +107,8 @@ def convert_list_to_string (list, separator):
     """
     return separator.join(list)
 
-def show_times (init_value):
+
+def show_times(init_value):
     """
     shows the time duration of the entire test
     :param initValue: initial time
@@ -113,6 +117,7 @@ def show_times (init_value):
     print "Initial (date & time): " + str(init_value)
     print "Final   (date & time): " + str(time.strftime("%c"))
     print "**************************************************************"
+
 
 def generate_date_zulu():
     """
@@ -129,7 +134,59 @@ def generate_timestamp():
     ex: 1425373697
     :return  timestamp
     """
-    return time.time()
+    yesterday = time.time() - datetime.timedelta(1).total_seconds()
+    return yesterday
+
+
+def check_type(object, type):
+        """
+        Check if the object is an instance of type
+        :param object:
+        :param type:
+        :return:
+        """
+        if not isinstance(object, type):
+            raise ValueError('The attribute "{object}" is not an instance of "{type}"')
+
+def pretty(json_pret):
+        try:
+            return json.dumps(json_pret, sort_keys=True, indent=4, separators=(',', ': '))
+        except Exception as e:
+            try:
+                return xml.dom.minidom.parse(json_pret).toprettyxml()
+            except Exception:
+                return json_pret
+
+
+def generate_context_fake_in_cep_mongo(entity_id, entity_type, service_path, attribute_name,
+                                           attribute_value, attribute_type="void"):
+        """
+        generate context fake in cep mongo that is used in not updated card (no-signal)
+        :param attribute_type:
+        :param entity_id:
+        :param entity_type:
+        :param service_path:
+        :param attribute_name:
+        :param attribute_value:
+        :param driver: Mongo class into mongo_utils.py
+        """
+        ts = generate_timestamp()
+        context_data = {'creDate': ts,
+                        '_id': {
+                            'type': entity_type,
+                            'id': entity_id,
+                            'servicePath': service_path},
+                        'attrs': [{
+                                      'creDate': ts,
+                                      'type': attribute_type,
+                                      'name': attribute_name,
+                                      'value': attribute_value,
+                                      'modDate': ts}],
+                        'modDate': ts}
+        # insert a context in mongo to simulate a context in orion
+        return context_data
 
 
 
+if __name__ == '__main__':
+    print generate_timestamp()

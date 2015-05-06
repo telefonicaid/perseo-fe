@@ -20,76 +20,9 @@
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid.es
+# iot_support at tid.es
 #
-__author__ = 'Iván Arias León (ivan.ariasleon@telefonica.com)'
+__author__ = 'Jon Calderin Goñi <jon.caldering@gmail.com>'
 
-
-from lettuce import world, after, before
-import time
-from tools.cep import CEP
-import tools.general_utils
-from tools.mongo_utils import Mongo
-
-@before.all
-def before_all_scenarios():
-    """
-    Actions before all scenarios
-    Get the initial time at start the tests
-    """
-    world.test_time_init = time.strftime("%c")
-
-
-@before.each_scenario
-def before_each_scenario(scenario):
-    """
-    actions before each scenario
-    :param scenario:
-    """
-    world.cep_requests = CEP(world.config['CEP']['cep_url'],
-                             send_sms_url = world.config['CEP']['cep_send_sms_url'],
-                             send_email_url = world.config['CEP']['cep_send_email_url'],
-                             send_update_url = world.config['CEP']['cep_send_update_url'],
-                             rule_post_url = world.config['CEP']['cep_rule_post_url'],
-                             version = world.config['CEP']['cep_version'],
-                             rule_name_default = world.config['CEP']['cep_rule_name_default'],
-                             tenant_default = world.config['CEP']['cep_tenant_default'],
-                             service_path_default = world.config['CEP']['cep_service_path_default'],
-                             identity_type_default = world.config['CEP']['cep_identity_type'],
-                             identity_id_default = world.config['CEP']['cep_identity_id'],
-                             attribute_number_default = world.config['CEP']['cep_attribute_number_default'],
-                             rules_number_default = int(world.config['CEP']['cep_rules_number_default']),
-                             epl_attribute_data_type = world.config['CEP']['cep_epl_attribute_data_type'],
-                             epl_operation = world.config['CEP']['cep_epl_operation'],
-                             epl_value = world.config['CEP']['cep_epl_value'],
-                             card_active = world.config['CEP']['cep_card_active'],
-                             retries_number = world.config['CEP']['cep_retries_received_in_mock'],
-                             retry_delay = world.config['CEP']['cep_delay_to_retry']
-    )
-
-    world.cep_mongo = Mongo (world.config['MongoDB']['mongo_host'],
-                             world.config['MongoDB']['mongo_port'],
-                             world.config['MongoDB']['mongo_database'],
-                             world.config['MongoDB']['mongo_collection']
-
-    )
-    world.cep_mongo.connect()
-
-@after.each_scenario
-def after_each_scenario(scenario):
-    """
-    actions after each scenario
-    :param scenario:
-    """
-    world.cep_mongo.disconnect()
-
-
-@after.all
-def after_all_scenarios(scenario):
-    """
-    Actions after all scenarios
-    Show the initial and final time of the tests completed
-    :param scenario:
-    """
-    tools.general_utils.show_times(world.test_time_init)
+from integration.terrain import *
 

@@ -4,36 +4,28 @@
         "logs_path": "logs"
     },
     "CEP": {
-        "cep_url": "<protocol>://<host>:<port>",
-        "cep_send_sms_url": "<protocol>://<host>:<port>",
-        "cep_send_email_url": "<protocol>://<host>:<port>",
-        "cep_send_update_url": "<protocol>://<host>:<port>",
-        "cep_rule_post_url": "<protocol>://<host>:<port>",
-        "cep_version": "X.Y.z",
-        "cep_rule_name_default": "name",
-        "cep_tenant_default": "unknownT",
-        "cep_service_path_default": "/",
-        "cep_identity_type": "Room",
-        "cep_identity_id": "Room1",
-        "cep_attribute_number_default": 1,
-        "cep_rules_number_default": 1,
-        "cep_epl_attribute_data_type": "float",
-        "cep_epl_operation": ">",
-        "cep_epl_value":"1.5",
-        "cep_card_active":8,
-        "cep_retries_received_in_mock": 15,
-        "cep_delay_to_retry": 15
+        "host": "localhost",
+        "port": "9090",
+        "service": "unknownT",
+        "service_path": "/",
+        "log_level": "DEBUG"
+    },
+    "CEP-CORE": {
+        "host": "localhost",
+        "port": "8080"
+    },
+    "Mock": {
+        "host": "localhost",
+        "port": "9998"
     },
 
     "MongoDB": {
-        "mongo_host": "hostname",
-        "mongo_port": "27017",
-        "mongo_database": "cep",
-        "mongo_collection": "rules"
+        "host": "localhost",
+        "port": "27017",
+        "database": "cep"
     },
-
     "MongoOrion": {
-        "mongo_host": "hostname",
+        "mongo_host": "localhost",
         "mongo_port": "27017",
         "mongo_database": "orion",
         "mongo_collection": "entities"

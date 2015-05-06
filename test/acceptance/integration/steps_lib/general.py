@@ -20,18 +20,23 @@
 #
 # For those usages not covered by the GNU Affero General Public License
 # please contact with:
-#   iot_support at tid.es
+# iot_support at tid.es
 #
-__author__ = 'Jon Calderin Goñi <jon.caldering@gmail.com>'
+from tools.general_utils import pretty
 
-from integration.common_steps import *
-from integration.steps_lib import cards
-from integration.steps_lib import database
-from integration.steps_lib import epl
-from integration.steps_lib import general
-from integration.steps_lib import mock
-from integration.steps_lib import notifications
-from integration.steps_lib import perseo_core
-from integration.steps_lib import perseo_fe
-from integration.steps_lib import rules
-from integration.steps_lib import validations
+__author__ = 'Jon Calderín Goñi <jon.caldering@gmail.com>'
+from lettuce import step, world
+from time import sleep
+
+
+
+@step('waiting "([^"]*)" seconds to verify orion contexts')
+def waiting_seconds_to_verify_orion_contexts(step, seconds):
+    """
+    Wait a given number of seconds
+    :param step:
+    :param seconds:
+    :return:
+    """
+    world.log.debug('Waiting {seconds} seconds'.format(seconds=seconds))
+    sleep(int(seconds))

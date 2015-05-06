@@ -39,33 +39,29 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @value_threshold_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only value threshold card without action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
     And create a action card of "SendEmailAction" type, with id "card_7", response "${device_latitude}${device_longitude}${measure.value}", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_10000000001", activate "1"
     # update the same visual rule without an action card
     And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "MINOR_THAN", data type "Quantity", parameter value "67" and connect to "card_5"
     When update a visual rule "test_10000000001"
-    Then I receive an "Bad Request" http code
-    And delete a rule created
+    Then I receive an "400" http code in rules request
 
+#TODO: Mejorar el checkeo de la BBDD añadiendo comprobar que la modificación se ha hecho
   @value_threshold_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only value threshold card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
     And create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "345345" and connect to "card_5"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When update a visual rule "<rule_name>"
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
-    And delete a rule created
+    And Check the parameter value of the sensor card "card_4" changed to "345345"
   Examples:
     | rule_name        | attribute_name | operator              | data_type | value  | action           | response                                              | parameters      |
     | test_20000000001 | temperature    | GREATER_THAN          | Quantity  | 34     | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
@@ -81,33 +77,29 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @attribute_threshold_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only attribute threshold card without action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
      # create a new visual rule
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_30000000001", activate "1"
     # update the same visual rule without an action card
     And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
     When update a visual rule "test_30000000001"
-    Then I receive an "Bad Request" http code
-    And delete a rule created
+    Then I receive an "400" http code in rules request
 
   @attribute_threshold_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only attribute threshold card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
     And create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "temp_changed" and connect to "card_6"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When update a visual rule "<rule_name>"
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
-    And delete a rule created
+    And Check the parameter value of the sensor card "card_5" changed to "temp_changed"
+
   Examples:
     | rule_name        | attribute_name | operator              | data_type | value      | action           | response                                              | parameters      |
     | test_40000000001 | temperature    | GREATER_THAN          | Quantity  | temp_refer | SendEmailAction  | email body                                            | erwer@sdfsf.com |
@@ -123,33 +115,28 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @type_card_without_action_card
   Scenario: ty to update a rule in Perseo manager using card from portal using only type card without action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of type type, with "card_3", identity type "temperature",operator "EQUAL_TO" and connect to "card_4"
+    Given create a sensor card of type type, with "card_3", identity type "temperature",operator "EQUAL_TO" and connect to "card_4"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_50000000001", activate "1"
      # update the same visual rule without an action card
     And create a sensor card of type type, with "card_3", identity type "temperature_error",operator "EQUAL_TO" and connect to "card_4"
     When update a visual rule "test_50000000001"
-    Then I receive an "Bad Request" http code
-    And delete a rule created
+    Then I receive an "400" http code in rules request
 
   @type_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only type card and action cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
+    Given create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
     And create a sensor card of type type, with "card_3", identity type "house",operator "<operator>" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When update a visual rule "<rule_name>"
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
-    And delete a rule created
+    And Check the parameter value of the sensor card "card_3" changed to "house"
   Examples:
     | rule_name        | identity_type | operator     | action           | response                    | parameters      |
     | test_60000000001 | temperature   | EQUAL_TO     | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -158,33 +145,29 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @id_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only id card without action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of id type, with id "card_2", identity id "room1" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "room1" and connect to "card_3"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_70000000001", activate "1"
     # update the same visual rule without an action card
     And create a sensor card of id type, with id "card_2", identity id "room4" and connect to "card_3"
     When update a visual rule "test_70000000001"
-    Then I receive an "Bad Request" http code
-    And delete a rule created
+    Then I receive an "400" http code in rules request
 
   @id_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only id card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
     And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "parameter_changed" and connect to "card_8"
     When update a visual rule "<rule_name>"
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
-    And delete a rule created
+    And Check the parameter value of the action card "card_3" changed to "parameter_changed"
+
   Examples:
     | rule_name        | identity_id | action           | response                     | parameters      |
     | test_80000000001 | room1       | SendEmailAction  | email body ${measure.value}  | erwer@sdfsf.com |
@@ -194,17 +177,15 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @id_card_error
   Scenario Outline: try to update a rule created previously in Perseo manager using card from portal using only id card and actions cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
     And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "parameter_changed" and connect to "card_8"
     When update a visual rule "<rule_name>"
-    Then I receive an "Bad Request" http code
+    Then I receive an "400" http code in rules request
   Examples:
     | rule_name        | identity_id | action           | response                    | parameters      |
     | test_80000000005 | *****       | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -212,33 +193,28 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @not_updated_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only not updated card without action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of notUpdated type with id "card_1", verify interval "40", attribute name "temperature", max time without update "30" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "40", attribute name "temperature", max time without update "30" and connect to "card_2"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_90000000001", activate "1"
     # update the same visual rule without an action card
     And create a sensor card of notUpdated type with id "card_1", verify interval "90", attribute name "temperature", max time without update "10" and connect to "card_2"
     When update a visual rule "test_90000000001"
-    Then I receive an "Bad Request" http code
-    And delete a rule created
+    Then I receive an "400" http code in rules request
 
   @not_updated_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only not updated card ant actions cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
     And create a sensor card of notUpdated type with id "card_1", verify interval "56", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When update a visual rule "<rule_name>"
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
-    And delete a rule created
+    And Check the interval value of the sensor card "card_1" changed to "56"
   Examples:
     | rule_name        | interval | attribute_name | max_time | action           | response                                              | parameters      |
     | test_01000000001 | 40       | temperature    | 30       | SendEmailAction  | ${device_latitude}${device_longitude}${measure.value} | erwer@sdfsf.com |
@@ -247,33 +223,28 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @epl_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only epl card without action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of epl type with id "card_6", epl query "were ewrwer werwe rwrwer  wer" and connect to "card_7"
+    Given create a sensor card of epl type with id "card_6", epl query "were ewrwer werwe rwrwer  wer" and connect to "card_7"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_11000000001", activate "1"
     # update the same visual rule without an action card
     And create a sensor card of epl type with id "card_6", epl query "dfgdfg fgdfg fdgdfg" and connect to "card_7"
     When update a visual rule "test_11000000001"
-    Then I receive an "Bad Request" http code
-    And delete a rule created
+    Then I receive an "400" http code in rules request
 
   @epl_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only epl card and action cards
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
+    Given create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
     And create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "parameters changed" and connect to "card_8"
     When update a visual rule "<rule_name>"
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
-    And delete a rule created
+    And Check the parameter value of the action card "card_7" changed to "parameters changed"
   Examples:
     | rule_name        | epl_query                     | action           | response                    | parameters      |
     | test_21000000001 | were ewrwer werwe rwrwer  wer | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
@@ -282,33 +253,29 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @elapsed_card_without_action_card
   Scenario: try to update a new rule in Perseo manager using card from portal using only elapsed card without action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
+    Given create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_31000000001", activate "1"
     # update the same visual rule without an action card
     And create a time card of time elapsed type, with id "card_10", interval "28" and connect to "card_11"
     When update a visual rule "test_31000000001"
-    Then I receive an "Bad Request" http code
-    And delete a rule created
+    Then I receive an "400" http code in rules request
 
   @elapsed_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only elapsed card and action card
-    Given Perseo manager is installed correctly to "append"
-    And configured with tenant "my_tenant" and service "/my_service"
     # create a new visual rule
-    And create a time card of time elapsed type, with id "card_10", interval "<interval>" and connect to "card_11"
+    Given create a time card of time elapsed type, with id "card_10", interval "<interval>" and connect to "card_11"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
     And create a time card of time elapsed type, with id "card_10", interval "45" and connect to "card_11"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When update a visual rule "<rule_name>"
-    Then I receive an "OK" http code
+    Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
-    And delete a rule created
+    And Check the interval value of the sensor card "card_10" changed to "45"
+
   Examples:
     | rule_name        | interval | action           | response                    | parameters      |
     | test_41000000001 | 8        | SendEmailAction  | email body ${measure.value} | erwer@sdfsf.com |
