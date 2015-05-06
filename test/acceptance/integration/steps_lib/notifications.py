@@ -90,7 +90,7 @@ def add_to_the_notification_an_entity_with_id_and_type_with_the_amount_of_equal_
         attribute_id = '{prefix}_{iterator}'.format(prefix=step.hashes[0]['attribute_id_prefix'], iterator=i)
         world.log.debug('Add attribute to the context element with attribute id "{attribute_id}", attribute type "{attribute_type}" and attirbute new value "{attribute_new_value}"'.format(attribute_id=attribute_id, attribute_type=step.hashes[0]['attribute_type'], attribute_new_value=step.hashes[0]['attribute_new_value']))
         context_element.add_attribute(attribute_id, step.hashes[0]['attribute_type'], step.hashes[0]['attribute_new_value'])
-    world.log.debug('Setting the context element of the notification as \n"{context_elemlent}"'.format(attributes=pretty(context_element.get_context_element())))
+    world.log.debug('Setting the context element of the notification as \n"{context_elemlent}"'.format(context_elemlent=pretty(context_element.get_context_element())))
     world.notification.add_context_response(context_element)
 
 @step('the notification is sent to perseo$')
