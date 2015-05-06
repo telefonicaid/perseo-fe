@@ -43,6 +43,7 @@ def a_notification_with_the_following_information(step, subscription_id, origina
     """
     world.log.debug('Setting the notfication instance with the subscription_id "{subscription_id}" and originator "{originator}"'.format(subscription_id=subscription_id, originator=originator))
     world.notification = NotificationsUtils(subscription_id, originator)
+    world.epl_attributes = []
 
 @step('add to the notification an entity with id "([^"]*)" and type "([^"]*)" with the following attributes')
 def add_to_the_notification_an_entity_with_id_and_type_with_the_attributes(step, entity_id, entity_type):
@@ -86,17 +87,17 @@ def add_to_the_notification_an_entity_with_id_and_type_with_the_amount_of_equal_
     # Create a context element
     context_element = ContextElement(entity_id, entity_type)
     for i in range(0, int(attributes_number)):
-
         attribute_id = '{prefix}_{iterator}'.format(prefix=step.hashes[0]['attribute_id_prefix'], iterator=i)
         world.log.debug('Add attribute to the context element with attribute id "{attribute_id}", attribute type "{attribute_type}" and attirbute new value "{attribute_new_value}"'.format(attribute_id=attribute_id, attribute_type=step.hashes[0]['attribute_type'], attribute_new_value=step.hashes[0]['attribute_new_value']))
         world.epl_attributes.append(context_element.add_attribute(attribute_id, step.hashes[0]['attribute_type'], step.hashes[0]['attribute_new_value']))
     world.log.debug('Setting the EPL attributes as \n"{attributes}"'.format(attributes=pretty(world.epl_attributes)))
+    world.notification.add_context_response(context_element)
 
 @step('the notification is sent to perseo$')
 def the_notification_is_sent_to_perseo(step):
     payload = world.notification.get_notification_payload()
     world.log.debug('Sent to cep the notification payload: \n {payload}'.format(payload=pretty(payload)))
-    world.resp = world.cep.notify(payload).status_code
+    world.resp = world.cep.notify(payload)
 
 @step('the notification is sent to perseo in xml format')
 def the_notification_is_sent_to_perseo_in_xml_format(step):

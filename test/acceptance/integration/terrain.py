@@ -73,6 +73,8 @@ def reset_environment():
     world.cards = []
     world.resp = []
     world.rules = []
+    world.epl_attributes = []
+    world.notification = None
     # Reset the database of tests
     world.cep.reset_db()
     world.cep.util_delete_all_core_rules()
