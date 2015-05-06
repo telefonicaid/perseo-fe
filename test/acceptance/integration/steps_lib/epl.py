@@ -97,10 +97,9 @@ def a_number_of_equal_attributes_for_the_epl_with_the_data(step, attributes_numb
         })
     world.log.debug('Setting the EPL attributes as \n"{attributes}"'.format(attributes=pretty(world.epl_attributes)))
 
-@step('an EPL with a rule name "([^"]*)", an identity type "([^"]*)", an attributes Number "([^"]*)", an attribute data type "([^"]*)", an operation type "([^"]*)" and value "([^"]*)"')
-def an_epl_with_a_rule_name_an_identity_type_an_attributes_number_an_attribute_data_type_an_operation_type_and_value_(step, name, type, attributes_number, attribute_type, operation_type, value):
-    service, servicepath = world.cep.get_service_and_servicepath()
-    world.epl_sentence = world.rules_utils.generate_epl(service, servicepath, name, type, attributes_number,
-                                                        attribute_type, operation_type, value)
-    world.attributes_number = attributes_number
-    world.rule_name = name
+# @step('an EPL with a rule name "([^"]*)", an identity type "([^"]*)", an attributes Number "([^"]*)", an attribute data type "([^"]*)", an operation type "([^"]*)" and value "([^"]*)"')
+# def an_epl_with_a_rule_name_an_identity_type_an_attributes_number_an_attribute_data_type_an_operation_type_and_value_(step, name, type, attributes_number, attribute_type, operation_type, value):
+#     service, servicepath = world.cep.get_service_and_servicepath()
+#     world.epl_sentence = world.rules_utils.generate_epl(service, servicepath, name, type, attributes_number, attribute_type, operation_type, value)
+#     world.attributes_number = attributes_number
+#     world.rule_name = name

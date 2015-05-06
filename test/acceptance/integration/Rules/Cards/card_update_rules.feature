@@ -39,9 +39,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @value_threshold_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only value threshold card without action card
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
     And create a action card of "SendEmailAction" type, with id "card_7", response "${device_latitude}${device_longitude}${measure.value}", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_10000000001", activate "1"
     # update the same visual rule without an action card
@@ -52,9 +51,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 #TODO: Mejorar el checkeo de la BBDD añadiendo comprobar que la modificación se ha hecho
   @value_threshold_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only value threshold card and actions cards
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
@@ -79,9 +77,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @attribute_threshold_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only attribute threshold card without action card
-    Given Perseo manager is installed correctly to "append"
      # create a new visual rule
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", attribute to refer "temp_refer" and connect to "card_6"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_30000000001", activate "1"
     # update the same visual rule without an action card
@@ -91,9 +88,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @attribute_threshold_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only attribute threshold card and actions cards
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
@@ -119,9 +115,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @type_card_without_action_card
   Scenario: ty to update a rule in Perseo manager using card from portal using only type card without action card
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of type type, with "card_3", identity type "temperature",operator "EQUAL_TO" and connect to "card_4"
+    Given create a sensor card of type type, with "card_3", identity type "temperature",operator "EQUAL_TO" and connect to "card_4"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_50000000001", activate "1"
      # update the same visual rule without an action card
@@ -131,9 +126,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @type_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only type card and action cards
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
+    Given create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
@@ -151,9 +145,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @id_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only id card without action card
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of id type, with id "card_2", identity id "room1" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "room1" and connect to "card_3"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_70000000001", activate "1"
     # update the same visual rule without an action card
@@ -163,9 +156,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @id_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only id card and actions cards
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
@@ -185,9 +177,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @id_card_error
   Scenario Outline: try to update a rule created previously in Perseo manager using card from portal using only id card and actions cards
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
@@ -202,9 +193,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @not_updated_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only not updated card without action card
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of notUpdated type with id "card_1", verify interval "40", attribute name "temperature", max time without update "30" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "40", attribute name "temperature", max time without update "30" and connect to "card_2"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_90000000001", activate "1"
     # update the same visual rule without an action card
@@ -214,9 +204,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @not_updated_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only not updated card ant actions cards
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
@@ -234,9 +223,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @epl_card_without_action_card
   Scenario: try to update a rule in Perseo manager using card from portal using only epl card without action card
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of epl type with id "card_6", epl query "were ewrwer werwe rwrwer  wer" and connect to "card_7"
+    Given create a sensor card of epl type with id "card_6", epl query "were ewrwer werwe rwrwer  wer" and connect to "card_7"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_11000000001", activate "1"
     # update the same visual rule without an action card
@@ -246,9 +234,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @epl_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only epl card and action cards
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
+    Given create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card
@@ -266,9 +253,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @elapsed_card_without_action_card
   Scenario: try to update a new rule in Perseo manager using card from portal using only elapsed card without action card
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
+    Given create a time card of time elapsed type, with id "card_10", interval "8" and connect to "card_11"
     And create a action card of "SendEmailAction" type, with id "card_7", response "body email", parameters "erwer@sdfsf.com" and connect to "card_8"
     And append a new rule name "test_31000000001", activate "1"
     # update the same visual rule without an action card
@@ -278,9 +264,8 @@ Feature: Update a rule in Perseo manager using cards from portal
 
   @elapsed_card
   Scenario Outline: update a rule created previously in Perseo manager using card from portal using only elapsed card and action card
-    Given Perseo manager is installed correctly to "append"
     # create a new visual rule
-    And create a time card of time elapsed type, with id "card_10", interval "<interval>" and connect to "card_11"
+    Given create a time card of time elapsed type, with id "card_10", interval "<interval>" and connect to "card_11"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     # update the same visual rule with an action card

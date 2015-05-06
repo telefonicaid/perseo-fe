@@ -108,3 +108,8 @@ def validate_that_rule_name_is_deleted_successfully_in_db(step):
     assert len(world.cep.get_rule_from_mongo(
         world.rules[len(world.rules) - 1]['name'])) == 0, 'The rule "{name}" is still in the db'.format(
         name=world.rules[len(world.rules) - 1]['name'])
+
+
+@step('validate the rules are "([^"]*)"')
+def validate_the_rules_are(step, rules_number):
+    assert len(world.resp.json()['data']) == int(rules_number), 'The rules expected are {expected} and the returnet are {returned}. The whole response is: {response}'.format(expected=rules_number, returned=len(world.resp.json()['data']), response=world.resp.text)

@@ -59,7 +59,7 @@ from tools.general_utils import pretty
 #     world.resp = world.cep.create_plain_rule(world.rules[len(world.rules) - 1])
 
 @step('append a new rule name "([^"]*)", activate "([^"]*)"')
-def append_a_new_rule_name_group1_activate_group2(step, name, active):
+def append_a_new_rule_name_activate(step, name, active):
     world.rules.append(world.rules_utils.create_card_rule(name, active, world.cards))
     world.cards = []
     world.log.debug('Creating the visual rule: \n {visual_rule}'.format(visual_rule=pretty(world.rules[len(world.rules)-1])))
@@ -208,10 +208,22 @@ def with_the_epl_generated_and_the_action_append_an_amount_of_rules_in_perseo_wi
 def delete_a_visual_rule_created(step):
     world.resp = world.cep.delete_visual_rule(world.rules[len(world.rules) - 1]['name'])
 
+@step('delete a plain rule created')
+def delete_a_plain_rule_created(step):
+    world.resp = world.cep.delete_plain_rule(world.rules[len(world.rules) - 1]['name'])
+
+@step('delete a plain rule with name "([^"]*)"')
+def delete_a_plain_rule_created(step, name):
+    world.resp = world.cep.delete_plain_rule(name)
+
 
 @step('read a visual rule in perseo')
 def read_a_visual_rule_in_perseo(step):
     world.resp = world.cep.get_visual_rule(world.rules[len(world.rules) - 1]['name'])
+
+@step('read a plain rule in perseo')
+def read_a_visual_rule_in_perseo(step):
+    world.resp = world.cep.get_plain_rule(world.rules[len(world.rules) - 1]['name'])
 
 
 @step('create visual rules "([^"]*)" with prefix "([^"]*)", sensor cards and an action card "([^"]*)"')
@@ -230,6 +242,11 @@ def create_visual_rules_group1_with_prefix_group2_sensor_cards_and_an_action_car
 @step('list all rules')
 def read_all_rules(step):
     world.resp = world.cep.list_visual_rules()
+
+
+@step('list all plain rules')
+def read_all_plain_rules(step):
+    world.resp = world.cep.list_plain_rules()
 
 
 @step('update a visual rule "([^"]*)"')

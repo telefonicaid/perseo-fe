@@ -39,8 +39,7 @@ Feature: get rules in Perseo manager from portal
 
   @happy_path @value_threshold_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only value threshold card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
+    Given create a sensor card of value threshold type, with id "card_4", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", parameter value "<value>" and connect to "card_5"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
@@ -54,8 +53,7 @@ Feature: get rules in Perseo manager from portal
 
   @attribute_threshold_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only attribute threshold card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
+    Given create a sensor card of attribute threshold type, with id "card_5", attribute name "<attribute_name>", operator "<operator>", data type "<data_type>", attribute to refer "<value>" and connect to "card_6"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
@@ -70,8 +68,7 @@ Feature: get rules in Perseo manager from portal
 
   @type_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only type card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
+    Given create a sensor card of type type, with "card_3", identity type "<identity_type>",operator "<operator>" and connect to "card_4"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
@@ -86,8 +83,7 @@ Feature: get rules in Perseo manager from portal
 
   @regexp_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only regexp card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
+    Given create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     When append a new rule name "<rule_name>", activate "1"
     And append a new rule name "<rule_name>", activate "1"
@@ -103,8 +99,7 @@ Feature: get rules in Perseo manager from portal
 
   @notUpdated_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only not updated card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "<attribute_name>", max time without update "<max_time>" and connect to "card_2"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
@@ -119,8 +114,7 @@ Feature: get rules in Perseo manager from portal
 
   @epl_card
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only epl card and actions cards
-    Given Perseo manager is installed correctly to "get"
-    And create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
+    Given create a sensor card of epl type with id "card_6", epl query "<epl_query>" and connect to "card_7"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
@@ -135,9 +129,8 @@ Feature: get rules in Perseo manager from portal
 
   @multiples_rules
   Scenario Outline: read multiples visual rules in Perseo manager from portal
-    Given Perseo manager is installed correctly to "get"
      # Sensor cards
-    And create visual rules "<rules_number>" with prefix "<prefix>", sensor cards and an action card "SendEmailAction"
+    Given create visual rules "<rules_number>" with prefix "<prefix>", sensor cards and an action card "SendEmailAction"
       | sensorCardType |
       | valueThreshold |
       | regexp         |
