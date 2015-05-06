@@ -86,8 +86,9 @@ def add_to_the_notification_an_entity_with_id_and_type_with_the_amount_of_equal_
     # Create a context element
     context_element = ContextElement(entity_id, entity_type)
     for i in range(0, int(attributes_number)):
-        world.log.debug('Add attribute to the context element with attribute id "{attribute_id}", attribute type "{attribute_type}" and attirbute new value "{attribute_new_value}"'.format(attribute_id=attribute_id, attribute_type=step.hashes[0]['attribute_type'], attribute_new_value=step.hashes[0]['attribute_new_value']))
+
         attribute_id = '{prefix}_{iterator}'.format(prefix=step.hashes[0]['attribute_id_prefix'], iterator=i)
+        world.log.debug('Add attribute to the context element with attribute id "{attribute_id}", attribute type "{attribute_type}" and attirbute new value "{attribute_new_value}"'.format(attribute_id=attribute_id, attribute_type=step.hashes[0]['attribute_type'], attribute_new_value=step.hashes[0]['attribute_new_value']))
         world.epl_attributes.append(context_element.add_attribute(attribute_id, step.hashes[0]['attribute_type'], step.hashes[0]['attribute_new_value']))
     world.log.debug('Setting the EPL attributes as \n"{attributes}"'.format(attributes=pretty(world.epl_attributes)))
 
