@@ -39,7 +39,7 @@ Feature: Get a rule in Perseo manager
   so that they become more functional and useful
 
   # -----
-  @happy_path @act
+  @happy_path 
   Scenario: get a update rule in Perseo manager
     # Gen EPL
     Given an EPL sentence with name "update_rule"
@@ -55,7 +55,7 @@ Feature: Get a rule in Perseo manager
     When read a plain rule in perseo
     Then I receive an "200" http code in rules request
 
-  @happy_path @act
+  @happy_path 
   Scenario: get a email rule in Perseo manager
     # Gen EPL
     Given an EPL sentence with name "email"
@@ -71,7 +71,7 @@ Feature: Get a rule in Perseo manager
     When read a plain rule in perseo
     Then I receive an "200" http code in rules request
 
-  @happy_path @act
+  @happy_path 
   Scenario: get a sms rule in Perseo manager
     # Gen EPL
     Given an EPL sentence with name "sms_rule"
@@ -87,7 +87,7 @@ Feature: Get a rule in Perseo manager
     When read a plain rule in perseo
     Then I receive an "200" http code in rules request
 
-  @happy_path @act
+  @happy_path 
   Scenario: get a update rule in Perseo manager
     # Gen EPL
     Given an EPL sentence with name "post_rule"

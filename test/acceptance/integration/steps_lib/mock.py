@@ -25,9 +25,11 @@
 
 __author__ = 'Jon Calderín Goñi <jon.caldering@gmail.com>'
 from lettuce import step, world
+import time
 
 @step('the mock receive the number "([^"]*)" of actions "([^"]*)"')
 def the_mock_receive_the_action(step, number, action):
+    time.sleep(1)
     if action == 'SendEmailAction' or action == 'email':
         resp = world.mock_utils.get_counter_mails()
         find_result = resp.text.find('email counter: {number}'.format(number=number))
@@ -46,6 +48,7 @@ def the_mock_receive_the_action(step, number, action):
 
 @step('the mock receive this part of text "([^"]*)" in the action "([^"]*)"')
 def the_mock_receive_this_part_of_text_in_the_action(step, text, action):
+    time.sleep(1)
     if action == 'SendEmailAction' or action == 'email':
         resp = world.mock_utils.get_mails()
         assert resp.status_code == 200
