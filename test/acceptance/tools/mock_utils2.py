@@ -41,14 +41,19 @@ class Mock(object):
         self.sms_url = '{base_url}/get/sms'.format(base_url=base_url)
         self.update_url = '{base_url}/get/update'.format(base_url=base_url)
         self.post_url = '{base_url}/get/post'.format(base_url=base_url)
+        self.twitter_url = '{base_url}/get/twitter'.format(base_url=base_url)
         self.mail_counter_url = '{base_url}/counter/email'.format(base_url=base_url)
         self.sms_counter_url = '{base_url}/counter/sms'.format(base_url=base_url)
         self.update_counter_url = '{base_url}/counter/update'.format(base_url=base_url)
         self.post_counter_url = '{base_url}/counter/post'.format(base_url=base_url)
+        self.twitter_counter_url = '{base_url}/counter/twitter'.format(base_url=base_url)
         self.reset_mails_url = '{base_url}/reset/email'.format(base_url=base_url)
         self.reset_sms_url = '{base_url}/reset/sms'.format(base_url=base_url)
         self.reset_update_url = '{base_url}/reset/update'.format(base_url=base_url)
         self.reset_post_url = '{base_url}/reset/post'.format(base_url=base_url)
+        self.reset_twitter_url = '{base_url}/reset/twitter'.format(base_url=base_url)
+
+    # GET Operations
 
     def get_mails(self):
         """
@@ -77,6 +82,15 @@ class Mock(object):
         :return:
         """
         return requests.request('get', self.post_url)
+
+    def get_twitter(self):
+        """
+        Get all twitter sent from the mock
+        :return:
+        """
+        return requests.request('get', self.twitter_url)
+
+    # GET Counter operations
     
     def get_counter_mails(self):
         """
@@ -105,6 +119,15 @@ class Mock(object):
         :return:
         """
         return requests.request('get', self.sms_counter_url)
+
+    def get_counter_twitter(self):
+        """
+        Get the counter of the twitters from the mock
+        :return:
+        """
+        return requests.request('get', self.twitter_counter_url)
+
+    # RESET operations
     
     def reset_mails(self):
         """
@@ -133,3 +156,10 @@ class Mock(object):
         :return:
         """
         return requests.request('put', self.reset_sms_url)
+
+    def reset_twitter(self):
+        """
+        Reste the twitter and the counter twitter in the mock
+        :return:
+        """
+        return requests.request('put', self.reset_twitter_url)

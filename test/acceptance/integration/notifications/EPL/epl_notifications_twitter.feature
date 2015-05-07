@@ -31,3 +31,26 @@ Feature: Launch an action if a rule is triggered in Perseo manager
 
   Background:
     Given perseo-fe is up and running
+
+  @happy_path @act
+  Scenario: Launch a twitter action if a rule is triggered
+    # Gen EPL
+    Given an EPL sentence with name "twitter_rule"
+    And the entity_type "Room" for the EPL
+    And the attributes for the EPL
+      | attribute_id | attribute_value_type | attribute_operation | attribute_value |
+      | temperature  | float                | >                   | 1.5             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the twitter action with text "The new temperature is ${temperature}" and the connexion information
+    | consumer_key | consumer_secret | access_token_key | access_token_secret |
+    | aaaa         | bbbbbb          | ccccc            | dddddd              |
+    And with the epl generated and the action, append a new rule in perseo with name "twitter_rule"
+    # Notification
+    And a notifications with subscription_id "aaaaa" and originator "localhost"
+    And add to the notification an entity with id "room2" and type "Room" with the following attributes
+      | attribute_id | attribute_type | attribute_new_value |
+      | temperature  | celcius        | 300                 |
+    When the notification is sent to perseo
+    Then the mock receive the number "1" of actions "email"
+    And the mock receive this part of text "the new temperature is 300" in the action "twitter"

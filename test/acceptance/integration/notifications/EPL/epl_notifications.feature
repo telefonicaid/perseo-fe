@@ -112,7 +112,7 @@ Feature: Launch an action if a rule is triggered in Perseo manager
     And add to the notification an entity with id "room2" and type "Room" with the following attributes
       | attribute_id | attribute_type | attribute_new_value |
       | speed        | kms per our    | 300                 |
-    When the notification is sent to perseo
+    And the notification is sent to perseo
     Then the mock receive the number "0" of actions "sms"
 
 

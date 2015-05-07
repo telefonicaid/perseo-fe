@@ -64,9 +64,11 @@ class FakeSMTPServer(smtpd.SMTPServer):
 body_sms = mock_config.INITIAL_SMS_MSG
 body_update = mock_config.INITIAL_UPDATE_MSG
 body_post = mock_config.INITIAL_POST_MSG
+body_twitter = mock_config.INITIAL_TWITTER_MSG
 sms_number = 0
 update_number = 0
 post_number = 0
+twitter_number = 0
 
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -76,7 +78,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """
         Respond to a POST request.
         """
-        global body_sms, body_update, body_post, sms_number, update_number, post_number
+        global body_twitter, body_sms, body_update, body_post, sms_number, update_number, post_number, twitter_number
         try:
             #POST response - socket hang up
             self.send_response(mock_config.OK)
@@ -94,6 +96,12 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 print body_sms
                 if mock_config.MORE_INFO:  # -i option
                     print "sms counter: " + str(sms_number)
+            if self.path.find(mock_config.SEND_TWITTER) >= 0:  # /send/twitter
+                body_twitter = str(body)
+                twitter_number = twitter_number + 1
+                print body_twitter
+                if mock_config.MORE_INFO:  # -i option
+                    print "twitter counter: " + str(twitter_number)
             elif self.path.find(mock_config.SEND_UPDATE) >= 0:  # /send/update
                 body_update = str(body)
                 update_number = update_number + 1
@@ -115,7 +123,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """
         Respond to a GET request.
         """
-        global body_sms, body_update, sms_number, update_number, body_post, post_number
+        global body_sms, body_update, sms_number, update_number, body_post, post_number, twitter_number, body_twitter
         body_temp = u''
         #gets
         self.send_response(mock_config.OK)
@@ -128,6 +136,8 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             body_temp = body_update
         elif self.path.find(mock_config.GET_POST) >= 0:  # /get/post
             body_temp = body_post
+        elif self.path.find(mock_config.GET_TWITTER) >= 0:  # /get/twitter
+            body_temp = body_twitter
         #counters
         elif self.path.find(mock_config.COUNTER_EMAIL) >= 0:  # /counter/email
             body_temp = "email counter: " + str(body_email[mock_config.SMTP_COUNTER])
@@ -137,6 +147,8 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             body_temp = "update counter: " + str(update_number)
         elif self.path.find(mock_config.COUNTER_POST) >= 0:  # /counter/post
             body_temp = "post counter: " + str(post_number)
+        elif self.path.find(mock_config.COUNTER_TWITTER) >= 0:  # /counter/twitter
+            body_temp = "twitter counter: " + str(twitter_number)
         else:
             self.send_error(400, 'URL not found: {url}'.format(url=self.path))
 
@@ -150,7 +162,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """
         text = " counter is reset..."
         sub_str_path = self.path[len("/reset/"):]
-        global sms_number, update_number, body_sms, body_update, post_number, body_post
+        global sms_number, update_number, twitter_number, body_sms, body_update, post_number, body_post, body_twitter
         self.send_response(mock_config.OK)
 
         if self.path.find(mock_config.RESET_EMAIL) >= 0:  #/reset/email
@@ -165,6 +177,9 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         elif self.path.find(mock_config.RESET_POST) >= 0:  # /reset/post
             post_number = 0
             body_post = mock_config.INITIAL_POST_MSG
+        elif self.path.find(mock_config.RESET_TWITTER) >= 0:  # /reset/twitter
+            twitter_number = 0
+            body_twitter = mock_config.INITIAL_TWITTER_MSG
         else:
             self.send_error(400, 'URL not found: {url}'.format(url=self.path))
         self.send_header(mock_config.CONTENT_LENGTH, len(text) + len(sub_str_path))

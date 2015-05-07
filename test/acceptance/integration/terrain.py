@@ -82,6 +82,7 @@ def reset_environment():
     world.mock_utils.reset_post()
     world.mock_utils.reset_update()
     world.mock_utils.reset_sms()
+    world.mock_utils.reset_twitter()
 
 
 @before.each_scenario

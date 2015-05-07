@@ -40,7 +40,7 @@ Feature: Append a new rule in Perseo manager using cards from portal
   @happy_path
   Scenario: append a new rule in Perseo manager using card from portal with all cards
      # Sensor cards
-    #Given create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
+    Given create a sensor card of notUpdated type with id "card_1", verify interval "45", attribute name "temperature", max time without update "10" and connect to "card_2"
     And create a sensor card of id type, with id "card_2", identity id "room2" and connect to "card_3"
     And create a sensor card of type type, with "card_3", identity type "room",operator "DIFFERENT_TO" and connect to "card_4"
     And create a sensor card of value threshold type, with id "card_4", attribute name "temperature", operator "GREATER_THAN", data type "Quantity", parameter value "34" and connect to "card_5"
@@ -56,7 +56,6 @@ Feature: Append a new rule in Perseo manager using cards from portal
     When append a new rule name "test_000001", activate "1"
     Then I receive an "201" http code in rules request
     And Validate that rule name is created successfully in db
-    And validate that rule name is created successfully in perseo-core
 
   @value_threshold_card_without_action_card
   Scenario: try to append a new rule in Perseo manager using card from portal using only value threshold card without action card

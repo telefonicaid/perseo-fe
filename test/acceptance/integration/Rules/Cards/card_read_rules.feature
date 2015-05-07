@@ -85,7 +85,6 @@ Feature: get rules in Perseo manager from portal
   Scenario Outline: get a visual rule in Perseo manager using card from portal using only regexp card and actions cards
     Given create a sensor card of id type, with id "card_2", identity id "<identity_id>" and connect to "card_3"
     And create a action card of "<action>" type, with id "card_7", response "<response>", parameters "<parameters>" and connect to "card_8"
-    When append a new rule name "<rule_name>", activate "1"
     And append a new rule name "<rule_name>", activate "1"
     When read a visual rule in perseo
     Then I receive an "200" http code in rules request

@@ -42,6 +42,9 @@ def the_mock_receive_the_action(step, number, action):
     elif action == 'post':
         resp = world.mock_utils.get_counter_post()
         find_result = resp.text.find('post counter: {number}'.format(number=number))
+    elif action == 'twitter':
+        resp = world.mock_utils.get_counter_twitter()
+        find_result = resp.text.find('twitter counter: {number}'.format(number=number))
     else:
         raise ValueError('The action "{action}" is not supported'.format(action=action))
     assert find_result >= 0, 'The response from the mock for action "{action}" is not the expected, the response is: "{response}"'.format(action=action, response=resp.text)
@@ -60,6 +63,9 @@ def the_mock_receive_this_part_of_text_in_the_action(step, text, action):
         assert resp.status_code == 200
     elif action == 'post':
         resp = world.mock_utils.get_post()
+        assert resp.status_code == 200
+    elif action == 'twitter':
+        resp = world.mock_utils.get_twitter()
         assert resp.status_code == 200
     else:
         raise ValueError('The action "{action}" is not supported'.format(action=action))

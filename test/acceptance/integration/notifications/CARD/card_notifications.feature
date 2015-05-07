@@ -144,7 +144,7 @@ Feature: Launch an action if a visual rule is triggered in Perseo manager
   @not_updated_card
   Scenario Outline: launch a action if a visual rule is triggered in Perseo manager using only not_updated_card with more than one attributes not updated and actions cards
     Given generate context orion fake with entity id "room_1", entity type "room", attribute name "alarm", attribute value "danger" and attribute type "void"
-    Given generate context orion fake with entity id "room_2", entity type "room", attribute name "alarm", attribute value "danger" and attribute type "void"
+    And generate context orion fake with entity id "room_2", entity type "room", attribute name "alarm", attribute value "danger" and attribute type "void"
     # create a new visual rule
     And create a sensor card of notUpdated type with id "card_1", verify interval "<interval>", attribute name "alarm", max time without update "<max_time_WO_update>" and connect to "card_2"
     And create a sms action card with id "card_2" text "The attribute alarm with value: ${alarm} is not updated :${reportInterval} ${lastTime}" telephone number "666999666" and connected to ""

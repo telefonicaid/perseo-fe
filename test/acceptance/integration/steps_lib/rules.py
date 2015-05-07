@@ -104,6 +104,27 @@ def set_the_post_action_with_payload_and_url(step, from_, to, subject, body):
     # Generate the action of the rule
     world.action = world.rules_utils.create_email_action(from_, to, subject, body)
 
+@step('set the twitter action with text "([^"]*)" and the connexion information')
+def set_the_post_action_with_payload_and_url(step, text):
+    """
+    | consumer_key | consumer_secret | access_token_key | access_token_secret |
+    | aaaa         | bbbbbb          | ccccc            | dddddd              |
+    Generate the twitter action
+    :param step:
+    :param text:
+    :param number:
+    :return:
+    """
+    hash_structure_example = """
+    | consumer_key | consumer_secret | access_token_key | access_token_secret |
+    | aaaa         | bbbbbb          | ccccc            | dddddd              |
+    """
+    if len(step.hashes) != 1:
+        raise ValueError('The twitter access information is mandatory (only one row), the format is: \n {example}'.format(example=hash_structure_example))
+    for row in step.hashes:
+        # Generate the action of the rule
+        world.action = world.rules_utils.create_twitter_action(text, row['consumer_key'], row['consumer_secret'], row['access_token_key'], row['access_token_secret'])
+
 @step('set the update action with attribute name "([^"]*)" attribute value "([^"]*)" attribute type "([^"]*)" entity id "([^"]*)" is pattern "([^"]*)"')
 def set_the_post_action_with_payload_and_url(step, attribute_name, attribute_value, attribute_type, entity_id, is_pattern):
     """
@@ -141,6 +162,8 @@ def set_the_post_action_with_payload_and_url(step, payload, url):
         # Set the mock url of the properties file
         url = 'http://{mock_host}:{mock_port}/send/post'.format(mock_host=world.config['Mock']['host'], mock_port=world.config['Mock']['port'])
     world.action = world.rules_utils.create_post_action(payload, url, 'bad_type')
+
+
     
 @step('with the epl generated and the action, append a new rule in perseo with name "([^"]*)"')
 def with_the_epl_generated_and_the_action_append_a_new_rule_in_perseo(step, rule_name):

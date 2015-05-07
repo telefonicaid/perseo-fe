@@ -49,7 +49,7 @@ Feature: Append a new rule in Perseo manager
     And generate the epl sentence with the data defined before
     # Create the Rule
     And set the email action with from "from@from.com" to "to@to.com" subject "test_subject" and body "the new temperature is ${temperature}"
-    And with the epl generated and the action, append a new rule in perseo with name "email_rule"
+    When with the epl generated and the action, append a new rule in perseo with name "email_rule"
     # Validations
     Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
@@ -66,7 +66,7 @@ Feature: Append a new rule in Perseo manager
     And generate the epl sentence with the data defined before
     # Create the Rule
     And set the sms action with text "the new temperature is ${temperature}" and number "666999666"
-    And with the epl generated and the action, append a new rule in perseo with name "sms_rule"
+    When with the epl generated and the action, append a new rule in perseo with name "sms_rule"
     # Validations
     Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
@@ -83,7 +83,7 @@ Feature: Append a new rule in Perseo manager
     And generate the epl sentence with the data defined before
     # Create the Rule
     And set the post action with payload "the new temperature is ${temperature}" and url "mock_url"
-    And with the epl generated and the action, append a new rule in perseo with name "post_rule"
+    When with the epl generated and the action, append a new rule in perseo with name "post_rule"
     # Validations
     Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
@@ -100,7 +100,7 @@ Feature: Append a new rule in Perseo manager
     And generate the epl sentence with the data defined before
     # Create the Rule
     And set the update action with attribute name "temperature" attribute value "500" attribute type "empty" entity id "empty" is pattern "empty"
-    And with the epl generated and the action, append a new rule in perseo with name "update_rule"
+    When with the epl generated and the action, append a new rule in perseo with name "update_rule"
     # Validations
     Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
@@ -344,7 +344,7 @@ Feature: Append a new rule in Perseo manager
     And generate the epl sentence with the data defined before
     # Create the Rule
     And set the sms action with text "the new temperature is ${temperature}" and number "666999666"
-    And with the epl generated and the action, append an amount of "<rule_number>" rules in perseo with prefix name "<rule_prefix_name>"
+    When with the epl generated and the action, append an amount of "<rule_number>" rules in perseo with prefix name "<rule_prefix_name>"
     Then I receive an "200" http code in rules request
     And list all plain rules
     And validate the rules are "<rule_number>"
