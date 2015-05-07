@@ -32,7 +32,7 @@ Feature: Launch an action if a rule is triggered in Perseo manager
   Background:
     Given perseo-fe is up and running
 
-  @happy_path @act
+  @happy_path
   Scenario: Launch a twitter action if a rule is triggered
     # Gen EPL
     Given an EPL sentence with name "twitter_rule"

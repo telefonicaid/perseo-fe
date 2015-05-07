@@ -107,6 +107,28 @@ Feature: Delete a rule in Perseo manager
     And list all plain rules
     And validate the rules are "0"
 
+
+  @happy_path
+  Scenario: delete a twitter rule in Perseo manager
+    # Gen EPL
+    Given an EPL sentence with name "twitter_rule"
+    And the entity_type "Room" for the EPL
+    And the attributes for the EPL
+      | attribute_id | attribute_value_type | attribute_operation | attribute_value |
+      | temperature  | float                | >                   | 1.5             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the twitter action with text "The new temperature is ${temperature}" and the connexion information
+    | consumer_key | consumer_secret | access_token_key | access_token_secret |
+    | aaaa         | bbbbbb          | ccccc            | dddddd              |
+    And with the epl generated and the action, append a new rule in perseo with name "twitter_rule"
+    # Action
+    When delete a plain rule created
+    Then I receive an "200" http code in rules request
+    And list all plain rules
+    And validate the rules are "0"
+
+
     # ----
   @rule_name 
   Scenario Outline: delete a rule with several names in Perseo manager

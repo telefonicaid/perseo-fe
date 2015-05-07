@@ -104,6 +104,25 @@ Feature: Append a new rule in Perseo manager
     # Validations
     Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
+
+
+  @happy_path
+  Scenario: Append a twitter rule in Perseo manager
+    # Gen EPL
+    Given an EPL sentence with name "twitter_rule"
+    And the entity_type "Room" for the EPL
+    And the attributes for the EPL
+      | attribute_id | attribute_value_type | attribute_operation | attribute_value |
+      | temperature  | float                | >                   | 1.5             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the twitter action with text "The new temperature is ${temperature}" and the connexion information
+    | consumer_key | consumer_secret | access_token_key | access_token_secret |
+    | aaaa         | bbbbbb          | ccccc            | dddddd              |
+    When with the epl generated and the action, append a new rule in perseo with name "twitter_rule"
+    # Validations
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
    #-----------------------------------------------------------------------
 
   @tenant
