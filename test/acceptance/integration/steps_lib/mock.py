@@ -26,6 +26,7 @@
 __author__ = 'Jon Calderín Goñi <jon.caldering@gmail.com>'
 from lettuce import step, world
 import time
+import urllib
 
 @step('the mock receive the number "([^"]*)" of actions "([^"]*)"')
 def the_mock_receive_the_action(step, number, action):
@@ -69,6 +70,6 @@ def the_mock_receive_this_part_of_text_in_the_action(step, text, action):
         assert resp.status_code == 200
     else:
         raise ValueError('The action "{action}" is not supported'.format(action=action))
-    print resp.text
-    find_result = resp.text.find(text)
-    assert find_result >= 0, 'The response from the mock for action "{action}" is not the expected, the response is: "{response}"'.format(action=action, response=resp.text)
+    urllib.unquote(resp.text)
+    find_result = urllib.unquote(resp.text).find(text)
+    assert find_result >= 0, 'The response from the mock for action "{action}" is not the expected, the response is: "{response}"'.format(action=action, response=urllib.unquote(resp.text))

@@ -52,5 +52,5 @@ Feature: Launch an action if a rule is triggered in Perseo manager
       | attribute_id | attribute_type | attribute_new_value |
       | temperature  | celcius        | 300                 |
     When the notification is sent to perseo
-    Then the mock receive the number "1" of actions "email"
-    And the mock receive this part of text "the new temperature is 300" in the action "twitter"
+    Then the mock receive the number "1" of actions "twitter"
+    And the mock receive this part of text "The new temperature is 300" in the action "twitter"
