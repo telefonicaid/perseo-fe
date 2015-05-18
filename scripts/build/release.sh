@@ -157,9 +157,11 @@ echo "new version:     $NEW_VERSION"
 #
 sed "s/\"version\": \"$currentVersion\"/\"version\": \"$NEW_VERSION\"/" package.json        > /tmp/package.json
 sed "s/$currentVersion/$NEW_VERSION/" rpm/create-rpm.sh        > /tmp/create-rpm.sh
+sed "s/\"version\": \"$currentVersion\"/\"version\": \"$NEW_VERSION\"/" npm-shrinkwrap.json        > /tmp/npm-shrinkwrap.json
 
 mv /tmp/package.json              package.json
 mv /tmp/create-rpm.sh             rpm/create-rpm.sh
+mv /tmp/npm-shrinkwrap.json       npm-shrinkwrap.json
 
 
 # Clean the inter-release changes file
