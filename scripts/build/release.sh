@@ -54,7 +54,18 @@ EOF
   exit 1
 }
 
+#
+# Check git status and abort if it is dirty
+#
+function checkGitStatus() {
+  git status |grep "Changes not staged for commit" > /dev/null
+  RESULT=$?
 
+  if [ $RESULT = 0 ]; then
+    echo "There are unstaged changes in your git workspace. Clean them before proceeding with the release"
+    exit 0
+  fi
+}
 
 #
 # Chewcking command line parameters
@@ -81,6 +92,8 @@ export PERSEO_RELEASE=$2
 #
 DATE=$(LANG=C date +"%a %b %d %Y")
 export dateLine="$DATE Daniel Moran <daniel.moranjimenez@telefonica.com> ${NEW_VERSION}"
+
+checkGitStatus
 
 
 # Modify rpm/SPECS/cep.spec only when step to a non-devel release
@@ -157,9 +170,11 @@ echo "new version:     $NEW_VERSION"
 #
 sed "s/\"version\": \"$currentVersion\"/\"version\": \"$NEW_VERSION\"/" package.json        > /tmp/package.json
 sed "s/$currentVersion/$NEW_VERSION/" rpm/create-rpm.sh        > /tmp/create-rpm.sh
+sed "s/\"version\": \"$currentVersion\"/\"version\": \"$NEW_VERSION\"/" npm-shrinkwrap.json        > /tmp/npm-shrinkwrap.json
 
 mv /tmp/package.json              package.json
 mv /tmp/create-rpm.sh             rpm/create-rpm.sh
+mv /tmp/npm-shrinkwrap.json       npm-shrinkwrap.json
 
 
 # Clean the inter-release changes file
