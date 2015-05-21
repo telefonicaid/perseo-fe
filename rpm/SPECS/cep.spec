@@ -160,6 +160,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Thu May 21 2015 Daniel Moran <daniel.moranjimenez@telefonica.com> 0.6.0
+Fix entity's attributes in NSR action (#73)
+Fix #75 (undo #55) Params in updateAction is not an array
+Add auth for update action
+Fix Configuration for no HA (#86)
+Fix Use service/subservice instead of tenant/service (#39)
+Extract params for checkDB to config.js (#6)
+
+
 * Thu Feb 26 2015 Daniel Moran <daniel.moranjimenez@telefonica.com> 0.5.0
 Fiware-Service validation (#29)
 Fiware-ServicePath validation (#32)
