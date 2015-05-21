@@ -190,6 +190,7 @@ then
     git add rpm/SPECS/cep.spec
     git add rpm/create-rpm.sh
     git add package.json
+    git add npm-shrinkwrap.json
     git add CHANGES_NEXT_RELEASE
     git commit -m "ADD Step: $currentVersion -> $NEW_VERSION"
     git push origin develop
