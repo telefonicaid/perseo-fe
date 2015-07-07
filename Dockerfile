@@ -5,9 +5,13 @@ RUN yum update -y && yum install -y wget \
   && yum install -y npm git 
 
 WORKDIR /opt
-RUN git clone https://github.com/telefonicaid/perseo-fe.git && cd perseo-fe && npm install
+RUN git clone https://github.com/telefonicaid/perseo-fe.git && cd perseo-fe && git checkout develop && npm install
 
 EXPOSE 9090
 WORKDIR /opt/perseo-fe
 
-RUN bin/perseo
+ENV PERSEO_MONGO_HOST=mongodb
+ENV PERSEO_CORE_URL=http://corehost:8080
+
+CMD bin/perseo
+
