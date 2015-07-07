@@ -40,13 +40,13 @@ process.on('uncaughtException', function(ex){
 
 function loadConfiguration() {
     var environmentValues = [
-        'ENDPOINT_HOST',
-        'ENDPOINT_PORT',
-        'MONGO_HOST',
-        'CORE_URL',
-        'NEXT_URL',
-        'ORION_URL',
-        'LOG_LEVEL'
+        'PERSEO_ENDPOINT_HOST',
+        'PERSEO_ENDPOINT_PORT',
+        'PERSEO_MONGO_HOST',
+        'PERSEO_CORE_URL',
+        'PERSEO_NEXT_URL',
+        'PERSEO_ORION_URL',
+        'PERSEO_LOG_LEVEL'
     ];
 
     for (var i = 0; i < environmentValues.length; i++) {
@@ -55,28 +55,28 @@ function loadConfiguration() {
         }
     }
 
-    if (process.env.ENDPOINT_HOST) {
-        config.endpoint.host = process.env.ENDPOINT_HOST;
+    if (process.env.PERSEO_ENDPOINT_HOST) {
+        config.endpoint.host = process.env.PERSEO_ENDPOINT_HOST;
     }
-    if (process.env.ENDPOINT_PORT) {
-        config.endpoint.port = process.env.ENDPOINT_PORT;
+    if (process.env.PERSEO_ENDPOINT_PORT) {
+        config.endpoint.port = process.env.PERSEO_ENDPOINT_PORT;
     }
-    if (process.env.MONGO_HOST) {
-        config.mongo.url = 'mongodb://' + process.env.MONGO_HOST + ':27017/cep';
+    if (process.env.PERSEO_MONGO_HOST) {
+        config.mongo.url = 'mongodb://' + process.env.PERSEO_MONGO_HOST + ':27017/cep';
     }
-    if (process.env.CORE_URL) {
-        config.perseoCore.rulesURL = process.env.CORE_URL + '/perseo-core/rules';
-        config.perseoCore.noticesURL = process.env.CORE_URL + '/perseo-core/events';
+    if (process.env.PERSEO_CORE_URL) {
+        config.perseoCore.rulesURL = process.env.PERSEO_CORE_URL + '/perseo-core/rules';
+        config.perseoCore.noticesURL = process.env.PERSEO_CORE_URL + '/perseo-core/events';
     }
-    if (process.env.NEXT_URL) {
-        config.nextCore.rulesURL = process.env.CORE_URL + '/perseo-core/rules';
-        config.nextCore.noticesURL = process.env.CORE_URL + '/perseo-core/events';
+    if (process.env.PERSEO_NEXT_URL) {
+        config.nextCore.rulesURL = process.env.PERSEO_CORE_URL + '/perseo-core/rules';
+        config.nextCore.noticesURL = process.env.PERSEO_CORE_URL + '/perseo-core/events';
     }
-    if (process.env.ORION_URL) {
-        config.orion.URL = process.env.ORION_URL;
+    if (process.env.PERSEO_ORION_URL) {
+        config.orion.URL = process.env.PERSEO_ORION_URL;
     }
-    if (process.env.LOG_LEVEL) {
-        config.logLevel = process.env.LOG_LEVEL;
+    if (process.env.PERSEO_LOG_LEVEL) {
+        config.logLevel = process.env.PERSEO_LOG_LEVEL;
     }
 }
 

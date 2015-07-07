@@ -7,15 +7,16 @@ There are two ways of configuring Perseo CEP:
 ### Environment Variables Configuration
 The following table shows the environment variables available for Perseo configuration:
 
-| Environment variable | Description                            |
-|:-------------------- |:-------------------------------------- |
-| ENDPOINT_HOST        | Host where the CEP will listen.        |
-| ENDPOINT_PORT        | Port where the CEP will listen.        |
-| MONGO_HOST           | Host of the Mongo DB.                  |
-| CORE_URL             | Full URL where Perseo Core is listening (e.g: http://63.34.124.1:8080). |
-| NEXT_URL             | Full URL where Perseo Core replicated node is listening. Same format as above. |
-| ORION_URL            | Full URL of the Orion Context Broker (e.g: http://64.124.28.15:1026).          |
-| LOG_LEVEL            | Log level.         |
+| Environment variable      | Description                            |
+|:------------------------- |:-------------------------------------- |
+| PERSEO_ENDPOINT_HOST      | Host where the CEP will listen.        |
+| PERSEO_ENDPOINT_PORT      | Port where the CEP will listen.        |
+| PERSEO_MONGO_HOST         | Host of the Mongo DB.                  |
+| PERSEO_CORE_URL           | Full URL where Perseo Core is listening (e.g: http://63.34.124.1:8080). |
+| PERSEO_NEXT_URL           | Full URL where Perseo Core replicated node is listening. Same format as above. |
+| PERSEO_ORION_URL          | Full URL of the Orion Context Broker (e.g: http://64.124.28.15:1026).          |
+| PERSEO_LOG_LEVEL    
+      | Log level.         |
 
 ### Basic Configuration
 In order to have perseo running, there are several basic pieces of information to fill:
