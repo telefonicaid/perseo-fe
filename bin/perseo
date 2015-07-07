@@ -63,6 +63,7 @@ function loadConfiguration() {
     }
     if (process.env.PERSEO_MONGO_HOST) {
         config.mongo.url = 'mongodb://' + process.env.PERSEO_MONGO_HOST + ':27017/cep';
+        config.mongo.url = 'mongodb://' + process.env.PERSEO_MONGO_HOST + ':27017/orion';
     }
     if (process.env.PERSEO_CORE_URL) {
         config.perseoCore.rulesURL = process.env.PERSEO_CORE_URL + '/perseo-core/rules';
