@@ -27,6 +27,7 @@
 
 var app = require('../lib/perseo'),
     logger = require('logops'),
+    config = require('../config'),
     context = {op: 'perseo'};
 
 
@@ -36,6 +37,50 @@ process.on('uncaughtException', function(ex){
         process.exit(-1);
     });
 });
+
+function loadConfiguration() {
+    var environmentValues = [
+        'ENDPOINT_HOST',
+        'ENDPOINT_PORT',
+        'MONGO_HOST',
+        'CORE_URL',
+        'NEXT_URL',
+        'ORION_URL',
+        'LOG_LEVEL'
+    ];
+
+    for (var i = 0; i < environmentValues.length; i++) {
+        if (process.env[environmentValues[i]]) {
+            console.log('Changing %s to environment value: %s', environmentValues[i], process.env[environmentValues[i]]);
+        }
+    }
+
+    if (process.env.ENDPOINT_HOST) {
+        config.endpoint.host = process.env.ENDPOINT_HOST;
+    }
+    if (process.env.ENDPOINT_PORT) {
+        config.endpoint.port = process.env.ENDPOINT_PORT;
+    }
+    if (process.env.MONGO_HOST) {
+        config.mongo.url = 'mongodb://' + process.env.MONGO_HOST + ':27017/cep';
+    }
+    if (process.env.CORE_URL) {
+        config.perseoCore.rulesURL = process.env.CORE_URL + '/perseo-core/rules';
+        config.perseoCore.noticesURL = process.env.CORE_URL + '/perseo-core/events';
+    }
+    if (process.env.NEXT_URL) {
+        config.nextCore.rulesURL = process.env.CORE_URL + '/perseo-core/rules';
+        config.nextCore.noticesURL = process.env.CORE_URL + '/perseo-core/events';
+    }
+    if (process.env.ORION_URL) {
+        config.orion.URL = process.env.ORION_URL;
+    }
+    if (process.env.LOG_LEVEL) {
+        config.logLevel = process.env.LOG_LEVEL;
+    }
+}
+
+loadConfiguration();
 
 app.start(function (err) {
         logger.info(context, 'starting perseo');
