@@ -14,7 +14,7 @@ Perseo FE needs some components to be present event to be started. Those compone
 
 * Environment variables, as in the following example:
 ```
-docker run -e "PERSEO_MONGO_HOST=52.26.28.74" -e "PERSEO_CORE_URL=http://52.26.93.210:8080" fiwareiotplatform/perseocore
+docker run -e "PERSEO_MONGO_HOST=127.0.0.1" -e "PERSEO_CORE_URL=http://127.0.0.1:8080" fiwareiotplatform/perseocore
 ```
 
 * Or links to other docker images running in the same docker host, as in the following example:
