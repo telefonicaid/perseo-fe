@@ -7,6 +7,28 @@ The CEP is a standard Node.js app and doesn't require more dependencies than the
 
 A mongoDB 2.4 database should be working and accesible before perseo can be started
 
+### Installation using Docker
+
+The last development version is uploaded as a Docker image to Docker Hub for every PR merged into the `develop` branch.
+Perseo FE needs some components to be present event to be started. Those components can be configured using:
+
+* Environment variables, as in the following example:
+```
+docker run -e "PERSEO_MONGO_HOST=127.0.0.1" -e "PERSEO_CORE_URL=http://127.0.0.1:8080" fiwareiotplatform/perseocore
+```
+
+* Or links to other docker images running in the same docker host, as in the following example:
+```
+docker run --link corehost:corehost --link mongodb:mongodb fiwareiotplatform/perseocore
+```
+
+In order to link other Docker images to the Perso FE image, take into account that it has two requirements:
+
+* A **Mongo DB** instance: the image looks for a Mongo DB instance in the `mongodb` alias (port 27017) when it starts.
+* A **Perseo Core** instance: the instance expects a instance of Perseo Core running in the alias `corehost`, port 8080.
+
+For the full perseo stack to work, both instances should be linked to their appropriate alias.
+
 ### Installation from RPM
 
 This project provides the specs to create the RPM Package for the project, that may (in the future) be installed in a
