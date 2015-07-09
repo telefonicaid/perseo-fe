@@ -22,6 +22,13 @@ docker run -e "PERSEO_MONGO_HOST=127.0.0.1" -e "PERSEO_CORE_URL=http://127.0.0.1
 docker run --link corehost:corehost --link mongodb:mongodb fiwareiotplatform/perseocore
 ```
 
+In order to link other Docker images to the Perso FE image, take into account that it has two requirements:
+
+* A **Mongo DB** instance: the image looks for a Mongo DB instance in the `mongodb` alias (port 27017) when it starts.
+* A **Perseo Core** instance: the instance expects a instance of Perseo Core running in the alias `corehost`, port 8080.
+
+For the full perseo stack to work, both instances should be linked to their appropriate alias.
+
 ### Installation from RPM
 
 This project provides the specs to create the RPM Package for the project, that may (in the future) be installed in a
