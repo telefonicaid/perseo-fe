@@ -161,6 +161,17 @@ It could happen (in theory) that a just got auth token also produce a 401 Not au
 ### HTTP POST action
 Makes an HTTP POST to an URL specified in `url` inside `parameters`, sending a body built from `template`.
 
+```json
+ "action": {
+        "type": "post",
+        "template": "Meter ${Meter} has pression ${Pression}.",
+        "parameters": {
+            "url": "localhost:1111"
+        }
+    }
+```
+
+Note that you can encode a JSON in the `template` field:
 
 ```json
  "action": {
