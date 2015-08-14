@@ -124,7 +124,7 @@ Sends an email to the recipient set in the action parameters, with the body mail
     }
 ```
 
-The `template` field performs [attribute substitution](#string-substitution-syntax).
+The `template` field performs [string substitution](#string-substitution-syntax).
 
 ### update attribute action
 Updates an specified attribute of a given entity (in the Context Broker instance specified in the Perseo configuration). The `parameters` map includes the following fields:
@@ -151,7 +151,7 @@ Updates an specified attribute of a given entity (in the Context Broker instance
 ```
 The `name` parameter cannot take `id` or `type` as a value, as that would refer to the entity's id and the entity's type (which are not updatable) and not to an attribute with any of those names. Trying to create such action will return an error.
 
-The `id`, `type`, `name`, `value`, `ìsPattern` fields perform [attribute substitution](#string-substitution-syntax).
+The `id`, `type`, `name`, `value`, `ìsPattern` fields perform [string substitution](#string-substitution-syntax).
 
 First time an update action using trust token is triggered, Perseo interacts with Keystone to get the temporal auth token corresponding to that trust token. This auth token is cached and used in every new update associated to the same action. Eventually, Perseo can receive a 401 Not Authorized due to auth token expiration. In that case, Perseo interacts again with Keystone to get a fresh auth token, then retries the update that causes the 401 (and the cache is refreshed with the new auth token for next updates).
 
@@ -183,7 +183,7 @@ Note that you can encode a JSON in the `template` field:
     }
 ```
 
-The `template` field performs [attribute substitution](#string-substitution-syntax).
+The `template` field performs [string substitution](#string-substitution-syntax).
 
 ### twitter action
 
@@ -202,5 +202,5 @@ Updates the status of a twitter account, with the text build from the `template`
     }
 ```
 
-The `template` field performs [attribute substitution](#string-substitution-syntax).
+The `template` field performs [string substitution](#string-substitution-syntax).
 
