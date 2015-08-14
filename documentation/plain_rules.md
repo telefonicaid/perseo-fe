@@ -118,7 +118,7 @@ Sends an email to the recipient set in the action parameters, with the body mail
         "template": "Meter ${Meter} has pression ${Pression} (GEN RULE)",
         "parameters": {
             "to": "someone@telefonica.com",
-            "from": "cep@system.org"
+            "from": "cep@system.org",
             "subject": "It's The End Of The World As We Know It (And I Feel Fine)"
         }
     }
