@@ -76,7 +76,21 @@ The `type` field is mandatory and must be one of
 * `post`: make an HTTP POST
 * `twitter`: send a twitter
 
-The actions `sms`, `email`, `post` include a field `template` used to build the body of message/request. This text can include placeholders for attributes of the generated event. That placeholder has the form `${` *attribute* `}` which will be substituted by the value of the event's attribute.  The name of the attribute must be prefixed with "ev__" if no alias in the `select` clause is provided. All alias for simple event attributes or "complex" calculated values can be directly used in the placeholder with their name. Any of the original event attributes can be referred as **ev__** *name* (double underscore), if an alias hasn't been given to them.
+
+### String substitution syntax
+
+Some of the fields of an `action` (see detailed list below) can include a reference to one of the fields of the notification/event. This allows include information as the pression value received, the id of the device, etc. For example, the actions `sms`, `email`, `post` include a field `template` used to build the body of message/request. This text can include placeholders for attributes of the generated event. That placeholder has the form `${X}`, where `X` may be:
+
+* `id` for the id of the entity that triggers the rule.
+* `type` for the type of the entity that triggers the rule
+* Any other value is interpreted as the name of an attribute in the entity which triggers the rule and the placeholder is substituded by the value of that attribute.
+
+All alias for simple event attributes or "complex" calculated values can be directly used in the placeholder with their name. And any of the original event attributes (with the special cases for `id` and `type` meaning entity ID and type, respectively) can be referred too.
+
+This substitution can be used in the the following fields:
+* `template` for `email`, `post`, `sms`, `twitter` actions
+* `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
+
 
 ### SMS action
 
@@ -92,9 +106,11 @@ Sends a SMS to a number set as an action paramter with the body of the message b
 ```
 The field `parameters` include a field `to` with the number to send the message to.
 
+The `template` field performs [attribute substitution](#string-substitution-syntax).
+
 ### email action
 
-Sends an email to the recipient set in the action parameters, with the body mail build from the `template` field. A field `to` in `parameters` sets the recipient and a field `from`sets the sender's email address. Also the subject of the email can be set in the field `subject` in `parameters`. 
+Sends an email to the recipient set in the action parameters, with the body mail build from the `template` field. A field `to` in `parameters` sets the recipient and a field `from`sets the sender's email address. Also the subject of the email can be set in the field `subject` in `parameters`.
 
 ```json
  "action": {
@@ -102,11 +118,13 @@ Sends an email to the recipient set in the action parameters, with the body mail
         "template": "Meter ${Meter} has pression ${Pression} (GEN RULE)",
         "parameters": {
             "to": "someone@telefonica.com",
-            "from": "cep@system.org"
+            "from": "cep@system.org",
             "subject": "It's The End Of The World As We Know It (And I Feel Fine)"
         }
     }
 ```
+
+The `template` field performs [string substitution](#string-substitution-syntax).
 
 ### update attribute action
 Updates an specified attribute of a given entity (in the Context Broker instance specified in the Perseo configuration). The `parameters` map includes the following fields:
@@ -119,11 +137,6 @@ Updates an specified attribute of a given entity (in the Context Broker instance
 * attrType: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is changed).
 * trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context Broker behind a PEP.
 
-The values of these fields can be either literal values or use `${X}` substitution macros (except trust), where `X` may be:
-
-* `id` for the id of the entity that triggers the rule. As example, if we want the entity with "id" `sensor1` to update the entity with "id" `sensor1_friend` we should set the `id` field in `parameters` with the value `"${id}_friend"`
-* `type` for the type of the entity that triggers the rule
-* Any other value is interpreted as the name of an attribute in the entity which triggers the rule and the macro is substituded by the value of that attribute.
 
 ```json
 "action":{
@@ -136,15 +149,17 @@ The values of these fields can be either literal values or use `${X}` substituti
         }
     }
 ```
-The `name` parameter cannot take `id` or `type` as a value. Those values always refer to the entity's id and the entity's type and not to an attribute with any of those names. Trying to create such action will return an error.
+The `name` parameter cannot take `id` or `type` as a value, as that would refer to the entity's id and the entity's type (which are not updatable) and not to an attribute with any of those names. Trying to create such action will return an error.
+
+The `id`, `type`, `name`, `value`, `ìsPattern` fields perform [string substitution](#string-substitution-syntax).
 
 First time an update action using trust token is triggered, Perseo interacts with Keystone to get the temporal auth token corresponding to that trust token. This auth token is cached and used in every new update associated to the same action. Eventually, Perseo can receive a 401 Not Authorized due to auth token expiration. In that case, Perseo interacts again with Keystone to get a fresh auth token, then retries the update that causes the 401 (and the cache is refreshed with the new auth token for next updates).
 
 It could happen (in theory) that a just got auth token also produce a 401 Not authorized, however this would be an abnormal situation: Perseo logs the problem with the update but doesn't try to get a new one from Keystone. Next time Perseo triggers the action, the process may repeat, i.e. first update attemp fails with 401, Perseo requests a fresh auth token to Keystone, the second update attemp fails with 401, Perseo logs the problem and doesn't retry again.
 
+
 ### HTTP POST action
 Makes an HTTP POST to an URL specified in `url` inside `parameters`, sending a body built from `template`.
-
 
 ```json
  "action": {
@@ -155,6 +170,20 @@ Makes an HTTP POST to an URL specified in `url` inside `parameters`, sending a b
         }
     }
 ```
+
+Note that you can encode a JSON in the `template` field:
+
+```json
+ "action": {
+        "type": "post",
+        "template": "{\"meter\":\"${Meter}\", \"pression\": ${Pression}}",
+        "parameters": {
+            "url": "localhost:1111"
+        }
+    }
+```
+
+The `template` field performs [string substitution](#string-substitution-syntax).
 
 ### twitter action
 
@@ -172,3 +201,6 @@ Updates the status of a twitter account, with the text build from the `template`
         }
     }
 ```
+
+The `template` field performs [string substitution](#string-substitution-syntax).
+
