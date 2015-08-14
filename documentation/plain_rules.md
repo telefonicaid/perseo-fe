@@ -164,7 +164,7 @@ Makes an HTTP POST to an URL specified in `url` inside `parameters`, sending a b
 ```json
  "action": {
         "type": "post",
-        "template": "Meter ${Meter} has pression ${Pression}.",
+        "template": "{\"meter\":\"${Meter}\", \"pression\": ${Pression}}",
         "parameters": {
             "url": "localhost:1111"
         }
