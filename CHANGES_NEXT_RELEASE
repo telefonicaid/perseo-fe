@@ -1,1 +1,3 @@
 - Modify Perseo's executable to add environment variable-based configuration.
+- Add string subsitution for more action parameters
+

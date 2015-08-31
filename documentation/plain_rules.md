@@ -106,7 +106,7 @@ Sends a SMS to a number set as an action paramter with the body of the message b
 ```
 The field `parameters` include a field `to` with the number to send the message to.
 
-The `template` field performs [attribute substitution](#string-substitution-syntax).
+The `template` and `to` fields perform [attribute substitution](#string-substitution-syntax).
 
 ### email action
 
@@ -124,7 +124,7 @@ Sends an email to the recipient set in the action parameters, with the body mail
     }
 ```
 
-The `template` field performs [string substitution](#string-substitution-syntax).
+The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax).
 
 ### update attribute action
 Updates an specified attribute of a given entity (in the Context Broker instance specified in the Perseo configuration). The `parameters` map includes the following fields:
@@ -183,7 +183,7 @@ Note that you can encode a JSON in the `template` field:
     }
 ```
 
-The `template` field performs [string substitution](#string-substitution-syntax).
+The `template` and `url` fields perform [string substitution](#string-substitution-syntax).
 
 ### twitter action
 
