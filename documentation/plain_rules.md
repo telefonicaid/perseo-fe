@@ -88,7 +88,10 @@ Some of the fields of an `action` (see detailed list below) can include a refere
 All alias for simple event attributes or "complex" calculated values can be directly used in the placeholder with their name. And any of the original event attributes (with the special cases for `id` and `type` meaning entity ID and type, respectively) can be referred too.
 
 This substitution can be used in the the following fields:
-* `template` for `email`, `post`, `sms`, `twitter` actions
+* `template`, `from`, `to` and `subject` for `email` action
+* `template` for `post` action
+* `template` for `sms` action
+* `template` for `twitter` action
 * `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
 
 
