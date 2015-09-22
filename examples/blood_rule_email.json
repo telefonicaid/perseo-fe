@@ -1,12 +1,13 @@
 {
-   "name":"blood_rule_email",
-   "text":"select *,\"blood_rule_email\" as ruleName, *,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
-   "action":{
-      "type":"email",
-      "template":"Meter ${Meter} has pression ${Pression} (GEN RULE)",
-      "parameters":{
-         "to":"brox@tid.es",
-         "from":"brox@tid.es"
-      }
-   }
+    "name": "blood_rule_email",
+    "text": "select *,\"blood_rule_email\" as ruleName, *,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+    "action": {
+        "type": "email",
+        "template": "Meter ${Meter} has pression ${Pression} (GEN RULE)",
+        "parameters": {
+            "to": "someone@tid.es",
+            "from": "perseo_cep@telefonica.com",
+            "subject": "${Meter} has changed"
+        }
+    }
 }

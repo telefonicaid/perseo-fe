@@ -88,7 +88,10 @@ Some of the fields of an `action` (see detailed list below) can include a refere
 All alias for simple event attributes or "complex" calculated values can be directly used in the placeholder with their name. And any of the original event attributes (with the special cases for `id` and `type` meaning entity ID and type, respectively) can be referred too.
 
 This substitution can be used in the the following fields:
-* `template` for `email`, `post`, `sms`, `twitter` actions
+* `template`, `from`, `to` and `subject` for `email` action
+* `template` for `post` action
+* `template` for `sms` action
+* `template` for `twitter` action
 * `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
 
 
@@ -106,7 +109,7 @@ Sends a SMS to a number set as an action paramter with the body of the message b
 ```
 The field `parameters` include a field `to` with the number to send the message to.
 
-The `template` field performs [attribute substitution](#string-substitution-syntax).
+The `template` and `to` fields perform [attribute substitution](#string-substitution-syntax).
 
 ### email action
 
@@ -124,7 +127,7 @@ Sends an email to the recipient set in the action parameters, with the body mail
     }
 ```
 
-The `template` field performs [string substitution](#string-substitution-syntax).
+The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax).
 
 ### update attribute action
 Updates an specified attribute of a given entity (in the Context Broker instance specified in the Perseo configuration). The `parameters` map includes the following fields:
@@ -183,7 +186,7 @@ Note that you can encode a JSON in the `template` field:
     }
 ```
 
-The `template` field performs [string substitution](#string-substitution-syntax).
+The `template` and `url` fields perform [string substitution](#string-substitution-syntax).
 
 ### twitter action
 
