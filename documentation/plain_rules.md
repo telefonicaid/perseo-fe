@@ -29,7 +29,7 @@ The rule name must consist of the ASCII characters from A to Z, from a to z, dig
 ## EPL text
 The field ```text``` of the rule must be a valid EPL statement and additionally must honor several restrictions to match expectations of perseo and perseo-core.
 
-EPL is documented in [Esper web] (http://esper.codehaus.org/esper-4.7.0/doc/reference/en-US/html_single/index.html#epl_clauses)
+EPL is documented in [Esper web] (http://www.espertech.com/esper/documentation.php)
 
 A EPL statement to use with perseo could be:
 
