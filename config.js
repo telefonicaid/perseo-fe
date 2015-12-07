@@ -99,8 +99,16 @@ config.nextCore = {
  * SMTP endpoint options
  */
 config.smtp = {
-    port : 25,
-    host : 'smtpserver'
+    port: 25,
+    host: 'smtpserver',
+    secure: false
+    /*
+     ,
+     auth: {
+     user: 'abc',
+     pass: 'xyz'
+     }
+    */
 };
 
 /**

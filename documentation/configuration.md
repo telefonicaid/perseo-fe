@@ -25,6 +25,9 @@ In order to have perseo running, there are several basic pieces of information t
 * `config.perseoCore.interval`: interval for refreshing rules at core rule engine (milliseconds).
 * `config.smtp.port`: port for sending email.
 * `config.smtp.host`:  host for sending email.
+* `config.smtp.secure`:  defines if the connection should use SSL (if true) or not (if false).
+* `config.smtp.auth.user`:  authentication data, the username.
+* `config.smtp.auth.pass`:  authentication data, the password for the user.
 * `config.sms.URL`: URL for sending SMSs.
 * `config.sms.from`: Field `from` for the outgoing SMSs. Required by the SMPP Adapter.
 * `config.sms.API_KEY`: API KEY for sending SMSs, if necessary. Only for the SMPP Adapter simulator.
