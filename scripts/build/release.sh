@@ -225,6 +225,7 @@ then
 
     git add rpm/create-rpm.sh
     git add package.json
+    git add npm-shrinkwrap.json
     git commit -m "ADD Prepare new version numbers for develop"
     git push origin develop
 
