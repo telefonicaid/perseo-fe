@@ -165,30 +165,27 @@ rm -rf $RPM_BUILD_ROOT
 - Add string subsitution for more action parameters (#114)
 - Add configuration for secure SMTP servers (#122)
 
-
 * Thu May 21 2015 Daniel Moran <daniel.moranjimenez@telefonica.com> 0.6.0
-Fix entity's attributes in NSR action (#73)
-Fix #75 (undo #55) Params in updateAction is not an array
-Add auth for update action
-Fix Configuration for no HA (#86)
-Fix Use service/subservice instead of tenant/service (#39)
-Extract params for checkDB to config.js (#6)
-
+- Fix entity's attributes in NSR action (#73)
+- Fix #75 (undo #55) Params in updateAction is not an array
+- Add auth for update action
+- Fix Configuration for no HA (#86)
+- Fix Use service/subservice instead of tenant/service (#39)
+- Extract params for checkDB to config.js (#6)
 
 * Thu Feb 26 2015 Daniel Moran <daniel.moranjimenez@telefonica.com> 0.5.0
-Fiware-Service validation (#29)
-Fiware-ServicePath validation (#32)
-Change HA model for execution of actions
-Fix error if parameter "type" exist in Update entity action (#30)
-Added 'twitter' action
-Changed 'update' action, any entity
-Do not allow 'id' and 'type' as attribute names
-Change parameter for POST action from 'URL' to 'url'
-Fix error in VR for updateAction (#55)
-Fix validation rule name (#44, #15)
-Fix negative and zero check intervals for NSR (#53)
-Fix missing 'from' in SMS (#67)
-
+- Fiware-Service validation (#29)
+- Fiware-ServicePath validation (#32)
+- Change HA model for execution of actions
+- Fix error if parameter "type" exist in Update entity action (#30)
+- Added 'twitter' action
+- Changed 'update' action, any entity
+- Do not allow 'id' and 'type' as attribute names
+- Change parameter for POST action from 'URL' to 'url'
+- Fix error in VR for updateAction (#55)
+- Fix validation rule name (#44, #15)
+- Fix negative and zero check intervals for NSR (#53)
+- Fix missing 'from' in SMS (#67)
 
 * Mon Jan 19 2015 Daniel Moran <daniel.moranjimenez@telefonica.com> 0.4.1
 - Fix: using logops as logging library
