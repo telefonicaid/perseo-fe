@@ -160,6 +160,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Wed Dec 09 2015 Daniel Moran <daniel.moranjimenez@telefonica.com> 0.7.0
+- Modify Perseo's executable to add environment variable-based configuration.
+- Add string subsitution for more action parameters (#114)
+- Add configuration for secure SMTP servers (#122)
+
+
 * Thu May 21 2015 Daniel Moran <daniel.moranjimenez@telefonica.com> 0.6.0
 Fix entity's attributes in NSR action (#73)
 Fix #75 (undo #55) Params in updateAction is not an array
