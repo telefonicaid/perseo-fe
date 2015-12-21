@@ -189,7 +189,9 @@ describe('Actions', function() {
 
         it('should update execution time when an action with interval has been executed', function(done) {
             var rule = utilsT.loadExample('./test/data/good_vrs/time_card.json'),
-                action = utilsT.loadExample('./test/data/good_actions/action_sms.json');
+                action = utilsT.loadExample('./test/data/good_actions/action_sms.json'),
+                date = new Date();
+            action.ev.id += date.getTime();
             utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
             async.series([
                 function(callback) {
@@ -222,7 +224,9 @@ describe('Actions', function() {
        it('should not execute an action when has been executed too recently', function(done) {
             var rule = utilsT.loadExample('./test/data/good_vrs/time_card.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_sms.json'),
-                lastTime = 0;
+                lastTime = 0,
+                date = new Date();
+            action.ev.id += date.getTime();
             utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
             async.series([
                 function(callback) {

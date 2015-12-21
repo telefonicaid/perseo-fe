@@ -40,7 +40,9 @@ describe('Auth', function() {
     describe('#UpdateAction()', function() {
         it('should return ok with using a trust token', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update_trust.json'),
-                action = utilsT.loadExample('./test/data/good_actions/action_update_trust.json');
+                action = utilsT.loadExample('./test/data/good_actions/action_update_trust.json'),
+                date = new Date();
+            action.ev.id += date.getTime();
             utilsT.getConfig().authentication.host = 'localhost';
             utilsT.getConfig().authentication.port = utilsT.fakeHttpServerPort;
             utilsT.getConfig().orion.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
