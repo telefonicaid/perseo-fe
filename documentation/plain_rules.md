@@ -64,7 +64,8 @@ The action must be provided in the ```action``` field of rule. An example:
          "name":"abnormal",
          "value":"true",
          "type":"boolean"
-      }
+      },
+      "interval" : "30e3"
    }
 
 ```
@@ -76,6 +77,11 @@ The `type` field is mandatory and must be one of
 * `post`: make an HTTP POST
 * `twitter`: send a twitter
 
+An action can *optionally* have a field `interval` for limiting the frequency of the action execution (for the rule and
+entity which fired it). The value is expressed in milliseconds and is the minimum period between executions. Once the action 
+is executed _successfully_, it won't be executed again until that period has elapsed. All the request from core to execute
+it are silently discarded. This way, the rate of executions for an entity and rule can be limited. (Strictly, the minimum
+time between executions)
 
 ### String substitution syntax
 
