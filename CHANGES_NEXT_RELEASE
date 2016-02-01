@@ -1,1 +1,3 @@
 - Fix: serialize actions execution
+- Fix: Use current orion db model for no-sigal rules (#128)
+
