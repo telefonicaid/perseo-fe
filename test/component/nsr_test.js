@@ -40,19 +40,29 @@ describe('Entity', function() {
 
     describe('#alertFunc()', function() {
         var entities = [
-                {_id: {id: 'eA', servicePath: DEFAULT_SUBSERVICE, type: 'type e1'}, attrs: [
-                    {name: 'at', value: 1, modDate: 0},
-                    {name: 'other', value: 'this is a value', modDate: 0}
-                ]},
-                {_id: {id: 'eB', servicePath: DEFAULT_SUBSERVICE, type: 'type e2'}, attrs: [
-                    {name: 'at', value: 2, modDate: Date.now() / 1000 - 30 * 60}
-                ]},
-                {_id: {id: 'eC', servicePath: DEFAULT_SUBSERVICE, type: 'type e3'}, attrs: [
-                    {name: 'at', value: 3, modDate: -1}
-                ]}
+                {
+                    _id: {id: 'eA', servicePath: DEFAULT_SUBSERVICE, type: 'type e1'},
+                    attrs: {
+                        'at': {value: 1, modDate: 0},
+                        'other': {value: 'this is a value', modDate: 0}
+                    }
+                },
+                {
+                    _id: {id: 'eB', servicePath: DEFAULT_SUBSERVICE, type: 'type e2'},
+                    attrs: {
+                        'at': {value: 2, modDate: Date.now() / 1000 - 30 * 60}
+                    }
+                },
+                {
+                    _id: {id: 'eC', servicePath: DEFAULT_SUBSERVICE, type: 'type e3'},
+                    attrs: {
+                        'at': {value: 3, modDate: -1}
+                    }
+                }
             ],
             checkInterval = 1,
             rule = utilsT.loadExample('./test/data/no_signal/generic_nonsignal.json');
+
         utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
         this.timeout(2 * checkInterval * 60e3);
         it('should return silent entities', function(done) {
