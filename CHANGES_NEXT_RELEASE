@@ -1,3 +1,4 @@
 - Fix: serialize actions execution
 - Fix: Use current orion db model for no-sigal rules (#128)
+- Add: Change log level at run-time with PUT (#131)
 
