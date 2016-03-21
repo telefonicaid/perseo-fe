@@ -27,6 +27,13 @@ time=2014-12-16T12:01:46.487Z | lvl=ERROR | corr=62d2f662-37de-4dcf-ba02-0136425
 
 Logs for errors can show additional info in the message, giving a hint of the root cause of the problem (`ECONNREFUSED`,`ENOTFOUND`, `ECONNRESET`, ...)
 
+The log level can be changed at run-time, with an HTTP PUT request
+
+```
+ curl --request PUT <host>:<port>/admin/log?level=<FATAL|ERROR|WARNING|WARN|INFO|DEBUG>
+ ```
+
+
 # Alarms
 
 Alarm levels
