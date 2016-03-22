@@ -50,3 +50,9 @@ CRUD for Visual Rules. Originally detailed in [DCA documentation](https://colabo
 | Method | Path | Description|
 | ------ |:-----|-----------|
 | POST   | /version | Get version of perseo|
+
+### Log level
+| Method | Path | Description|
+| ------ |:-----|-----------|
+| PUT   | /admin/log?level={level} | Set log level of perseo|
+

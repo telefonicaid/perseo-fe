@@ -108,6 +108,11 @@ function GetVersion(callback) {
         config.endpoint.port, config.endpoint.versionPath);
     commonRequest('get', url, null, callback);
 }
+function PutLogLevel(level, callback) {
+    var url = util.format('http://%s:%s%s?level=%s', config.endpoint.host,
+        config.endpoint.port, config.endpoint.logPath, level);
+    commonRequest('put', url, null, callback);
+}
 
 module.exports.PostVR = PostVR;
 module.exports.DeleteVR = DeleteVR;
@@ -125,3 +130,5 @@ module.exports.PostNotice = PostNotice;
 module.exports.PostAction = PostAction;
 
 module.exports.GetVersion = GetVersion;
+
+module.exports.PutLogLevel = PutLogLevel;
