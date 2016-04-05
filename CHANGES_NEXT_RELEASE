@@ -1,4 +1,6 @@
 - Fix: serialize actions execution
-- Fix: Use current orion db model for no-sigal rules (#128)
+- Fix: Use current orion db model for no-signal rules (#128)
 - Add: Change log level at run-time with PUT (#131)
+- Add: Use srv and subsrv in log traces (#132)
+- Add: Use 'fiware-correlator' instead of 'unica-correlator' (#133)
 
