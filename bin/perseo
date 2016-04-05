@@ -30,6 +30,7 @@ var app = require('../lib/perseo'),
     config = require('../config'),
     context = {op: 'perseo'};
 
+logger.format = logger.formatters.pipe;
 
 process.on('uncaughtException', function(ex){
     logger.fatal(context, 'uncaughtException: %s', ex.message || ex , ex.stack && ex.stack.split('\n').join(','));
