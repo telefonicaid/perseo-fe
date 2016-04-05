@@ -24,8 +24,10 @@
 var async = require('async'),
     app = require('../../lib/perseo'),
     fakeServer,
-    utilsT = require('../utils/utilsT');
+    utilsT = require('../utils/utilsT'),
+    logger = require('logops');
 
+logger.format = logger.formatters.pipe;
 function commonBeforeEach(done) {
     utilsT.configTest();
     utilsT.setServerCallback(null);
