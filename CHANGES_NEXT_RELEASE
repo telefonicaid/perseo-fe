@@ -3,4 +3,5 @@
 - Add: Change log level at run-time with PUT (#131)
 - Add: Use srv and subsrv in log traces (#132)
 - Add: Use 'fiware-correlator' instead of 'unica-correlator' (#133)
+- Fix: Bug in update action when origin entity does not have type (#136)
 
