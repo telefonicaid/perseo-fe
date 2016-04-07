@@ -48,13 +48,13 @@ describe('Entity', function() {
                     }
                 },
                 {
-                    _id: {id: 'eB', servicePath: DEFAULT_SUBSERVICE, type: 'type e2'},
+                    _id: {id: 'eB', servicePath: DEFAULT_SUBSERVICE, type: ''},
                     attrs: {
                         'at': {value: 2, modDate: Date.now() / 1000 - 30 * 60}
                     }
                 },
                 {
-                    _id: {id: 'eC', servicePath: DEFAULT_SUBSERVICE, type: 'type e3'},
+                    _id: {id: 'eC', servicePath: DEFAULT_SUBSERVICE},
                     attrs: {
                         'at': {value: 3, modDate: -1}
                     }

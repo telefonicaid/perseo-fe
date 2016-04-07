@@ -184,6 +184,31 @@ describe('AxnParams', function() {
             should.equal(options.isPattern, 'false'); // default value
             should.equal(options.attrType, 'ATTRTYPE');
         });
+        it('should not use type if not specified and not in event', function() {
+            /*
+                Some entities do not have type. To update the same origin
+                entity, 'type' field should not be propagated to Context Broker.
+                If the action does not include an explicit parameter for 'type'
+                and the incoming event has not 'type' neither, options should
+                not include a 'type'
+             */
+            var event = {id: 'ID', x: 'X'},
+                action = {
+                    parameters: {
+                        name: 'NAME',
+                        value: 'VALUE',
+                        attrType: '${x}'
+                    }
+                },
+                options = updateAction.buildUpdateOptions(action, event);
+
+            should.equal(options.id, 'ID'); // default value
+            should.not.exists(options.type); // not in event
+            should.equal(options.name, 'NAME');
+            should.equal(options.value, 'VALUE');
+            should.equal(options.isPattern, 'false'); // default value
+            should.equal(options.attrType, 'X');
+        });
     });
 });
 
