@@ -23,7 +23,7 @@
 # Bash lib to know the RPM version and revision from a Github repository
 # Call method get_rpm_version_string to obtain them for rpmbuild
 
-#shopt -s extglob
+shopt -s extglob
 
 get_branch()
 {
