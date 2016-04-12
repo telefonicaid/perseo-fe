@@ -23,7 +23,11 @@
 # Bash lib to know the RPM version and revision from a Github repository
 # Call method get_rpm_version_string to obtain them for rpmbuild
 
-shopt -s extglob
+if [[ $(ps -hp  $$ | grep bash) ]]; then
+  shopt -s extglob
+elif [[ $(ps -hp  $$ | grep zsh) ]]; then
+  setopt kshglob
+fi
 
 get_branch()
 {
@@ -48,7 +52,7 @@ get_version_string()
     case $(get_branch_type) in
         stable)
            # If we are on stable branch get last tag as the version, but transform to x.x.x-x-SHA1
-           describe_tags="$(git describe --tags --long  --match "[0-9*].[0-9*].[0-9*]" 2>/dev/null)"
+           describe_tags="$(git describe --tags --long  --match "[[:digit:]]*.[[:digit:]]*.[[:digit:]]*" 2>/dev/null)"
            version="${describe_tags%-*-*}"
            echo "${version%.*}-${version#*.*.*.}-$(git log --pretty=format:'%h' -1)"
         ;;
@@ -56,7 +60,7 @@ get_version_string()
           ## If we are in develop use the total count of commits of the repo
           total_commit_number=$(git rev-list --all --count)
           short_hash=$(git rev-parse --short HEAD)
-          version="$(git describe --tags --long  --match "[0-9*].[0-9*].[0-9*]" 2>/dev/null)"
+          version="$(git describe --tags --long  --match "[[:digit:]]*.[[:digit:]]*.[[:digit:]]*" 2>/dev/null)"
           echo "${version%-*-*}-${total_commit_number}-${short_hash}"
         ;;
         release)
@@ -68,7 +72,7 @@ get_version_string()
         ;;
         other)
             ## We are in detached mode, use the last x-y-z tag
-            version="$(git describe --tags --long  --match "[0-9*].[0-9*].[0-9*]" 2>/dev/null)"
+            version="$(git describe --tags --long  --match "[[:digit:]]*.[[:digit:]]*.[[:digit:]]*" 2>/dev/null)"
             echo "${version%-*-*}"
         ;;
         *)
