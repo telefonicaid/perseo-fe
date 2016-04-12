@@ -72,7 +72,7 @@ get_version_string()
           describe_tags="$(git describe --tags --long  --match ${branch_name} 2>/dev/null)"
           version="${describe_tags%-*-*}"
           version="${version%KO}"
-          release=${describe_tags#*.*.*.}
+          release=${describe_tags#*.*.*-}
           echo "${version}-${release}"
         ;;
         other)
