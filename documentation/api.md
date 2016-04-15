@@ -6,7 +6,7 @@ A description of "plain"" rules can be found at [plain rules](plain_rules.md).
 
 Visual Rules are intended to be used by the Portal exclusively, until a new format is developed which will replace the old format eventually. So, basically, the DCA's documentation is the reference.
 
-Notices/notifications follow the format defined in Orion (Context Broker) for "notify" actions. [Context subscrioptions](https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/Publish/Subscribe_Broker_-_Orion_Context_Broker_-_User_and_Programmers_Guide#Context_subscriptions)
+Notices/notifications follow the format defined in Orion (Context Broker) for "notify" actions. [Context subscriptions](https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/Publish/Subscribe_Broker_-_Orion_Context_Broker_-_User_and_Programmers_Guide#Context_subscriptions)
 
 
 ## API
