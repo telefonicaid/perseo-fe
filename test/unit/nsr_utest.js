@@ -63,6 +63,53 @@ describe('noSignal', function() {
                 rule.nosignal.checkInterval * noSignal.getIntervalUnit());
         });
     });
+    describe('#GetNSArrRule()', function() {
+        it('should get an existing rule', function() {
+            var gotNSRule;
+            rule.name = 'got rule';
+            rule.nosignal.checkInterval = '2';
+            should.notEqual(noSignal.AddNSRule(rule.service, rule.subservice, rule.name, rule.nosignal), 0);
+            gotNSRule = noSignal.GetNSArrRule(rule.service, rule.subservice, rule.name);
+            should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal),
+                gotNSRule);
+        });
+
+    });
+
+    describe('#refreshAll()', function() {
+        it('should add a new rule', function() {
+            var insertedRule;
+            rule.nosignal.checkInterval = '12';
+            rule.name = 'rule to add';
+            noSignal.RefreshAllRules([rule]);
+            insertedRule = noSignal.GetNSArrRule(rule.service, rule.subservice, rule.name);
+            should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal),
+                insertedRule);
+        });
+        it('should delete a missing rule', function() {
+            var deletedRule;
+            rule.nosignal.checkInterval = '12';
+            rule.name = 'rule to delete';
+            //First inserted
+            noSignal.RefreshAllRules([rule]);
+            // remove it  by refreshing
+            noSignal.RefreshAllRules([]);
+            deletedRule = noSignal.GetNSArrRule(rule.service, rule.subservice, rule.name);
+           should.not.exist(deletedRule);
+        });
+        it('should update a changed rule', function() {
+            var updatedRule;
+            rule.name = 'rule to update';
+            rule.nosignal.checkInterval = '12';
+            //First inserted
+            noSignal.RefreshAllRules([rule]);
+            rule.nosignal.checkInterval = '24';
+            noSignal.RefreshAllRules([rule]);
+            updatedRule = noSignal.GetNSArrRule(rule.service, rule.subservice, rule.name);
+            should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal),
+                updatedRule);
+        });
+    });
 });
 
 
