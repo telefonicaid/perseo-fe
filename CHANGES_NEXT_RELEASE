@@ -6,4 +6,6 @@
 - Fix: Bug in update action when origin entity does not have type (#136)
 - Fix: Verify checkInterval is valid even if coming from DB (#140)
 - Fix: refreshing deleted no-signal rules (regular rules refreshing after deletion was already working) (#141)
+- Change: do not lower subservice taken from header (#146)
+
 
