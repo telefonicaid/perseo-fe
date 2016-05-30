@@ -7,5 +7,5 @@
 - Fix: Verify checkInterval is valid even if coming from DB (#140)
 - Fix: refreshing deleted no-signal rules (regular rules refreshing after deletion was already working) (#141)
 - Change: do not lower subservice taken from header (#146)
-
+- Fix: insert service/subservice into core events, taking them from header
 
