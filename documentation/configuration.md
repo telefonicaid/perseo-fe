@@ -16,6 +16,15 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_NEXT_URL           | Full URL where Perseo Core replicated node is listening. Same format as above. |
 | PERSEO_ORION_URL          | Full URL of the Orion Context Broker (e.g: http://64.124.28.15:1026).          |
 | PERSEO_LOG_LEVEL          | Log level.         |
+| PERSEO_SMTP_HOST          | Host of the SMTP server |
+| PERSEO_SMTP_PORT          | Port of the SMTP serber |
+| PERSEO_SMTP_SECURE        | `true` if SSL should be used with the SMTP server |
+| PERSEO_SMTP_AUTH_USER     | Authentication data, the username |
+| PERSEO_SMTP_AUTH_PASS     | Authentication data, the password for the user |
+| PERSEO_SMS_URL            | URL for sending SMSs (SMPP Adapter) |
+| PERSEO_SMS_API_KEY        | API KEY for sending SMSs, if necessary. Only for the SMPP Adapter simulator |
+| PERSEO_SMS_API_SECRET     | API SECRET for sending SMSs, if necessary. Only for the SMPP Adapter simulator |
+| PERSEO_SMS_FROM           | Field `from` for the outgoing SMSs. Required by the SMPP Adapter |
 
 ### Basic Configuration
 In order to have perseo running, there are several basic pieces of information to fill:
