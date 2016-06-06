@@ -80,6 +80,25 @@ function loadConfiguration() {
     if (process.env.PERSEO_LOG_LEVEL) {
         config.logLevel = process.env.PERSEO_LOG_LEVEL;
     }
+
+    config.smtp = config.smtp || {};
+    config.smtp.port = process.env.PERSEO_SMTP_PORT || config.smtp.port;
+    config.smtp.host = process.env.PERSEO_SMTP_HOST || config.smtp.host;
+    if (process.env.PERSEO_SMTP_SECURE === 'true') {
+        config.smtp.secure = true;
+        config.smtp.auth = config.smtp.auth || {};
+        config.smtp.auth.user = process.env.PERSEO_SMTP_AUTH_USER || config.smtp.auth.user;
+        config.smtp.auth.pass = process.env.PERSEO_SMTP_AUTH_PASS || config.smtp.auth.pass;
+    }
+    else if (process.env.PERSEO_SMTP_SECURE === 'false') {
+        config.smtp.secure = false;
+        delete config.smtp.auth;
+    }
+    config.sms = config.sms || {};
+    config.sms.URL = process.env.PERSEO_SMS_URL || config.sms.URL;
+    config.sms.API_KEY = process.env.PERSEO_SMS_API_KEY || config.sms.API_KEY;
+    config.sms.API_SECRET = process.env.PERSEO_SMS_API_SECRET || config.sms.API_SECRET;
+    config.sms.from = process.env.PERSEO_SMS_FROM || config.sms.from;
 }
 
 loadConfiguration();
