@@ -9,5 +9,6 @@
 - Change: do not lower subservice taken from header (#146)
 - Fix: insert service/subservice into core events, taking them from header
 - Change: make subject optional for email action
+- Add: Take configuration for environment variables for STMP y SMPP Adapter
 
 
