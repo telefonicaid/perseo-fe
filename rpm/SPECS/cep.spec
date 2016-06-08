@@ -160,6 +160,22 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Wed Jun 08 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.0.0
+- Fix: serialize actions execution
+- Fix: Use current orion db model for no-signal rules (#128)
+- Add: Change log level at run-time with PUT (#131)
+- Add: Use srv and subsrv in log traces (#132)
+- Add: Use 'fiware-correlator' instead of 'unica-correlator' (#133)
+- Fix: Bug in update action when origin entity does not have type (#136)
+- Fix: Verify checkInterval is valid even if coming from DB (#140)
+- Fix: refreshing deleted no-signal rules (regular rules refreshing after deletion was already working) (#141)
+- Change: do not lower subservice taken from header (#146)
+- Fix: insert service/subservice into core events, taking them from header
+- Change: make subject optional for email action
+- Add: Take configuration for environment variables for STMP y SMPP Adapter (#153)
+
+
+
 * Wed Dec 09 2015 Daniel Moran <daniel.moranjimenez@telefonica.com> 0.7.0
 - Modify Perseo's executable to add environment variable-based configuration.
 - Add string subsitution for more action parameters (#114)
