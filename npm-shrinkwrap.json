@@ -13,12 +13,12 @@
       "resolved": "https://registry.npmjs.org/body-parser/-/body-parser-1.10.1.tgz",
       "dependencies": {
         "bytes": {
-          "version": "1.0.0-next",
+          "version": "1.0.0",
           "from": "https://registry.npmjs.org/bytes/-/bytes-1.0.0.tgz",
           "resolved": "https://registry.npmjs.org/bytes/-/bytes-1.0.0.tgz"
         },
         "depd": {
-          "version": "1.0.0-next",
+          "version": "1.0.0",
           "from": "depd@1.0.0",
           "resolved": "https://registry.npmjs.org/depd/-/depd-1.0.0.tgz"
         },
@@ -139,7 +139,7 @@
           }
         },
         "depd": {
-          "version": "1.0.0-next",
+          "version": "1.0.0",
           "from": "depd@1.0.0",
           "resolved": "https://registry.npmjs.org/depd/-/depd-1.0.0.tgz"
         },
@@ -288,7 +288,7 @@
           }
         },
         "vary": {
-          "version": "1.0.0-next",
+          "version": "1.0.0",
           "from": "vary@1.0.0",
           "resolved": "https://registry.npmjs.org/vary/-/vary-1.0.0.tgz"
         },
@@ -303,7 +303,7 @@
           "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-0.0.2.tgz"
         },
         "utils-merge": {
-          "version": "1.0.0-next",
+          "version": "1.0.0",
           "from": "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.0.tgz",
           "resolved": "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.0.tgz"
         }
@@ -501,7 +501,7 @@
           }
         },
         "nodemailer-direct-transport": {
-          "version": "1.0.0-next",
+          "version": "1.0.0",
           "from": "https://registry.npmjs.org/nodemailer-direct-transport/-/nodemailer-direct-transport-1.0.0.tgz",
           "resolved": "https://registry.npmjs.org/nodemailer-direct-transport/-/nodemailer-direct-transport-1.0.0.tgz",
           "dependencies": {
