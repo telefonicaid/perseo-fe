@@ -51,6 +51,7 @@ perseo_start()
     if [[ -x ${EXECUTABLE} ]]; then
         cd $PROXY_PATH
         su $PROXY_USER -c "cd $PROXY_PATH; nohup ${EXECUTABLE} &>> $LOG_PATH & echo \$! > $PIDFILE"
+        chmod 644 $PIDFILE
         echo "Success"
     else
         printf "%s\n" "Fail - missing ${EXECUTABLE} executable"
