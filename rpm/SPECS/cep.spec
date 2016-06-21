@@ -160,6 +160,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue Jun 21 2016 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.0.1
+- Fix: modified the permissions of the PID file to be readable by third party SW
+
 * Wed Jun 08 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.0.0
 - Fix: serialize actions execution
 - Fix: Use current orion db model for no-signal rules (#128)
