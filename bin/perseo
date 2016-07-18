@@ -47,7 +47,19 @@ function loadConfiguration() {
         'PERSEO_CORE_URL',
         'PERSEO_NEXT_URL',
         'PERSEO_ORION_URL',
-        'PERSEO_LOG_LEVEL'
+        'PERSEO_LOG_LEVEL',
+        'PERSEO_SMTP_PORT',
+        'PERSEO_SMTP_HOST',
+        'PERSEO_SMTP_SECURE',
+        'PERSEO_SMTP_AUTH_USER',
+        'PERSEO_SMTP_AUTH_PASS',
+        'PERSEO_SMS_URL',
+        'PERSEO_SMS_API_KEY',
+        'PERSEO_SMS_API_SECRET',
+        'PERSEO_SMS_FROM',
+        'PERSEO_NOTICES_PATH',
+        'PERSEO_RULES_PATH'
+
     ];
 
     for (var i = 0; i < environmentValues.length; i++) {
@@ -99,6 +111,9 @@ function loadConfiguration() {
     config.sms.API_KEY = process.env.PERSEO_SMS_API_KEY || config.sms.API_KEY;
     config.sms.API_SECRET = process.env.PERSEO_SMS_API_SECRET || config.sms.API_SECRET;
     config.sms.from = process.env.PERSEO_SMS_FROM || config.sms.from;
+
+    config.endpoint.noticesPath = process.env.PERSEO_NOTICES_PATH || config.endpoint.noticesPath;
+    config.endpoint.rulesPath = process.env.PERSEO_RULES_PATH || config.endpoint.rulesPath;
 }
 
 loadConfiguration();
