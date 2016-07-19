@@ -1,3 +1,1 @@
-- Fix: modified the permissions of the PID file to be readable by third party SW
 - Add: Allow notices and rules paths to be configured by environment variables (issue #161)
-
