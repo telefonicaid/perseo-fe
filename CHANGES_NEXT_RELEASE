@@ -1,2 +1,0 @@
-- Add: Allow notices and rules paths to be configured by environment variables (issue #161)
-

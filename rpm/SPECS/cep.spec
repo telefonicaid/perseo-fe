@@ -160,6 +160,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue Jul 19 2016 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.0.2
+- Add: Allow notices and rules paths to be configured by environment variables (#161)
+
 * Tue Jun 21 2016 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.0.1
 - Fix: modified the permissions of the PID file to be readable by third party SW
 
