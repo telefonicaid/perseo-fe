@@ -27,8 +27,9 @@
 
 var app = require('../lib/perseo'),
     logger = require('logops'),
+    constants = require('../lib/constants'),
     config = require('../config'),
-    context = {op: 'perseo'};
+    context = {op: 'perseo', comp: constants.COMPONENT_NAME};
 
 logger.format = logger.formatters.pipe;
 
