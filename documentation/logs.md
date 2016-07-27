@@ -16,6 +16,7 @@ With `ERROR` level, alarms could be raised but not ceased.
 Each log line contains several fields of the form *name*`=` *value*, separated by `|`
 * `time` time of the log
 * `lvl` log level
+* `from` IP from X-Real-IP header field or client's IP if missing
 * `corr` correlator from the incoming request that caused the current transaction. It allows trace a global operation through several systems. If not present as field header in the incoming request, the internal transaction id will be used.
 * `trans` internal transaction id
 * `op`  description of the operation being done. Generally, the path of the URL invoked.
