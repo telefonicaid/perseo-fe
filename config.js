@@ -91,8 +91,10 @@ config.perseoCore = {
  * NEXT EPL core options (with HA)
  */
 config.nextCore = {
+    /*
     rulesURL : 'http://next-core:8080/perseo-core/rules',
     noticesURL : 'http://next-core:8080/perseo-core/events'
+    */
 };
 
 
