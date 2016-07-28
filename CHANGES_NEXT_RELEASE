@@ -3,4 +3,5 @@
 - Fix: align and fix log traces, add comp field (issue #166)
 - Add: add 'from' field in log traces (issue #166)
 - Add: GET /admin/log  (issue #169)
-
+- Fix: env var for next core bug (issue #171)
+- Change: default value for next core to none (issue #172)
