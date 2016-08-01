@@ -34,7 +34,7 @@ describe('LogLevel', function() {
 
     describe('#PutLoglevel()', function() {
         it('should return ok for  valid log levels', function(done) {
-            var levels = ['FATAL', 'ERROR', 'WARN', 'WARNING', 'INFO', 'DEBUG'];
+            var levels = ['FATAL', 'ERROR', 'WARN', 'INFO', 'DEBUG'];
             async.eachSeries(levels, function(level, callback) {
                 clients.PutLogLevel(level, function(error, data) {
                     should.not.exist(error);
@@ -61,8 +61,28 @@ describe('LogLevel', function() {
                 done();
             });
         });
+    });
+    describe('#GetLoglevel()', function() {
+        it('should return the current log level', function(done) {
+            var levels = ['FATAL', 'ERROR', 'WARN', 'INFO', 'DEBUG'];
+            async.eachSeries(levels, function(level, callback) {
+                clients.PutLogLevel(level, function(error, data) {
+                    should.not.exist(error);
+                    data.should.have.property('statusCode', 200);
+                    clients.GetLogLevel(function(error, response) {
+                        should.not.exist(error);
+                        response.should.have.property('statusCode', 200);
+                        response.should.have.body;
+                        response.body.should.have.property('level', level);
+                        callback(null);
+                    });
 
-
+                });
+            }, function(error) {
+                should.not.exist(error);
+                done();
+            });
+        });
     });
 });
 

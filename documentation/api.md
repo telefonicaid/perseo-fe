@@ -55,4 +55,4 @@ CRUD for Visual Rules. Originally detailed in [DCA documentation](https://colabo
 | Method | Path | Description|
 | ------ |:-----|-----------|
 | PUT   | /admin/log?level={level} | Set log level of perseo|
-
+| GET   | /admin/log | Get the current log level of perseo|

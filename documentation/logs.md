@@ -31,7 +31,13 @@ Logs for errors can show additional info in the message, giving a hint of the ro
 The log level can be changed at run-time, with an HTTP PUT request
 
 ```
- curl --request PUT <host>:<port>/admin/log?level=<FATAL|ERROR|WARNING|WARN|INFO|DEBUG>
+ curl --request PUT <host>:<port>/admin/log?level=<FATAL|ERROR|WARN|INFO|DEBUG>
+ ```
+
+The log level can be retrieved at run-time, with an HTTP GET request
+
+```
+ curl --request GET <host>:<port>/admin/log
  ```
 
 
