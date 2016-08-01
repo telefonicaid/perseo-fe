@@ -2,3 +2,5 @@
 - Add: Allow notices and rules paths to be configured by environment variables (issue #161)
 - Fix: align and fix log traces, add comp field (issue #166)
 - Add: add 'from' field in log traces (issue #166)
+- Add: GET /admin/log  (issue #169)
+
