@@ -91,8 +91,13 @@ config.perseoCore = {
  * NEXT EPL core options (with HA)
  */
 config.nextCore = {
+    //
+    // Note this parameter is empty, so Perseo will not use HA by default
+    //
+    /*
     rulesURL : 'http://next-core:8080/perseo-core/rules',
     noticesURL : 'http://next-core:8080/perseo-core/events'
+    */
 };
 
 

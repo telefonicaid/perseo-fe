@@ -84,8 +84,8 @@ function loadConfiguration() {
         config.perseoCore.noticesURL = process.env.PERSEO_CORE_URL + '/perseo-core/events';
     }
     if (process.env.PERSEO_NEXT_URL) {
-        config.nextCore.rulesURL = process.env.PERSEO_CORE_URL + '/perseo-core/rules';
-        config.nextCore.noticesURL = process.env.PERSEO_CORE_URL + '/perseo-core/events';
+        config.nextCore.rulesURL = process.env.PERSEO_NEXT_URL + '/perseo-core/rules';
+        config.nextCore.noticesURL = process.env.PERSEO_NEXT_URL + '/perseo-core/events';
     }
     if (process.env.PERSEO_ORION_URL) {
         config.orion.URL = process.env.PERSEO_ORION_URL;
