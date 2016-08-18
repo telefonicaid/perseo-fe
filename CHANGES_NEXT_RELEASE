@@ -5,3 +5,6 @@
 - Add: GET /admin/log  (issue #169)
 - Fix: env var for next core bug (issue #171)
 - Change: default value for next core to none (issue #172)
+- Fix: false error log when action is executed (issue #176)
+- Fix: saving invalid visual rule in updates (issue #177)
+
