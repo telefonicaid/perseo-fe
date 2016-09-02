@@ -359,6 +359,42 @@ describe('VisualRules', function() {
                 done();
             });
         });
+        it('should not save a VR not compiled by core', function(done) {
+            var rule = utilsT.loadExample('./test/data/good_vrs/visual_rule_1.json'),
+                originalID = 'ORIGINAL_ID';
+            async.series([
+                function(callback) {
+                    // Set mark for tracking a possible change after update
+                    rule.cards[0].id = originalID;
+                    clients.PostVR(rule, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 201);
+                        return callback(null);
+                    });
+                },
+                function(callback) {
+                    // new version of the rule
+                    rule.cards[0].id = 'MOFIFIED_VR';
+                    // simulate a compile error
+                    utilsT.setServerCode(500);
+                    utilsT.setServerMessage('what a pity!');
+                    clients.PutVR(rule.name, rule, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 500);
+                        return callback();
+                    });
+                },
+                // The rule is the first version
+                function(callback) {
+                    clients.GetVR(rule.name, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 200);
+                        data.body.data.cards[0].id.should.be.equal(originalID);
+                        return callback();
+                    });
+                }
+            ], done);
+        });
     });
 });
 
