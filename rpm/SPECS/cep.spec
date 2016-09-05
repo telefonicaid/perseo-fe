@@ -160,6 +160,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Fri Sep 02 2016 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.0.3
+- Fix: false error log when action is executed (#176)
+- Fix: saving invalid visual rule in updates (#177)
+
 * Tue Jul 19 2016 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.0.2
 - Add: Allow notices and rules paths to be configured by environment variables (#161)
 
