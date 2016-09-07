@@ -160,6 +160,18 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Wed Sep 07 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.1.0
+- Fix: modified the permissions of the PID file to be readable by third party SW
+- Add: Allow notices and rules paths to be configured by environment variables (issue #161)
+- Fix: align and fix log traces, add comp field (issue #166)
+- Add: add 'from' field in log traces (issue #166)
+- Add: GET /admin/log  (issue #169)
+- Fix: env var for next core bug (issue #171)
+- Change: default value for next core to none (issue #172)
+- Fix: false error log when action is executed (issue #176)
+- Fix: saving invalid visual rule in updates (issue #177)
+
+
 * Wed Jun 08 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.0.0
 - Fix: serialize actions execution
 - Fix: Use current orion db model for no-signal rules (#128)
