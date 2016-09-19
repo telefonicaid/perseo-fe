@@ -330,9 +330,10 @@ describe('VisualRules', function() {
             ], done);
         });
         it('should return an error when core-endpoint is not working', function(done) {
+            var rule = utilsT.loadExample('./test/data/good_vrs/visual_rule_1.json');
             utilsT.setServerCode(400);
             utilsT.setServerMessage('what a pity!');
-            clients.DeleteVR('a very strange rule to exist', function(error, data) {
+            clients.PutVR(rule.name, rule, function(error, data) {
                 should.not.exist(error);
                 data.should.have.property('statusCode', 500);
                 return done();
@@ -344,7 +345,7 @@ describe('VisualRules', function() {
                 utilsT.dropRulesCollection,
                 function(callback0) {
                     async.eachSeries(cases, function(c, callback) {
-                        clients.DeleteVR(c.object.name, function(error, data) {
+                        clients.PutVR(c.object.name, c.object, function(error, data) {
                             should.not.exist(error);
                             data.should.have.property('statusCode', 500);
                             return callback(null);
