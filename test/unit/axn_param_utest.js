@@ -73,7 +73,9 @@ describe('AxnParams', function() {
             var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
                 action = {
                     parameters: {
-                        url: 'http://${x}/${y}/${z}'
+                        url: 'http://${x}/${y}/${z}',
+                        qs: { '${x}': 'Y${y}Y'},
+                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+'}
                     },
                     template: 'this is \"${t}\"'
                 },
@@ -81,12 +83,19 @@ describe('AxnParams', function() {
 
             should.equal(options.url, 'http://1/abc/***');
             should.equal(options.text, 'this is \"some text\"');
+            should.equal(Object.keys(options.qs).length, 1);
+            should.equal(options.qs['1'], 'YabcY');
+            should.equal(Object.keys(options.headers).length, 2);
+            should.equal(options.headers['X-1'], '-***-');
+            should.equal(options.headers['X-abc'], '+***+');
         });
         it('should keep params without placeholders', function() {
             var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
                 action = {
                     parameters: {
-                        url: 'http://localhost:8080/path/entity'
+                        url: 'http://localhost:8080/path/entity',
+                        headers: {'Content-type': 'application/json', 'X-Something': 'in the way she moves'},
+                        qs: {'George': 'Harrison', 'Paul': 'McCartney', 'John': 'Lennon', 'Ringo': '*'}
                     },
                     template: 'this is \"$\"'
                 },
@@ -94,6 +103,12 @@ describe('AxnParams', function() {
 
             should.equal(options.url, 'http://localhost:8080/path/entity');
             should.equal(options.text, 'this is \"$\"');
+            should.equal(Object.keys(options.qs).length, 4);
+            should.equal(options.qs.John, 'Lennon');
+            should.equal(options.qs.Ringo, '*');
+            should.equal(Object.keys(options.headers).length, 2);
+            should.equal(options.headers['Content-type'], 'application/json');
+            should.equal(options.headers['X-Something'], 'in the way she moves');
         });
     });
     describe('#buildSMSOptions()', function() {
