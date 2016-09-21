@@ -241,7 +241,7 @@ The metadata in an event/notice like
             "name" : "BloodPressure",
             "type" : "centigrade",
             "value" : "2",
-            "metadata": {
+            "metadatas": {
               "crs": {
                 "value": {"system": "WGS84"}
               }
@@ -287,3 +287,6 @@ could be used by a rule so
 Generally, fields of attribute values which are objects themselves are accessible by adding to the name of the field a 
 double underscore prefix, so an attribute `x` with fields `a`, `b`, `c`, will allow these fields to be referred as 
 `x__a`, `x__b` and `x__c`.
+
+Note: be aware of the difference between the key `metadatas` used in the context broker notificacions (v1), ending in `s`
+ and the infix `metadata`, without the final `s`, used to access fields from EPL and actions. 
