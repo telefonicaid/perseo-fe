@@ -49,7 +49,7 @@ The used entity's attributes must be cast to `float` in case of being numeric (l
 values must be cast to `String`. Nested cast to string and to float is something we are analyzing, and could be 
 unnecessary in a future version. Use it by now. All the attributes in the notification from Orion are available in the 
 event object, **ev**,  like *ev.BlodPressure?* and *ev.id?*. A question mark is *necessary* for EPL referring ‘dynamic’ 
-values.
+values. Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
 
 
 <a name="actions"></a>
