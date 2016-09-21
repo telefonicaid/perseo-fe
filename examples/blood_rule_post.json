@@ -3,19 +3,21 @@
    "text":"select \"blood_rule_post\" as ruleName, * from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
    "action":{
       "type":"post",
-      "template":"{\"BloodPressure\": ${BloodPressure} }",
       "parameters":{
          "url": "http://localhost:9182/${type}/${id}",
          "method": "PUT",
          "headers": {
             "Content-type": "application/json",
-            "X-BloodPressure": "${BloodPressure}"
+            "X-BloodPressure": "{{BloodPressure}}"
          },
          "qs": {
-            "bp": "${BloodPressure}",
-            "id": "${id}",
-            "type": "${type}",
+            "bp": "{{BloodPressure}}",
+            "id": "{{id}}",
+            "{{type}}": "{{type}}",
             "España": "y olé"
+         },
+         "json": {
+            "BloodPressure": "{{BloodPressure}}"
          }
       }
    }
