@@ -1,0 +1,13 @@
+{
+    "name": "rule_delta",
+    "text": "select *,\"rule_delta\" as ruleName, cast(cast(ev.A?,String),float)-cast(cast(ev.A__metadata__previousValue?,String),float) as DELTA from pattern [every ev=iotEvent(cast(cast(A?,String),float)>cast(cast(A__metadata__previousValue?,String),float))]",
+    "action": {
+        "type": "email",
+        "template": "Positive delta ${A__metadata__previousValue} -> ${A} ",
+        "parameters": {
+            "to": "someone@tid.es",
+            "from": "perseo_cep@telefonica.com",
+            "subject": "DELTA ${DELTA}"
+        }
+    }
+}

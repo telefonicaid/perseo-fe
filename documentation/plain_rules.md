@@ -45,7 +45,12 @@ from pattern
 * The *from* pattern must name the event as **ev** and the event stream from which take events must be **iotEvent**
 * A *type=* condition must be concatenated for avoiding mixing different kinds of entities
 
-The used entity's atrributes must be cast to `float` in case of being numeric (like  in the example). Alphanumeric values must be cast to `String`. Nested cast to string and to float is something we are analyzing, and could be unnecessary in a future version. Use it by now. All the attributes in the notification from Orion are available in the event object, **ev**,  like *ev.BlodPressure?* and *ev.id?*. A question mark is *necessary* for EPL referring ‘dynamic’ values.
+The used entity's attributes must be cast to `float` in case of being numeric (like  in the example). Alphanumeric 
+values must be cast to `String`. Nested cast to string and to float is something we are analyzing, and could be 
+unnecessary in a future version. Use it by now. All the attributes in the notification from Orion are available in the 
+event object, **ev**,  like *ev.BlodPressure?* and *ev.id?*. A question mark is *necessary* for EPL referring ‘dynamic’ 
+values. Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
+
 
 <a name="actions"></a>
 ## Actions
@@ -213,3 +218,75 @@ Updates the status of a twitter account, with the text build from the `template`
 
 The `template` field performs [string substitution](#string-substitution-syntax).
 
+## Metadata and object values
+
+Metadata values can be accessed by adding the suffix `__metadata__x` to the attribute name, being `x` the name of the 
+metadata attribute. This name can be used in the EPL text of the rule and in the parameters of the action which accept 
+string substitution. If the value of the metadata item is an object itself, nested fields can be referred by additional 
+suffixes beginning with double underscore and the hierarchy can be walked down by adding more suffixes, like
+ `__metadata__x__subf1__subf12`.
+
+For example:
+The metadata in an event/notice like
+
+```
+{
+  "subscriptionId" : "51c04a21d714fb3b37d7d5a7",
+  "originator" : "localhost",
+  "contextResponses" : [
+    {
+      "contextElement" : {
+        "attributes" : [
+          {
+            "name" : "BloodPressure",
+            "type" : "centigrade",
+            "value" : "2",
+            "metadatas": [{
+              "crs": {
+                "value": {"system": "WGS84"}
+              }]
+            }
+          },
+		{
+            "name" : "TimeInstant",
+            "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
+            "value" : "2014-04-29T13:18:05Z"
+          }
+        ],
+        "type" : "BloodMeter",
+        "isPattern" : "false",
+        "id" : "bloodm1"
+      },
+      "statusCode" : {
+        "code" : "200",
+        "reasonPhrase" : "OK"
+      }
+    }
+  ]
+}
+```
+
+could be used by a rule so
+
+```json
+{
+    "name": "blood_rule_email_md",
+    "text": "select *,\"blood_rule_email_md\" as ruleName, *,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(BloodPressure__metadata__crs__system?,String)=\"WGS84\" and type=\"BloodMeter\")]",
+    "action": {
+        "type": "email",
+        "template": "Meter ${Meter} has pression ${Pression} (GEN RULE) and system is ${BloodPressure__metadata__crs__system}",
+        "parameters": {
+            "to": "someone@org.com",
+            "from": "perseo_cep@telefonica.com",
+            "subject": "MD VALUE: ${BloodPressure__metadata__crs__system}"
+        }
+    }
+}
+```
+
+Generally, fields of attribute values which are objects themselves are accessible by adding to the name of the field a 
+double underscore prefix, so an attribute `x` with fields `a`, `b`, `c`, will allow these fields to be referred as 
+`x__a`, `x__b` and `x__c`.
+
+Note: be aware of the difference between the key `metadatas` used in the context broker notificacions (v1), ending in `s`
+ and the infix `metadata`, without the final `s`, used to access fields from EPL and actions. 
