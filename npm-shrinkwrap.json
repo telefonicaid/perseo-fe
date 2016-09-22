@@ -38,7 +38,7 @@
           "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.2.0.tgz",
           "dependencies": {
             "ee-first": {
-              "version": "1.1.0-next",
+              "version": "1.1.0",
               "from": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.0.tgz",
               "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.0.tgz"
             }
@@ -186,7 +186,7 @@
           "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.2.0.tgz",
           "dependencies": {
             "ee-first": {
-              "version": "1.1.0-next",
+              "version": "1.1.0",
               "from": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.0.tgz",
               "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.0.tgz"
             }
@@ -255,7 +255,7 @@
               "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.1.1.tgz",
               "dependencies": {
                 "ee-first": {
-                  "version": "1.1.0-next",
+                  "version": "1.1.0",
                   "from": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.0.tgz",
                   "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.0.tgz"
                 }
@@ -525,7 +525,7 @@
           "resolved": "https://registry.npmjs.org/nodemailer-wellknown/-/nodemailer-wellknown-0.1.4.tgz"
         },
         "smtp-connection": {
-          "version": "1.1.0-next",
+          "version": "1.1.0",
           "from": "https://registry.npmjs.org/smtp-connection/-/smtp-connection-1.1.0.tgz",
           "resolved": "https://registry.npmjs.org/smtp-connection/-/smtp-connection-1.1.0.tgz"
         }
