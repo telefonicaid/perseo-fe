@@ -241,10 +241,10 @@ The metadata in an event/notice like
             "name" : "BloodPressure",
             "type" : "centigrade",
             "value" : "2",
-            "metadatas": {
+            "metadatas": [{
               "crs": {
                 "value": {"system": "WGS84"}
-              }
+              }]
             }
           },
 		{
