@@ -93,7 +93,7 @@ time between executions)
 Some of the fields of an `action` (see detailed list below) can include a reference to one of the fields of the 
 notification/event. This allows include information as the received "pressure" value, the id of the device, etc. For 
 example, the actions `sms`, `email`, `post` include a field `template` used to build the body of message/request. This 
-text can include placeholders for attributes of the generated event. That placeholder has the form `{{X}}` where `X` 
+text can include placeholders for attributes of the generated event. That placeholder has the form `${X}` where `X` 
 may be:
 
 * `id` for the id of the entity that triggers the rule.
@@ -101,7 +101,7 @@ may be:
 * Any other value is interpreted as the name of an attribute in the entity which triggers the rule and the placeholder 
 is substituted by the value of that attribute.
 
-Also the form `${X}` is possible.
+
 
 All alias for simple event attributes or "complex" calculated values can be directly used in the placeholder with their 
 name. And any of the original event attributes (with the special cases for `id` and `type` meaning entity ID and type, 
@@ -189,7 +189,7 @@ The `parameters` field can specify
 * headers: *optional*, an object with fields and values for the HTTP header
 * qs: *optional*, an object with fields and values to build the query string of the URL
 * json: *optional*, an object that will be sent as JSON. String substitution will be performed in the keys and 
-values of the object's fields, but only the form `{{X}}` is allowed. If present, it overrides `template` from `action` 
+values of the object's fields. If present, it overrides `template` from `action` 
 
 ```json
  "action":{
@@ -234,8 +234,9 @@ or use the `json` parameter
                         "Content-type": "application/json"
             },
             "json": {
-               "meter": "{{meter}}",
-               "pressure": "{{pressure}}"
+               "meter": "${meter}",
+               "${id}": "${type}",
+               "pressure": "${pressure}"
             }
         }
     }
