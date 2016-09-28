@@ -8,16 +8,16 @@
          "method": "PUT",
          "headers": {
             "Content-type": "application/json",
-            "X-BloodPressure": "{{BloodPressure}}"
+            "X-BloodPressure": "${BloodPressure}"
          },
          "qs": {
-            "bp": "{{BloodPressure}}",
-            "id": "{{id}}",
-            "{{type}}": "{{type}}",
+            "bp": "${BloodPressure}",
+            "id": "${id}",
+            "${type}": "${type}",
             "España": "y olé"
          },
          "json": {
-            "BloodPressure": "{{BloodPressure}}"
+            "BloodPressure": "${BloodPressure}"
          }
       }
    }
