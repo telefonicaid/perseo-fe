@@ -181,8 +181,8 @@ First time an update action using trust token is triggered, Perseo interacts wit
 It could happen (in theory) that a just got auth token also produce a 401 Not authorized, however this would be an abnormal situation: Perseo logs the problem with the update but doesn't try to get a new one from Keystone. Next time Perseo triggers the action, the process may repeat, i.e. first update attemp fails with 401, Perseo requests a fresh auth token to Keystone, the second update attemp fails with 401, Perseo logs the problem and doesn't retry again.
 
 
-### HTTP POST action
-Makes an HTTP POST to an URL specified in `url` inside `parameters`, sending a body built from `template`. 
+### HTTP request action
+Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. 
 The `parameters` field can specify
 * method: *optional*, HTTP method to use, POST by default
 * **url**: *mandatory*, URL target of the HTTP method
