@@ -7,7 +7,7 @@ The “anatomy” of a rule is as follows
 ```json
 {
    "name":"blood_rule_update",
-   "text":"select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+   "text":"select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pressure, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
    "action":{
       "type":"update",
       "parameters":{
@@ -35,7 +35,7 @@ A EPL statement to use with perseo could be:
 
 ```
 select *, "blood_rule_update" as ruleName,
-	 ev.BloodPressure? as Pression, ev.id? as Meter
+	 ev.BloodPressure? as Pressure, ev.id? as Meter
 from pattern
  [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type="BloodMeter")]
 ```
@@ -90,17 +90,26 @@ time between executions)
 
 ### String substitution syntax
 
-Some of the fields of an `action` (see detailed list below) can include a reference to one of the fields of the notification/event. This allows include information as the pression value received, the id of the device, etc. For example, the actions `sms`, `email`, `post` include a field `template` used to build the body of message/request. This text can include placeholders for attributes of the generated event. That placeholder has the form `${X}`, where `X` may be:
+Some of the fields of an `action` (see detailed list below) can include a reference to one of the fields of the 
+notification/event. This allows include information as the received "pressure" value, the id of the device, etc. For 
+example, the actions `sms`, `email`, `post` include a field `template` used to build the body of message/request. This 
+text can include placeholders for attributes of the generated event. That placeholder has the form `${X}` where `X` 
+may be:
 
 * `id` for the id of the entity that triggers the rule.
 * `type` for the type of the entity that triggers the rule
-* Any other value is interpreted as the name of an attribute in the entity which triggers the rule and the placeholder is substituded by the value of that attribute.
+* Any other value is interpreted as the name of an attribute in the entity which triggers the rule and the placeholder 
+is substituted by the value of that attribute.
 
-All alias for simple event attributes or "complex" calculated values can be directly used in the placeholder with their name. And any of the original event attributes (with the special cases for `id` and `type` meaning entity ID and type, respectively) can be referred too.
+
+
+All alias for simple event attributes or "complex" calculated values can be directly used in the placeholder with their 
+name. And any of the original event attributes (with the special cases for `id` and `type` meaning entity ID and type, 
+respectively) can be referred too.
 
 This substitution can be used in the the following fields:
 * `template`, `from`, `to` and `subject` for `email` action
-* `template` for `post` action
+* `template`, `url`, `qs`, `headers`, `json` for `post` action
 * `template` for `sms` action
 * `template` for `twitter` action
 * `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
@@ -108,11 +117,11 @@ This substitution can be used in the the following fields:
 
 ### SMS action
 
-Sends a SMS to a number set as an action paramter with the body of the message built from the template
+Sends a SMS to a number set as an action parameter with the body of the message built from the template
 ```json
  "action": {
         "type": "sms",
-        "template": "Meter ${Meter} has pression ${Pression}.",
+        "template": "Meter ${Meter} has pressure ${Pressure}.",
         "parameters": {
             "to": "123456789"
         }
@@ -129,7 +138,7 @@ Sends an email to the recipient set in the action parameters, with the body mail
 ```json
  "action": {
         "type": "email",
-        "template": "Meter ${Meter} has pression ${Pression} (GEN RULE)",
+        "template": "Meter ${Meter} has pressure ${Pressure} (GEN RULE)",
         "parameters": {
             "to": "someone@telefonica.com",
             "from": "cep@system.org",
@@ -172,17 +181,32 @@ First time an update action using trust token is triggered, Perseo interacts wit
 It could happen (in theory) that a just got auth token also produce a 401 Not authorized, however this would be an abnormal situation: Perseo logs the problem with the update but doesn't try to get a new one from Keystone. Next time Perseo triggers the action, the process may repeat, i.e. first update attemp fails with 401, Perseo requests a fresh auth token to Keystone, the second update attemp fails with 401, Perseo logs the problem and doesn't retry again.
 
 
-### HTTP POST action
-Makes an HTTP POST to an URL specified in `url` inside `parameters`, sending a body built from `template`.
+### HTTP request action
+Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. 
+The `parameters` field can specify
+* method: *optional*, HTTP method to use, POST by default
+* **url**: *mandatory*, URL target of the HTTP method
+* headers: *optional*, an object with fields and values for the HTTP header
+* qs: *optional*, an object with fields and values to build the query string of the URL
+* json: *optional*, an object that will be sent as JSON. String substitution will be performed in the keys and 
+values of the object's fields. If present, it overrides `template` from `action` 
 
 ```json
- "action": {
-        "type": "post",
-        "template": "Meter ${Meter} has pression ${Pression}.",
-        "parameters": {
-            "url": "localhost:1111"
-        }
-    }
+ "action":{
+      "type":"post",
+      "template":"BloodPressure is ${BloodPressure}",
+      "parameters":{
+         "url": "http://localhost:9182/${type}/${id}",
+         "method": "PUT",
+         "headers": {
+            "Content-type": "text/plain",
+            "X-${type}-pressure": "${BloodPressure}"
+         },
+         "qs": {
+            "${id}": "${BloodPressure}"
+         }
+      }
+   }
 ```
 
 Note that you can encode a JSON in the `template` field:
@@ -190,14 +214,44 @@ Note that you can encode a JSON in the `template` field:
 ```json
  "action": {
         "type": "post",
-        "template": "{\"meter\":\"${Meter}\", \"pression\": ${Pression}}",
+        "template": "{\"meter\":\"${Meter}\", \"pressure\": ${Pressure}}",
         "parameters": {
-            "url": "localhost:1111"
+            "url": "http://${target_host}:${target_port}/myapp/${id}",
+            "headers": {
+                        "Content-type": "application/json",
+                        "X-${type}-pressure": "${BloodPressure}"
+            },
+            "qs": {
+                        "${id}": "${BloodPressure}"
+            }
+        }
+    }
+```
+or use the `json` parameter
+
+```json
+ "action": {
+        "type": "post",
+        "parameters": {
+            "url": "http://${target_host}:${target_port}/myapp/${id}",
+            "headers": {
+                        "Content-type": "application/json",
+                        "X-${type}-pressure": "${BloodPressure}"
+            },
+            "qs": {
+                        "${id}": "${BloodPressure}"
+            },
+            "json": {
+               "meter": "${meter}",
+               "${id}": "${type}",
+               "pressure": "${pressure}"
+            }
         }
     }
 ```
 
-The `template` and `url` fields perform [string substitution](#string-substitution-syntax).
+The `template` and `url` fields and both the field names and the field values of `qs` and `headers` and `json`
+perform [string substitution](#string-substitution-syntax).
 
 ### twitter action
 
@@ -206,7 +260,7 @@ Updates the status of a twitter account, with the text build from the `template`
 ```json
  "action": {
         "type": "twitter",
-        "template": "Meter ${Meter} has pression ${Pression} (GEN RULE)",
+        "template": "Meter ${Meter} has pressure ${Pressure} (GEN RULE)",
         "parameters": {
           "consumer_key": "xvz1evFS4wEEPTGEFPHBog",
           "consumer_secret": "L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg",
