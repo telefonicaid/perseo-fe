@@ -200,10 +200,10 @@ values of the object's fields. If present, it overrides `template` from `action`
          "method": "PUT",
          "headers": {
             "Content-type": "text/plain",
-            "X-BloodPressure": "${BloodPressure}"
+            "X-${type}-pressure": "${BloodPressure}"
          },
          "qs": {
-            "bp": "${BloodPressure}"
+            "${id}": "${BloodPressure}"
          }
       }
    }
@@ -218,8 +218,12 @@ Note that you can encode a JSON in the `template` field:
         "parameters": {
             "url": "http://${target_host}:${target_port}/myapp/${id}",
             "headers": {
-                        "Content-type": "application/json"
+                        "Content-type": "application/json",
+                        "X-${type}-pressure": "${BloodPressure}"
             },
+            "qs": {
+                        "${id}": "${BloodPressure}"
+            }
         }
     }
 ```
@@ -231,7 +235,11 @@ or use the `json` parameter
         "parameters": {
             "url": "http://${target_host}:${target_port}/myapp/${id}",
             "headers": {
-                        "Content-type": "application/json"
+                        "Content-type": "application/json",
+                        "X-${type}-pressure": "${BloodPressure}"
+            },
+            "qs": {
+                        "${id}": "${BloodPressure}"
             },
             "json": {
                "meter": "${meter}",
