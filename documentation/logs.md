@@ -240,6 +240,6 @@ ____
 
 **Description**: Some rules can be provoking an infinite loop of triggered actions.
 
-**Action**: Report to client/product about possible loop with the pointed rule. Check log for the correlator in teh log message
+**Action**: Report to client/product about possible loop with the pointed rule. Check log for the correlator in the log message
 
 
