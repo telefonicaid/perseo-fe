@@ -74,7 +74,7 @@ Alarm ID | Severity | Description | Action
 [CHECK_MASTER](#check_master)|Major|A "slave" perseo has lost visibility of master.|Check the configured SMTP Server is accessible and working properly.
 [DATABASE](#database)|Critical|There is a problem in connection to DB. It can be the perseo database or the Orion database (accessed by no-signal checker|Check configured mongoDB is up and running and is accessible from perseo. Check that databases exist in mongoDB.
 [AUTH](#auth)|Major|There is a problem in connection to Keystone. Update-actions to Orion through PEP are not working|Check HTTP connectivity to Keystone. Check provisioned user and roles/grants.
-
+[LOOP](#loop)|Major|Some rules can be provoking an infinite loop of triggered actions|Report to client/product about possible loop with the pointed rule. Check log for the correlator in teh log message.
 <a name="start"></a>
 ### Alarm START
 
@@ -228,5 +228,18 @@ ____
 
 **Action**: Check HTTP connectivity to Keystone. Check provisioned user and roles/grants.
 
+____
+<a name="loop"></a>
+### Alarm LOOP
+
+**Severity**: Major
+
+**Detection strategy:** `lvl`:`ERROR` `msg`:`check infinite loop`
+
+**Stop condition**: `N/A`
+
+**Description**: Some rules can be provoking an infinite loop of triggered actions.
+
+**Action**: Report to client/product about possible loop with the pointed rule. Check log for the correlator in teh log message
 
 
