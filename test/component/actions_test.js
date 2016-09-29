@@ -32,6 +32,9 @@ var
     testEnv = require('../utils/testEnvironment'),
     actions = require('../../lib/models/actions'),
     executionsStore = require('../../lib/models/executionsStore'),
+    constants = require('../../lib/constants'),
+    request = require('request'),
+    config = require('../../config'),
     EXEC_GRACE_PERIOD = 500;
 
 describe('Actions', function() {
@@ -272,5 +275,56 @@ describe('Actions', function() {
             ], done);
         });
 
+        it('should not execute an action when has been triggered with the same correlator', function(done) {
+            var rule = utilsT.loadExample('./test/data/good_vrs/time_card.json'),
+                action = utilsT.loadExample('./test/data/good_actions/action_sms.json');
+            action.ev.id = Date.now(); // generate unique id for event source
+
+            function postAction(action, callback) {
+                var options = {};
+                options.headers = {};
+                options.headers[constants.SERVICE_HEADER] = config.DEFAULT_SERVICE;
+                options.headers[constants.SUBSERVICE_HEADER] = config.DEFAULT_SUBSERVICE;
+                options.headers[constants.CORRELATOR_HEADER] = 'thesamecorrelator';
+                options.url = util.format('http://%s:%s%s', config.endpoint.host,
+                    config.endpoint.port, config.endpoint.actionsPath);
+                options.body = action;
+                options.json = true;
+
+                request.post(options, function cbPostAxnTest(error, response, body) {
+                    if (error) {
+                        return callback(error, null);
+                    }
+                    if (response.headers['content-type'] === 'application/json; charset=utf-8' &&
+                        typeof body === 'string') {
+                        body = JSON.parse(body);
+                    }
+                    return callback(error, {statusCode: response.statusCode, body: body, headers: response.headers});
+                });
+            }
+            async.series([
+                function(callback) {
+                    clients.PostVR(rule, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 201);
+                        return callback(null);
+                    });
+                },
+                function(callback) {
+                    postAction(action, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 200);
+                        setTimeout(callback, EXEC_GRACE_PERIOD);
+                    });
+                },
+                function(callback) {
+                    postAction(action, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 500);
+                        callback();
+                    });
+                }
+            ], done);
+        });
     });
 });
