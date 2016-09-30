@@ -210,6 +210,23 @@ The rule at perseo-core is expressed as an EPL sentence. EPL is a domain languag
 
 The action included in rule allows sending an email, sending an SMS or updating an attribute of the entity which was the source of the firing event, etc. The message sent in SMS or email can be a template with parameters replaced with fields of the generated event when the message is about to be sent by perseo (through SMS gateway or SMTP server)
 
+#### Loop detection
+
+An infinite loop can be created by rules with update actions, each one making a change which triggers the other rule. It 
+is a symptom of a bad design or an error in writing the rules. For example, two rules like
+```
+	IF temperature < 5 THEN alarm = ON
+	IF temperature < 5 THEN alarm = OFF
+```
+	If the subscription in Orion is for every attribute or just for `temperature` and `alarm`, those rules will create 
+an infinite loop of triggers/updates.
+
+In a best-effort to avoid this situation as much as possible, the feature of propagation of the header field 
+`Fiware-correlator` is used. This field header is taken from the incoming request (or created if not present) and sent 
+to every external system. The Context Broker follows the same tactic. In a loop, the same correlator will be sent between
+perseo and orion, like a ping-pong game. So, if perseo-core sends an action to perseo-fe 
+and that action (for the same rule) has been executed with that correlator already, it declines executing it. It could 
+be part of an infinite loop. The fact is logged and the action is ignored.
 
 
 <a name="Dataflow"></a>
