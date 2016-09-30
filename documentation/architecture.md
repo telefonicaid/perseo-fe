@@ -214,12 +214,11 @@ The action included in rule allows sending an email, sending an SMS or updating 
 
 An infinite loop can be created by rules with update actions, each one making a change which triggers the other rule. It 
 is a symptom of a bad design or an error in writing the rules. For example, two rules like
-```
+
 	IF temperature < 5 THEN alarm = ON
 	IF temperature < 5 THEN alarm = OFF
-```
 
-	If the subscription in Orion is for every attribute or just for `temperature` and `alarm`, those rules will create 
+If the subscription in Orion is for every attribute or just for `temperature` and `alarm`, those rules will create 
 an infinite loop of triggers/updates.
 
 In a best-effort to avoid this situation as much as possible, the feature of propagation of the header field 
