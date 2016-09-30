@@ -218,6 +218,7 @@ is a symptom of a bad design or an error in writing the rules. For example, two 
 	IF temperature < 5 THEN alarm = ON
 	IF temperature < 5 THEN alarm = OFF
 ```
+
 	If the subscription in Orion is for every attribute or just for `temperature` and `alarm`, those rules will create 
 an infinite loop of triggers/updates.
 
