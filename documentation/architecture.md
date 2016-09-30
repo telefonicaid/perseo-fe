@@ -222,7 +222,7 @@ If the subscription in Orion is for every attribute or just for `temperature` an
 an infinite loop of triggers/updates.
 
 In a best-effort to avoid this situation as much as possible, the feature of propagation of the header field 
-`Fiware-correlator` is used. This field header is taken from the incoming request (or created if not present) and sent 
+`Fiware-correlator` is used. This header field is taken from the incoming request (or created if not present) and sent 
 to every external system. The Context Broker follows the same tactic. In a loop, the same correlator will be sent between
 perseo and orion, like a ping-pong game. So, if perseo-core sends an action to perseo-fe 
 and that action (for the same rule) has been executed with that correlator already, it declines executing it. It could 
