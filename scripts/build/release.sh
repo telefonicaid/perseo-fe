@@ -41,11 +41,10 @@ Usage:
         The second argument indicates what type of release is it going to be released:
 
         - sprint: releases that are meant to be created each sprint end. A tag is automatically
-        generated along with the branch and develop is merged with master.
+        generated along with the branch.
 
         - cc: code complete releases meant to be created when the product is about to go
-        into production with the rest of the platform. No tag is generated and master is not
-        updated.
+        into production with the rest of the platform. No tag is generated.
 
         - dev: intermediate releases that do not require following the same SCM specs.
 
@@ -182,10 +181,10 @@ rm -rf $CHANGELOG_FILE
 touch $CHANGELOG_FILE
 
 #
-# Do the git stuff only if we are in develop branch
+# Do the git stuff only if we are in master branch
 #
 CURRENT_BRANCH=$(git branch | grep '^*' | cut -c 3-10)
-if [ "$CURRENT_BRANCH" == "develop" ]
+if [ "$CURRENT_BRANCH" == "master" ]
 then
     git add rpm/SPECS/cep.spec
     git add rpm/create-rpm.sh
@@ -193,14 +192,11 @@ then
     git add npm-shrinkwrap.json
     git add CHANGES_NEXT_RELEASE
     git commit -m "ADD Step: $currentVersion -> $NEW_VERSION"
-    git push origin develop
+    git push origin master
 
     # We do the tag only and merge to master only in the case of  non "dev" release
     if [ "$PERSEO_RELEASE" = "sprint" ]
     then
-       git checkout master
-       git pull origin master
-       git merge develop
        git push origin master
        git checkout -b release/$NEW_VERSION
        git tag $NEW_VERSION
@@ -214,7 +210,7 @@ then
     fi
 
     #
-    # Prepare develop for the next version
+    # Prepare master for the next version
     #
     sed "s/\"version\": \"$NEW_VERSION\"/\"version\": \"$NEW_VERSION-next\"/" package.json        > /tmp/package.json
     sed "s/\"version\": \"$NEW_VERSION\"/\"version\": \"$NEW_VERSION-next\"/" npm-shrinkwrap.json        > /tmp/npm-shrinkwrap.json
@@ -226,10 +222,10 @@ then
     git add rpm/create-rpm.sh
     git add package.json
     git add npm-shrinkwrap.json
-    git commit -m "ADD Prepare new version numbers for develop"
-    git push origin develop
+    git commit -m "ADD Prepare new version numbers for master"
+    git push origin master
 
 else
-    echo "Your current branch is $CURRENT_BRANCH. You need to be at develop branch to do the final part of the process"
+    echo "Your current branch is $CURRENT_BRANCH. You need to be at master branch to do the final part of the process"
 fi
 
