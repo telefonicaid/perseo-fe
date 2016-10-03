@@ -440,7 +440,7 @@
       "resolved": "https://registry.npmjs.org/nodemailer/-/nodemailer-1.3.0.tgz",
       "dependencies": {
         "buildmail": {
-          "version": "1.2.0-next",
+          "version": "1.2.0",
           "from": "https://registry.npmjs.org/buildmail/-/buildmail-1.2.0.tgz",
           "resolved": "https://registry.npmjs.org/buildmail/-/buildmail-1.2.0.tgz",
           "dependencies": {
