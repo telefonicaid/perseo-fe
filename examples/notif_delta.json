@@ -1,0 +1,66 @@
+{
+    "contextResponses": [
+        {
+            "contextElement": {
+                "attributes": [
+                    {
+                        "metadatas": [
+                            {
+                                "name": "previousValue",
+                                "type": "Number",
+                                "value": "11"
+                            },
+                            {
+                                "name": "actionType",
+                                "type": "Text",
+                                "value": "update"
+                            }
+                        ],
+                        "name": "A",
+                        "type": "Number",
+                        "value": "12"
+                    },
+                    {
+                        "metadatas": [
+                            {
+                                "name": "previousValue",
+                                "type": "Text",
+                                "value": "z"
+                            },
+                            {
+                                "name": "actionType",
+                                "type": "Text",
+                                "value": "update"
+                            }
+                        ],
+                        "name": "B",
+                        "type": "Text",
+                        "value": "z"
+                    },
+                    {
+                        "metadatas": [
+                            {
+                                "name": "previousValue",
+                                "type": "Text",
+                                "value": "w"
+                            }
+                        ],
+                        "name": "C",
+                        "type": "Text",
+                        "value": "w"
+                    }
+                ],
+                "id": "E2",
+                "isPattern": "false",
+                "type": "T"
+            },
+            "statusCode": {
+                "code": "200",
+                "reasonPhrase": "OK"
+            }
+        }
+    ],
+    "originator": "localhost",
+    "subscriptionId": "123456789"
+}
+

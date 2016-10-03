@@ -44,7 +44,7 @@ The “anatomy” of a rule is as follows
 ```json
 {
    "name":"blood_rule_update",
-   "text":"select *,\"blood_rule_update\" as ruleName, ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+   "text":"select *,\"blood_rule_update\" as ruleName from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
    "action":{
       "type":"update",
       "parameters":{
@@ -78,10 +78,10 @@ The rule for sending an email is
 ```json
 {
    "name":"blood_rule_email",
-   "text":"select *,\"blood_rule_email\" as ruleName, *,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+   "text":"select *,\"blood_rule_email\" as ruleName, *,ev.BloodPressure? as Pressure, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
    "action":{
       "type":"email",
-      "template":"Meter ${Meter} has pression ${Pression} (GEN RULE)",
+      "template":"Meter ${Meter} has pressure ${Pressure} (GEN RULE)",
       "parameters":{
          "to":"control@hospital.org",
          "from":"cep@hospital.org"
