@@ -1,5 +1,0 @@
-- Add: propagate metadata to core (#182)
-- Add: improved post action (#144)
-- Fix: weird behaviour post action (#191)
-- Add: break rule execution loops (#190)
-

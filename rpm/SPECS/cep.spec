@@ -160,6 +160,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Mon Oct 03 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.2.0
+- Add: propagate metadata to core (#182)
+- Add: improved post action (#144)
+- Fix: weird behaviour post action (#191)
+- Add: break rule execution loops (#190)
+
+
 * Wed Sep 07 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.1.0
 - Fix: modified the permissions of the PID file to be readable by third party SW
 - Add: Allow notices and rules paths to be configured by environment variables (issue #161)
