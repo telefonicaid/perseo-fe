@@ -9,7 +9,7 @@ A mongoDB 2.4 database should be working and accesible before perseo can be star
 
 ### Installation using Docker
 
-The last development version is uploaded as a Docker image to Docker Hub for every PR merged into the `develop` branch.
+The last development version is uploaded as a Docker image to Docker Hub for every PR merged into the `master` branch.
 Perseo FE needs some components to be present event to be started. Those components can be configured using:
 
 * Environment variables, as in the following example:
@@ -38,7 +38,7 @@ Assuming there is a Mongo DB container already running (named `mongo`) and an [O
 First a container running Perseo Core has to be instantiated and run (hostname of this container will be `perseocore` and will be listening on port `8080`):
 
 ```
-docker run -d --name perseo_core -h perseocore -p 8080:8080 telefonicaiot/perseo-core:develop -perseo_fe_url <perseo_fe_addr>:9090
+docker run -d --name perseo_core -h perseocore -p 8080:8080 telefonicaiot/perseo-core:master -perseo_fe_url <perseo_fe_addr>:9090
 ```
 
 where <perseo_fe_addr> must be the host name or IP address of the *machine hosting the Perseo FE Container*. Please note that it is a good idea to
@@ -47,7 +47,7 @@ expose port `8080` to the host so that it can be verified that Perseo Core is up
 Then a container running Perseo Front-End has to be instantiated and run: 
 
 ```
-docker run -d -p 9090:9090 --name perseo_fe -h perseo --link perseo_core --link mongo --link orion -e "PERSEO_MONGO_HOST=mongo" -e "PERSEO_CORE_URL=http://perseocore:8080" -e "PERSEO_LOG_LEVEL=debug" -e "PERSEO_ORION_URL=http://orion:1026/v1/updateContext" telefonicaiot/perseo-fe:develop
+docker run -d -p 9090:9090 --name perseo_fe -h perseo --link perseo_core --link mongo --link orion -e "PERSEO_MONGO_HOST=mongo" -e "PERSEO_CORE_URL=http://perseocore:8080" -e "PERSEO_LOG_LEVEL=debug" -e "PERSEO_ORION_URL=http://orion:1026/v1/updateContext" telefonicaiot/perseo-fe:master
 ```
 
 Please note that we use the name `perseocore` to refer to the container where Perseo Core is running (previously linked). Similarly we use use the names `orion` and 
