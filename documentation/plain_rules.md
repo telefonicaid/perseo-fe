@@ -355,7 +355,8 @@ The formats are
 * [NGSV1 deprecated format](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Publish/Subscribe_Broker_-_Orion_Context_Broker_-_User_and_Programmers_Guide_R3#Defining_location_attribute)
 * [NGSIV1 current format](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/user/geolocation.md#defining-location-attribute)
 
- So, a notification in the deprecated format like
+
+So, a notification in the deprecated format like
  
  ```json
  {
