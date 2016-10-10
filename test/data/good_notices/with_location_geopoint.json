@@ -4,9 +4,9 @@
     "contextResponses":[
         {
             "contextElement":{
-                "type":"City",
+                "type":"Trunk",
                 "isPattern":"false",
-                "id":"Madrid",
+                "id":"T1",
                 "attributes":[
                     {
                         "name":"position",

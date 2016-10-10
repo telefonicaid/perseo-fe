@@ -4,9 +4,9 @@
     "contextResponses":[
         {
             "contextElement":{
-                "type":"City",
+                "type":"Motorbike",
                 "isPattern":"false",
-                "id":"Madrid",
+                "id":"M1",
                 "attributes":[
                     {
                         "name":"position",
