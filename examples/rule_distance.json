@@ -1,0 +1,13 @@
+{
+    "name": "rule_distance",
+    "text": "select *, \"rule_distance\" as ruleName from pattern [every ev=iotEvent(Math.pow((cast(cast(position__x?,String),float) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),float) - 9764160.736945232), 2) < Math.pow(500e3,2))]",
+    "action": {
+        "type": "email",
+        "template": "${id} (${type}) is at ${position__lat}, ${position__lon} (${position__x}, ${position__y})",
+        "parameters": {
+            "to": "brox@tid.es",
+            "from": "brox@tid.es",
+            "subject": "${id} is coming"
+        }
+    }
+}
