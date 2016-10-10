@@ -53,6 +53,7 @@
     "nodemailer-smtp-transport": "^0.1.12",
     "request": "^2.39.0",
     "twitter": "^1.2.5",
+    "utm-converter": "^0.1.1",
     "uuid": "^1.4.1"
   }
 }
