@@ -348,7 +348,7 @@ Note: be aware of the difference between the key `metadatas` used in the context
 ## Location fields
 
 Fields with geolocation info with the formats recognized by NGSI v1, are parsed and generate two pseudo-attributes, one
- for the altitude and another one for the longitude for easing their use in the EPL sentence of the rule. These fields 
+ for the latitude and another one for the longitude for easing their use in the EPL sentence of the rule. These fields 
  have the same name of the attribute with a suffix of `__lat` and `__lon` respectively.
 
 The formats are 
