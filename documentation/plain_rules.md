@@ -464,7 +464,7 @@ An example of rule taking advantage of these derived attributes could be:
 ```json
 {
     "name": "rule_distance",
-    "text": "select *, \"rule_distance\" as ruleName from pattern [every ev=iotEvent(Math.pow((cast(cast(position__x?,String),float) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),float) - 9764160.736945232), 2) < Math.pow(500e3,2))]",
+    "text": "select *, \"rule_distance\" as ruleName from pattern [every ev=iotEvent(Math.pow((cast(cast(position__x?,String),float) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),float) - 9764160.736945232), 2) < Math.pow(5e3,2))]",
     "action": {
         "type": "email",
         "template": "${id} (${type}) is at ${position__lat}, ${position__lon} (${position__x}, ${position__y})",
@@ -477,4 +477,9 @@ An example of rule taking advantage of these derived attributes could be:
 }
 ```
 
-that will send an email when the entity with attribute `position` is less than 500 km far away from Cuenca.
+that will send an email when the entity with attribute `position` is less than 5 km far away from Cuenca. It uses the 
+circle equation, `(x - a)^2 + (y - b)^2 = d^2`, being `(a, b)` 618618.8286057833 and 9764160.736945232 the UTMC coordinates
+of Cuenca and `d` the distance of 5 000 m. 
+
+Note: for long distances the precision of the computations and the distortion of the projection can introduce some degree 
+of inaccuracy.
