@@ -344,3 +344,142 @@ double underscore prefix, so an attribute `x` with fields `a`, `b`, `c`, will al
 
 Note: be aware of the difference between the key `metadatas` used in the context broker notificacions (v1), ending in `s`
  and the infix `metadata`, without the final `s`, used to access fields from EPL and actions. 
+ 
+## Location fields
+
+Fields with geolocation info with the formats recognized by NGSI v1, are parsed and generate two pairs of 
+pseudo-attributes, the first pair is for the latitude and the longitude and the second pair is for the x and y 
+UTMC coordinates for the point. These pseudo-attributes ease the use of the position in the EPL sentence of the rule. 
+These derived attributes have the same name of the attribute with a suffix of `__lat` and `__lon` , and `__x` and 
+`__y` respectively.
+
+The formats are 
+* [NGSV1 deprecated format](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Publish/Subscribe_Broker_-_Orion_Context_Broker_-_User_and_Programmers_Guide_R3#Defining_location_attribute)
+* [NGSIV1 current format](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/user/geolocation.md#defining-location-attribute)
+
+
+So, a notification in the deprecated format like
+ 
+ ```json
+ {
+    "subscriptionId":"57f73930e0e2c975a712b8fd",
+    "originator":"localhost",
+    "contextResponses":[
+       {
+          "contextElement":{
+             "type":"Vehicle",
+             "isPattern":"false",
+             "id":"Car1",
+             "attributes":[
+                {
+                   "name":"position",
+                   "type":"coords",
+                   "value":"40.418889, -3.691944",
+                   "metadatas":[
+                      {
+                         "name":"location",
+                         "type":"string",
+                         "value":"WGS84"
+                      }
+                   ]
+                }
+             ]
+          }
+       }
+    ]
+ }
+ ```
+ 
+will propagate to the core, (and so making available to the EPL sentence) the fields `position__lat`, `position__lon` ,
+`position__x`, `position__y`
+
+```json
+{  
+   "noticeId":"169b0920-8edb-11e6-838d-0b633312661c",
+   "id":"Car1",
+   "type":"Vehicle",
+   "isPattern":"false",
+   "subservice":"/",
+   "service":"unknownt",
+   "position":"40.418889, -3.691944",
+   "position__type":"coords",
+   "position__metadata__location":"WGS84",
+   "position__metadata__location__type":"string",
+   "position__lat":40.418889,
+   "position__lon":-3.691944,
+   "position__x":657577.4234800448,
+   "position__y":9591797.935076647
+}
+```
+
+Analogously, a notification in "geopoint" format, like
+
+```json
+{
+   "subscriptionId":"57f73930e0e2c975a712b8fd",
+   "originator":"localhost",
+   "contextResponses":[
+      {
+         "contextElement":{
+            "type":"Vehicle",
+            "isPattern":"false",
+            "id":"Car1",
+            "attributes":[
+               {
+                  "name":"position",
+                  "type":"geo:point",
+                  "value":"40.418889, -3.691944"
+               }
+            ]
+         },
+         "statusCode":{
+            "code":"200",
+            "reasonPhrase":"OK"
+         }
+      }
+   ]
+}
+```
+
+will send to core an event with the fields `position__lat`, `position__lon`, `position__x`, `position__y` also
+
+```json
+{  
+   "noticeId":"7b8f1c50-8eda-11e6-838d-0b633312661c",
+   "id":"Car1",
+   "type":"Vehicle",
+   "isPattern":"false",
+   "subservice":"/",
+   "service":"unknownt",
+   "position":"40.418889, -3.691944",
+   "position__type":"geo:point",
+   "position__lat":40.418889,
+   "position__lon":-3.691944,
+   "position__x":657577.4234800448,
+   "position__y":9591797.935076647
+```
+
+An example of rule taking advantage of these derived attributes could be:
+
+```json
+{
+    "name": "rule_distance",
+    "text": "select *, \"rule_distance\" as ruleName from pattern [every ev=iotEvent(Math.pow((cast(cast(position__x?,String),float) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),float) - 9764160.736945232), 2) < Math.pow(5e3,2))]",
+    "action": {
+        "type": "email",
+        "template": "${id} (${type}) is at ${position__lat}, ${position__lon} (${position__x}, ${position__y})",
+        "parameters": {
+            "to": "someone@tid.es",
+            "from": "system@iot.tid.es",
+            "subject": "${id} is coming"
+        }
+    }
+}
+```
+
+that will send an email when the entity with attribute `position` is less than 5 km far away from Cuenca. It uses the 
+circle equation, `(x - a)^2 + (y - b)^2 = d^2`, being `(a, b)` 618618.8286057833 and 9764160.736945232 the UTMC coordinates
+of Cuenca and `d` the distance of 5 000 m. 
+
+Note: for long distances the precision of the computations and the distortion of the projection can introduce some degree 
+of inaccuracy.

@@ -1,0 +1,25 @@
+{
+    "subscriptionId":"57f73930e0e2c975a712b8fd",
+    "originator":"localhost",
+    "contextResponses":[
+        {
+            "contextElement":{
+                "type":"Trunk",
+                "isPattern":"false",
+                "id":"T1",
+                "attributes":[
+                    {
+                        "name":"position",
+                        "type":"geo:point",
+                        "value":"40.418889, -3.691944"
+                    }
+                ]
+            },
+            "statusCode":{
+                "code":"200",
+                "reasonPhrase":"OK"
+            }
+        }
+    ]
+}
+
