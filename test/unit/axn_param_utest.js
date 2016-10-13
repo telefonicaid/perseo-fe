@@ -89,6 +89,22 @@ describe('AxnParams', function() {
             should.equal(options.headers['X-1'], '-***-');
             should.equal(options.headers['X-abc'], '+***+');
         });
+        it('should substitute params w/o template also', function() {
+            var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
+                action = {
+                    parameters: {
+                        url: 'http://${x}/${y}/${z}',
+                        qs: { '${x}': 'Y${y}Y'},
+                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+'}
+                    }
+                },
+                options = postAction.buildPostOptions(action, event);
+
+            should.exist(options);
+            should.equal(Object.keys(options.qs).length, 1);
+            should.equal(Object.keys(options.headers).length, 2);
+            should.not.exist(options.text);
+        });
         it('should keep params without placeholders', function() {
             var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
                 action = {
