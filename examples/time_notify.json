@@ -1,0 +1,29 @@
+{
+    "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+    "originator": "localhost",
+    "contextResponses": [
+        {
+            "contextElement": {
+                "attributes": [
+                    {
+                        "name": "hire",
+                        "type": "DateTime",
+                        "value": "2016-10-13T12:10:44.149Z"
+                    },
+                    {
+                        "name": "role",
+                        "value": "benevolent dictator for life"
+                    }
+                ],
+                "type": "employee",
+                "isPattern": "false",
+                "id": "John Doe"
+            },
+            "statusCode": {
+                "code": "200",
+                "reasonPhrase": "OK"
+            }
+        }
+    ]
+}
+
