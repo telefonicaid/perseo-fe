@@ -533,16 +533,16 @@ So, an incoming notification like
                     {
                         "name": "hire",
                         "type": "DateTime",
-                        "value": "2014-04-29T13:18:05Z"
+                        "value": "2016-10-13T12:10:44.149Z"
                     },
                     {
                         "name": "role",
                         "value": "benevolent dictator for life",
-                        "metadatas": {
+                        "metadatas": [{
                             "name": "when",
                             "value": "2014-04-29T13:18:05Z",
                             "type": "DateTime"
-                        }
+                        }]
                     }
                 ],
                 "type": "employee",
@@ -561,8 +561,8 @@ So, an incoming notification like
 will send to core the "event"
 ```json
 {  
-   "noticeId":"a911f880-912a-11e6-b25c-670fa9f3ffaa",
-   "noticeTS":1476352309256,
+   "noticeId":"799635b0-914f-11e6-836b-bf1691c99768",
+   "noticeTS":1476368120971,
    "id":"John Doe",
    "type":"employee",
    "isPattern":"false",
@@ -618,7 +618,24 @@ will send to core the "event"
    "hire__minuteUTC":18,
    "hire__secondUTC":5,
    "hire__millisecondUTC":0,
-   "role":"benevolent dictator for life"
+   "role":"benevolent dictator for life",
+   "role__metadata__when":"2014-04-29T13:18:05Z",
+   "role__metadata__when__type":"DateTime",
+   "role__metadata__when__ts":1398777485000,
+   "role__metadata__when__day":29,
+   "role__metadata__when__month":4,
+   "role__metadata__when__year":2014,
+   "role__metadata__when__hour":15,
+   "role__metadata__when__minute":18,
+   "role__metadata__when__second":5,
+   "role__metadata__when__millisecond":0,
+   "role__metadata__when__dayUTC":29,
+   "role__metadata__when__monthUTC":4,
+   "role__metadata__when__yearUTC":2014,
+   "role__metadata__when__hourUTC":13,
+   "role__metadata__when__minuteUTC":18,
+   "role__metadata__when__secondUTC":5,
+   "role__metadata__when__millisecondUTC":0
 }```
 
 A rule that will check if the employee has been hired in the last half hour, could be
