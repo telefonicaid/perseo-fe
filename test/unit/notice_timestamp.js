@@ -129,8 +129,8 @@ describe('Notices', function() {
         // idem for metadata
         it('should add a ts pesudo-attribute for a metadata field of type DateTime', function() {
             var bn = basicNotice(),
-                date = new Date('2008-09-15T15:53:00+05:00'),
                 iso8601 = '2008-09-15T15:53:00+05:00',
+                date = new Date(iso8601),
                 millis = date.getTime(),
                 processed;
             bn.contextResponses[0].contextElement.attributes.push({
