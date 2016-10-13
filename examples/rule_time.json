@@ -1,0 +1,13 @@
+{
+    "name": "rule_time",
+    "text": "select *, \"rule_time\" as ruleName from pattern [every ev=iotEvent(cast(cast(hire__ts?,String),float) > current_timestamp - 30*60*1000)]",
+    "action": {
+        "type": "email",
+        "template": "So glad with our new ${role}, ${id}!",
+        "parameters": {
+            "to": "brox@tid.es",
+            "from": "system@iot.tid.es",
+            "subject": "Welcome ${id}!"
+        }
+    }
+}

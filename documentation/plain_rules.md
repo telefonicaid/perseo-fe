@@ -483,3 +483,176 @@ of Cuenca and `d` the distance of 5 000 m.
 
 Note: for long distances the precision of the computations and the distortion of the projection can introduce some degree 
 of inaccuracy.
+
+## Time fields
+Some attributes and metadata, supposed to contain a time in ISO8601 format, will generate a pseudo-attribute with the 
+same name as the attribute (or metadata field) and a suffix "__ts", with the parsed value as milliseconds for Unix epoch. 
+This value makes easier to write the EPL text which involves time comparisons. The fields (attribute or metadata) supposed 
+to convey time information are
+
+* Fields named `TimeInstant`
+* Fields of type `DateTime`
+* Fields of type `urn:x-ogc:def:trs:IDAS:1.0:ISO8601`
+
+Additionally, some derived pseudo-attributes are included also
+
+*   `x__day`: the day of the month (1-31) for the specified date according to local time.
+*   `x__month`: the month (1-12) in the specified date according to local time.
+*   `x__year`: the year (4 digits) of the specified date according to local time.
+*   `x__hour`: the hour (0-23) in the specified date according to local time.
+*   `x__minute`: the minutes (0-59) in the specified date according to local time.
+*   `x__second`: the seconds (0-59) in the specified date according to local time.
+*   `x__millisecond`: the milliseconds (0-999) in the specified date according to local time.
+*   `x__dayUTC`: the day of the month (1-31) in the specified date according to universal time.
+*   `x__monthUTC`: the month (1-12) in the specified date according to universal time.
+*   `x__yearUTC`: the year (4 digits) of the specified date according to universal time.
+*   `x__hourUTC`: the hour (0-23) in the specified date according to universal time.
+*   `x__minuteUTC`: the minutes (0-59) in the specified date according to universal time.
+*   `x__secondUTC`: the seconds (0-59) in the specified date according to universal time.
+*   `x__millisecondUTC`: the milliseconds (0-999) in the specified date according to universal time.
+
+So, an incoming notification like
+
+```json
+{
+    "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+    "originator": "localhost",
+    "contextResponses": [
+        {
+            "contextElement": {
+                "attributes": [
+                    {
+                        "name": "TimeInstant",
+                        "value": "2014-04-29T13:18:05Z"
+                    },
+                    {
+                        "name": "birthdate",
+                        "type": "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
+                        "value": "2014-04-29T13:18:05Z"
+                    },
+                    {
+                        "name": "hire",
+                        "type": "DateTime",
+                        "value": "2016-10-13T12:10:44.149Z"
+                    },
+                    {
+                        "name": "role",
+                        "value": "benevolent dictator for life",
+                        "metadatas": [{
+                            "name": "when",
+                            "value": "2014-04-29T13:18:05Z",
+                            "type": "DateTime"
+                        }]
+                    }
+                ],
+                "type": "employee",
+                "isPattern": "false",
+                "id": "John Doe"
+            },
+            "statusCode": {
+                "code": "200",
+                "reasonPhrase": "OK"
+            }
+        }
+    ]
+}
+```
+
+will send to core the "event"
+```json
+{  
+   "noticeId":"799635b0-914f-11e6-836b-bf1691c99768",
+   "noticeTS":1476368120971,
+   "id":"John Doe",
+   "type":"employee",
+   "isPattern":"false",
+   "subservice":"/",
+   "service":"unknownt",
+   "TimeInstant":"2014-04-29T13:18:05Z",
+   "TimeInstant__ts":1398777485000,
+   "TimeInstant__day":29,
+   "TimeInstant__month":4,
+   "TimeInstant__year":2014,
+   "TimeInstant__hour":15,
+   "TimeInstant__minute":18,
+   "TimeInstant__second":5,
+   "TimeInstant__millisecond":0,
+   "TimeInstant__dayUTC":29,
+   "TimeInstant__monthUTC":4,
+   "TimeInstant__yearUTC":2014,
+   "TimeInstant__hourUTC":13,
+   "TimeInstant__minuteUTC":18,
+   "TimeInstant__secondUTC":5,
+   "TimeInstant__millisecondUTC":0,
+   "birthdate":"2014-04-29T13:18:05Z",
+   "birthdate__type":"urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
+   "birthdate__ts":1398777485000,
+   "birthdate__day":29,
+   "birthdate__month":4,
+   "birthdate__year":2014,
+   "birthdate__hour":15,
+   "birthdate__minute":18,
+   "birthdate__second":5,
+   "birthdate__millisecond":0,
+   "birthdate__dayUTC":29,
+   "birthdate__monthUTC":4,
+   "birthdate__yearUTC":2014,
+   "birthdate__hourUTC":13,
+   "birthdate__minuteUTC":18,
+   "birthdate__secondUTC":5,
+   "birthdate__millisecondUTC":0,
+   "hire":"2014-04-29T13:18:05Z",
+   "hire__type":"DateTime",
+   "hire__ts":1398777485000,
+   "hire__day":29,
+   "hire__month":4,
+   "hire__year":2014,
+   "hire__hour":15,
+   "hire__minute":18,
+   "hire__second":5,
+   "hire__millisecond":0,
+   "hire__dayUTC":29,
+   "hire__monthUTC":4,
+   "hire__yearUTC":2014,
+   "hire__hourUTC":13,
+   "hire__minuteUTC":18,
+   "hire__secondUTC":5,
+   "hire__millisecondUTC":0,
+   "role":"benevolent dictator for life",
+   "role__metadata__when":"2014-04-29T13:18:05Z",
+   "role__metadata__when__type":"DateTime",
+   "role__metadata__when__ts":1398777485000,
+   "role__metadata__when__day":29,
+   "role__metadata__when__month":4,
+   "role__metadata__when__year":2014,
+   "role__metadata__when__hour":15,
+   "role__metadata__when__minute":18,
+   "role__metadata__when__second":5,
+   "role__metadata__when__millisecond":0,
+   "role__metadata__when__dayUTC":29,
+   "role__metadata__when__monthUTC":4,
+   "role__metadata__when__yearUTC":2014,
+   "role__metadata__when__hourUTC":13,
+   "role__metadata__when__minuteUTC":18,
+   "role__metadata__when__secondUTC":5,
+   "role__metadata__when__millisecondUTC":0
+}
+```
+
+A rule that will check if the employee has been hired in the last half hour, could be
+
+```json
+{
+    "name": "rule_time",
+    "text": "select *, \"rule_time\" as ruleName from pattern [every ev=iotEvent(cast(cast(hire__ts?,String),float) > current_timestamp - 30*60*1000)]",
+    "action": {
+        "type": "email",
+        "template": "So glad with our new ${role}, ${id}!",
+        "parameters": {
+            "to": "brox@tid.es",
+            "from": "system@iot.tid.es",
+            "subject": "Welcome ${id}!"
+        }
+    }
+}
+```
