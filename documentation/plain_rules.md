@@ -636,7 +636,8 @@ will send to core the "event"
    "role__metadata__when__minuteUTC":18,
    "role__metadata__when__secondUTC":5,
    "role__metadata__when__millisecondUTC":0
-}```
+}
+```
 
 A rule that will check if the employee has been hired in the last half hour, could be
 
