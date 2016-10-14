@@ -176,7 +176,7 @@ describe('AxnParams', function() {
         });
     });
     describe('#buildUpdateOptions()', function() {
-        it('should substitute params', function() {
+        it('should substitute params (old format)', function() {
             var event = {a: 'ID', b: 'TYPE', c: 'NAME', d: 'VALUE', e: 'ISPATTERN', f: 'ATTRTYPE'},
                 action = {
                     parameters: {
@@ -192,12 +192,12 @@ describe('AxnParams', function() {
 
             should.equal(options.id, 'ID');
             should.equal(options.type, 'TYPE');
-            should.equal(options.name, 'NAME');
-            should.equal(options.value, 'VALUE');
+            should.equal(options.attributes[0].name, 'NAME');
+            should.equal(options.attributes[0].value, 'VALUE');
             should.equal(options.isPattern, 'ISPATTERN');
-            should.equal(options.attrType, 'ATTRTYPE');
+            should.equal(options.attributes[0].type, 'ATTRTYPE');
         });
-        it('should keep params without placeholders', function() {
+        it('should keep params without placeholders (old format)', function() {
             var event = {id: 'ID', type: 'TYPE'},
                 action = {
                     parameters: {
@@ -210,12 +210,12 @@ describe('AxnParams', function() {
 
             should.equal(options.id, 'ID'); // default value
             should.equal(options.type, 'TYPE'); // default value
-            should.equal(options.name, 'NAME');
-            should.equal(options.value, 'VALUE');
+            should.equal(options.attributes[0].name, 'NAME');
+            should.equal(options.attributes[0].value, 'VALUE');
             should.equal(options.isPattern, 'false'); // default value
-            should.equal(options.attrType, 'ATTRTYPE');
+            should.equal(options.attributes[0].type, 'ATTRTYPE');
         });
-        it('should not use type if not specified and not in event', function() {
+        it('should not use type if not specified and not in event (old format)', function() {
             /*
                 Some entities do not have type. To update the same origin
                 entity, 'type' field should not be propagated to Context Broker.
@@ -235,10 +235,126 @@ describe('AxnParams', function() {
 
             should.equal(options.id, 'ID'); // default value
             should.not.exists(options.type); // not in event
-            should.equal(options.name, 'NAME');
-            should.equal(options.value, 'VALUE');
             should.equal(options.isPattern, 'false'); // default value
-            should.equal(options.attrType, 'X');
+            should.equal(options.attributes[0].name, 'NAME');
+            should.equal(options.attributes[0].value, 'VALUE');
+            should.equal(options.attributes[0].type, 'X');
+        });
+        it('should substitute params (array format)', function() {
+            var event = {a: 'ID', b: 'TYPE', c: 'NAME', d: 'VALUE', e: 'ISPATTERN', f: 'ATTRTYPE',
+                    c1: 'NAME1', d1: 'VALUE1', f1: 'ATTRTYPE1',
+                    c2: 'NAME2', d2: 'VALUE2', f2: 'ATTRTYPE2' },
+                action = {
+                    parameters: {
+                        id: '${a}',
+                        type: '${b}',
+                        isPattern: '${e}',
+                        attributes: [
+                            {
+                                name: '${c}',
+                                value: '${d}',
+                                type: '${f}'
+                            },
+                            {
+                                name: '${c1}',
+                                value: '${d1}',
+                                type: '${f1}'
+                            },
+                            {
+                                name: '${c2}',
+                                value: '${d2}',
+                                type: '${f2}'
+                            }
+                        ]
+                    }
+                },
+                options = updateAction.buildUpdateOptions(action, event);
+
+            should.equal(options.id, 'ID');
+            should.equal(options.type, 'TYPE');
+            should.equal(options.isPattern, 'ISPATTERN');
+
+            should.equal(options.attributes[0].name, 'NAME');
+            should.equal(options.attributes[0].value, 'VALUE');
+            should.equal(options.attributes[0].type, 'ATTRTYPE');
+
+            should.equal(options.attributes[1].name, 'NAME1');
+            should.equal(options.attributes[1].value, 'VALUE1');
+            should.equal(options.attributes[1].type, 'ATTRTYPE1');
+
+            should.equal(options.attributes[2].name, 'NAME2');
+            should.equal(options.attributes[2].value, 'VALUE2');
+            should.equal(options.attributes[2].type, 'ATTRTYPE2');
+        });
+        it('should keep params without placeholders (array format)', function() {
+            var event = {id: 'ID', type: 'TYPE'},
+                action = {
+                    parameters: {
+                        attributes: [
+                            {
+                                name: 'NAME',
+                                value: 'VALUE',
+                                type: 'ATTRTYPE'
+                            },
+                            {
+                                name: 'NAME1',
+                                value: 'VALUE1',
+                                type: 'ATTRTYPE1'
+                            },
+                            {
+                                name: 'NAME2',
+                                value: 'VALUE2',
+                                type: 'ATTRTYPE2'
+                            }
+                        ]
+                    }
+                },
+                options = updateAction.buildUpdateOptions(action, event);
+
+            should.equal(options.id, 'ID'); // default value
+            should.equal(options.type, 'TYPE'); // default value
+            should.equal(options.isPattern, 'false'); // default value
+
+            should.equal(options.attributes[0].name, 'NAME');
+            should.equal(options.attributes[0].value, 'VALUE');
+            should.equal(options.attributes[0].type, 'ATTRTYPE');
+
+            should.equal(options.attributes[1].name, 'NAME1');
+            should.equal(options.attributes[1].value, 'VALUE1');
+            should.equal(options.attributes[1].type, 'ATTRTYPE1');
+
+            should.equal(options.attributes[2].name, 'NAME2');
+            should.equal(options.attributes[2].value, 'VALUE2');
+            should.equal(options.attributes[2].type, 'ATTRTYPE2');
+        });
+        it('should not use type if not specified and not in event (array format)', function() {
+            /*
+             Some entities do not have type. To update the same origin
+             entity, 'type' field should not be propagated to Context Broker.
+             If the action does not include an explicit parameter for 'type'
+             and the incoming event has not 'type' neither, options should
+             not include a 'type'
+             */
+            var event = {id: 'ID', x: 'X'},
+                action = {
+                    parameters: {
+                        attributes: [
+                            {
+                                name: 'NAME',
+                                value: 'VALUE',
+                                type: '${x}'
+                            }
+                        ]
+                    }
+                },
+                options = updateAction.buildUpdateOptions(action, event);
+
+            should.equal(options.id, 'ID'); // default value
+            should.not.exists(options.type); // not in event
+            should.equal(options.isPattern, 'false'); // default value
+            should.equal(options.attributes[0].name, 'NAME');
+            should.equal(options.attributes[0].value, 'VALUE');
+            should.equal(options.attributes[0].type, 'X');
         });
     });
 });

@@ -4,9 +4,18 @@
     "action": {
         "type": "update",
         "parameters": {
-            "name": "abnormal",
-            "value": "true",
-            "attrType": "boolean"
+            "attributes": [
+                {
+                    "name": "abnormal",
+                    "value": "true",
+                    "type": "boolean"
+                },
+                {
+                    "name": "other",
+                    "value": 12.34,
+                    "type": "Number"
+                }
+            ]
         }
     }
 }
