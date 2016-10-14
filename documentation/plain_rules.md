@@ -649,7 +649,7 @@ A rule that will check if the employee has been hired in the last half hour, cou
         "type": "email",
         "template": "So glad with our new ${role}, ${id}!",
         "parameters": {
-            "to": "brox@tid.es",
+            "to": "someone@tid.es",
             "from": "system@iot.tid.es",
             "subject": "Welcome ${id}!"
         }
