@@ -1,4 +1,5 @@
 - Add: Processing location attributes for EPL (#198)
 - Add: Processing time attributes for EPL (#205)
 - Fix: Post axn w/o template (#207)
+- Add: Update axn with multiple attrs (#210)
 
