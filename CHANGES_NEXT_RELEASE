@@ -4,3 +4,4 @@
 - Fix: Alarms for database (replicaset) (#230)
 - Change: Default value for refresh rules to core in config.js, now 5 minutes
 - Change: Default value for DB checking in config.js, now 5 seconds
+- Add: Several actions per rule (#197)
