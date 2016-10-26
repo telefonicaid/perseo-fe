@@ -26,6 +26,8 @@ The fields (all must be present) are
 
 The rule name must consist of the ASCII characters from A to Z, from a to z, digits (0-9), underscore (_) and dash (-). It can have a maximum length of 50 characters.
 
+The field `action` can be also an array of "actions", objects with the same structure than the single action described in the rest of the documentation. Each of those actions will be executed when the rule is fired, avoiding to duplicate a rule only for getting several actions executed. For practical purposes, it is the same result that would be obtained with multiple rules with the same condition.
+
 ## EPL text
 The field ```text``` of the rule must be a valid EPL statement and additionally must honor several restrictions to match expectations of perseo and perseo-core.
 
