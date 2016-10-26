@@ -85,7 +85,16 @@ describe('Entity', function() {
                 },
                 function(cb) {
                     async.eachSeries(entities, function(entity) {
-                        executionsStore.LastTime(DEFAULT_SERVICE, DEFAULT_SUBSERVICE, rule.name, entity._id.id,
+                        executionsStore.LastTime(
+                            {
+                                'event': {
+                                    service: DEFAULT_SERVICE,
+                                    subservice: DEFAULT_SUBSERVICE,
+                                    ruleName: rule.name,
+                                    id: entity._id.id
+                                },
+                                'action': {index: 0}
+                            },
                             function(error, time) {
                                 should.not.exist(error);
                                 time.should.not.be.equal(0);

@@ -212,7 +212,16 @@ describe('Actions', function() {
                     });
                 },
                 function(callback) {
-                    executionsStore.LastTime(action.ev.service, action.ev.subservice, rule.name, action.ev.id,
+                    executionsStore.LastTime({
+                            'event': {
+                                service: action.ev.service,
+                                subservice: action.ev.subservice,
+                                ruleName: rule.name,
+                                id: action.ev.id
+                            },
+                            'action': {index: 0}
+                        },
+
                         function(error, time) {
                             should.not.exist(error);
                             time.should.not.be.equal(0);
@@ -247,7 +256,15 @@ describe('Actions', function() {
                     });
                 },
                 function(callback) {
-                    executionsStore.LastTime(action.ev.service, action.ev.subservice, rule.name, action.ev.id,
+                    executionsStore.LastTime({
+                            'event': {
+                                service: action.ev.service,
+                                subservice: action.ev.subservice,
+                                ruleName: rule.name,
+                                id: action.ev.id
+                            },
+                            'action': {index: 0}
+                        },
                         function(error, time) {
                             should.not.exist(error);
                             time.should.not.be.equal(0);
@@ -265,7 +282,15 @@ describe('Actions', function() {
                     });
                 },
                 function(callback) {
-                    executionsStore.LastTime(action.ev.service, action.ev.subservice, rule.name, action.ev.id,
+                    executionsStore.LastTime({
+                            'event': {
+                                service: action.ev.service,
+                                subservice: action.ev.subservice,
+                                ruleName: rule.name,
+                                id: action.ev.id
+                            },
+                            'action': {index: 0}
+                        },
                         function(error, time) {
                             should.not.exist(error);
                             time.should.be.equal(lastTime);
