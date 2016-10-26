@@ -1,0 +1,46 @@
+{
+    "name": "Several",
+    "text": "select *,\"Several\" as ruleName,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+    "action": [
+        {
+            "type": "sms",
+            "template": "Meter ${Meter} has pression ${Pression}.",
+            "parameters": {
+                "to": "123456789"
+            }
+        },
+        {
+            "type": "update",
+            "parameters": {
+                "name": "abnormal",
+                "value": "true",
+                "type": "boolean"
+            }
+        },
+        {
+            "type": "email",
+            "template": "Meter ${Meter} has pression ${Pression}: ${ev__complejo__saludo} (GEN RULE)",
+            "parameters": {
+                "to": "brox@tid.es",
+                "from": "brox@tid.es"
+            }
+        },
+        {
+            "type": "post",
+            "template": "Meter ${Meter} has pression ${Pression}.",
+            "parameters": {
+                "url": "localhost:1111"
+            }
+        },
+        {
+            "type":"twitter",
+            "template":"Meter ${Meter} has pression ${Pression}.",
+            "parameters":{
+                "consumer_key": "xx",
+                "consumer_secret": "xx",
+                "access_token_key": "xx",
+                "access_token_secret": "xx"
+            }
+        }
+    ]
+}
