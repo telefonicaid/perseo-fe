@@ -25,6 +25,8 @@ The servicepath is a set of scopes separated by "/" and has the following limita
 
 Fiware-ServicePath is an optional header. It is assumed that requests without Fiware-ServicePath belongs to a root scope "/" implicitely. 
 
+Internally to the CEP, scopes do not have a special meaning, so the entire servicepath string is used as a unit, and no operation of CEP takes into account a particular scope inside servicepath. Note this is the current behaviour, although it could change in the future to align more closely to how Orion uses service path (i.e. in a hierarchical way)
+
 ### Notifications
 | Method | Path | Description|
 | ------ |:-----|-----------|
