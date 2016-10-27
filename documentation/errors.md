@@ -7,8 +7,8 @@ A list of errors returned by perseo-fe
 | label | HTTP code | message | description |
 | ----- | --------- | ------- | ----------- |
 | INVALID_NOTICE | 400 | invalid notice format | there is a generic problem with the notice content. Missing fields |
-| ID_ATTRIBUTE | 400 | id as attribute | an attribute has name "id" |
-| TYPE_ATTRIBUTE | 400 |type as attribute | an attribute has name "type" |
+| ID_ATTRIBUTE | 400 | id as attribute | an attribute has "id" as name |
+| TYPE_ATTRIBUTE | 400 |type as attribute | an attribute has "type" as name |
 | INVALID_LOCATION | 400 | invalid location | a field for location has an invalid format |
 | INVALID_LONGITUDE | 400 | longitude is not valid | the longitude component is not valid |
 | INVALID_LATITUDE | 400 | latitude is not valid | the latitude component is not valid |
