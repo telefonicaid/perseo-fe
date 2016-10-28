@@ -160,6 +160,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Fri Oct 28 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.3.0
+- Add: Processing location attributes for EPL (#198)
+- Add: Processing time attributes for EPL (#205)
+- Fix: Post axn w/o template (#207)
+
+
 * Mon Oct 03 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.2.0
 - Add: propagate metadata to core (#182)
 - Add: improved post action (#144)
