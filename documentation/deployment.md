@@ -3,9 +3,25 @@
 
 ### Dependencies
 
-The CEP is a standard Node.js app and doesn't require more dependencies than the Node.js interpreter (0.10 or higher) and the NPM package utility.
+The CEP is a standard Node.js app and doesn't require more dependencies than the Node.js interpreter (0.10) and the NPM package utility.
 
-A mongoDB 2.4 database should be working and accesible before perseo can be started
+A mongoDB 3.2 database should be working and accesible before perseo can be started
+
+### Build your own Docker image
+There is also the possibility to build your own local Docker image of the Perseo-FE component.
+
+To do it, follow the next steps once you have installed Docker in your machine:
+
+1. Navigate to the path where the component repository was cloned.
+2. Launch a Docker build
+    * Using the default NodeJS version of the operating system used defined in FROM keyword of Dockerfile:
+    ```bash
+    sudo docker build -f Dockerfile -t perseo-fe .
+    ```
+    * Using an alternative NodeJS version:
+    ```bash
+    sudo docker build --build-arg NODEJS_VERSION=0.10.46 -f Dockerfile -t perseo-fe .
+    ```
 
 ### Installation using Docker
 
