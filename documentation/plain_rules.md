@@ -150,14 +150,16 @@ Sends an email to the recipient set in the action parameters, with the body mail
 The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax).
 
 ### update attribute action
-Updates an specified attribute of a given entity (in the Context Broker instance specified in the Perseo configuration). The `parameters` map includes the following fields:
+Updates one or more attributes of a given entity (in the Context Broker instance specified in the Perseo configuration). 
+The `parameters` map includes the following fields:
 
-* **name**: *mandatory*, attribute name to set
-* **value**: *mandatory*, attribute value to set
 * id: optional, the id of the entity which attribute is to be updated (by default the id of the entity that triggers the rule is used, i.e. `${id}`)
 * type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that triggers the rule is usedi.e. `${type}`)
 * isPattern: optional, `false` by default
-* attrType: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is changed).
+* attributes: *mandatory*, array of target attributes to update. Each element of the array must contain the fields
+    * **name**: *mandatory*, attribute name to set
+    * **value**: *mandatory*, attribute value to set
+    * type: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is changed).
 * trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context Broker behind a PEP.
 
 
@@ -166,9 +168,13 @@ Updates an specified attribute of a given entity (in the Context Broker instance
         "type":"update",
         "parameters":{
             "id":"${id}_mirror",
-            "name":"abnormal",
-            "attrType":"boolean",
-            "value":"true"
+            "attributes": [
+                {
+                    "name":"abnormal",
+                    "type":"boolean",
+                    "value":"true"
+                }
+            ]
         }
     }
 ```
