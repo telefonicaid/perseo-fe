@@ -53,7 +53,7 @@ Alarm levels
 
 Alarms will be inferred from logs typically. For each alarm, a 'detection strategy' and a 'stop condition' is provided 
 (note that the stop condition is not shown in the next table, but it is included in the detailed description for each 
-alarm below). The conditions are use for detecting logs that should raise the alarm and cease it respectively. The log 
+alarm below). The conditions are used for detecting logs that should raise the alarm and cease it respectively. The log 
 level for alarms is `ERROR` if no other level is said. The message in a condition should be taken as a **prefix** of the 
 possible message in the log. We recommend you to ignore starting spaces in each field in order to avoid missing a log 
 that should meet the condition in other case. 
