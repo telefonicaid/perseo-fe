@@ -62,9 +62,7 @@ Some errors avoid perseo to start up. They have `FATAL` level and are caused by
 * There is no connection to database
 * There is no connection to perseo-core
 
-They should be solved in order to get perseo running. Once it is got started, such errors will cause a log that should 
-generate an alarm.
-
+They should be solved in order to get perseo running.
 
 
 ## Alarm conditions
