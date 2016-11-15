@@ -101,7 +101,7 @@ ____
 
 **Severity**: Major
 
-**Detection strategy:** ``msg`:`ALARM-ON [CORE]`
+**Detection strategy:** `msg`:`ALARM-ON [CORE]`
 
 **Stop condition**: `msg`:`ALARM-OFF [CORE]`
 
