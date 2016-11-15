@@ -10,8 +10,10 @@ Logs have levels `FATAL`, `ERROR`, `INFO` and `DEBUG`. The log level must be set
 config.logLevel = 'INFO';
 ```
 
- In order to have logs that can enable alarms being raised and ceased, `INFO` level should be set in the configuration file.
-With `ERROR` level, alarms could be raised but not ceased.
+ In order to have logs that can enable alarms being raised and ceased, `ERROR` level (or one with more detail) should be
+set in the configuration file. Generally, `ERROR` level should be used at least, as some important information can be 
+lost in other case (e.g. when set to `FATAL`)
+
 
 Each log line contains several fields of the form *name*`=` *value*, separated by `|`
 * `time` time of the log
@@ -49,32 +51,37 @@ Alarm levels
 * **Major** - The system has a problem that degrades the service and must be addressed
 * **Warning** - It is happening something that must be notified
 
-Alarms will be inferred from logs typically. For each alarm, a 'detection strategy' and a 'stop condition' is provided (note that the stop condition is not shown in the next table, but it is included in the detailed description for each alarm below). The conditions are use for detecting logs that should raise the alarm and cease it respectively. Level (`lvl`), operation  (`op`) and message (`msg`) are considerated to evaluate the condition. The message in a condition is considerated to be a prefix of the possible message in the log. Starting spaces in each field is recommended to be eliminated to avoid missing a log that should meet the condition in other case. The expressions `h:p` and `h:p/d` are used as placeholders for any combination on a host, a port and a database (usually the actual values will be taken from config file)
+Alarms will be inferred from logs typically. For each alarm, a 'detection strategy' and a 'stop condition' is provided 
+(note that the stop condition is not shown in the next table, but it is included in the detailed description for each 
+alarm below). The conditions are use for detecting logs that should raise the alarm and cease it respectively. The log 
+level for alarms is `ERROR` if no other level is said. The message in a condition should be taken as a **prefix** of the 
+possible message in the log. We recommend you to ignore starting spaces in each field in order to avoid missing a log 
+that should meet the condition in other case. 
 
 Some errors avoid perseo to start up. They have `FATAL` level and are caused by
 * There is no connection to database
 * There is no connection to perseo-core
 
-They should be solved in order to get perseo running. Once it is got started, such errors will cause a log that should generate an alarm.
+They should be solved in order to get perseo running. Once it is got started, such errors will cause a log that should 
+generate an alarm.
 
 
 
 ## Alarm conditions
 
-Alarm ID | Severity | Description | Action
+Alarm ID | Severity | Description 
 ---|---|---|---|
-[START](#start)|Critical|Impossible to start perseo|Check HTTP connectivity to perseo-core from perseo and connectivity to the mongoDB, as set in the config file.
-[REFRESH](#refresh)|Major|Refreshing of rules at core is failing.|Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path.
-[POST_RULE](#post_rule)|Major|Adding a rule at core is failing.|Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path.
-[DEL_RULE](#del_rule)|Major|Deleting a rule at core is failing.|Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path.
-[PUT_RULE](#put_rule)|Major|Updating a rule at core is failing.|Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path.
-[POST_EVENT](#post_event)|Critical|Sending an event to core is failing.|Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path.
-[EXEC_ACTION](#exec_action)|Critical|Trying to execute an action is failing. (The endpoint can be Orion for update actions or the SMS Gateway for sending SMS)|Check HTTP connectivity to endpoint from perseo. Check the endpoint is working properly.
-[EXEC_EMAIL](#exec_email)|Critical|Trying to execute an email action is failing.|Check the configured SMTP Server is accessible and working properly.
-[CHECK_MASTER](#check_master)|Major|A "slave" perseo has lost visibility of master.|Check the configured SMTP Server is accessible and working properly.
-[DATABASE](#database)|Critical|There is a problem in connection to DB. It can be the perseo database or the Orion database (accessed by no-signal checker|Check configured mongoDB is up and running and is accessible from perseo. Check that databases exist in mongoDB.
-[AUTH](#auth)|Major|There is a problem in connection to Keystone. Update-actions to Orion through PEP are not working|Check HTTP connectivity to Keystone. Check provisioned user and roles/grants.
-[LOOP](#loop)|Major|Some rules can be provoking an infinite loop of triggered actions|Report to client/product about possible loop with the pointed rule. Check log for the correlator in the log message.
+[START](#start)|Critical|Impossible to start perseo|
+[CORE](#core)|Major|Refreshing of rules at core is failing.|
+[POST_EVENT](#post_event)|Critical|Sending an event to core is failing.|
+[EMAIL](#email)|Critical|Trying to execute an email action is failing.|
+[SMS](#sms)|Critical|Trying to execute an SMS action is failing.|
+[ORION](#orion)|Critical|Trying to execute an update action is failing|
+[DATABASE](#database)|Critical|There is a problem in connection to DB.|
+[DATABASE_ORION](#database_orion)|Critical|There is a problem in connection to Orion DB (accessed by no-signal checker)|
+[AUTH](#auth)|Major|There is a problem in connection to Keystone. Update-actions to Orion through PEP are not working|
+[LOOP](#loop)|Major|Some rules can be provoking an infinite loop of triggered actions|
+
 <a name="start"></a>
 ### Alarm START
 
@@ -82,67 +89,26 @@ Alarm ID | Severity | Description | Action
 
 **Detection strategy:** `lvl`:`FATAL` `op`:`perseo`
 
-**Stop condition**: `lvl`:`INFO` `op`:`perseo` `msg`:`perseo started`
+**Stop condition**: `N/A`
 
 **Description**: Starting perseo is failing.
 
 **Action**: Check HTTP connectivity to perseo-core from perseo and connectivity to the mongoDB, as set in the config file.
 
 ____
-<a name="refresh"></a>
-### Alarm REFRESH
+<a name="core"></a>
+### Alarm CORE
 
 **Severity**: Major
 
-**Detection strategy:** `lvl`:`ERROR` `op`:`refreshCore` `msg`:`error put to http://h:p/perseo-core/rules`
+**Detection strategy:** ``msg`:`ALARM-ON [CORE]`
 
-**Stop condition**: `lvl`:`INFO` `op`:`refreshCore` `msg`:`done put to http://h:p/perseo-core/rules`
+**Stop condition**: `msg`:`ALARM-OFF [CORE]`
 
-**Description**: Refreshing of rules at core is failing.
+**Description**: Communication with core is failing.
 
-**Action**: Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path
-
-____
-<a name="post_rule"></a>
-### Alarm POST_RULE
-
-**Severity**: Major
-
-**Detection strategy:** `lvl`:`ERROR` `op`:`/rules` `msg`:`error post to http://h:p/perseo-core/rules`
-
-**Stop condition**: `lvl`:`INFO` `op`:`/rules` `msg`:`done post to http://h:p/perseo-core/rules`
-
-**Description**: Adding a rule at core is failing.
-
-**Action**: Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path
-
-____
-<a name="del_rule"></a>
-### Alarm DEL_RULE
-
-**Severity**: Major
-
-**Detection strategy:** `lvl`:`ERROR` `op`:`/rules` `msg`:`error del to http://h:p/perseo-core/rules`
-
-**Stop condition**:`lvl`:`INFO` `op`:`/rules` `msg`:`done del to http://h:p/perseo-core/rules`
-
-**Description**: Deleting a rule at core is failing.
-
-**Action**: Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path
-
-____
-<a name="put_rule"></a>
-### Alarm PUT_RULE
-
-**Severity**: Major
-
-**Detection strategy:** `lvl`:`ERROR` `op`:`/rules` `msg`:`error put to http://h:p/perseo-core/rules`
-
-**Stop condition**: `lvl`:`INFO` `op`:`/rules` `msg`:`done put to http://h:p/perseo-core/rules`
-
-**Description**: Updating a rule at core is failing.
-
-**Action**: Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path
+**Action**: Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right 
+URL path
 
 ____
 <a name="post_event"></a>
@@ -150,55 +116,54 @@ ____
 
 **Severity**: Critical
 
-**Detection strategy:** `lvl`:`ERROR` `op`:`/notices` `msg`:`error post to http://` *h:p* `/perseo-core/events`
+**Detection strategy:** `msg`:`ALARM-ON [POST_EVENT]`
 
-**Stop condition**: `lvl`:`INFO` `op`:`/notices` `msg`:`done post to http://` *h:p* `/perseo-core/events`
+**Stop condition**: `msg`:`ALARM-OFF [POST_EVENT]`
 
 **Description**: Sending an event to core is failing.
 
 **Action**: Check HTTP connectivity to perseo-core from perseo. Also check deployment of perseo-core at the right URL path
 
 ____
-
-<a name="exec_action"></a>
-### Alarm EXEC_ACTION
-
-**Severity**: Critical
-
-**Detection strategy:** `lvl`:`ERROR` `op`:`/actions/do` `msg`:`error post to http://` *h:p*
-
-**Stop condition**: `lvl`:`INFO` `op`:`/actions/do` `msg`:`done post to http://` *h:p*
-
-**Description**: Trying to execute an action is failing. (The endpoint can be Orion for update actions or the SMS Gateway for sending SMS)
-
-**Action**: Check HTTP connectivity to h:p from perseo. Check the endpoint is working properly
-
-____
-<a name="exec_email"></a>
-### Alarm EXEC_EMAIL
+<a name="email"></a>
+### Alarm EMAIL
 
 **Severity**: Critical
 
-**Detection strategy:** `lvl`:`ERROR` `op`:`/actions/do` `msg`:`emailAction.SendMail`
+**Detection strategy:** `msg`:`ALARM-ON: [EMAIL]`
 
-**Stop condition**: `lvl`:`INFO` `op`:`/actions/do` `msg`:`done emailAction.SendMail`
+**Stop condition**: `msg`:`ALARM-OFF: [EMAIL]`
 
 **Description**: Trying to execute an email action is failing.
 
 **Action**: Check the configured SMTP Server is accessible and working properly
 ____
-<a name="check_master"></a>
-### Alarm CHECK_MASTER
+<a name="sms"></a>
+### Alarm SMS
 
-**Severity**: Major
+**Severity**: Critical
 
-**Detection strategy:** `lvl`:`ERROR` `op`:`checkMaster` `msg`:`master http://` *h:p* `/check is not available`
+**Detection strategy:** `msg`:`ALARM-ON: [SMS]`
 
-**Stop condition**: `lvl`:`INFO` `op`:`checkMaster` `msg`:`master http://` *h:p* `/check availability has changed to true`
+**Stop condition**: `msg`:`ALARM-OFF: [SMS]`
 
-**Description**: A "slave" perseo has lost visibility of master.
+**Description**: Trying to execute an SMS action is failing.
 
-**Action**: Check perseo-master is up and running and is accessible from perseo-slave
+**Action**: Check the configured SMPP Adapter Server is accessible and working properly
+
+____
+<a name="orion"></a>
+### Alarm ORION
+
+**Severity**: Critical
+
+**Detection strategy:** `msg`:`ALARM-ON: [ORION]`
+
+**Stop condition**: `msg`:`ALARM-OFF: [ORION]`
+
+**Description**: Trying to execute an update action is failing.
+
+**Action**: Check the configured Orion path for updating is accessible and working properly
 
 ____
 <a name="database"></a>
@@ -206,23 +171,38 @@ ____
 
 **Severity**: Critical
 
-**Detection strategy:** `lvl`:`ERROR` `msg`:`database error mongodb://` *h:p/db*
+**Detection strategy:** `msg`:`ALARM-ON: [DATABASE]`
 
-**Stop condition**: `lvl`:`INFO` `msg`:`database ping done: mongodb://` *h:p/db*
+**Stop condition**: `msg`:`ALARM-OFF: [DATABASE]`
 
-**Description**: There is a problem in connection to DB. It can be the perseo database or the Orion database (accessed by no-signal checker)
+**Description**: There is a problem in connection to DB.
 
 **Action**: Check configured mongoDB is up and running and is accessible from perseo. Check that databases exist.
 
 ____
+<a name="database_orion"></a>
+### Alarm DATABASE_ORION
+
+**Severity**: Critical
+
+**Detection strategy:** `msg`:`ALARM-ON: [DATABASE_ORION]`
+
+**Stop condition**: `msg`:`ALARM-OFF: [DATABASE_ORION]`
+
+**Description**: There is a problem in connection to Orion DB (accessed by no-signal checker)
+
+**Action**: Check configured mongoDB is up and running and is accessible from perseo. Check that databases exist.
+
+____
+
 <a name="auth"></a>
 ### Alarm AUTH
 
 **Severity**: Major
 
-**Detection strategy:** `lvl`:`ERROR` `msg`:`error retrieving token from Keystone`
+**Detection strategy:** `msg`:`ALARM-ON: [AUTH]`
 
-**Stop condition**: `lvl`:`INFO` `msg`:`token generated successfully`
+**Stop condition**: `msg`:`ALARM-ON: [AUTH]`
 
 **Description**: There is a problem in connection to Keystone. Update-actions to Orion through PEP are not working.
 
@@ -234,7 +214,7 @@ ____
 
 **Severity**: Major
 
-**Detection strategy:** `lvl`:`ERROR` `msg`:`check infinite loop`
+**Detection strategy:** `msg`:`check infinite loop`
 
 **Stop condition**: `N/A`
 
