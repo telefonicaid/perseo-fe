@@ -25,9 +25,13 @@
 
 var async = require('async'),
     should = require('should'),
+    util = require('util'),
+    request = require('request'),
     clients = require('../utils/clients'),
     utilsT = require('../utils/utilsT'),
-    testEnv = require('../utils/testEnvironment');
+    testEnv = require('../utils/testEnvironment'),
+    config = require('../../config'),
+    constants = require('../../lib/constants');
 
 describe('Notices', function() {
     beforeEach(testEnv.commonBeforeEach);
@@ -89,6 +93,29 @@ describe('Notices', function() {
             }, function(error) {
                 should.not.exist(error);
                 done();
+            });
+        });
+        it('several servicepaths should be OK', function(done) {
+            var n = utilsT.loadExample('./test/data/notices_several_sp/several_servicepath.json'),
+                options = {},
+                data;
+            options.headers = {};
+            options.headers[constants.SERVICE_HEADER] = config.DEFAULT_SERVICE;
+            options.headers[constants.SUBSERVICE_HEADER] = '/A,/B,/C';
+            options.url = util.format('http://%s:%s%s',
+                config.endpoint.host,
+                config.endpoint.port,
+                config.endpoint.noticesPath);
+            options.json = n;
+            request.post(options, function localPostNotice(error, response, body) {
+                should.not.exist(error);
+                if (response.headers['content-type'] === 'application/json; charset=utf-8' &&
+                    typeof body === 'string') {
+                    body = JSON.parse(body);
+                }
+                data = {statusCode: response.statusCode, body: body, headers: response.headers};
+                data.should.have.property('statusCode', 200);
+                return done();
             });
         });
     });

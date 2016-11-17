@@ -61,7 +61,7 @@ describe('Notices', function() {
                 after,
                 processed;
 
-            processed = notices.ProcessCBNotice(bn);
+            processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             after = Date.now();
             should.exist(processed);
             processed.should.not.be.instanceof(Error);
@@ -80,7 +80,7 @@ describe('Notices', function() {
                 type: 'DateTime',
                 value: iso8601
             });
-            processed = notices.ProcessCBNotice(bn);
+            processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
             processed.should.not.be.instanceof(Error);
             /*jshint -W106 */
@@ -99,7 +99,7 @@ describe('Notices', function() {
                 type: 'urn:x-ogc:def:trs:IDAS:1.0:ISO8601',
                 value: iso8601
             });
-            processed = notices.ProcessCBNotice(bn);
+            processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
             processed.should.not.be.instanceof(Error);
             /*jshint -W106 */
@@ -117,7 +117,7 @@ describe('Notices', function() {
                 name: 'TimeInstant',
                 value: iso8601
             });
-            processed = notices.ProcessCBNotice(bn);
+            processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
             processed.should.not.be.instanceof(Error);
             /*jshint -W106 */
@@ -145,7 +145,7 @@ describe('Notices', function() {
                     }
                 ]
             });
-            processed = notices.ProcessCBNotice(bn);
+            processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
             processed.should.not.be.instanceof(Error);
             /*jshint -W106 */
@@ -171,7 +171,7 @@ describe('Notices', function() {
                     }
                 ]
             });
-            processed = notices.ProcessCBNotice(bn);
+            processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
             processed.should.not.be.instanceof(Error);
             /*jshint -W106 */
@@ -195,7 +195,7 @@ describe('Notices', function() {
                     }
                 ]
             });
-            processed = notices.ProcessCBNotice(bn);
+            processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
             processed.should.not.be.instanceof(Error);
             /*jshint -W106 */
