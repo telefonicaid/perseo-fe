@@ -1,3 +1,4 @@
 - Add: Update axn with multiple attrs (#210)
 - Change: Logs for alarms in ERROR level and use of ALARM-ON and ALARM-OFF prefixes to signal alarm raising/releasing in log (#218). See doc.
+- Add: Admit several servicepaths in header for notifications (#117)
 
