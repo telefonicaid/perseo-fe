@@ -160,6 +160,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Thu Nov 24 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.3.1
+- Fix: Undo loop detection because of sharing correlator some notifications
+
+
 * Fri Oct 28 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.3.0
 - Add: Processing location attributes for EPL (#198)
 - Add: Processing time attributes for EPL (#205)
