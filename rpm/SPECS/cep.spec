@@ -160,6 +160,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Thu Dec 01 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.4.0
+- Add: Update axn with multiple attrs (#210)
+- Change: Logs for alarms in ERROR level and use of ALARM-ON and ALARM-OFF prefixes to signal alarm raising/releasing in log (#218). See doc.
+- Add: Admit several comma-separated servicepaths in header for notifications (#117)
+- Remove (rollback feature introduced in 1.2.0): break rule execution loops (PR #225)
+
+
 * Fri Oct 28 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.3.0
 - Add: Processing location attributes for EPL (#198)
 - Add: Processing time attributes for EPL (#205)
