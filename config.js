@@ -44,7 +44,8 @@ config.endpoint = {
     vrPath : '/m2m/vrules',
     checkPath : '/check',
     versionPath : '/version',
-    logPath: '/admin/log'
+    logPath: '/admin/log',
+    metricsPath: '/admin/metrics'
 };
 
 /**
