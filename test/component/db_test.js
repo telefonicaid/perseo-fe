@@ -32,7 +32,7 @@ describe('Db', function() {
         var mongourl = '';
         before(function() {
             mongourl = utilsT.getConfig().mongo.url;
-            utilsT.getConfig().mongo.url = 'mongodb://ihopethisdoesnotexistpleeease:0/perseo_testing';
+            utilsT.getConfig().mongo.url = 'mongodb://ihopethisdoesnotexistpleeease:32321/perseo_testing';
         });
         after(function() {
             utilsT.getConfig().mongo.port = mongourl;
