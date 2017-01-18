@@ -7,8 +7,6 @@ branches:
   only:
     - master
 
-services:
- - mongodb
 
 addons:
   apt:
@@ -16,7 +14,7 @@ addons:
     - mongodb-3.2-precise
     packages:
     - mongodb-org-server
-    
+
 install:
  - npm install
 
