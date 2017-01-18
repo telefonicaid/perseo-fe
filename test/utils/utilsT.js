@@ -222,7 +222,7 @@ function configTest() {
     config.endpoint.port = 9182;
     config.perseoCore.noticesURL = 'http://localhost:' + fakeServerPort;
     config.perseoCore.rulesURL = 'http://localhost:' + fakeServerPort;
-    config.logLevel = 'fatal';
+    config.logLevel = 'error';
     config.nextCore = {};
     config.orionDb.url = 'mongodb://localhost:27017/test';
     config.orionDb.prefix = 'oriontest';
