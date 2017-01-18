@@ -1,4 +1,5 @@
 - Fix: Blocked actions in queue when error (#221)
 - Add: Retrieve loop detection, with mark (#226)
-
+- Fix: Alarms for database (replicaset) (#230)
+#
 
