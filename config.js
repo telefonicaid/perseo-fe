@@ -86,7 +86,7 @@ config.orionDb = {
 config.perseoCore = {
     rulesURL : 'http://localhost:8080/perseo-core/rules',
     noticesURL : 'http://localhost:8080/perseo-core/events',
-    interval: 60e3*1
+    interval: 60e3*5
 };
 /**
  * NEXT EPL core options (with HA)
@@ -182,8 +182,11 @@ config.DEFAULT_SERVICE= 'unknownt';
  * @type {Number}
  */
 config.checkDB = {
-    delay: 2000,
-    reportInterval: 15e3
+    delay: 5e3,
+    reportInterval: 15e3,
+    reconnectTries: 1e3,
+    reconnectInterval: 5e3,
+    bufferMaxEntries: 5
 };
 
 /**

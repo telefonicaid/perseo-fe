@@ -48,7 +48,7 @@
     "body-parser": "^1.5.2",
     "express": "^4.7.2",
     "logops": "1.0.0-alpha.7",
-    "mongodb": "^1.4.7",
+    "mongodb": "^2.2.19",
     "nodemailer": "^1.1.1",
     "nodemailer-smtp-transport": "^0.1.12",
     "request": "^2.39.0",
