@@ -72,7 +72,7 @@ If that command cannot be executed successfully, an alarm is generated eventuall
 The configuration parameters (in `config.js`) are
 * *delay*:  Number of milliseconds to check DB connection. Perseo FE checks DB connectivity periodically, and this 
 configuration parameter is the value of the checking interval in milliseconds
-* *bufferMaxEntries: Number of operations buffered up before giving up on getting a working connection.
+* *bufferMaxEntries*: Number of operations buffered up before giving up on getting a working connection.
 The mongoDb driver when the Database is not connected to a replica set but a standalone server also allow to set 
 * *reconnectTries*: Number of of attempts to reconnect when the DB connection fails. If the limit is reached, then 
 Perseo FE stops with a Fatal Error.
