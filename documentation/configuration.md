@@ -47,7 +47,6 @@ In order to have perseo running, there are several basic pieces of information t
 * `config.mongo.URL`: URL for connecting mongoDB.
 * `config.executionsTTL`: Time-To-Live for documents of action executions (seconds).
 * `config.checkDB.delay`:  Number of milliseconds to check DB connection.
-* `config.checkDB.reportInterval`:  Number of milliseconds to report a problem with DB connection in logs.
 * `config.checkDB.reconnectTries`:  Number of of attempts to reconnect.
 * `config.checkDB.reconnectInterval`:  Number of milliseconds to wait between attempts to reconnect.
 * `config.checkDB.bufferMaxEntries`:  Number of operations buffered up before giving up on getting a working connection.

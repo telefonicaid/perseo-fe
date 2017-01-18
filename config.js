@@ -183,7 +183,6 @@ config.DEFAULT_SERVICE= 'unknownt';
  */
 config.checkDB = {
     delay: 5e3,
-    reportInterval: 15e3,
     reconnectTries: 1e3,
     reconnectInterval: 5e3,
     bufferMaxEntries: 5
