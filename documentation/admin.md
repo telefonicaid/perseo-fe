@@ -64,7 +64,7 @@ if a connection problem persist, then the buffer size will eventually overpass
 the limit (all the operations waiting in the buffer will result in error in
 this case). In addition, an DB alarm at `ERROR` level is traced in the logs.
 
-Moreover, in standalone mode (and *not* in replica set modde) the driver
+Moreover, in standalone mode (and *not* in replica set mode) the driver
 also use a couple of parameters: `checkDB.reconnectTries` and
 `checkDB.reconnectInterval` to manage DB connections retries in the case of connection
 problems. If the connection to the server fails in this case, then the driver
