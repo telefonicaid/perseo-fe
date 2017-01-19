@@ -64,7 +64,6 @@ Some errors avoid perseo to start up. They have `FATAL` level and are caused by
 
 They should be solved in order to get perseo running.
 
-
 ## Alarm conditions
 
 Alarm ID | Severity | Description 
@@ -177,6 +176,7 @@ ____
 
 **Action**: Check configured mongoDB is up and running and is accessible from perseo. Check that databases exist.
 
+You can find more information about DB dynamics in the [database aspects](admin.md#database-aspects) documentation.
 ____
 <a name="database_orion"></a>
 ### Alarm DATABASE_ORION
