@@ -47,6 +47,43 @@ can be used to check the process is listening in the appropriate port (provided 
 tcp   0   0  0.0.0.0:1026     0.0.0.0:*   LISTEN   12179/node
 ```
 
+### Database aspects
+
+Perseo FE uses MongoDB for persistence (have a look to the [data models](models.md)
+document for more detail regarding how the data in the DB is structured).
+Perseo FE supports both standalone and replica set configurations for the DB.
+
+At startup time, Perseo tries to connect to CB. If this connection fails,
+then Perseo will decline to run and log a `FATAL` error pointing out the problem
+with DB.
+
+At runtime the connection to DB is managed by the driver. The driver keeps a
+buffer of operations waiting for connection. There is a limit for that buffer,
+established by the `checkDB.bufferMaxEntries` configuration parameter. Thus,
+if a connection problem persist, then the buffer size will eventually overpass
+the limit (all the operations waiting in the buffer will result in error in
+this case). In addition, an DB alarm at `ERROR` level is traced in the logs.
+
+Moreover, in standalone mode (and *not* in replica set modde) the driver
+also use a couple of parameters: `checkDB.reconnectTries` and
+`checkDB.reconnectInterval` to manage DB connections retries in the case of connection
+problems. If the connection to the server fails in this case, then the driver
+will try to reconnect as many time as `reconnectTries`, waiting `reconnectInterval`
+between attemps. Overpassed the limit, Perseo will end with `FATAL` error log
+in the traces (as it does when connection fails at startup time).
+
+Finally, note that perseo does periodical pings to DB in order to check if it
+is active. The pinging period is configured with the `checkDB.delay` parameter.
+This is a measure to "stimulate" the connection with DB and early discover
+possible connection problems. Even in the case of no other operations
+(i.e. Perseo is idle) the ping will accumulate in the buffer, eventually
+overpassing `checkDB.bufferMaxEntries` and raising the DB alarm.
+
+In a DB alarm situation, the ping operation also allows to release the alarm,
+once the DB connection is ok again.
+
+The different configuration parameters introduced above are described
+also in the [configuration document](configuration.md).
 
 ### How to subscribe to Context Broker
 ([Orion](https://github.com/telefonicaid/fiware-orion) has detailed documentation)

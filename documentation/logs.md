@@ -64,23 +64,6 @@ Some errors avoid perseo to start up. They have `FATAL` level and are caused by
 
 They should be solved in order to get perseo running.
 
-## Alarms for DB
-
-In order to detect problems with the connection to the DB and raise an alarm, a periodical ping is sent to the database.
-If that command cannot be executed successfully, an alarm is generated eventually.
-
-The configuration parameters (in `config.js`) are
-* *delay*:  Number of milliseconds to check DB connection. Perseo FE checks DB connectivity periodically, and this 
-configuration parameter is the value of the checking interval in milliseconds
-* *bufferMaxEntries*: Number of operations buffered up before giving up on getting a working connection.
-The mongoDb driver when the Database is not connected to a replica set but a standalone server also allow to set 
-* *reconnectTries*: Number of of attempts to reconnect when the DB connection fails. If the limit is reached, then 
-Perseo FE stops with a Fatal Error.
-* *reconnectInterval*: Number of milliseconds to wait between attempts to reconnect when the DB connection fails. 
- 
- If at the time of starting up, a connection cannot be established to DB, Perseo will decline to run, and log a `FATAL`
-error pointing out the problem with DB.
-
 ## Alarm conditions
 
 Alarm ID | Severity | Description 
@@ -193,6 +176,7 @@ ____
 
 **Action**: Check configured mongoDB is up and running and is accessible from perseo. Check that databases exist.
 
+You can find more information about DB dynamics in the [database aspects](admin.md#database-aspects) documentation.
 ____
 <a name="database_orion"></a>
 ### Alarm DATABASE_ORION

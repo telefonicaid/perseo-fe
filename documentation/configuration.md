@@ -46,10 +46,10 @@ In order to have perseo running, there are several basic pieces of information t
 * `config.orion.URL`: URL for updating contexts at Orion (Context Broker).
 * `config.mongo.URL`: URL for connecting mongoDB.
 * `config.executionsTTL`: Time-To-Live for documents of action executions (seconds).
-* `config.checkDB.delay`:  Number of milliseconds to check DB connection.
-* `config.checkDB.reconnectTries`:  Number of of attempts to reconnect.
-* `config.checkDB.reconnectInterval`:  Number of milliseconds to wait between attempts to reconnect.
-* `config.checkDB.bufferMaxEntries`:  Number of operations buffered up before giving up on getting a working connection.
+* `config.checkDB.delay`:  Number of milliseconds to check DB connection (see [database aspects](admin.md#database-aspects) documentation for mode detail).
+* `config.checkDB.reconnectTries`:  Number of of attempts to reconnect (see [database aspects](admin.md#database-aspects) documentation for mode detail).
+* `config.checkDB.reconnectInterval`:  Number of milliseconds to wait between attempts to reconnect (see [database aspects](admin.md#database-aspects) documentation for mode detail).
+* `config.checkDB.bufferMaxEntries`:  Number of operations buffered up before giving up on getting a working connection (see [database aspects](admin.md#database-aspects) documentation for mode detail).
 
 
 
