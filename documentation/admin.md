@@ -68,7 +68,7 @@ Moreover, in standalone mode (and *not* in replica set mode) the driver
 also use a couple of parameters: `checkDB.reconnectTries` and
 `checkDB.reconnectInterval` to manage DB connections retries in the case of connection
 problems. If the connection to the server fails in this case, then the driver
-will try to reconnect as many time as `reconnectTries`, waiting `reconnectInterval`
+will try to reconnect as many times as `reconnectTries`, waiting `reconnectInterval`
 between attemps. Overpassed the limit, Perseo will end with `FATAL` error log
 in the traces (as it does when connection fails at startup time).
 
