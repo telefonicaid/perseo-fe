@@ -26,7 +26,7 @@
 var should = require('should'),
     metrics = require('../../lib/models/metrics');
 
-describe('Metrcis', function() {
+describe('Metrics', function() {
     var service = 'S',
         subservice = 'SP';
     describe('service time (average)', function() {
