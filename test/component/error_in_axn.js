@@ -84,7 +84,7 @@ describe('Actions', function() {
                             // Should not be any action in queue
                             should.equal(array.length, 0);
                             return callback();
-                        }, 50);
+                        }, 100);
                     }
                 ], callbackES);
             }, function(error) {
