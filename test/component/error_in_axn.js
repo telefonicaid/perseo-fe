@@ -82,7 +82,7 @@ describe('Actions', function() {
                             var array = actions.getInProcessArray(config.DEFAULT_SERVICE, config.DEFAULT_SUBSERVICE,
                                 rule.name, action.ev.id, action.ev.type);
                             // Should not be any action in queue
-                            should.equal(array.length, 0);
+                            should.equal(array.length(), 0);
                             return callback();
                         }, 100);
                     }
