@@ -23,9 +23,7 @@
 
 'use strict';
 
-var
-    util = require('util'),
-    async = require('async'),
+var async = require('async'),
     should = require('should'),
     utilsT = require('../utils/utilsT'),
     testEnv = require('../utils/testEnvironment'),
@@ -63,7 +61,9 @@ describe('Entity', function() {
             checkInterval = 1,
             rule = utilsT.loadExample('./test/data/no_signal/generic_nonsignal.json');
 
-        utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
+        // This is not correct, it does not affect actions module
+        //      utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
+        // We must start with the fake server in the initial configuration
         this.timeout(2 * checkInterval * 60e3);
         it('should return silent entities', function(done) {
             var start = Date.now();

@@ -222,6 +222,12 @@ function configTest() {
     config.endpoint.port = 9182;
     config.perseoCore.noticesURL = 'http://localhost:' + fakeServerPort;
     config.perseoCore.rulesURL = 'http://localhost:' + fakeServerPort;
+
+    // This is necessary for SMS actions
+    // The configuration for a working server must be present since the
+    // beginning, for the module 'actions' taking it into account
+    config.sms.URL = 'http://localhost:' + fakeServerPort;
+
     config.logLevel = 'fatal';
     config.nextCore = {};
     config.orionDb.url = 'mongodb://localhost:27017/test';

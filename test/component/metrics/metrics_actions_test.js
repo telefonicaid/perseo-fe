@@ -37,7 +37,7 @@ describe('Metrics', function() {
     afterEach(testEnv.commonAfterEach);
 
     describe('#PostAction()', function() {
-  /*      it('should count fired valid actions', function(done) {
+       it('should count fired valid actions', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_actions');
             metrics.GetDecorated(true); // reset metrics
             async.eachSeries(cases, function(c, callback) {
@@ -62,7 +62,7 @@ describe('Metrics', function() {
                 return done();
             });
         });
-*/
+
         it('should increment successful sms', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_sms.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_sms.json');
@@ -331,7 +331,7 @@ describe('Metrics', function() {
                             should.equal(m.services.unknownt.sum.outgoingTransactions, 1);
                             should.equal(m.services.unknownt.sum.outgoingTransactionsErrors, 1);
                             return callback();
-                        }, 500);
+                        }, 50);
                     });
                 }
             ], done);
