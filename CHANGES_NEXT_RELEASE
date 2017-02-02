@@ -1,7 +1,0 @@
-- Fix: Blocked actions in queue when error (#221)
-- Add: Retrieve loop detection, with mark (#226)
-- Add: metrics REST API (#227)
-- Fix: Alarms for database (replicaset) (#230)
-- Change: Default value for refresh rules to core in config.js, now 5 minutes
-- Change: Default value for DB checking in config.js, now 5 seconds
-- Add: Several actions per rule (#197)

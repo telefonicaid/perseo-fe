@@ -160,6 +160,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Thu Feb 02 2017 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.5.0
+- Fix: Blocked actions in queue when error (#221)
+- Add: Retrieve loop detection, with mark (#226)
+- Add: metrics REST API (#227)
+- Fix: Alarms for database (replicaset) (#230)
+- Change: Default value for refresh rules to core in config.js, now 5 minutes
+- Change: Default value for DB checking in config.js, now 5 seconds
+- Add: Several actions per rule (#197)
+
 * Thu Dec 01 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.4.0
 - Add: Update axn with multiple attrs (#210)
 - Change: Logs for alarms in ERROR level and use of ALARM-ON and ALARM-OFF prefixes to signal alarm raising/releasing in log (#218). See doc.
