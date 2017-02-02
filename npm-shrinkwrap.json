@@ -65,7 +65,7 @@
               "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.0.7.tgz",
               "dependencies": {
                 "mime-db": {
-                  "version": "1.5.0-next",
+                  "version": "1.5.0",
                   "from": "https://registry.npmjs.org/mime-db/-/mime-db-1.5.0.tgz",
                   "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.5.0.tgz"
                 }
@@ -103,7 +103,7 @@
               "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.0.7.tgz",
               "dependencies": {
                 "mime-db": {
-                  "version": "1.5.0-next",
+                  "version": "1.5.0",
                   "from": "https://registry.npmjs.org/mime-db/-/mime-db-1.5.0.tgz",
                   "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.5.0.tgz"
                 }
@@ -279,7 +279,7 @@
               "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.0.7.tgz",
               "dependencies": {
                 "mime-db": {
-                  "version": "1.5.0-next",
+                  "version": "1.5.0",
                   "from": "https://registry.npmjs.org/mime-db/-/mime-db-1.5.0.tgz",
                   "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.5.0.tgz"
                 }
@@ -616,7 +616,7 @@
               "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.0.7.tgz",
               "dependencies": {
                 "mime-db": {
-                  "version": "1.5.0-next",
+                  "version": "1.5.0",
                   "from": "https://registry.npmjs.org/mime-db/-/mime-db-1.5.0.tgz",
                   "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.5.0.tgz"
                 }
