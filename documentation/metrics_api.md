@@ -108,7 +108,7 @@ in an atomical way, resets metrics.
 
 The following metrics are common with other IoT platform componentes (e.g. Orion Contex Broker):
 
-* **incomingTransactions**: number of requests consumed by Orion. All kind of transactions
+* **incomingTransactions**: number of requests consumed by Perseo. All kind of transactions
   (no matter if they are ok transactions or error transactions) count for this metric.
 * **incomingTransactionRequestSize**: total size (bytes) in requests associated to incoming transactions
   ("in" from the point of view of Perseo). All kind of transactions (no matter if they are ok transactions
