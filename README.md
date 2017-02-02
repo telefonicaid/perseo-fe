@@ -10,6 +10,7 @@ CEP implementation for IoT platform
 	* [Deployment](documentation/deployment.md)
 	* [Configuration](documentation/configuration.md)
 	* [Administration](documentation/admin.md)
+	* [Metrics API](documentation/metrics_api.md)
 
 * [API] (documentation/api.md)
 	* [Plain rules](documentation/plain_rules.md)
