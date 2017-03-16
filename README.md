@@ -12,11 +12,11 @@ CEP implementation for IoT platform
 	* [Administration](documentation/admin.md)
 	* [Metrics API](documentation/metrics_api.md)
 
-* [API] (documentation/api.md)
+* [API](documentation/api.md)
 	* [Plain rules](documentation/plain_rules.md)
 	* [Errors](documentation/errors.md)
-* [Data model] (documentation/models.md)
-* [Available actions for PEP] (documentation/pep_actions.md)
+* [Data model](documentation/models.md)
+* [Available actions for PEP](documentation/pep_actions.md)
 * [Documentation for developers of perseo](documentation/development.md)
 
 ## License
