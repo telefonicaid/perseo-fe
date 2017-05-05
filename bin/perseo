@@ -76,8 +76,12 @@ function loadConfiguration() {
         config.endpoint.port = process.env.PERSEO_ENDPOINT_PORT;
     }
     if (process.env.PERSEO_MONGO_HOST) {
-        config.mongo.url = 'mongodb://' + process.env.PERSEO_MONGO_HOST + ':27017/cep';
-        config.orionDb.url = 'mongodb://' + process.env.PERSEO_MONGO_HOST + ':27017/orion';
+        var mongoDBEndpoint = process.env.PERSEO_MONGO_HOST;
+        // set default mongodb port if it not provided
+        if (mongoDBEndpoint.indexOf(':') == -1)
+            mongoDBEndpoint += ':27017';
+        config.mongo.url = 'mongodb://' + mongoDBEndpoint + '/cep';
+        config.orionDb.url = 'mongodb://' + mongoDBEndpoint + '/orion';
     }
     if (process.env.PERSEO_CORE_URL) {
         config.perseoCore.rulesURL = process.env.PERSEO_CORE_URL + '/perseo-core/rules';
