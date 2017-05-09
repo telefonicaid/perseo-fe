@@ -129,6 +129,17 @@ config.sms = {
 };
 
 /**
+ * SMPP endpoint options
+ */
+config.smpp = {
+    host: '',
+    port: '',
+    systemid: '',
+    password: '',
+    from: 'tel:22012;phone-context=+34'
+};
+
+/**
  * Orion (Context Broker) endpoint options
  */
 config.orion = {
