@@ -43,6 +43,10 @@ Perseo queries the Orion database periodically in order to check if the entities
 
 Some actions send an SMS to a number set in the action parameters. This is done by an HTTP post to the SMS gateway (SMPP adapter), configured in perseo.
 
+### SMPP link
+
+Some actions send an SMS to a number set in the action parameters. Alternativaly instead of use a SMS gateway this can be done by and HTTP post to a SMPP server configured in perseo.
+
 ### SMTP server
 
 Some actions send an email. It is done using an SMTP server configured in perseo.
