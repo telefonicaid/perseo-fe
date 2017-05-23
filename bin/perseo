@@ -58,6 +58,11 @@ function loadConfiguration() {
         'PERSEO_SMS_API_KEY',
         'PERSEO_SMS_API_SECRET',
         'PERSEO_SMS_FROM',
+        'PERSEO_SMPP_HOST',
+        'PERSEO_SMPP_PORT',
+        'PERSEO_SMPP_SYSTEMID',
+        'PERSEO_SMPP_PASSWORD',
+        'PERSEO_SMPP_FROM',
         'PERSEO_NOTICES_PATH',
         'PERSEO_RULES_PATH'
 
@@ -112,6 +117,13 @@ function loadConfiguration() {
     config.sms.API_KEY = process.env.PERSEO_SMS_API_KEY || config.sms.API_KEY;
     config.sms.API_SECRET = process.env.PERSEO_SMS_API_SECRET || config.sms.API_SECRET;
     config.sms.from = process.env.PERSEO_SMS_FROM || config.sms.from;
+
+    config.smpp = config.smpp || {};
+    config.smpp.host = process.env.PERSEO_SMPP_HOST || config.smpp.host;
+    config.smpp.port = process.env.PERSEO_SMPP_PORT || config.smpp.port;
+    config.smpp.systemid = process.env.PERSEO_SMPP_SYSTEMID || config.smpp.systemid;
+    config.smpp.password = process.env.PERSEO_SMPP_PASSWORD || config.smpp.password;
+    config.smpp.from = process.env.PERSEO_SMPP_FROM || config.smpp.from;
 
     config.endpoint.noticesPath = process.env.PERSEO_NOTICES_PATH || config.endpoint.noticesPath;
     config.endpoint.rulesPath = process.env.PERSEO_RULES_PATH || config.endpoint.rulesPath;
