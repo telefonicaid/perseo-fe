@@ -25,6 +25,11 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_SMS_API_KEY        | API KEY for sending SMSs, if necessary. Only for the SMPP Adapter simulator |
 | PERSEO_SMS_API_SECRET     | API SECRET for sending SMSs, if necessary. Only for the SMPP Adapter simulator |
 | PERSEO_SMS_FROM           | Field `from` for the outgoing SMSs. Required by the SMPP Adapter |
+| PERSEO_SMPP_HOST          | Host of the SMPP server |
+| PERSEO_SMPP_PORT          | Port of the SMPP server |
+| PERSEO_SMPP_SYSTEMID      | SystemID for the user of the SMPP server |
+| PERSEO_SMPP_PASSWORD      | Password for the user of the SMPP server |
+| PERSEO_SMPP_FROM          | Field `from` for the outgoing SMSs. |
 | PERSEO_NOTICES_PATH       | Path for incoming notices, default value '/notices' |
 | PERSEO_RULES_PATH         | Path for incoming rules, default value '/rules' |
 
