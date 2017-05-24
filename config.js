@@ -136,7 +136,8 @@ config.smpp = {
     port: '',
     systemid: '',
     password: '',
-    from: 'tel:22012;phone-context=+34'
+    from: 'tel:22012;phone-context=+34',
+    enabled: false
 };
 
 /**
