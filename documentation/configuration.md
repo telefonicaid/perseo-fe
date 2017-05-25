@@ -11,7 +11,8 @@ The following table shows the environment variables available for Perseo configu
 |:------------------------- |:-------------------------------------- |
 | PERSEO_ENDPOINT_HOST      | Host where the CEP will listen.        |
 | PERSEO_ENDPOINT_PORT      | Port where the CEP will listen.        |
-| PERSEO_MONGO_HOST         | Host of the Mongo DB.                  |
+| PERSEO_MONGO_ENDPOINT     | Endpoint list for Mongo DB.            |
+| PERSEO_MONGO_REPLICASET   | ReplicaSet name for Mongo DB.          |
 | PERSEO_CORE_URL           | Full URL where Perseo Core is listening (e.g: http://63.34.124.1:8080). |
 | PERSEO_NEXT_URL           | Full URL where Perseo Core replicated node is listening. Same format as above. |
 | PERSEO_ORION_URL          | Full URL of the Orion Context Broker (e.g: http://64.124.28.15:1026).          |
