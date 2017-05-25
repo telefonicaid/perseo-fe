@@ -73,6 +73,7 @@ Alarm ID | Severity | Description
 [POST_EVENT](#post_event)|Critical|Sending an event to core is failing.|
 [EMAIL](#email)|Critical|Trying to execute an email action is failing.|
 [SMS](#sms)|Critical|Trying to execute an SMS action is failing.|
+[SMPP](#smpp)|Critical|Trying to execute an SMPP action is failing.|
 [ORION](#orion)|Critical|Trying to execute an update action is failing|
 [DATABASE](#database)|Critical|There is a problem in connection to DB.|
 [DATABASE_ORION](#database_orion)|Critical|There is a problem in connection to Orion DB (accessed by no-signal checker)|
@@ -147,6 +148,20 @@ ____
 **Description**: Trying to execute an SMS action is failing.
 
 **Action**: Check the configured SMPP Adapter Server is accessible and working properly
+
+____
+<a name="smpp"></a>
+### Alarm SMPP
+
+**Severity**: Critical
+
+**Detection strategy:** `msg`:`ALARM-ON: [SMPP]`
+
+**Stop condition**: `msg`:`ALARM-OFF: [SMPP]`
+
+**Description**: Trying to execute an SMPP action is failing.
+
+**Action**: Check the configured SMPP Server is accessible and working properly
 
 ____
 <a name="orion"></a>
