@@ -29,7 +29,7 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_SMPP_PORT          | Port of the SMPP server |
 | PERSEO_SMPP_SYSTEMID      | SystemID for the user of the SMPP server |
 | PERSEO_SMPP_PASSWORD      | Password for the user of the SMPP server |
-| PERSEO_SMPP_FROM          | Field `from` for the outgoing SMSs. |
+| PERSEO_SMPP_FROM          | Number from SMS are sending by SMPP server |
 | PERSEO_SMPP_ENABLED       | SMPP is default method for SMS instead of use SMS gateway |
 | PERSEO_NOTICES_PATH       | Path for incoming notices, default value '/notices' |
 | PERSEO_RULES_PATH         | Path for incoming rules, default value '/rules' |
@@ -53,7 +53,7 @@ In order to have perseo running, there are several basic pieces of information t
 * `config.smpp.port`: Port of the SMPP server.
 * `config.smpp.systemid`: SystemID for the user of the SMPP server
 * `config.smpp.password`: Password for the user of the SMPP server
-* `config.smpp.from`: Field `from` for the outgoing SMSs.
+* `config.smpp.from`: Number from SMS are sending by SMPP server
 * `config.smpp.enabled`: SMPP is default method for SMS instead of use SMS gateway.
 * `config.orion.URL`: URL for updating contexts at Orion (Context Broker).
 * `config.mongo.URL`: URL for connecting mongoDB.
