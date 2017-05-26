@@ -46,6 +46,8 @@ function loadConfiguration() {
         'PERSEO_ENDPOINT_PORT',
         'PERSEO_MONGO_ENDPOINT',
         'PERSEO_MONGO_REPLICASET',
+        'PERSEO_MONGO_USER',
+        'PERSEO_MONGO_PASSWORD',
         'PERSEO_CORE_URL',
         'PERSEO_NEXT_URL',
         'PERSEO_ORION_URL',
@@ -83,9 +85,13 @@ function loadConfiguration() {
         config.endpoint.port = process.env.PERSEO_ENDPOINT_PORT;
     }
     if (process.env.PERSEO_MONGO_ENDPOINT) {
-        config.mongo.url = 'mongodb://' + process.env.PERSEO_MONGO_ENDPOINT + '/cep' + (
+        config.mongo.url = 'mongodb://'+ (
+            process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD ? process.env.PERSEO_MONGO_USER + ':' + process.env.PERSEO_MONGO_PASSWORD + '@' : '') +
+            process.env.PERSEO_MONGO_ENDPOINT + '/cep' + (
             process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '');
-        config.orionDb.url = 'mongodb://' + process.env.PERSEO_MONGO_ENDPOINT + '/orion' + (
+        config.orionDb.url = 'mongodb://' + (
+            process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD ? process.env.PERSEO_MONGO_USER + ':' + process.env.PERSEO_MONGO_PASSWORD + '@' : '') +
+            process.env.PERSEO_MONGO_ENDPOINT + '/orion' + (
             process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '');
     }
     if (process.env.PERSEO_CORE_URL) {
