@@ -1,1 +1,2 @@
 - Add native SMPP support [#246]
+- Fix mongo endpoint variable to compose a full mongo connection string [#243]
