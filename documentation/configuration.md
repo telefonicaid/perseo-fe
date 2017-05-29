@@ -11,7 +11,7 @@ The following table shows the environment variables available for Perseo configu
 |:------------------------- |:-------------------------------------- |
 | PERSEO_ENDPOINT_HOST      | Host where the CEP will listen.        |
 | PERSEO_ENDPOINT_PORT      | Port where the CEP will listen.        |
-| PERSEO_MONGO_ENDPOINT     | Endpoint (host:[port]) list for Mongo DB.            |
+| PERSEO_MONGO_ENDPOINT     | Endpoint (host[:port]) list for Mongo DB.            |
 | PERSEO_MONGO_REPLICASET   | ReplicaSet name for Mongo DB.          |
 | PERSEO_MONGO_USER         | User for Mongo DB.                     |
 | PERSEO_MONGO_PASSWORD     | Password for Mongo DB.                 g|
