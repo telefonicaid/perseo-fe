@@ -1,1 +1,3 @@
 - Add native SMPP support [#246]
+- Add PERSEO_MONGO_ENDPOINT, PERSEO_MONGO_USER and PERSEO_MONGO_PASSWORD variables to compose a full mongo connection string [#243]
+- Remove PERSEO_MONGO_HOST variable (use PERSEO_MONGO_ENDPOINT instead) [#243]
