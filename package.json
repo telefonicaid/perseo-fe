@@ -14,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/telefonicaid/perseo-fe/issues"
   },
-  "main": "lib/perseo",
+  "main": "bin/perseo",
   "engines": {
     "node": ">=0.10.8"
   },
