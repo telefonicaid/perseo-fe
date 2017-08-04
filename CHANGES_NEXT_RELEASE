@@ -1,3 +1,4 @@
+- Fixed issue https://github.com/telefonicaid/perseo-fe/issues/253 solving timer leak in HA-refresh scenarios 
 - Modify main section of package.json from lib/perseo to bin/perseo
 - Add native SMPP support [#246]
 - Add PERSEO_MONGO_ENDPOINT, PERSEO_MONGO_USER and PERSEO_MONGO_PASSWORD variables to compose a full mongo connection string [#243]
