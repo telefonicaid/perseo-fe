@@ -44,7 +44,10 @@ function loadConfiguration() {
     var environmentValues = [
         'PERSEO_ENDPOINT_HOST',
         'PERSEO_ENDPOINT_PORT',
-        'PERSEO_MONGO_HOST',
+        'PERSEO_MONGO_ENDPOINT',
+        'PERSEO_MONGO_REPLICASET',
+        'PERSEO_MONGO_USER',
+        'PERSEO_MONGO_PASSWORD',
         'PERSEO_CORE_URL',
         'PERSEO_NEXT_URL',
         'PERSEO_ORION_URL',
@@ -58,6 +61,12 @@ function loadConfiguration() {
         'PERSEO_SMS_API_KEY',
         'PERSEO_SMS_API_SECRET',
         'PERSEO_SMS_FROM',
+        'PERSEO_SMPP_HOST',
+        'PERSEO_SMPP_PORT',
+        'PERSEO_SMPP_SYSTEMID',
+        'PERSEO_SMPP_PASSWORD',
+        'PERSEO_SMPP_FROM',
+        'PERSEO_SMPP_ENABLED',
         'PERSEO_NOTICES_PATH',
         'PERSEO_RULES_PATH'
 
@@ -75,9 +84,15 @@ function loadConfiguration() {
     if (process.env.PERSEO_ENDPOINT_PORT) {
         config.endpoint.port = process.env.PERSEO_ENDPOINT_PORT;
     }
-    if (process.env.PERSEO_MONGO_HOST) {
-        config.mongo.url = 'mongodb://' + process.env.PERSEO_MONGO_HOST + ':27017/cep';
-        config.orionDb.url = 'mongodb://' + process.env.PERSEO_MONGO_HOST + ':27017/orion';
+    if (process.env.PERSEO_MONGO_ENDPOINT) {
+        config.mongo.url = 'mongodb://'+ (
+            process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD ? process.env.PERSEO_MONGO_USER + ':' + process.env.PERSEO_MONGO_PASSWORD + '@' : '') +
+            process.env.PERSEO_MONGO_ENDPOINT + '/cep' + (
+            process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '');
+        config.orionDb.url = 'mongodb://' + (
+            process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD ? process.env.PERSEO_MONGO_USER + ':' + process.env.PERSEO_MONGO_PASSWORD + '@' : '') +
+            process.env.PERSEO_MONGO_ENDPOINT + '/orion' + (
+            process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '');
     }
     if (process.env.PERSEO_CORE_URL) {
         config.perseoCore.rulesURL = process.env.PERSEO_CORE_URL + '/perseo-core/rules';
@@ -113,6 +128,13 @@ function loadConfiguration() {
     config.sms.API_SECRET = process.env.PERSEO_SMS_API_SECRET || config.sms.API_SECRET;
     config.sms.from = process.env.PERSEO_SMS_FROM || config.sms.from;
 
+    config.smpp = config.smpp || {};
+    config.smpp.host = process.env.PERSEO_SMPP_HOST || config.smpp.host;
+    config.smpp.port = process.env.PERSEO_SMPP_PORT || config.smpp.port;
+    config.smpp.systemid = process.env.PERSEO_SMPP_SYSTEMID || config.smpp.systemid;
+    config.smpp.password = process.env.PERSEO_SMPP_PASSWORD || config.smpp.password;
+    config.smpp.from = process.env.PERSEO_SMPP_FROM || config.smpp.from;
+    config.smpp.enabled = process.env.PERSEO_SMPP_ENABLED || config.smpp.enabled;
     config.endpoint.noticesPath = process.env.PERSEO_NOTICES_PATH || config.endpoint.noticesPath;
     config.endpoint.rulesPath = process.env.PERSEO_RULES_PATH || config.endpoint.rulesPath;
 }

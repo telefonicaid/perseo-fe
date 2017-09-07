@@ -63,6 +63,9 @@ config.slaveDelay = 500;
  * DB Configuration.
  */
 config.mongo = {
+    // The URI to use for the database connection. It supports replica set URIs.
+    // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+    // I.e.: 'mongodb://user:pass@host1:27017,host2:27018,host3:27019/cep?replicaSet=myrep'
     url : 'mongodb://localhost:27017/cep'
 };
 
@@ -126,6 +129,18 @@ config.sms = {
     API_KEY : '',
     API_SECRET: '',
     from: 'tel:22012;phone-context=+34'
+};
+
+/**
+ * SMPP endpoint options
+ */
+config.smpp = {
+    host: '',
+    port: '',
+    systemid: '',
+    password: '',
+    from: '346666666',
+    enabled: false
 };
 
 /**
