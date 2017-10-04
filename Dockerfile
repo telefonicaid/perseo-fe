@@ -16,9 +16,9 @@
 # For those usages not covered by the GNU Affero General Public License please contact with iot_support at tid dot es
 #
 
-FROM centos:6
+FROM centos:7
 
-ARG NODEJS_VERSION=
+ARG NODEJS_VERSION=4.8.4
 
 COPY . /opt/perseo-fe/
 WORKDIR /opt/perseo-fe
