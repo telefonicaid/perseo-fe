@@ -56,7 +56,7 @@
             },
             "statuses": {
               "version": "1.3.1",
-              "from": "statuses@>=1.3.1 <2.0.0",
+              "from": "statuses@>=1.3.1 <1.4.0",
               "resolved": "https://registry.npmjs.org/statuses/-/statuses-1.3.1.tgz"
             }
           }
@@ -81,7 +81,7 @@
         "qs": {
           "version": "6.5.1",
           "from": "qs@6.5.1",
-          "resolved": "https://registry.npmjs.org/qs/-/qs-6.5.1.tgz"
+          "resolved": "http://registry.npmjs.org/qs/-/qs-6.5.1.tgz"
         },
         "raw-body": {
           "version": "2.3.2",
@@ -107,7 +107,7 @@
             },
             "mime-types": {
               "version": "2.1.17",
-              "from": "mime-types@>=2.1.15 <2.2.0",
+              "from": "mime-types@>=2.1.17 <2.2.0",
               "resolved": "https://registry.npmjs.org/mime-types/-/mime-types-2.1.17.tgz",
               "dependencies": {
                 "mime-db": {
@@ -136,7 +136,7 @@
     "express": {
       "version": "4.16.1",
       "from": "express@>=4.7.2 <5.0.0",
-      "resolved": "http://registry.npmjs.org/express/-/express-4.16.1.tgz",
+      "resolved": "https://registry.npmjs.org/express/-/express-4.16.1.tgz",
       "dependencies": {
         "accepts": {
           "version": "1.3.4",
@@ -222,7 +222,7 @@
         "finalhandler": {
           "version": "1.1.0",
           "from": "finalhandler@1.1.0",
-          "resolved": "http://registry.npmjs.org/finalhandler/-/finalhandler-1.1.0.tgz",
+          "resolved": "https://registry.npmjs.org/finalhandler/-/finalhandler-1.1.0.tgz",
           "dependencies": {
             "unpipe": {
               "version": "1.0.0",
@@ -271,7 +271,7 @@
         "proxy-addr": {
           "version": "2.0.2",
           "from": "proxy-addr@>=2.0.2 <2.1.0",
-          "resolved": "http://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.2.tgz",
+          "resolved": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.2.tgz",
           "dependencies": {
             "forwarded": {
               "version": "0.1.2",
@@ -281,14 +281,14 @@
             "ipaddr.js": {
               "version": "1.5.2",
               "from": "ipaddr.js@1.5.2",
-              "resolved": "http://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.5.2.tgz"
+              "resolved": "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.5.2.tgz"
             }
           }
         },
         "qs": {
           "version": "6.5.1",
           "from": "qs@>=6.5.1 <6.6.0",
-          "resolved": "https://registry.npmjs.org/qs/-/qs-6.5.1.tgz"
+          "resolved": "http://registry.npmjs.org/qs/-/qs-6.5.1.tgz"
         },
         "range-parser": {
           "version": "1.2.0",
@@ -303,7 +303,7 @@
         "send": {
           "version": "0.16.1",
           "from": "send@0.16.1",
-          "resolved": "http://registry.npmjs.org/send/-/send-0.16.1.tgz",
+          "resolved": "https://registry.npmjs.org/send/-/send-0.16.1.tgz",
           "dependencies": {
             "destroy": {
               "version": "1.0.4",
@@ -330,7 +330,7 @@
             "mime": {
               "version": "1.4.1",
               "from": "mime@1.4.1",
-              "resolved": "http://registry.npmjs.org/mime/-/mime-1.4.1.tgz"
+              "resolved": "https://registry.npmjs.org/mime/-/mime-1.4.1.tgz"
             },
             "ms": {
               "version": "2.0.0",
@@ -342,12 +342,12 @@
         "serve-static": {
           "version": "1.13.1",
           "from": "serve-static@1.13.1",
-          "resolved": "http://registry.npmjs.org/serve-static/-/serve-static-1.13.1.tgz"
+          "resolved": "https://registry.npmjs.org/serve-static/-/serve-static-1.13.1.tgz"
         },
         "setprototypeof": {
           "version": "1.1.0",
           "from": "setprototypeof@1.1.0",
-          "resolved": "http://registry.npmjs.org/setprototypeof/-/setprototypeof-1.1.0.tgz"
+          "resolved": "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.1.0.tgz"
         },
         "statuses": {
           "version": "1.3.1",
@@ -381,7 +381,7 @@
         "utils-merge": {
           "version": "1.0.1",
           "from": "utils-merge@1.0.1",
-          "resolved": "http://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz"
+          "resolved": "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz"
         },
         "vary": {
           "version": "1.1.2",
@@ -432,7 +432,7 @@
     "mongodb": {
       "version": "2.2.31",
       "from": "mongodb@>=2.2.19 <3.0.0",
-      "resolved": "https://registry.npmjs.org/mongodb/-/mongodb-2.2.31.tgz",
+      "resolved": "http://registry.npmjs.org/mongodb/-/mongodb-2.2.31.tgz",
       "dependencies": {
         "es6-promise": {
           "version": "3.2.1",
@@ -442,12 +442,12 @@
         "mongodb-core": {
           "version": "2.1.15",
           "from": "mongodb-core@2.1.15",
-          "resolved": "https://registry.npmjs.org/mongodb-core/-/mongodb-core-2.1.15.tgz",
+          "resolved": "http://registry.npmjs.org/mongodb-core/-/mongodb-core-2.1.15.tgz",
           "dependencies": {
             "bson": {
               "version": "1.0.4",
               "from": "bson@>=1.0.4 <1.1.0",
-              "resolved": "https://registry.npmjs.org/bson/-/bson-1.0.4.tgz"
+              "resolved": "http://registry.npmjs.org/bson/-/bson-1.0.4.tgz"
             },
             "require_optional": {
               "version": "1.0.1",
@@ -471,7 +471,7 @@
         "readable-stream": {
           "version": "2.2.7",
           "from": "readable-stream@2.2.7",
-          "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.2.7.tgz",
+          "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.2.7.tgz",
           "dependencies": {
             "buffer-shims": {
               "version": "1.0.0",
@@ -933,7 +933,7 @@
         "qs": {
           "version": "6.5.1",
           "from": "qs@>=6.5.1 <6.6.0",
-          "resolved": "https://registry.npmjs.org/qs/-/qs-6.5.1.tgz"
+          "resolved": "http://registry.npmjs.org/qs/-/qs-6.5.1.tgz"
         },
         "safe-buffer": {
           "version": "5.1.1",
