@@ -161,6 +161,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Wed Oct 18 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.6.0
+- FEATURE update node version to 4.8.4
+- Fixed timer leak in HA-refresh scenarios [#253]
+- Modify main section of package.json from lib/perseo to bin/perseo
+- Add native SMPP support [#246]
+- Add PERSEO_MONGO_ENDPOINT, PERSEO_MONGO_USER and PERSEO_MONGO_PASSWORD variables to compose a full mongo connection string [#243]
+- Remove PERSEO_MONGO_HOST variable (use PERSEO_MONGO_ENDPOINT instead) [#243]
+- Add smpp dependence to npm-shrinkwrap [#249]
+
 * Thu Feb 02 2017 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.5.0
 - Fix: Blocked actions in queue when error (#221)
 - Add: Retrieve loop detection, with mark (#226)
