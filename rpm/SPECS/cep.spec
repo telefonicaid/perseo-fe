@@ -161,7 +161,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
-* Wed Oct 18 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.6.0
+* Wed Oct 18 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.6.0
 - FEATURE update node version to 4.8.4
 - Fixed timer leak in HA-refresh scenarios [#253]
 - Modify main section of package.json from lib/perseo to bin/perseo
