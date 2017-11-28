@@ -66,19 +66,19 @@ They should be solved in order to get perseo running.
 
 ## Alarm conditions
 
-|Alarm ID | Severity | Description 
-|---|---|---|---
-|[START](#start)|Critical|Impossible to start perseo
-|[CORE](#core)|Major|Refreshing of rules at core is failing.
-|[POST_EVENT](#post_event)|Critical|Sending an event to core is failing.
-|[EMAIL](#email)|Critical|Trying to execute an email action is failing.
-|[SMS](#sms)|Critical|Trying to execute an SMS action is failing.
-|[SMPP](#smpp)|Critical|Trying to execute an SMPP action is failing.
-|[ORION](#orion)|Critical|Trying to execute an update action is failing
-|[DATABASE](#database)|Critical|There is a problem in connection to DB.
-|[DATABASE_ORION](#database_orion)|Critical|There is a problem in connection to Orion DB (accessed by no-signal checker)
-|[AUTH](#auth)|Major|There is a problem in connection to Keystone. Update-actions to Orion through PEP are not working
-|[LOOP](#loop)|Major|Some rules can be provoking an infinite loop of triggered actions
+| Alarm ID | Severity | Description 
+| :------- | :------- | :-----------
+| [START](#start) | Critical | Impossible to start perseo
+| [CORE](#core) | Major | Refreshing of rules at core is failing.
+| [POST_EVENT](#post_event) | Critical | Sending an event to core is failing.
+| [EMAIL](#email) | Critical | Trying to execute an email action is failing.
+| [SMS](#sms) | Critical | Trying to execute an SMS action is failing.
+| [SMPP](#smpp) | Critical | Trying to execute an SMPP action is failing.
+| [ORION](#orion) | Critical | Trying to execute an update action is failing
+| [DATABASE](#database) | Critical | There is a problem in connection to DB.
+| [DATABASE_ORION](#database_orion) | Critical | There is a problem in connection to Orion DB (accessed by no-signal checker)
+| [AUTH](#auth) | Major | There is a problem in connection to Keystone. Update-actions to Orion through PEP are not working
+| [LOOP](#loop) | Major | Some rules can be provoking an infinite loop of triggered actions
 
 <a name="start"></a>
 ### Alarm START
