@@ -31,7 +31,7 @@ The field `action` can be also an array of "actions", objects with the same stru
 ## EPL text
 The field ```text``` of the rule must be a valid EPL statement and additionally must honor several restrictions to match expectations of perseo and perseo-core.
 
-EPL is documented in [Esper web] (http://www.espertech.com/esper/documentation.php)
+EPL is documented in [Esper website](http://www.espertech.com/esper/esper-documentation)
 
 A EPL statement to use with perseo could be:
 
