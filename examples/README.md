@@ -1,3 +1,7 @@
+## Blood rules examples
+
+All the files in this directory prefixed by `blood_` are part of the same familiy of examples, described in this section.
+
 To run the examples, `config.env` has to be modified to point to perseo and orion machines at your installation.
 
 The examples use an entity with id “bloodm1”,  of type “BloodMeter” and with an attribute “BloodPressure”.
@@ -10,9 +14,17 @@ Examples of rules are
 
 `blood_rule_email.json`: if the blood pressure is greater than 1.5, send an email
 
+`blood_rule_email_metadata.json`: if the blood pressure metadata named `crs` with `system` field is `"WGS84"`, send an email
+
 `blood_rule_sms.json`: if the blood pressure is greater than 1.5, send a sms
 
+`blood_rule_twitter.json`: if the blood pressure is greater than 1.5, publish in Twitter
+
 `blood_rule_update.json`: if the blood pressure is greater than 1.5, update the attribute ’abnornal’ to ‘true’ in the entity
+
+`blood_rule_update_mirror.json`: similar to previous rule, but updating an entity with different id
+
+`blood_rule_post.json`: if the blood pressure is greater than 1.5, publish on a given REST service
 
 `blood_rule_complex.json`: send an complex event with stats (average, total, stddev) of the last three blood pressure measures
 
@@ -98,5 +110,14 @@ The actions currently available are
 * Update the entity which fired the rule, setting an attribute to a value
 * Make a generic HTTP POST to an URL set as an action parameter
 
-Detailed information about [EPL](http://esper.codehaus.org/esper-4.7.0/doc/reference/en-US/html_single/index.html#epl_clauses)
+## Other examples
 
+* `rule_delta.json`, rule using `previousValue` metadata to calculate deltas in attribute values
+* `rule_distance.json`, rule which triggers if the distance to a given point is closer to a given value
+* `rule_time.json`, rule based on time using the `__ts` timestamp
+* `timewindow_send_alert_if_2.json`, rule to send an email when two or more different entities has reported an alert status within 60sec time window
+* `timewindow_threeshold_if_2.json`, rule to update an alert attribute of a given entity when its value attibute is greater than 10 at least twice in a 60sec time window
+
+## More info
+
+Detailed information about [EPL](http://esper.espertech.com/release-4.10.0/esper-reference/html/epl_clauses.html)
