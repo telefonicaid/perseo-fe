@@ -1,0 +1,22 @@
+//update an alert attribute of a given entity when its value attibute is greater than 10 at least twice in a 60 sec time window
+
+ {
+            "_id": "5a300f9581a9151fdf11e931",
+            "name": "test",
+            "text": "select * from iotEvent(cast(cast(value?,String),float)>10).win:time(60 sec) group by id? having count(*)>1",
+            "action": {
+                "type": "update",
+                "parameters": {
+                    "id": "${id}",
+                    "attributes": [
+                        {
+                            "name": "alert",
+                            "type": "string",
+                            "value": "true"
+                        }
+                    ]
+                }
+            },
+            "subservice": "/ss",
+            "service": "S"
+        }
