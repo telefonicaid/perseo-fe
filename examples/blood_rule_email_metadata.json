@@ -1,9 +1,9 @@
 {
     "name": "blood_rule_email_md",
-    "text": "select *,\"blood_rule_email_md\" as ruleName, *,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(BloodPressure__metadata__crs__system?,String)=\"WGS84\" and type=\"BloodMeter\")]",
+    "text": "select *,\"blood_rule_email_md\" as ruleName, *,ev.BloodPressure? as Pressure, ev.id? as Meter from pattern [every ev=iotEvent(cast(BloodPressure__metadata__crs__system?,String)=\"WGS84\" and type=\"BloodMeter\")]",
     "action": {
         "type": "email",
-        "template": "Meter ${Meter} has pression ${Pression} (GEN RULE) and system is ${BloodPressure__metadata__crs__system}",
+        "template": "Meter ${Meter} has pressure ${Pressure} (GEN RULE) and system is ${BloodPressure__metadata__crs__system}",
         "parameters": {
             "to": "someone@org.com",
             "from": "perseo_cep@telefonica.com",

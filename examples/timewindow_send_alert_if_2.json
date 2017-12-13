@@ -1,6 +1,4 @@
-//Send an email when two or more  different entities has reported an alert status within 60sec time window 
-  {
-            "_id": "5a3002e581a9151fdf11e92f",
+{
             "name": "test",
             "text": "select \"test\" as ruleName, * from ev=iotEvent.win:time(60 sec) having count(distinct (id?))>1 and cast(alert?,String)='true'",
             "action": {
@@ -10,7 +8,5 @@
                     "to": "m.r@t.com",
                     "from": "m.r@t.com"
                 }
-            },
-            "subservice": "/ss",
-            "service": "S"
-        }
+            }
+}
