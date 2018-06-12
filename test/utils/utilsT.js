@@ -77,7 +77,7 @@ function dropExecutions(callback) {
     remove(config.collections.executions, callback);
 }
 function dropEntities(callback) {
-    MongoClient.connect(new URL('v2/entities', config.orion.URL), function(err, db) {
+    MongoClient.connect(new URL('v1/updateContext', config.orion.URL), function(err, db) {
         if (err) {
             return callback(err);
         }

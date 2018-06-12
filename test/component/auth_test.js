@@ -31,7 +31,8 @@ var
     utilsT = require('../utils/utilsT'),
     testEnv = require('../utils/testEnvironment'),
     EventEmitter = require('events').EventEmitter,
-    updateDone = new EventEmitter();
+    updateDone = new EventEmitter(),
+    URL = require('url').URL;
 
 describe('Auth', function() {
     beforeEach(testEnv.commonBeforeEach);
@@ -45,7 +46,7 @@ describe('Auth', function() {
             action.ev.id += date.getTime();
             utilsT.getConfig().authentication.host = 'localhost';
             utilsT.getConfig().authentication.port = utilsT.fakeHttpServerPort;
-            utilsT.getConfig().orion.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
+            utilsT.getConfig().orion.URL = new URL(util.format('http://localhost:%s', utilsT.fakeHttpServerPort));
             updateDone.once('updated_renew', done);
             updateDone.once('updated_first', function(error) {
                 if (error) {
