@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "chai": "~1.8.0",
+    "closure-linter-wrapper": "0.2.11",
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-jshint": "~0.6.4",
@@ -44,17 +45,17 @@
   },
   "keywords": [],
   "dependencies": {
-    "async": "^0.9.0",
-    "body-parser": "^1.5.2",
-    "express": "^4.7.2",
+    "async": "~0.9.0",
+    "body-parser": "~1.5.2",
+    "express": "~4.7.2",
     "logops": "1.0.0-alpha.7",
-    "mongodb": "^2.2.19",
-    "nodemailer": "^1.1.1",
-    "nodemailer-smtp-transport": "^0.1.12",
-    "request": "^2.39.0",
-    "twitter": "^1.2.5",
-    "utm-converter": "^0.1.1",
-    "uuid": "^1.4.1",
+    "mongodb": "~2.2.19",
+    "nodemailer": "~1.1.1",
+    "nodemailer-smtp-transport": "~0.1.12",
+    "request": "~2.39.0",
+    "twitter": "~1.2.5",
+    "utm-converter": "~0.1.1",
+    "uuid": "~1.4.1",
     "smpp": "0.3.1"
   }
 }
