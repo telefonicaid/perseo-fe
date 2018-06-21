@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "chai": "~1.8.0",
+    "closure-linter-wrapper": "0.20.11",
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-jshint": "~0.6.4",
