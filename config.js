@@ -121,6 +121,7 @@ config.smtp = {
     */
     ,
     tls: {
+      // keep rejectUnauthorized to false when secure is also false
       rejectUnauthorized: false
     }
     
