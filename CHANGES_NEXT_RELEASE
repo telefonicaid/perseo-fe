@@ -1,2 +1,2 @@
 - Using precise dependencies (~=) in packages.json
-- Provide default value (false) for tls.rejectUnauthorized config option
+- Provide default value (false) for tls.rejectUnauthorized config option (#272, partially)
