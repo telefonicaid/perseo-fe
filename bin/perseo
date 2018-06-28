@@ -57,6 +57,8 @@ function loadConfiguration() {
         'PERSEO_SMTP_SECURE',
         'PERSEO_SMTP_AUTH_USER',
         'PERSEO_SMTP_AUTH_PASS',
+        'PERSEO_SMTP_AUTH_PASS',
+        'PERSEO_SMTP_TLS_REJECTUNAUTHORIZED',
         'PERSEO_SMS_URL',
         'PERSEO_SMS_API_KEY',
         'PERSEO_SMS_API_SECRET',
@@ -121,6 +123,11 @@ function loadConfiguration() {
     else if (process.env.PERSEO_SMTP_SECURE === 'false') {
         config.smtp.secure = false;
         delete config.smtp.auth;
+    }
+    if (process.env.PERSEO_SMTP_TLS_REJECTUNAUTHORIZED === 'true') {
+        config.smtp.tls.rejectUnauthorized = true;
+    } else if (process.env.PERSEO_SMTP_TLS_REJECTUNAUTHORIZED === 'false') {
+        config.smtp.tls.rejectUnauthorized = false;
     }
     config.sms = config.sms || {};
     config.sms.URL = process.env.PERSEO_SMS_URL || config.sms.URL;

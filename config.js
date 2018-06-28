@@ -119,6 +119,12 @@ config.smtp = {
      pass: 'xyz'
      }
     */
+    ,
+    tls: {
+      // keep rejectUnauthorized to false when secure is also false
+      rejectUnauthorized: false
+    }
+    
 };
 
 /**
