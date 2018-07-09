@@ -1,6 +1,5 @@
 'use strict';
 
-var should = require('should');
 var rewire = require('rewire');
 var notices = rewire('../../lib/models/notices');
 var chai = require('chai');
@@ -8,6 +7,7 @@ var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 var expect = chai.expect;
 chai.use(sinonChai);
+chai.Should();
 
 var id = 'sensor-1';
 var type = 'tipeExample1';
@@ -67,7 +67,7 @@ var y = 4474481.316254241;
 var locValue = lat + ', ' + long;
 
 
-describe('Notices', function() {
+describe('Notices NGSIv1', function() {
     var noticeExample;
     beforeEach(function() {
         // Default
@@ -82,15 +82,15 @@ describe('Notices', function() {
                 'Date.now': dateNowMock
             })(function () {
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, 'false'); // why not boolean??
-                should.equal(noticeResult[attrKey + '__type'], attrType);
-                should.equal(noticeResult[attrKey], attrValue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal('false'); // why not boolean??
+                expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                expect(noticeResult[attrKey]).to.equal(attrValue);
                 done();
             });
         });
@@ -113,20 +113,21 @@ describe('Notices', function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, 'false'); // why not boolean??
-                should.equal(noticeResult[attrKey + '__type'], locType);
-                should.equal(noticeResult[attrKey], locValue);
-                should.equal(noticeResult[attrKey + '__lat'], lat);
-                should.equal(noticeResult[attrKey + '__lon'], long);
-                should.equal(noticeResult[attrKey + '__x'], x);
-                should.equal(noticeResult[attrKey + '__y'], y);
-                expect(parseLocation2GeoJSONMock).to.have.been.calledOnceWith(locValue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal('false');
+                expect(noticeResult[attrKey + '__type']).to.equal(locType);
+                expect(noticeResult[attrKey]).to.equal(locValue);
+                expect(noticeResult[attrKey + '__lat']).to.equal(lat);
+                expect(noticeResult[attrKey + '__lon']).to.equal(long);
+                expect(noticeResult[attrKey + '__x']).to.equal(x);
+                expect(noticeResult[attrKey + '__y']).to.equal(y);
+                parseLocation2GeoJSONMock.should.have.been.calledWith(locValue);
+                parseLocation2GeoJSONMock.should.be.calledOnce;
                 done();
             });
         });
@@ -152,23 +153,24 @@ describe('Notices', function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = dateType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = dateValue;
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, 'false'); // why not boolean??
-                should.equal(noticeResult[attrKey + '__type'], dateType);
-                should.equal(noticeResult[attrKey], dateValue);
-                should.equal(noticeResult[attrKey + '__ts'], 1528018286296);
-                should.equal(noticeResult[attrKey + '__day'], 3);
-                should.equal(noticeResult[attrKey + '__month'], 6);
-                should.equal(noticeResult[attrKey + '__year'], 2018);
-                should.equal(noticeResult[attrKey + '__hour'], 11);
-                should.equal(noticeResult[attrKey + '__minute'], 31);
-                should.equal(noticeResult[attrKey + '__second'], 26);
-                expect(parseDateMock).to.have.been.calledOnceWith(dateValue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal('false'); // why not boolean??
+                expect(noticeResult[attrKey + '__type']).to.equal(dateType);
+                expect(noticeResult[attrKey]).to.equal(dateValue);
+                expect(noticeResult[attrKey + '__ts']).to.equal(1528018286296);
+                expect(noticeResult[attrKey + '__day']).to.equal(3);
+                expect(noticeResult[attrKey + '__month']).to.equal(6);
+                expect(noticeResult[attrKey + '__year']).to.equal(2018);
+                expect(noticeResult[attrKey + '__hour']).to.equal(11);
+                expect(noticeResult[attrKey + '__minute']).to.equal(31);
+                expect(noticeResult[attrKey + '__second']).to.equal(26);
+                parseDateMock.should.have.been.calledWith(dateValue);
+                parseDateMock.should.be.calledOnce;
                 done();
             });
         });
@@ -186,21 +188,20 @@ describe('Notices', function() {
                     'value': metaAtVal
                 }];
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, 'false'); // why not boolean??
-                should.equal(noticeResult[attrKey + '__type'], attrType);
-                should.equal(noticeResult[attrKey], attrValue);
-                should.not.exist(noticeResult[attrKey + '__metadata__' + at + '__type']);
-                should.equal(noticeResult[attrKey + '__metadata__' + at], metaAtVal);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal('false'); // why not boolean??
+                expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                expect(noticeResult[attrKey]).to.equal(attrValue);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).not.exist;
+                expect(noticeResult[attrKey + '__metadata__' + at]).to.equal(metaAtVal);
                 done();
             });
         });
-
 
         it('should accept notice using DateTime metadata', function(done) {
 
@@ -227,24 +228,25 @@ describe('Notices', function() {
                     'type': dateType
                 }];
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, 'false'); // why not boolean??
-                should.equal(noticeResult[attrKey + '__type'], attrType);
-                should.equal(noticeResult[attrKey], attrValue);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__type'], dateType);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__ts'], 1528018286296);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__day'], 3);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__month'], 6);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__year'], 2018);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__hour'], 11);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__minute'], 31);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__second'], 26);
-                expect(parseDateMock).to.have.been.calledOnceWith(dateValue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal('false'); // why not boolean??
+                expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                expect(noticeResult[attrKey]).to.equal(attrValue);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(dateType);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__ts']).to.equal(1528018286296);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__day']).to.equal(3);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__month']).to.equal(6);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__year']).to.equal(2018);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__hour']).to.equal(11);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__minute']).to.equal(31);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__second']).to.equal(26);
+                parseDateMock.should.have.been.calledWith(dateValue);
+                parseDateMock.should.be.calledOnce;
                 done();
             });
         });
@@ -253,20 +255,20 @@ describe('Notices', function() {
             noticeExample.contextResponses[0].contextElement.attributes[0].name = 'id';
             var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
             noticeResult.should.be.instanceof(notices.errors.IdAsAttribute);
-            should.equal(noticeResult.name, 'ID_ATTRIBUTE');
-            should.equal(noticeResult.message, 'id as attribute ' + JSON.stringify(noticeExample.contextResponses[0]
+            expect(noticeResult.name).to.equal('ID_ATTRIBUTE');
+            expect(noticeResult.message).to.equal('id as attribute ' + JSON.stringify(noticeExample.contextResponses[0]
                                                                                         .contextElement.attributes[0]));
-            should.equal(noticeResult.httpCode, 400);
+            expect(noticeResult.httpCode).to.equal(400);
         });
 
         it('should fail when contains Type As Attribute', function() {
             noticeExample.contextResponses[0].contextElement.attributes[0].name = 'type';
             var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
             noticeResult.should.be.instanceof(notices.errors.TypeAsAttribute);
-            should.equal(noticeResult.name, 'TYPE_ATTRIBUTE');
-            should.equal(noticeResult.message, 'type as attribute ' + JSON.stringify(noticeExample.contextResponses[0]
-                .contextElement.attributes[0]));
-            should.equal(noticeResult.httpCode, 400);
+            expect(noticeResult.name).to.equal('TYPE_ATTRIBUTE');
+            expect(noticeResult.message).to.equal('type as attribute ' + 
+                                    JSON.stringify(noticeExample.contextResponses[0].contextElement.attributes[0]));
+            expect(noticeResult.httpCode).to.equal(400);
         });
 
         // Weird functionality
@@ -294,77 +296,78 @@ describe('Notices', function() {
                         'type': locType
                     }];
                     var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                    should.equal(noticeResult.noticeId, mockedUid);
-                    should.equal(noticeResult.noticeTS, mockedDateMilis);
-                    should.equal(noticeResult.id, id);
-                    should.equal(noticeResult.type, type);
-                    should.equal(noticeResult.subservice, subservice);
-                    should.equal(noticeResult.service, service);
-                    should.equal(noticeResult.isPattern, 'false'); // why not boolean??
-                    should.equal(noticeResult[attrKey + '__type'], attrType);
-                    should.equal(noticeResult[attrKey], attrValue);
-                    should.equal(noticeResult[attrKey + '__metadata__' + at], locValue);
-                    should.equal(noticeResult[attrKey + '__metadata__' + at + '__type'], locType);
+                    expect(noticeResult.noticeId).to.equal(mockedUid);
+                    expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                    expect(noticeResult.id).to.equal(id);
+                    expect(noticeResult.type).to.equal(type);
+                    expect(noticeResult.subservice).to.equal(subservice);
+                    expect(noticeResult.service).to.equal(service);
+                    expect(noticeResult.isPattern).to.equal('false'); // why not boolean??
+                    expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                    expect(noticeResult[attrKey]).to.equal(attrValue);
+                    expect(noticeResult[attrKey + '__metadata__' + at]).to.equal(locValue);
+                    expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locType);
 
                     // This attributes not should be metadata???
-                    should.equal(noticeResult[attrKey + '__lat'], lat);
-                    should.equal(noticeResult[attrKey + '__lon'], long);
-                    should.equal(noticeResult[attrKey + '__x'], x);
-                    should.equal(noticeResult[attrKey + '__y'], y);
-                    //should.equal(noticeResult[attrKey + '__metadata__' + at + '__lat'], lat);
-                    //should.equal(noticeResult[attrKey + '__metadata__' + at + '__lon'], long);
-                    //should.equal(noticeResult[attrKey + '__metadata__' + at + '__x'], x);
-                    //should.equal(noticeResult[attrKey + '__metadata__' + at + '__y'], y);
+                    expect(noticeResult[attrKey + '__lat']).to.equal(lat);
+                    expect(noticeResult[attrKey + '__lon']).to.equal(long);
+                    expect(noticeResult[attrKey + '__x']).to.equal(x);
+                    expect(noticeResult[attrKey + '__y']).to.equal(y);
+                    //expect(noticeResult[attrKey + '__metadata__' + at + '__lat']).to.equal(lat);
+                    //expect(noticeResult[attrKey + '__metadata__' + at + '__lon']).to.equal(long);
+                    //expect(noticeResult[attrKey + '__metadata__' + at + '__x']).to.equal(x);
+                    //expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
 
                     // Why call parselocation with the attribute value and not with location metadata attribute?
-                    //expect(parseLocation2GeoJSONMock).to.have.been.calledOnceWith(locValue);
-                    expect(parseLocation2GeoJSONMock).to.have.been.calledOnceWith(attrValue);
+                    parseLocation2GeoJSONMock.should.have.been.calledWith(attrValue);
+                    parseLocation2GeoJSONMock.should.be.calledOnce;
                     done();
                 });
             }
         );
-        /* why NGSIv1 dont parse metadata geo:points? only parseocation when 'name' is 'location'.
-        it('should accept notice using geo:point metadata type', function(done) {
-
-            var at = 'theMetaAttribute';
-            var parseLocation2GeoJSONMock = sinon.spy(function() {
-                return {
-                    lat: lat,
-                    lon: long,
-                    x: x,
-                    y: y
-                };
-            });
-            notices.__with__({
-                'uuid.v1': uuidMock,
-                'Date.now': dateNowMock,
-                'parseLocation2GeoJSON': parseLocation2GeoJSONMock
-            })(function () {
-                noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [{
-                    'name':  at,
-                    'value': locValue,
-                    'type': locType
-                }];
-                var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, 'false'); // why not boolean??
-                should.equal(noticeResult[attrKey + '__type'], attrType);
-                should.equal(noticeResult[attrKey], attrValue);
-                should.equal(noticeResult[attrKey + '__metadata__' + at], locValue);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__type'], locType);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__lat'], lat);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__lon'], long);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__x'], x);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__y'], y);
-                expect(parseLocation2GeoJSONMock).to.have.been.calledOnceWith(locValue);
-                done();
-            });
-        });*/
+        // why NGSIv1 dont parse metadata geo:points? only parseocation when 'name' is 'location'.
+        // it('should accept notice using geo:point metadata type', function(done) {
+        //
+        //     var at = 'theMetaAttribute';
+        //     var parseLocation2GeoJSONMock = sinon.spy(function() {
+        //         return {
+        //             lat: lat,
+        //             lon: long,
+        //             x: x,
+        //             y: y
+        //         };
+        //     });
+        //     notices.__with__({
+        //         'uuid.v1': uuidMock,
+        //         'Date.now': dateNowMock,
+        //         'parseLocation2GeoJSON': parseLocation2GeoJSONMock
+        //     })(function () {
+        //         noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [{
+        //             'name':  at,
+        //             'value': locValue,
+        //             'type': locType
+        //         }];
+        //         var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
+        //         expect(noticeResult.noticeId).to.equal(mockedUid);
+        //         expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+        //         expect(noticeResult.id).to.equal(id);
+        //         expect(noticeResult.type).to.equal(type);
+        //         expect(noticeResult.subservice).to.equal(subservice);
+        //         expect(noticeResult.service).to.equal(service);
+        //         expect(noticeResult.isPattern).to.equal('false'); // why not boolean??
+        //         expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+        //         expect(noticeResult[attrKey]).to.equal(attrValue);
+        //         expect(noticeResult[attrKey + '__metadata__' + at]).to.equal(locValue);
+        //         expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locType);
+        //         expect(noticeResult[attrKey + '__metadata__' + at + '__lat']).to.equal(lat);
+        //         expect(noticeResult[attrKey + '__metadata__' + at + '__lon']).to.equal(long);
+        //         expect(noticeResult[attrKey + '__metadata__' + at + '__x']).to.equal(x);
+        //         expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
+        //         parseLocation2GeoJSONMock.should.have.been.calledWith(locValue);
+        //         parseLocation2GeoJSONMock.should.be.calledOnce;
+        //         done();
+        //     });
+        // });
 
         it('should catch correctly errors',
             function(done) {
@@ -384,13 +387,14 @@ describe('Notices', function() {
                     noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
                     var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
                     noticeResult.should.be.instanceof(notices.errors.InvalidNotice);
-                    should.equal(noticeResult.name, 'INVALID_NOTICE');
-                    should.equal(noticeResult.message, 'invalid notice format ' + JSON.stringify(noticeExample));
-                    should.equal(noticeResult.httpCode, 400);
+                    expect(noticeResult.name).to.equal('INVALID_NOTICE');
+                    expect(noticeResult.message).to.equal('invalid notice format ' + JSON.stringify(noticeExample));
+                    expect(noticeResult.httpCode).to.equal(400);
                     expect(parseLocation2GeoJSONMock).to.throw(Error);
                     expect(parseLocation2GeoJSONMock).to.have.been.calledWith(locValue);
                     // Checking logError
-                    expect(logErrorMock).to.have.been.calledOnceWith();
+                    logErrorMock.should.have.been.calledWith(noticeResult);
+                    logErrorMock.should.be.calledOnce;
                     done();
                 });
             }
@@ -411,10 +415,11 @@ describe('Notices', function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidLocation);
-                should.equal(noticeResult.name, 'INVALID_LOCATION');
-                should.equal(noticeResult.message, error.message);
-                should.equal(noticeResult.httpCode, 400);
-                expect(parseLocation2GeoJSONMock).to.have.been.calledWith(locValue);
+                expect(noticeResult.name).to.equal('INVALID_LOCATION');
+                expect(noticeResult.message).to.equal(error.message);
+                expect(noticeResult.httpCode).to.equal(400);
+                parseLocation2GeoJSONMock.should.have.been.calledWith(locValue);
+                parseLocation2GeoJSONMock.should.be.calledOnce;
                 done();
             });
         });

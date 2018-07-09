@@ -42,10 +42,12 @@ describe('Myutils', function() {
     describe('#RequestHelper()', function() {
         describe('When there is a network problem', function() {
             it('should return error', function(done) {
-                var url = 'http://incredibleifthishostexistsicantbelievemyeyes.io';
+                var host = 'incredibleifthishostexistsicantbelievemyeyes.io';
+                var url = 'http://' + host;
                 myutils.requestHelper('get', {url: url}, function(error) {
                     should.exist(error);
-                    error.should.be.an.Error;
+                    error.host.should.be.equal(host);
+                    error.code.should.be.equal('ENOTFOUND');
                 });
                 done();
             });

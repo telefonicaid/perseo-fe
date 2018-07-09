@@ -7,6 +7,7 @@ var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 var expect = chai.expect;
+chai.Should();
 chai.use(sinonChai);
 
 var noticeExampleV1 = JSON.stringify({
@@ -57,7 +58,7 @@ var coreNotice1 = {
     'subservice': '/test/notices/unit'
 };
 
-describe('Notices', function() {
+describe('Notices Do', function() {
 
     describe('#DoNotice', function() {
         var v1notice, v2notice;
@@ -92,15 +93,18 @@ describe('Notices', function() {
                     should.equal(request.length, 1);
                     should.equal(request[0].httpCode, 200);
                     // Checking call to processCBNotice
-                    expect(processCBNoticeMock).to.have.been.calledOnceWith('utest', '/test/notices/unit', v1notice, 0);
+                    processCBNoticeMock.should.have.been.calledWith('utest', '/test/notices/unit', v1notice, 0);
+                    processCBNoticeMock.should.be.calledOnce;
                     // Checking call to requestWOMetrics
                     var h = {'fiware-servicepath': '/test/notices/unit'};
-                    expect(requestWOMetricsMock).to.have.been.calledOnceWith('post', {
+                    requestWOMetricsMock.should.have.been.calledWith('post', {
                         url: 'http://mokedurl.org',
                         json: coreNotice1,
                         headers: h
                     });
-                    expect(alarmReleaseMock).to.have.been.calledOnceWith(postEvent);
+                    requestWOMetricsMock.should.be.calledOnce;
+                    alarmReleaseMock.should.have.been.calledWith(postEvent);
+                    alarmReleaseMock.should.be.calledOnce;
                     done();
                 };
                 notices.Do(v1notice, callback);
@@ -157,15 +161,18 @@ describe('Notices', function() {
                     should.equal(request.length, 1);
                     should.equal(request[0].httpCode, 200);
                     // Checking call to processCBv2NoticeMock
-                    expect(processCBv2NoticeMock).to.have.been.calledOnceWith('utestv2', '/test/notices/unitv2', v2notice, 0);
+                    processCBv2NoticeMock.should.have.been.calledWith('utestv2', '/test/notices/unitv2', v2notice, 0);
+                    processCBv2NoticeMock.should.be.calledOnce;
                     // Checking call to requestWOMetrics
                     var h = {'fiware-servicepath': '/test/notices/unit'};
-                    expect(requestWOMetricsMock).to.have.been.calledOnceWith('post', {
+                    requestWOMetricsMock.should.have.been.calledWith('post', {
                         url: 'http://mokedurl.org',
                         json: coreNotice1,
                         headers: h
                     });
-                    expect(alarmReleaseMock).to.have.been.calledOnceWith(postEvent);
+                    requestWOMetricsMock.should.be.calledOnce;
+                    alarmReleaseMock.should.have.been.calledWith(postEvent);
+                    alarmReleaseMock.should.be.calledOnce;
                     done();
                 };
                 notices.Do(v2notice, callback);
@@ -196,9 +203,11 @@ describe('Notices', function() {
                     should.equal(e.httpCode, 500);
                     should.equal(e.message, 'invalid location Location_Mock');
                     // Checking call to processCBv2Notice
-                    expect(processCBv2NoticeMock).to.have.been.calledOnceWith('utestv2', '/test/notices/unitv2', v2notice, 0);
+                    processCBv2NoticeMock.should.have.been.calledWith('utestv2', '/test/notices/unitv2', v2notice, 0);
+                    processCBv2NoticeMock.should.be.calledOnce;
                     // Checking logError
-                    expect(logErrorMock).to.have.been.calledOnceWith(errorLocNotice);
+                    logErrorMock.should.have.been.calledWith(errorLocNotice);
+                    logErrorMock.should.be.calledOnce;
                     done();
                 };
                 notices.Do(v2notice, callback);
@@ -234,7 +243,8 @@ describe('Notices', function() {
                     should.not.exists(request);
                     should.equal(e.httpCode, 400);
                     // Checking call to processCBv2NoticeMock
-                    expect(processCBv2NoticeMock).to.have.been.calledOnceWith('utestv2', '/test/notices/unitv2', v2notice, 0);
+                    processCBv2NoticeMock.should.have.been.calledWith('utestv2', '/test/notices/unitv2', v2notice, 0);
+                    processCBv2NoticeMock.should.be.calledOnce;
                     // Checking call to requestWOMetrics
                     var h = {'fiware-servicepath': '/test/notices/unit'};
                     should.equal(requestWOMetricsMock.calledTwice, true);
@@ -248,9 +258,11 @@ describe('Notices', function() {
                         json: coreNotice1,
                         headers: h
                     });
-                    expect(alarmRaiseMock).to.have.been.calledOnceWith(postEvent);
+                    alarmRaiseMock.should.have.been.calledWith(postEvent);
+                    alarmRaiseMock.should.be.calledOnce;
                     // Checking logError
-                    expect(logErrorMock).to.have.been.calledOnceWith('errorMock!');
+                    logErrorMock.should.have.been.calledWith('errorMock!');
+                    logErrorMock.should.be.calledOnce;
                     done();
                 };
                 notices.Do(v2notice, callback);

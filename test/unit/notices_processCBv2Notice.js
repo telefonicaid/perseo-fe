@@ -1,12 +1,12 @@
 'use strict';
 
-var should = require('should');
 var rewire = require('rewire');
 var notices = rewire('../../lib/models/notices');
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 var expect = chai.expect;
+chai.Should();
 chai.use(sinonChai);
 
 var id = 'sensor-1';
@@ -60,7 +60,7 @@ var x = 441298.13043762115;
 var y = 4474481.316254241;
 var locValue = lat + ', ' + long;
 
-describe('Notices', function() {
+describe('Notices NGSIv2', function() {
     var noticeExample;
     beforeEach(function() {
         // Default
@@ -75,15 +75,15 @@ describe('Notices', function() {
                 'Date.now': dateNowMock
             })(function () {
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, false);
-                should.equal(noticeResult[attrKey + '__type'], attrType);
-                should.equal(noticeResult[attrKey], attrValue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                expect(noticeResult[attrKey]).to.equal(attrValue);
                 done();
             });
         });
@@ -105,17 +105,18 @@ describe('Notices', function() {
                 noticeExample.data[0][attrKey].type = dateType;
                 noticeExample.data[0][attrKey].value = dateValue;
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, false);
-                should.equal(noticeResult[attrKey + '__type'], dateType);
-                should.equal(noticeResult[attrKey + '__a'], 123);
-                should.equal(noticeResult[attrKey + '__b'], 456);
-                expect(parseDateMock).to.have.been.calledOnceWith(dateValue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey + '__type']).to.equal(dateType);
+                expect(noticeResult[attrKey + '__a']).to.equal(123);
+                expect(noticeResult[attrKey + '__b']).to.equal(456);
+                parseDateMock.should.have.been.calledWith(dateValue);
+                parseDateMock.should.be.calledOnce;
                 done();
             });
         });
@@ -139,19 +140,20 @@ describe('Notices', function() {
                 noticeExample.data[0][attrKey].type = locType;
                 noticeExample.data[0][attrKey].value = locValue;
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, false);
-                should.equal(noticeResult[attrKey + '__type'], locType);
-                should.equal(noticeResult[attrKey + '__lat'], lat);
-                should.equal(noticeResult[attrKey + '__lon'], long);
-                should.equal(noticeResult[attrKey + '__x'], x);
-                should.equal(noticeResult[attrKey + '__y'], y);
-                expect(parseLocation2GeoJSONMock).to.have.been.calledOnceWith(locValue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey + '__type']).to.equal(locType);
+                expect(noticeResult[attrKey + '__lat']).to.equal(lat);
+                expect(noticeResult[attrKey + '__lon']).to.equal(long);
+                expect(noticeResult[attrKey + '__x']).to.equal(x);
+                expect(noticeResult[attrKey + '__y']).to.equal(y);
+                parseLocation2GeoJSONMock.should.have.been.calledWith(locValue);
+                parseLocation2GeoJSONMock.should.be.calledOnce;
                 done();
             });
         });
@@ -169,17 +171,17 @@ describe('Notices', function() {
                     'value': metavalue
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, false);
-                should.equal(noticeResult[attrKey + '__type'], attrType);
-                should.equal(noticeResult[attrKey], attrValue);
-                should.not.exist(noticeResult[attrKey + '__metadata__' + at + '__type']);
-                should.equal(noticeResult[attrKey + '__metadata__' + at], metavalue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                expect(noticeResult[attrKey]).to.equal(attrValue);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).not.exist;
+                expect(noticeResult[attrKey + '__metadata__' + at]).to.equal(metavalue);
                 done();
             });
         });
@@ -206,21 +208,22 @@ describe('Notices', function() {
                     'type': locType
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, false);
-                should.equal(noticeResult[attrKey + '__type'], attrType);
-                should.equal(noticeResult[attrKey], attrValue);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__type'], locType);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__lat'], lat);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__lon'], long);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__x'], x);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__y'], y);
-                expect(parseLocation2GeoJSONMock).to.have.been.calledOnceWith(locValue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                expect(noticeResult[attrKey]).to.equal(attrValue);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locType);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__lat']).to.equal(lat);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__lon']).to.equal(long);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__x']).to.equal(x);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
+                parseLocation2GeoJSONMock.should.have.been.calledWith(locValue);
+                parseLocation2GeoJSONMock.should.be.calledOnce;
                 done();
             });
         });
@@ -249,22 +252,23 @@ describe('Notices', function() {
                     'type': dateType
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-                should.equal(noticeResult.noticeId, mockedUid);
-                should.equal(noticeResult.noticeTS, mockedDateMilis);
-                should.equal(noticeResult.id, id);
-                should.equal(noticeResult.type, type);
-                should.equal(noticeResult.subservice, subservice);
-                should.equal(noticeResult.service, service);
-                should.equal(noticeResult.isPattern, false);
-                should.equal(noticeResult[attrKey + '__type'], attrType);
-                should.equal(noticeResult[attrKey], attrValue);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__type'], dateType);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__ts'], 1528018286296);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__day'], 3);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__month'], 6);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__year'], 2018);
-                should.equal(noticeResult[attrKey + '__metadata__' + at + '__hour'], 11);
-                expect(parseDateMock).to.have.been.calledOnceWith(dateValue);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                expect(noticeResult[attrKey]).to.equal(attrValue);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(dateType);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__ts']).to.equal(1528018286296);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__day']).to.equal(3);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__month']).to.equal(6);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__year']).to.equal(2018);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__hour']).to.equal(11);
+                parseDateMock.should.have.been.calledWith(dateValue);
+                parseDateMock.should.be.calledOnce;
                 done();
             });
         });
@@ -290,11 +294,12 @@ describe('Notices', function() {
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidDateTime);
-                should.equal(noticeResult.name, 'INVALID_DATETIME');
-                should.equal(noticeResult.message, 'Invalid ' + dateType +
+                expect(noticeResult.name).to.equal('INVALID_DATETIME');
+                expect(noticeResult.message).to.equal('Invalid ' + dateType +
                                                    ' attribute metadata: datetime is not valid ' + invalidMetaDate);
-                should.equal(noticeResult.httpCode, 400);
-                expect(parseDateMock).to.have.been.calledOnceWith(invalidMetaDate);
+                expect(noticeResult.httpCode).to.equal(400);
+                parseDateMock.should.have.been.calledWith(invalidMetaDate);
+                parseDateMock.should.be.calledOnce;
                 done();
             });
         });
@@ -318,11 +323,12 @@ describe('Notices', function() {
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidDateTime);
-                should.equal(noticeResult.name, 'INVALID_DATETIME');
-                should.equal(noticeResult.message, 'Invalid ' + dateType +
+                expect(noticeResult.name).to.equal('INVALID_DATETIME');
+                expect(noticeResult.message).to.equal('Invalid ' + dateType +
                     ' attribute: datetime is not valid ' + invalidAttDate);
-                should.equal(noticeResult.httpCode, 400);
-                expect(parseDateMock).to.have.been.calledOnceWith(invalidAttDate);
+                expect(noticeResult.httpCode).to.equal(400);
+                parseDateMock.should.have.been.calledWith(invalidAttDate);
+                parseDateMock.should.be.calledOnce;
                 done();
             });
         });
@@ -346,11 +352,12 @@ describe('Notices', function() {
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidLocation);
-                should.equal(noticeResult.name, 'INVALID_LOCATION');
-                should.equal(noticeResult.message, 'Invalid ' + locType +
+                expect(noticeResult.name).to.equal('INVALID_LOCATION');
+                expect(noticeResult.message).to.equal('Invalid ' + locType +
                     ' attribute: invalid location ' + invalidLoc);
-                should.equal(noticeResult.httpCode, 400);
-                expect(parseLocation2GeoJSONMock).to.have.been.calledOnceWith(invalidLoc);
+                expect(noticeResult.httpCode).to.equal(400);
+                parseLocation2GeoJSONMock.should.have.been.calledWith(invalidLoc);
+                parseLocation2GeoJSONMock.should.be.calledOnce;
                 done();
             });
         });
@@ -376,11 +383,12 @@ describe('Notices', function() {
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidLocation);
-                should.equal(noticeResult.name, 'INVALID_LOCATION');
-                should.equal(noticeResult.message, 'Invalid ' + locType +
+                expect(noticeResult.name).to.equal('INVALID_LOCATION');
+                expect(noticeResult.message).to.equal('Invalid ' + locType +
                     ' attribute metadata: invalid location ' + invalidLoc);
-                should.equal(noticeResult.httpCode, 400);
-                expect(parseLocation2GeoJSONMock).to.have.been.calledOnceWith(invalidLoc);
+                expect(noticeResult.httpCode).to.equal(400);
+                parseLocation2GeoJSONMock.should.have.been.calledWith(invalidLoc);
+                parseLocation2GeoJSONMock.should.be.calledOnce;
                 done();
             });
         });
@@ -408,21 +416,22 @@ describe('Notices', function() {
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidV2Notice);
-                should.equal(noticeResult.name, 'INVALID_NGSIV2_NOTICE');
-                should.equal(noticeResult.message, 'invalid NGSIv2 notice format ' + error +
+                expect(noticeResult.name).to.equal('INVALID_NGSIV2_NOTICE');
+                expect(noticeResult.message).to.equal('invalid NGSIv2 notice format ' + error +
                                                    ' (' + JSON.stringify(noticeExample) +')');
-                should.equal(noticeResult.httpCode, 400);
+                expect(noticeResult.httpCode).to.equal(400);
                 expect(parseLocation2GeoJSONMock).to.throw(Error);
                 expect(parseLocation2GeoJSONMock).to.have.been.calledWith(locValue);
                 // Checking logError
-                expect(logErrorMock).to.have.been.calledOnceWith();
+                logErrorMock.should.have.been.calledWith(noticeResult);
+                logErrorMock.should.be.calledOnce;
                 done();
             });
         });
     });
 
 
-    describe('#other', function() {
+    describe('#Data types location and time', function() {
         var noticeExample;
         beforeEach(function() {
             // Default
@@ -431,17 +440,17 @@ describe('Notices', function() {
 
         it('should fail parsing invalid location attributes', function() {
             var callback = function (e, request) {
-                should.exist(e);
-                should.not.exists(request);
-                should.equal(e.httpCode, 400);
-                should.equal(e.message[0], 'Invalid geo:point attribute: invalid location 47.41x8889, -3.691944, x');
-                should.equal(e.message[1], 'Invalid geo:point attribute metadata: longitude is not valid NaN');
-                should.equal(e.message[2], 'Invalid geo:point attribute metadata: invalid location Error: ' +
+                expect(e).exist;
+                expect(request).not.exist;
+                expect(e.httpCode).to.equal(400);
+                expect(e.message[0]).to.equal('Invalid geo:point attribute: invalid location 47.41x8889, -3.691944, x');
+                expect(e.message[1]).to.equal('Invalid geo:point attribute metadata: longitude is not valid NaN');
+                expect(e.message[2]).to.equal('Invalid geo:point attribute metadata: invalid location Error: ' +
                                            'Longitude must be in range [-180, 180).');
-                should.equal(e.message[3], 'Invalid geo:point attribute: invalid location Error: ' +
+                expect(e.message[3]).to.equal('Invalid geo:point attribute: invalid location Error: ' +
                                            'Latitude must be in range [-90, 90).');
-                should.equal(e.message[4], 'Invalid geo:point attribute metadata: latitude is not valid NaN');
-                should.equal(e.message[5], 'Invalid geo:point attribute: invalid location 4559');
+                expect(e.message[4]).to.equal('Invalid geo:point attribute metadata: latitude is not valid NaN');
+                expect(e.message[5]).to.equal('Invalid geo:point attribute: invalid location 4559');
             };
             noticeExample.data = [
                 {
@@ -530,11 +539,11 @@ describe('Notices', function() {
         });
         it('should fail parsing invalid DateTime attributes', function() {
             var callback = function (e, request) {
-                should.exist(e);
-                should.not.exists(request);
-                should.equal(e.httpCode, 400);
-                should.equal(e.message[0], 'Invalid DateTime attribute metadata: datetime is not valid 2018-96-03T09:31:26.296Z');
-                should.equal(e.message[1], 'Invalid DateTime attribute: datetime is not valid 2018-08-32T09:31:26.296Z');
+                expect(e).exist;
+                expect(request).not.exist;
+                expect(e.httpCode).to.equal(400);
+                expect(e.message[0]).to.equal('Invalid DateTime attribute metadata: datetime is not valid 2018-96-03T09:31:26.296Z');
+                expect(e.message[1]).to.equal('Invalid DateTime attribute: datetime is not valid 2018-08-32T09:31:26.296Z');
             };
             noticeExample.data = [
                 {
