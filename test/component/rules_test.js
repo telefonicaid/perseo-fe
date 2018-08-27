@@ -87,6 +87,31 @@ describe('Rules', function() {
                 }
             ], done);
         });
+        it('should add ruleName automatically when the rule does not include "rule as ruleName"', function(done) {
+            var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_post_Without_as_ruleName.json');
+            async.series([
+                function(callback) {
+                    clients.PostRule(rule, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 200);
+                        return callback(null);
+                    });
+                },
+                function(callback) {
+                    clients.GetRule(rule.name, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 200);
+                        data.should.have.property('body');
+                        data.body.should.have.property('data');
+                        data.body.data.should.have.property('text');
+                        data.body.data.should.have.property('name', rule.name);
+                        data.body.data.text.should.startWith('select "blood_post_auto" as ruleName,');
+
+                        return callback();
+                    });
+                }
+            ], done);
+        });
         it('should return an error if core endpoint is not working', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_rules');
             utilsT.setServerCode(400);
