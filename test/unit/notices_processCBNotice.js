@@ -97,7 +97,7 @@ describe('Notices NGSIv1', function() {
 
         it('should accept simple notice using geo:point type', function(done) {
 
-            var parseLocation2GeoJSONMock = sinon.spy(function() {
+            var parseLocationMock = sinon.spy(function() {
                 return {
                     lat: lat,
                     lon: long,
@@ -108,7 +108,7 @@ describe('Notices NGSIv1', function() {
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                'parseLocation2GeoJSON': parseLocation2GeoJSONMock
+                'parseLocation': parseLocationMock
             })(function () {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
@@ -126,8 +126,8 @@ describe('Notices NGSIv1', function() {
                 expect(noticeResult[attrKey + '__lon']).to.equal(long);
                 expect(noticeResult[attrKey + '__x']).to.equal(x);
                 expect(noticeResult[attrKey + '__y']).to.equal(y);
-                parseLocation2GeoJSONMock.should.have.been.calledWith(locValue);
-                parseLocation2GeoJSONMock.should.be.calledOnce;
+                parseLocationMock.should.have.been.calledWith(locValue);
+                parseLocationMock.should.be.calledOnce;
                 done();
             });
         });
@@ -277,7 +277,7 @@ describe('Notices NGSIv1', function() {
 
                 // this feature does not seem to make sense
                 var at = 'location';
-                var parseLocation2GeoJSONMock = sinon.spy(function() {
+                var parseLocationMock = sinon.spy(function() {
                     return {
                         lat: lat,
                         lon: long,
@@ -288,7 +288,7 @@ describe('Notices NGSIv1', function() {
                 notices.__with__({
                     'uuid.v1': uuidMock,
                     'Date.now': dateNowMock,
-                    'parseLocation2GeoJSON': parseLocation2GeoJSONMock
+                    'parseLocation': parseLocationMock
                 })(function () {
                     noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [{
                         'name':  at,
@@ -319,8 +319,8 @@ describe('Notices NGSIv1', function() {
                     //expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
 
                     // Why call parselocation with the attribute value and not with location metadata attribute?
-                    parseLocation2GeoJSONMock.should.have.been.calledWith(attrValue);
-                    parseLocation2GeoJSONMock.should.be.calledOnce;
+                    parseLocationMock.should.have.been.calledWith(attrValue);
+                    parseLocationMock.should.be.calledOnce;
                     done();
                 });
             }
@@ -329,7 +329,7 @@ describe('Notices NGSIv1', function() {
         // it('should accept notice using geo:point metadata type', function(done) {
         //
         //     var at = 'theMetaAttribute';
-        //     var parseLocation2GeoJSONMock = sinon.spy(function() {
+        //     var parseLocationMock = sinon.spy(function() {
         //         return {
         //             lat: lat,
         //             lon: long,
@@ -340,7 +340,7 @@ describe('Notices NGSIv1', function() {
         //     notices.__with__({
         //         'uuid.v1': uuidMock,
         //         'Date.now': dateNowMock,
-        //         'parseLocation2GeoJSON': parseLocation2GeoJSONMock
+        //         'parseLocation': parseLocationMock
         //     })(function () {
         //         noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [{
         //             'name':  at,
@@ -363,8 +363,8 @@ describe('Notices NGSIv1', function() {
         //         expect(noticeResult[attrKey + '__metadata__' + at + '__lon']).to.equal(long);
         //         expect(noticeResult[attrKey + '__metadata__' + at + '__x']).to.equal(x);
         //         expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
-        //         parseLocation2GeoJSONMock.should.have.been.calledWith(locValue);
-        //         parseLocation2GeoJSONMock.should.be.calledOnce;
+        //         parseLocationMock.should.have.been.calledWith(locValue);
+        //         parseLocationMock.should.be.calledOnce;
         //         done();
         //     });
         // });
@@ -373,14 +373,14 @@ describe('Notices NGSIv1', function() {
             function(done) {
 
                 var error = new Error('fake error');
-                var parseLocation2GeoJSONMock = sinon.stub().throws(error);
+                var parseLocationMock = sinon.stub().throws(error);
                 var logErrorMock = sinon.spy(
                     function(notice) {}
                 );
                 notices.__with__({
                     'uuid.v1': uuidMock,
                     'Date.now': dateNowMock,
-                    'parseLocation2GeoJSON': parseLocation2GeoJSONMock,
+                    'parseLocation': parseLocationMock,
                     'myutils.logErrorIf': logErrorMock
                 })(function () {
                     noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
@@ -390,8 +390,8 @@ describe('Notices NGSIv1', function() {
                     expect(noticeResult.name).to.equal('INVALID_NOTICE');
                     expect(noticeResult.message).to.equal('invalid notice format ' + JSON.stringify(noticeExample));
                     expect(noticeResult.httpCode).to.equal(400);
-                    expect(parseLocation2GeoJSONMock).to.throw(Error);
-                    expect(parseLocation2GeoJSONMock).to.have.been.calledWith(locValue);
+                    expect(parseLocationMock).to.throw(Error);
+                    expect(parseLocationMock).to.have.been.calledWith(locValue);
                     // Checking logError
                     logErrorMock.should.have.been.calledWith(noticeResult);
                     logErrorMock.should.be.calledOnce;
@@ -403,13 +403,13 @@ describe('Notices NGSIv1', function() {
         it('should fail parsing invalid location attribute', function(done) {
 
             var error = new notices.errors.InvalidLocation('fake error');
-            var parseLocation2GeoJSONMock = sinon.spy(function() {
+            var parseLocationMock = sinon.spy(function() {
                 return error;
             });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                'parseLocation2GeoJSON': parseLocation2GeoJSONMock
+                'parseLocation': parseLocationMock
             })(function () {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
@@ -418,8 +418,8 @@ describe('Notices NGSIv1', function() {
                 expect(noticeResult.name).to.equal('INVALID_LOCATION');
                 expect(noticeResult.message).to.equal(error.message);
                 expect(noticeResult.httpCode).to.equal(400);
-                parseLocation2GeoJSONMock.should.have.been.calledWith(locValue);
-                parseLocation2GeoJSONMock.should.be.calledOnce;
+                parseLocationMock.should.have.been.calledWith(locValue);
+                parseLocationMock.should.be.calledOnce;
                 done();
             });
         });
