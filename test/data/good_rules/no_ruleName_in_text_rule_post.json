@@ -1,0 +1,11 @@
+{
+  "name": "x_post_auto",
+  "text": "select *, ev.xPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(xPressure?,String),float)>1.5 and type=\"xMeter\")]",
+  "action": {
+    "type": "post",
+    "template": "Meter ${Meter} has pression ${Pression}.",
+    "parameters": {
+      "url": "localhost:1111"
+    }
+  }
+}
