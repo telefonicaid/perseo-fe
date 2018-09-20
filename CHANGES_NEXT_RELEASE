@@ -1,3 +1,0 @@
-- Add: new parameter to updateAction card: actionType: APPEND (default) or UPDATE (#278)
-- Using precise dependencies (~=) in packages.json
-- Provide default value (false) for tls.rejectUnauthorized config option (#272, partially)
