@@ -162,7 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
-* Tru Sep 20 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.0
+* Thu Sep 20 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.0
 - Add: new parameter to updateAction card: actionType: APPEND (default) or UPDATE (#278)
 - Using precise dependencies (~=) in packages.json
 - Provide default value (false) for tls.rejectUnauthorized config option (#272, partially)
