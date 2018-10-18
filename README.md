@@ -1,5 +1,10 @@
 # perseo
 
+[![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
+[![License: APGL](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](https://opensource.org/licenses/AGPL-3.0)
+![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
+
+
 CEP implementation for IoT platform
 
 ## Index
