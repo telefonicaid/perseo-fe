@@ -18,7 +18,7 @@
 
 FROM node:8.12.0-slim
 
-MAINTAINER FIWARE IoTAgent Team. TelefÃ³nica I+D
+MAINTAINER FIWARE Perseo Team. TelefÃ³nica I+D
 
 COPY . /opt/perseo-fe/
 WORKDIR /opt/perseo-fe
