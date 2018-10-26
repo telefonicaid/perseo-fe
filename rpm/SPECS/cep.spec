@@ -72,9 +72,9 @@ cp -R %{_topdir}/SOURCES/etc %{buildroot}
 echo "[INFO] Building RPM"
 cd %{_build_root_project}
 
-# Only production modules
+# Only production modules. We have found that --force is required to make this work for Node v8
 rm -fR node_modules/
-npm cache clear
+npm cache clear --force
 npm install --production
 
 # -------------------------------------------------------------------------------------------- #
