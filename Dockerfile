@@ -26,7 +26,7 @@ WORKDIR /opt/perseo-fe
 RUN \
   apt-get update && \
   apt-get install -y git && \
-  npm install -g grunt-cli && \
+  npm install pm2@3.2.2 -g && \
   echo "INFO: npm install --production..." && \
   cd /opt/perseo-fe && npm install --production && \
   # Clean apt cache
@@ -39,4 +39,8 @@ EXPOSE 9090
 ENV PERSEO_MONGO_HOST=mongodb
 ENV PERSEO_CORE_URL=http://corehost:8080
 
-CMD bin/perseo
+USER node
+ENV NODE_ENV=production
+
+ENTRYPOINT ["pm2-runtime", "bin/perseo"]
+CMD ["-- ", "config.js"]
