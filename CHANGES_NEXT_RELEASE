@@ -1,1 +1,2 @@
 - Add: use NodeJS 8 in Dockerfile
+- Add: use PM2 in Dockerfile
