@@ -1,6 +1,7 @@
 - Set Nodejs 8.12.0 as minimum version in packages.json
 - Add: use NodeJS 8 in Dockerfile
 - Add: use PM2 in Dockerfile
+- Upgrade depedency logops from 1.0.0-alpha.7 to 2.1.0
 - Remove: old unused development dependencies
   * grunt and grunt related module
   * closure-linter-wrapper
