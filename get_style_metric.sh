@@ -18,6 +18,10 @@
 # For those usages not covered by this license please contact with
 # iot_support at tid dot es
 
+# FIXME: we remove grunt in Perseo FE 1.8.0. Thus, this script is now broken
+# and should be reworked in terms of "npm run" scripts. However, not a big
+# problem, as this script has not been used for years.
+
 grunt lint-report --force > /dev/null 2>&1
 ERRORS_GJSLINT=$(cat report/lint/gjslint.xml | grep issue | wc -l)
 ERRORS_JSLINT=$(cat report/lint/jshint-lib.xml | grep error | wc -l)
