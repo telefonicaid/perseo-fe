@@ -1,8 +1,6 @@
 language: node_js
 
 node_js:
- - "4"
- - "6"
  - "8"
  - "10"
 
@@ -25,4 +23,3 @@ install:
 
 before_install:
  - npm update -q
- - npm install -g grunt-cli

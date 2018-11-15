@@ -1,2 +1,12 @@
+- Set Nodejs 8.12.0 as minimum version in packages.json
 - Add: use NodeJS 8 in Dockerfile
 - Add: use PM2 in Dockerfile
+- Upgrade depedency logops from 1.0.0-alpha.7 to 2.1.0
+- Upgrade dev dependency istanbul from ~0.1.34 to ~0.4.5
+- Upgrade dev dependency mocha from 2.4.5 to to 5.2.0
+- Remove: old unused development dependencies
+  * chai
+  * sinon
+  * sinon-chai
+  * grunt and grunt related module
+  * closure-linter-wrapper
