@@ -23,3 +23,6 @@ install:
 
 before_install:
  - npm update -q
+
+before_script:
+ - npm run lint
