@@ -1,0 +1,27 @@
+site_name: Perseo Front End
+site_url: https://fiware-perseo-fe.readthedocs.org
+repo_url: https://github.com/telefonicaid/perseo-fe.git
+site_description: Perseo-Front End (EPL server)
+docs_dir: documentation
+site_dir: html
+markdown_extensions: [toc,fenced_code]
+use_directory_urls: false
+theme: readthedocs
+extra_css: ["https://fiware.org/style/fiware_readthedocs.css", "https://www.fiware.org/style/fiware_readthedocs_processing.css"]
+
+pages:
+  - 'Home': 'index.md' 
+  - 'Architecture': 'architecture.md'
+  - 'Installation & Administration Manual':
+      - 'Introduction': 'admin.md'
+      - 'Configuration': 'configuration.md'
+      - 'Deployment': 'deployment.md'
+      - 'Logs': 'logs.md'
+  - 'User Guide':
+      - 'Plain Rules': 'plain_rules.md'
+      - 'Models': 'models.md'
+      - 'Actions': 'pep_actions.md'
+      - 'API': 'api.md'
+      - 'Metrics API': 'metrics_api.md'
+      - 'Errors': 'errors.md'
+
