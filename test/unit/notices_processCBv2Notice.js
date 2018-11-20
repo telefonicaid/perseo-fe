@@ -542,8 +542,10 @@ describe('Notices NGSIv2', function() {
                 expect(e).exist;
                 expect(request).not.exist;
                 expect(e.httpCode).to.equal(400);
-                expect(e.message[0]).to.equal('Invalid DateTime attribute metadata: datetime is not valid 2018-96-03T09:31:26.296Z');
-                expect(e.message[1]).to.equal('Invalid DateTime attribute: datetime is not valid 2018-08-32T09:31:26.296Z');
+                expect(e.message[0]).to.equal('Invalid DateTime attribute metadata: datetime' +
+                    ' is not valid 2018-96-03T09:31:26.296Z');
+                expect(e.message[1]).to.equal('Invalid DateTime attribute: datetime' +
+                    ' is not valid 2018-08-32T09:31:26.296Z');
             };
             noticeExample.data = [
                 {

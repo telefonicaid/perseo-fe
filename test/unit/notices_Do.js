@@ -130,7 +130,8 @@ describe('Notices Do', function() {
                 should.exist(e);
                 should.not.exist(request);
                 should.equal(e.httpCode, 400);
-                should.equal(e.message, 'invalid notice format Subservice must be a comma-separated list of servicePath');
+                should.equal(e.message, 'invalid notice format Subservice must be' +
+                    ' a comma-separated list of servicePath');
                 done();
             };
             notices.Do({data:[], subservice:123}, callback);
