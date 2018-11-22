@@ -10,3 +10,6 @@
   * sinon-chai
   * grunt and grunt related module
   * closure-linter-wrapper
+- Change on the PERSEO_ORION_URL env var behaviour. Now it represents Context Broker URL instead of the updateContext
+  endpoint
+- Add: NGSIv2 support
