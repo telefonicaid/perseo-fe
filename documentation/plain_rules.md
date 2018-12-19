@@ -200,6 +200,8 @@ The `parameters` field can specify
 * qs: *optional*, an object with fields and values to build the query string of the URL
 * json: *optional*, an object that will be sent as JSON. String substitution will be performed in the keys and 
 values of the object's fields. If present, it overrides `template` from `action` 
+* form: *optional*, an object that will be sent as JSON, for url encoded form data. Header "Content-type: application/x-www-form-urlencoded" is advisable to be present
+
 
 ```json
  "action":{
@@ -255,6 +257,28 @@ or use the `json` parameter
                "meter": "${meter}",
                "${id}": "${type}",
                "pressure": "${pressure}"
+            }
+        }
+    }
+```
+You can also send form encoded data by using the `form` parameter
+
+```json
+ "action": {
+        "type": "post",
+        "parameters": {
+            "url": "http://${target_host}:${target_port}/myapp/${id}",
+            "headers": {
+                        "Content-type": "application/json",
+                        "X-${type}-pressure": "${BloodPressure}"
+            },
+            "qs": {
+                        "${id}": "${BloodPressure}"
+            },
+            "form": {
+               "meter": "meter",
+               "id": "id",
+               "pressure": "pressure"
             }
         }
     }
