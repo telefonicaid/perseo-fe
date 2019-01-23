@@ -2,6 +2,9 @@
 
 [![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: APGL](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](https://opensource.org/licenses/AGPL-3.0)
+<br/>
+[![Build badge](https://img.shields.io/travis/telefonicaid/perseo-fe.svg)](https://travis-ci.org/telefonicaid/perseo-fe/)
+[![Coverage Status](https://coveralls.io/repos/github/telefonicaid/perseo-fe/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/perseo-fe?branch=master)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
 
 
