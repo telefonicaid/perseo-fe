@@ -157,7 +157,8 @@ The `parameters` map includes the following fields:
 
 * id: optional, the id of the entity which attribute is to be updated (by default the id of the entity that triggers the rule is used, i.e. `${id}`)
 * type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that triggers the rule is usedi.e. `${type}`)
-* isPattern: optional, `false` by default
+* version: optional, The NGSI version for the update action. Set this attribute to `2` or `"2"` if you want to use NGSv2 format. `1` by default
+* isPattern: optional, `false` by default. (Only for NGSIv1. If `version` is set to 2, this attribute will be ignored)
 * attributes: *mandatory*, array of target attributes to update. Each element of the array must contain the fields
     * **name**: *mandatory*, attribute name to set
     * **value**: *mandatory*, attribute value to set
@@ -165,7 +166,7 @@ The `parameters` map includes the following fields:
 * actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
 * trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context Broker behind a PEP.
 
-
+NGSIv1 example:
 ```json
 "action":{
         "type":"update",
@@ -190,6 +191,50 @@ First time an update action using trust token is triggered, Perseo interacts wit
 
 It could happen (in theory) that a just got auth token also produce a 401 Not authorized, however this would be an abnormal situation: Perseo logs the problem with the update but doesn't try to get a new one from Keystone. Next time Perseo triggers the action, the process may repeat, i.e. first update attemp fails with 401, Perseo requests a fresh auth token to Keystone, the second update attemp fails with 401, Perseo logs the problem and doesn't retry again.
 
+NGSIv2 example:
+```json
+"action":{
+        "type":"update",
+        "parameters":{
+            "id":"${id}_mirror",
+            "version": 2,
+            "attributes": [
+                {
+                    "name":"abnormal",
+                    "type":"number",
+                    "value": 7
+                }
+            ]
+        }
+    }
+```
+
+**Note:** NGSIv2 update actions ignore the trust token for now.
+
+When using NGSIv2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If `value` is a String, Perseo will parse the value taking into account the `type` field, this only applies to *`Number`*, *`Boolean`* and *`None`* types. 
+
+Complete example using NGSv2 update action in a rule:
+
+```json
+{
+   "name":"blood_rule_update",
+   "text":"select *,\"blood_rule_update\" as ruleName, *, cast(ev.BloodPressure?,float) as Pressure from pattern [every ev=iotEvent(cast(BloodPressure?,float)>1.5 and type=\"BloodMeter\")]",
+   "action":{
+      "type":"update",
+      "parameters":{
+         "id":"${id}_example",
+         "version": 2,
+         "attributes": [
+             {
+                 "name":"pressure",
+                 "type":"number",
+                 "value": "${Pressure}"
+             }
+         ]
+      }
+   }
+}
+```
 
 ### HTTP request action
 Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. 
