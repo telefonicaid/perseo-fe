@@ -24,6 +24,7 @@ The following list of features are planned to be addressed in the short term, an
 
 -   Improve template processing, extending it to StructuredValue/JSON attributes.
 
+-   Description API in OpenAPIv3
 
 ## Medium term
 
@@ -42,3 +43,4 @@ The following list of features are proposals regarding the longer-term evolution
 
 -   Enhanced multi-tenancy support. Leverage different "Fiware-Service" and "Fiware-ServicePath" in rules
 
+-   Rule templates (i.e. having a rule template that can be instantiated to create particular instances of the rule). The idea is be able to create complex rules only providing some parameters.
