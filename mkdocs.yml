@@ -1,7 +1,7 @@
 site_name: Perseo Front End
 site_url: https://fiware-perseo-fe.readthedocs.org
 repo_url: https://github.com/telefonicaid/perseo-fe.git
-site_description: Perseo-Front End (EPL server)
+site_description: Perseo-Front End
 docs_dir: documentation
 site_dir: html
 markdown_extensions: [toc,fenced_code]
