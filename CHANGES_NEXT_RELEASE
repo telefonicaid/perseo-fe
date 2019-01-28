@@ -10,3 +10,4 @@
   * sinon-chai
   * grunt and grunt related module
   * closure-linter-wrapper
+- Add Rule auto-naming on rule creation time
