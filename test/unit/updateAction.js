@@ -16,8 +16,6 @@ var metaExample = {
 var action1 = {
     'type': 'update',
     'parameters': {
-        'id':'${id}_NGSIv2Test',
-        'type':'NGSIv2TypesTest',
         'version': '2',
         'attributes': [
             {
@@ -72,6 +70,7 @@ var action1 = {
 var event1 = {
     'ruleName': 'switch_on',
     'id': 'AmbientLightSensor:1',
+    'type': 'AmbientLightSensor',
     'lastLightIllum': 80,
     'isconnected': true,
     'streetAddress': 'Vasagatan 1',
@@ -131,19 +130,17 @@ var expectedChanges = {
     'lastchange': {
         'value': '2018-12-05T11:31:39.00Z',
         'type': 'DateTime'
-    },
-    'id': 'AmbientLightSensor:1_NGSIv2Test',
-    'type': 'NGSIv2TypesTest'
+    }
 };
 
 describe('doIt', function() {
 
-    describe('#NGSIv2 simple updateAction', function() {
+    describe('#NGSIv2 updateActions', function() {
 
         beforeEach(function () {
         });
 
-        it('should accept NGSIv1 entities', function (done) {
+        it('should accept NGSIv2 entities', function (done) {
 
             // Mocks
             var createEntityThen = sinon.spy(function (successCB, errorCB) {
@@ -176,11 +173,108 @@ describe('doIt', function() {
             })(function () {
                 var callback = function (e, request) {
                     should.exist(request);
-                    request.should.not.be.instanceof(Error);
+                    should.not.exist(e);
                     should.equal(request.httpCode, 200);
+                    expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
+                    expectedChanges.type = 'NGSIv2TypesTest';
                     createEntityMock.should.be.calledOnceWith(expectedChanges, {upsert: true});
                     done();
                 };
+                action1.parameters.id = '${id}_NGSIv2Test';
+                action1.parameters.type = 'NGSIv2TypesTest';
+                updateAction.doIt(action1, event1, callback);
+            });
+        });
+
+        it('should accept NGSIv2 entities without type and id', function (done) {
+
+            // Mocks
+            var createEntityThen = sinon.spy(function (successCB, errorCB) {
+                setTimeout(function () {
+                    successCB({'httpCode': '200', 'message': 'all right'}); // success callback
+                }, 0);
+                return '__TEST';
+            });
+            var createEntityMock = sinon.spy(
+                function (changes, options) {
+                    return {'then': createEntityThen};
+                }
+            );
+            var NGSICloseMock = sinon.spy(
+                function () {
+                    return 'closed';
+                }
+            );
+            var NGSIConnectionMock = sinon.spy(
+                function () {
+                    return {
+                        'v2': {'createEntity': createEntityMock},
+                        'close': NGSICloseMock
+                    };
+                }
+            );
+
+            updateAction.__with__({
+                'NGSI.Connection': NGSIConnectionMock
+            })(function () {
+                var callback = function (e, request) {
+                    should.exist(request);
+                    should.not.exist(e);
+                    should.equal(request.httpCode, 200);
+                    expectedChanges.id = 'AmbientLightSensor:1';
+                    expectedChanges.type = 'AmbientLightSensor';
+                    createEntityMock.should.be.calledOnceWith(expectedChanges, {upsert: true});
+                    done();
+                };
+                delete action1.parameters.id;
+                delete action1.parameters.type;
+                updateAction.doIt(action1, event1, callback);
+            });
+        });
+
+        it('should control failed update actions', function (done) {
+
+            // Mocks
+            var theCBError = new Error();
+            var createEntityThen = sinon.spy(function (successCB, errorCB) {
+                setTimeout(function () {
+                    errorCB(theCBError); // success callback
+                }, 0);
+                return '__TEST';
+            });
+            var createEntityMock = sinon.spy(
+                function (changes, options) {
+                    return {'then': createEntityThen};
+                }
+            );
+            var NGSICloseMock = sinon.spy(
+                function () {
+                    return 'closed';
+                }
+            );
+            var NGSIConnectionMock = sinon.spy(
+                function () {
+                    return {
+                        'v2': {'createEntity': createEntityMock},
+                        'close': NGSICloseMock
+                    };
+                }
+            );
+
+            updateAction.__with__({
+                'NGSI.Connection': NGSIConnectionMock
+            })(function () {
+                var callback = function (e, request) {
+                    should.not.exist(request);
+                    should.exist(e);
+                    e.should.be.instanceof(Error);
+                    expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
+                    expectedChanges.type = 'NGSIv2TypesTest';
+                    createEntityMock.should.be.calledOnceWith(expectedChanges, {upsert: true});
+                    done();
+                };
+                action1.parameters.id = '${id}_NGSIv2Test';
+                action1.parameters.type = 'NGSIv2TypesTest';
                 updateAction.doIt(action1, event1, callback);
             });
         });
