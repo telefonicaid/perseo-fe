@@ -1,6 +1,7 @@
 {
   "name": "perseo",
   "description": "IOT CEP front End",
+  "license": "AGPL-3.0-only",
   "version": "1.7.0-next",
   "homepage": "",
   "author": {
@@ -23,16 +24,20 @@
     "test": "mocha --recursive 'test/**/*.js' --reporter spec --timeout 3000 --ui bdd --exit",
     "test:watch": "npm run test -- -w ./lib",
     "lint": "jshint lib/ --config .jshintrc && jshint test/ --config test/.jshintrc",
+    "prettier": "prettier --single-quote --trailing-comma es5 --write **/*.js *.js",
     "test:coverage": "istanbul cover _mocha -- --recursive 'test/**/*.js' --reporter spec --exit",
     "test:coveralls": "npm run test:coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "watch": "watch 'npm test && npm run lint' ./lib ./test"
   },
   "devDependencies": {
     "coveralls": "~3.0.2",
+    "husky": "^1.1.0",
     "istanbul": "~0.4.5",
     "jshint": "~2.9.6",
+    "lint-staged": "^7.3.0",
     "mocha": "5.2.0",
     "proxyquire": "0.5.1",
+    "prettier": "^1.14.2",
     "should": "8.2.2",
     "watch": "~1.0.2"
   },
@@ -50,5 +55,16 @@
     "utm-converter": "~0.1.1",
     "uuid": "~1.4.2",
     "smpp": "0.3.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --parser flow --single-quote --trailing-comma es5 --write",
+      "git add"
+    ]
   }
 }
