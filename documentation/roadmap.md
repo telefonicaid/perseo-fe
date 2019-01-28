@@ -40,5 +40,5 @@ The following list of features are proposals regarding the longer-term evolution
 
 -   Support for geospatial analysis (geo-fencing, point-based actions, movement-based actions)
 
--   Enhanced multi-tenancy support. Leverage different “Fiware-Service” and “Fiware-ServicePath” in rules
+-   Enhanced multi-tenancy support. Leverage different "Fiware-Service" and "Fiware-ServicePath" in rules
 
