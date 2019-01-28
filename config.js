@@ -31,21 +31,20 @@ var config = {};
  */
 config.logLevel = 'INFO';
 
-
 /**
  * Configures the exposed API.
  */
 config.endpoint = {
-    host: 'localhost',
-    port: 9090,
-    rulesPath : '/rules',
-    actionsPath : '/actions/do',
-    noticesPath : '/notices',
-    vrPath : '/m2m/vrules',
-    checkPath : '/check',
-    versionPath : '/version',
-    logPath: '/admin/log',
-    metricsPath: '/admin/metrics'
+  host: 'localhost',
+  port: 9090,
+  rulesPath: '/rules',
+  actionsPath: '/actions/do',
+  noticesPath: '/notices',
+  vrPath: '/m2m/vrules',
+  checkPath: '/check',
+  versionPath: '/version',
+  logPath: '/admin/log',
+  metricsPath: '/admin/metrics',
 };
 
 /**
@@ -58,27 +57,25 @@ config.isMaster = true;
  */
 config.slaveDelay = 500;
 
-
 /**
  * DB Configuration.
  */
 config.mongo = {
-    // The URI to use for the database connection. It supports replica set URIs.
-    // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
-    // I.e.: 'mongodb://user:pass@host1:27017,host2:27018,host3:27019/cep?replicaSet=myrep'
-    url : 'mongodb://localhost:27017/cep'
+  // The URI to use for the database connection. It supports replica set URIs.
+  // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+  // I.e.: 'mongodb://user:pass@host1:27017,host2:27018,host3:27019/cep?replicaSet=myrep'
+  url: 'mongodb://localhost:27017/cep',
 };
 
 /**
  * OrionDB Configuration.
  */
 config.orionDb = {
-    url : 'mongodb://localhost:27017/orion',
-    collection : 'entities',
-    prefix : 'orion',
-    batchSize: 500
+  url: 'mongodb://localhost:27017/orion',
+  collection: 'entities',
+  prefix: 'orion',
+  batchSize: 500,
 };
-
 
 /**
  * EPL core options
@@ -87,83 +84,80 @@ config.orionDb = {
  * at core. Each <<interval>> ms, the rules are sent to core.
  */
 config.perseoCore = {
-    rulesURL : 'http://localhost:8080/perseo-core/rules',
-    noticesURL : 'http://localhost:8080/perseo-core/events',
-    interval: 60e3*5
+  rulesURL: 'http://localhost:8080/perseo-core/rules',
+  noticesURL: 'http://localhost:8080/perseo-core/events',
+  interval: 60e3 * 5,
 };
 /**
  * NEXT EPL core options (with HA)
  */
 config.nextCore = {
-    //
-    // Note this parameter is empty, so Perseo will not use HA by default
-    //
-    /*
+  //
+  // Note this parameter is empty, so Perseo will not use HA by default
+  //
+  /*
     rulesURL : 'http://next-core:8080/perseo-core/rules',
     noticesURL : 'http://next-core:8080/perseo-core/events'
     */
 };
 
-
 /**
  * SMTP endpoint options
  */
 config.smtp = {
-    port: 25,
-    host: 'smtpserver',
-    secure: false
-    /*
+  port: 25,
+  host: 'smtpserver',
+  secure: false,
+  /*
      ,
      auth: {
      user: 'abc',
      pass: 'xyz'
      }
     */
-    ,
-    tls: {
-      // keep rejectUnauthorized to false when secure is also false
-      rejectUnauthorized: false
-    }
-    
+  tls: {
+    // keep rejectUnauthorized to false when secure is also false
+    rejectUnauthorized: false,
+  },
 };
 
 /**
  * SMS endpoint options
  */
 config.sms = {
-    URL : 'http://sms-endpoint/smsoutbound',
-    API_KEY : '',
-    API_SECRET: '',
-    from: 'tel:22012;phone-context=+34'
+  URL: 'http://sms-endpoint/smsoutbound',
+  API_KEY: '',
+  API_SECRET: '',
+  from: 'tel:22012;phone-context=+34',
 };
 
 /**
  * SMPP endpoint options
  */
 config.smpp = {
-    host: '',
-    port: '',
-    systemid: '',
-    password: '',
-    from: '346666666',
-    enabled: false
+  host: '',
+  port: '',
+  systemid: '',
+  password: '',
+  from: '346666666',
+  enabled: false,
 };
 
 /**
  * Orion (Context Broker) endpoint options
  */
 config.orion = {
-        URL : 'http://orion-endpoint:1026/NGSI10/updateContext'
+  URL: 'http://orion-endpoint:1026/NGSI10/updateContext',
 };
 
 /**
  * Authorization endpoint
  */
 config.authentication = {
-    host: 'keystone',
-    port: '5001',
-    user: 'user',
-    password: 'password'
+  host: 'keystone',
+  port: '5001',
+  user: 'user',
+  password: 'password',
 };
 
 /**
@@ -171,8 +165,8 @@ config.authentication = {
  * @type {{}}
  */
 config.collections = {
-    rules : 'rules',
-    executions: 'executions'
+  rules: 'rules',
+  executions: 'executions',
 };
 
 /**
@@ -190,8 +184,8 @@ config.executionsTTL = 1 * 24 * 60 * 60;
  *
  * @type {{}}
  */
-config.DEFAULT_SUBSERVICE= '/';
-config.DEFAULT_SERVICE= 'unknownt';
+config.DEFAULT_SUBSERVICE = '/';
+config.DEFAULT_SERVICE = 'unknownt';
 
 /**
  * CheckDB configuration
@@ -203,10 +197,10 @@ config.DEFAULT_SERVICE= 'unknownt';
  * @type {Number}
  */
 config.checkDB = {
-    delay: 5e3,
-    reconnectTries: 1e3,
-    reconnectInterval: 5e3,
-    bufferMaxEntries: 5
+  delay: 5e3,
+  reconnectTries: 1e3,
+  reconnectInterval: 5e3,
+  bufferMaxEntries: 5,
 };
 
 /**
