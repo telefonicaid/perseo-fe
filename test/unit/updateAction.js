@@ -26,18 +26,68 @@ var action1 = {
             {
                 'name':'illuminanceLevel',
                 'type': 'Number',
-                'value': '${lastLightIllum}'
+                'value': '${lastLightIllumNumber}'
+            },
+            {
+                'name':'illuminanceLevel2',
+                'type': 'Number',
+                'value': '${lastLightIllumStringNumber}'
+            },
+            {
+                'name':'illuminanceLevel3',
+                'type': 'Number',
+                'value': 12.5
             },
             {
                 'name':'lastchange',
                 'type': 'DateTime',
-                'value': '${lastchange}'
+                'value': '${stringDate}'
             },
             {
-                'name':'isonline',
+                'name':'lastchange2',
+                'type': 'DateTime',
+                'value': '${stringDateMs}'
+            },
+            {
+                'name':'lastchange3',
+                'type': 'DateTime',
+                'value': '${numberDateMs}'
+            },
+            {
+                'name':'isBool1',
                 'type': 'Boolean',
                 'value': '${isconnected}',
                 'metadata': metaExample
+            },
+            {
+                'name':'isBool2',
+                'type': 'Boolean',
+                'value': 'TRUE'
+            },
+            {
+                'name':'isBool3',
+                'type': 'Boolean',
+                'value': 'true'
+            },
+            {
+                'name':'isBool4',
+                'type': 'Boolean',
+                'value': 'False'
+            },
+            {
+                'name':'isBool5',
+                'type': 'Boolean',
+                'value': 'other'
+            },
+            {
+                'name':'isBool6',
+                'type': 'Boolean',
+                'value': true
+            },
+            {
+                'name':'isBool7',
+                'type': 'Boolean',
+                'value': false
             },
             {
                 'name':'district',
@@ -60,9 +110,19 @@ var action1 = {
                 'value': '${powerState}'
             },
             {
-                'name':'ref',
-                'type': '${refType}',
+                'name':'refNone',
+                'type': '${refNoneType}',
                 'value': 'futureNull'
+            },
+            {
+                'name':'refNone2',
+                'type': '${refNoneType}',
+                'value': '123'
+            },
+            {
+                'name':'refNone3',
+                'type': '${refNoneType}',
+                'value': null
             }
         ]
     }
@@ -71,17 +131,20 @@ var event1 = {
     'ruleName': 'switch_on',
     'id': 'AmbientLightSensor:1',
     'type': 'AmbientLightSensor',
-    'lastLightIllum': 80,
+    'lastLightIllumNumber': 80,
+    'lastLightIllumStringNumber': '69',
     'isconnected': true,
     'streetAddress': 'Vasagatan 1',
     'addressLocality': 'Stockholm',
     'laststatus': 'allright',
     'powerState':'on',
-    'lastchange': '2018-12-05T11:31:39.00Z',
+    'stringDate': '2018-12-05T11:31:39.00Z',
+    'stringDateMs': '1548843060657',
+    'numberDateMs': 1548843229832,
     'subservice': '/',
     'areaServed': 'Stockholm center',
     'service': 'dev_test',
-    'refType': 'None',
+    'refNoneType': 'None',
     'fiwarePerseoContext': {
         'path': '/actions/do',
         'op': '/actions/do',
@@ -102,14 +165,46 @@ var expectedChanges = {
         'value': 'allright',
         'type': 'Text'
     },
-    'ref': {
+    'refNone': {
         'value': null,
         'type': 'None'
     },
-    'isonline': {
+    'refNone2': {
+        'value': null,
+        'type': 'None'
+    },
+    'refNone3': {
+        'value': null,
+        'type': 'None'
+    },
+    'isBool1': {
         'value': true,
         'type': 'Boolean',
         'metadata': metaExample
+    },
+    'isBool2': {
+        'value': true,
+        'type': 'Boolean'
+    },
+    'isBool3': {
+        'value': true,
+        'type': 'Boolean'
+    },
+    'isBool4': {
+        'value': false,
+        'type': 'Boolean'
+    },
+    'isBool5': {
+        'value': false,
+        'type': 'Boolean'
+    },
+    'isBool6': {
+        'value': true,
+        'type': 'Boolean'
+    },
+    'isBool7': {
+        'value': false,
+        'type': 'Boolean'
     },
     'powerState': {
         'value': 'on',
@@ -117,6 +212,14 @@ var expectedChanges = {
     },
     'illuminanceLevel': {
         'value': 80,
+        'type': 'Number'
+    },
+    'illuminanceLevel2': {
+        'value': 69,
+        'type': 'Number'
+    },
+    'illuminanceLevel3': {
+        'value': 12.5,
         'type': 'Number'
     },
     'streetLightID': {
@@ -128,7 +231,15 @@ var expectedChanges = {
         'type': 'Text'
     },
     'lastchange': {
-        'value': '2018-12-05T11:31:39.00Z',
+        'value': '2018-12-05T11:31:39.000Z',
+        'type': 'DateTime'
+    },
+    'lastchange2': {
+        'value': '2019-01-30T10:11:00.657Z',
+        'type': 'DateTime'
+    },
+    'lastchange3': {
+        'value': '2019-01-30T10:13:49.832Z',
         'type': 'DateTime'
     }
 };
