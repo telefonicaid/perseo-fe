@@ -49,6 +49,26 @@ var action1 = {
                 'value': '${id}'
             },
             {
+                'name':'textNumberLit',
+                'type': 'Text',
+                'value': 666
+            },
+            {
+                'name':'textBoolLit',
+                'type': 'Text',
+                'value': false
+            },
+            {
+                'name':'textObjLit',
+                'type': 'Text',
+                'value': {a: 1, b: 2}
+            },
+            {
+                'name':'streetLightID',
+                'type': 'Text',
+                'value': '${id}'
+            },
+            {
                 'name':'illuminanceLevel',
                 'type': 'Number',
                 'value': '${lastLightIllumNumber}'
@@ -188,6 +208,18 @@ var expectedChanges = {
     },
     'status': {
         'value': 'allright',
+        'type': 'Text'
+    },
+    'textBoolLit': {
+        'value': 'false',
+        'type': 'Text'
+    },
+    'textNumberLit': {
+        'value': '666',
+        'type': 'Text'
+    },
+    'textObjLit': {
+        'value': '[object Object]',
         'type': 'Text'
     },
     'refNone': {
