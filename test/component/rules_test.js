@@ -106,7 +106,8 @@ describe('Rules', function() {
                         data.should.have.property('body');
                         data.body.should.have.property('data');
                         data.body.data.should.have.property('text',
-                            'select "x_post_auto" as ruleName, *, ev.xPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(xPressure?,String),float)>1.5 and type="xMeter")]');
+                            'select "x_post_auto" as ruleName, *, ev.xPressure? as Pression, ev.id? as Meter from ' +
+                            'pattern [every ev=iotEvent(cast(cast(xPressure?,String),float)>1.5 and type="xMeter")]');
                         data.body.data.should.have.property('name', rule.name);
 
                         return callback();
@@ -131,7 +132,9 @@ describe('Rules', function() {
                         data.should.have.property('body');
                         data.body.should.have.property('data');
                         data.body.data.should.have.property('text',
-                            'select *,\"blood_post\" as ruleName,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]');
+                            'select *,\"blood_post\" as ruleName,ev.BloodPressure? as Pression, ev.id? as Meter from' +
+                            ' pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and ' +
+                            'type=\"BloodMeter\")]');
                         data.body.data.should.have.property('name', rule.name);
 
                         return callback();
@@ -156,7 +159,8 @@ describe('Rules', function() {
                         data.should.have.property('body');
                         data.body.should.have.property('data');
                         data.body.data.should.have.property('text',
-                            'select *, "badRuleleName" as ruleName, ev.xPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(xPressure?,String),float)>1.5 and type="xMeter")]');
+                            'select *, "badRuleleName" as ruleName, ev.xPressure? as Pression, ev.id? as Meter from' +
+                            ' pattern [every ev=iotEvent(cast(cast(xPressure?,String),float)>1.5 and type="xMeter")]');
                         data.body.data.should.have.property('name', rule.name);
 
                         return callback();
