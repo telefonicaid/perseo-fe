@@ -213,12 +213,157 @@ NGSIv2 example:
 
 When using NGSIv2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If `value` is a String, Perseo will parse the value taking into account the `type` field, this only applies to *`Number`*, *`Boolean`* and *`None`* types. 
 
-Complete example using NGSv2 update action in a rule:
+**Data Types for NGSIv2:**
+
+With `Number` type attributes, Perseo can be able to manage a int/float number or a String to parse in value field.
+- Number from variable:
+```json
+{
+    'name':'numberFromValue',
+    'type': 'Number',
+    'value': '${NumberValue}'
+}
+```
+If `NumberValue` value is for example `32.12`, this attribute will take `32.12` as value.
+
+- Literal Number:
+```json
+{
+    'name':'numberLiteral',
+    'type': 'Number',
+    'value': 12
+}
+```
+This attribute will take `12` as value.
+
+- Number as String from variable:
+```json
+{
+    'name':'numberFromStringValue',
+    'type': 'Number',
+    'value': '${NumberValueAsString}'
+}
+```
+If `NumberValueAsString` value is for example `"4.67"`, this attribute will take `4.67` as value.
+
+- Number as String:
+```json
+{
+    'name':'numberStringLiteral',
+    'type': 'Number',
+    'value': '67.8'
+}
+```
+This attribute will take `67.8` as value.
+
+
+
+With `Text` type attributes, Perseo will put the value field parsed as string.
+
+- Text as variable:
+```json
+{
+    'name':'textFromValue',
+    'type': 'Text',
+    'value': '${varValue}'
+}
+```
+If `varValue` value is for example `"Good morning"`, this attribute will take `"Good morning"` as value.
+
+If `varValue` value is for example `1234`, this attribute will take `"1234"` as value.
+
+- Literal Text:
+```json
+{
+    'name':'textLiteral',
+    'type': 'Text',
+    'value': 'Hello world'
+}
+```
+This attribute will take `"Hello world"` as value.
+
+- Literal Number:
+```json
+{
+    'name':'textNumberLiteral',
+    'type': 'Text',
+    'value': 67.8
+}
+```
+This attribute will take `"67.8"` as value.
+
+- Literal Boolean:
+```json
+{
+    'name':'textBoolLiteral',
+    'type': 'Text',
+    'value': true
+}
+```
+This attribute will take `"true"` as value.
+
+With `DateTime` type attributes, Perseo will try to parse the value to DateTime format.
+
+Date as String:
+```json
+{
+    'name':'dateString',
+    'type': 'DateTime',
+    'value': '2018-12-05T11:31:39.00Z'
+}
+```
+This attribute will take `"2018-12-05T11:31:39.000Z"` as value.
+
+Date as Number in milliseconds:
+```json
+{
+    'name':'dateString',
+    'type': 'DateTime',
+    'value': 1548843229832
+}
+```
+This attribute will take `"2019-01-30T10:13:49.832Z"` as value.
+
+Date from variable.
+```json
+{
+    'name':'dateString',
+    'type': 'DateTime',
+    'value': '${dateVar}'
+}
+```
+If `dateVar` value is for example `1548843229832` (as Number or String), this attribute will take `"2019-01-30T10:13:49.832Z"` as value.
+
+You can use the `__ts` field of a Perseo DateTime attribute to fill a DateTime attribute value without using any `cast()`. For example, if the var are defined as follow in the rule text, `ev.timestamp__ts? as dateVar`, `dateVar` will be a String with the Date in milliseconds, for example `"1548843060657"` and Perseo will parse this String with to a valid DateTime as `2019-01-30T10:11:00.657Z`.
+
+With `None` type attributes, Perseo will set the value to `null` in all cases.
+
+None Attribute:
+```json
+{
+    'name':'nullAttribute',
+    'type': 'None',
+    'value': 'It does not matter what you put here'
+}
+```
+This attribute will take `null` as value.
+
+```json
+{
+    'name':'nullAttribute2',
+    'type': 'None',
+    'value': null
+}
+```
+This attribute will take `null` as value.
+
+
+**Complete example using NGSv2 update action in a rule:**
 
 ```json
 {
    "name":"blood_rule_update",
-   "text":"select *,\"blood_rule_update\" as ruleName, *, cast(ev.BloodPressure?,float) as Pressure from pattern [every ev=iotEvent(cast(BloodPressure?,float)>1.5 and type=\"BloodMeter\")]",
+   "text":"select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pressure from pattern [every ev=iotEvent(BloodPressure? > 1.5 and type=\"BloodMeter\")]",
    "action":{
       "type":"update",
       "parameters":{
@@ -235,6 +380,8 @@ Complete example using NGSv2 update action in a rule:
    }
 }
 ```
+
+Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
 
 ### HTTP request action
 Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. 
