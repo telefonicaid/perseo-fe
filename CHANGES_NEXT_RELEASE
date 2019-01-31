@@ -10,4 +10,4 @@
   * sinon-chai
   * grunt and grunt related module
   * closure-linter-wrapper
-- Add Rule auto-naming on rule creation time
+- Add 'ruleName' as variable automatically in rule text field (EPL) on rule creation time (#208)
