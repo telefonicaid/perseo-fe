@@ -146,32 +146,42 @@ describe('AxnParams', function() {
                     parameters: {
                         to: 'http://localhost:8080/path/entity',
                     },
+                    /*jshint quotmark: double */
                     template: "this is '$'",
+                    /*jshint quotmark: single */
                 },
                 options = smsAction.buildSMSOptions(action, event);
 
             should.equal(options.to, 'http://localhost:8080/path/entity');
+            /*jshint quotmark: double */
             should.equal(options.text, "this is '$'");
+            /*jshint quotmark: single */
         });
     });
     describe('#buildTwitterOptions()', function() {
         it('should substitute params', function() {
             var event = { t: 'some text' },
                 action = {
+                    /*jshint quotmark: double */
                     template: "this is '${t}'",
+                    /*jshint quotmark: single */
                 },
                 options = twitterAction.buildTwitterOptions(action, event);
-
+            /*jshint quotmark: double */
             should.equal(options.text, "this is 'some text'");
+            /*jshint quotmark: single */
         });
         it('should keep params without placeholders', function() {
             var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
+                    /*jshint quotmark: double */
                     template: "this is '$'",
+                    /*jshint quotmark: single */
                 },
                 options = twitterAction.buildTwitterOptions(action, event);
-
+            /*jshint quotmark: double */
             should.equal(options.text, "this is '$'");
+            /*jshint quotmark: single */
         });
     });
     describe('#buildUpdateOptions()', function() {
