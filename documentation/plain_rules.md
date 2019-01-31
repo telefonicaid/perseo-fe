@@ -219,9 +219,9 @@ With `Number` type attributes, Perseo can be able to manage a int/float number o
 - Number from variable:
 ```json
 {
-    'name':'numberFromValue',
-    'type': 'Number',
-    'value': '${NumberValue}'
+    "name":"numberFromValue",
+    "type": "Number",
+    "value": "${NumberValue}"
 }
 ```
 If `NumberValue` value is for example `32.12`, this attribute will take `32.12` as value.
@@ -229,9 +229,9 @@ If `NumberValue` value is for example `32.12`, this attribute will take `32.12` 
 - Literal Number:
 ```json
 {
-    'name':'numberLiteral',
-    'type': 'Number',
-    'value': 12
+    "name":"numberLiteral",
+    "type": "Number",
+    "value": 12
 }
 ```
 This attribute will take `12` as value.
@@ -239,9 +239,9 @@ This attribute will take `12` as value.
 - Number as String from variable:
 ```json
 {
-    'name':'numberFromStringValue',
-    'type': 'Number',
-    'value': '${NumberValueAsString}'
+    "name":"numberFromStringValue",
+    "type": "Number",
+    "value": "${NumberValueAsString}"
 }
 ```
 If `NumberValueAsString` value is for example `"4.67"`, this attribute will take `4.67` as value.
@@ -249,9 +249,9 @@ If `NumberValueAsString` value is for example `"4.67"`, this attribute will take
 - Number as String:
 ```json
 {
-    'name':'numberStringLiteral',
-    'type': 'Number',
-    'value': '67.8'
+    "name":"numberStringLiteral",
+    "type": "Number",
+    "value": "67.8"
 }
 ```
 This attribute will take `67.8` as value.
@@ -263,9 +263,9 @@ With `Text` type attributes, Perseo will put the value field parsed as string.
 - Text as variable:
 ```json
 {
-    'name':'textFromValue',
-    'type': 'Text',
-    'value': '${varValue}'
+    "name":"textFromValue",
+    "type": "Text",
+    "value": "${varValue}"
 }
 ```
 If `varValue` value is for example `"Good morning"`, this attribute will take `"Good morning"` as value.
@@ -275,9 +275,9 @@ If `varValue` value is for example `1234`, this attribute will take `"1234"` as 
 - Literal Text:
 ```json
 {
-    'name':'textLiteral',
-    'type': 'Text',
-    'value': 'Hello world'
+    "name":"textLiteral",
+    "type": "Text",
+    "value": "Hello world"
 }
 ```
 This attribute will take `"Hello world"` as value.
@@ -285,9 +285,9 @@ This attribute will take `"Hello world"` as value.
 - Literal Number:
 ```json
 {
-    'name':'textNumberLiteral',
-    'type': 'Text',
-    'value': 67.8
+    "name":"textNumberLiteral",
+    "type": "Text",
+    "value": 67.8
 }
 ```
 This attribute will take `"67.8"` as value.
@@ -295,9 +295,9 @@ This attribute will take `"67.8"` as value.
 - Literal Boolean:
 ```json
 {
-    'name':'textBoolLiteral',
-    'type': 'Text',
-    'value': true
+    "name":"textBoolLiteral",
+    "type": "Text",
+    "value": true
 }
 ```
 This attribute will take `"true"` as value.
@@ -307,9 +307,9 @@ With `DateTime` type attributes, Perseo will try to parse the value to DateTime 
 Date as String:
 ```json
 {
-    'name':'dateString',
-    'type': 'DateTime',
-    'value': '2018-12-05T11:31:39.00Z'
+    "name":"dateString",
+    "type": "DateTime",
+    "value": "2018-12-05T11:31:39.00Z"
 }
 ```
 This attribute will take `"2018-12-05T11:31:39.000Z"` as value.
@@ -317,9 +317,9 @@ This attribute will take `"2018-12-05T11:31:39.000Z"` as value.
 Date as Number in milliseconds:
 ```json
 {
-    'name':'dateString',
-    'type': 'DateTime',
-    'value': 1548843229832
+    "name":"dateString",
+    "type": "DateTime",
+    "value": 1548843229832
 }
 ```
 This attribute will take `"2019-01-30T10:13:49.832Z"` as value.
@@ -327,9 +327,9 @@ This attribute will take `"2019-01-30T10:13:49.832Z"` as value.
 Date from variable.
 ```json
 {
-    'name':'dateString',
-    'type': 'DateTime',
-    'value': '${dateVar}'
+    "name":"dateString",
+    "type": "DateTime",
+    "value": "${dateVar}"
 }
 ```
 If `dateVar` value is for example `1548843229832` (as Number or String), this attribute will take `"2019-01-30T10:13:49.832Z"` as value.
@@ -341,18 +341,18 @@ With `None` type attributes, Perseo will set the value to `null` in all cases.
 None Attribute:
 ```json
 {
-    'name':'nullAttribute',
-    'type': 'None',
-    'value': 'It does not matter what you put here'
+    "name":"nullAttribute",
+    "type": "None",
+    "value": "It does not matter what you put here"
 }
 ```
 This attribute will take `null` as value.
 
 ```json
 {
-    'name':'nullAttribute2',
-    'type': 'None',
-    'value': null
+    "name":"nullAttribute2",
+    "type": "None",
+    "value": null
 }
 ```
 This attribute will take `null` as value.
