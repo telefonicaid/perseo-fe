@@ -30,7 +30,8 @@ var fs = require('fs'),
     fakeServerPort = 9753,
     fakeServerCode = 200,
     fakeServerMessage = 'All right',
-    fakeServerCallback;
+    fakeServerCallback,
+    URL = require('url').URL;
 
 function loadExample(fileName) {
     var f = fs.readFileSync(fileName);
@@ -80,7 +81,7 @@ function dropExecutions(callback) {
 }
 function dropEntities(callback) {
     MongoClient.connect(
-        config.orion.url,
+        new URL('v1/updateContext', config.orion.URL),
         function(err, db) {
             if (err) {
                 return callback(err);

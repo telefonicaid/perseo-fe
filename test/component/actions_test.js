@@ -34,7 +34,8 @@ var async = require('async'),
     constants = require('../../lib/constants'),
     request = require('request'),
     config = require('../../config'),
-    EXEC_GRACE_PERIOD = 500;
+    EXEC_GRACE_PERIOD = 500,
+    URL = require('url').URL;
 
 describe('Actions', function() {
     beforeEach(testEnv.commonBeforeEach);
@@ -87,7 +88,7 @@ describe('Actions', function() {
         it('should return ok with a valid action with a rule for update', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_update.json');
-            utilsT.getConfig().orion.URL = 'http://thisshouldbenothingnotaCB';
+            utilsT.getConfig().orion.URL = new URL('http://thisshouldbenothingnotaCB');
             async.series(
                 [
                     function(callback) {

@@ -82,7 +82,7 @@ describe('LogLevel', function() {
                         clients.GetLogLevel(function(error, response) {
                             should.not.exist(error);
                             response.should.have.property('statusCode', 200);
-                            response.should.have.body;
+                            response.should.have.property('body');
                             response.body.should.have.property('level', level);
                             callback(null);
                         });

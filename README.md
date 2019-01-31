@@ -27,6 +27,8 @@ CEP implementation for IoT platform
 * [Available actions for PEP](documentation/pep_actions.md)
 * [Documentation for developers of perseo](documentation/development.md)
 
+| :dart: [Roadmap](documentation/roadmap.md) |
+|---|
 ## License
 
 Perseo FE is licensed under Affero General Public License (GPL) version 3.
