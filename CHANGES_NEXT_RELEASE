@@ -10,8 +10,8 @@
 - Change on the PERSEO_ORION_URL env var behaviour. Now it represents Context Broker base URL instead of the
   updateContext endpoint
 - Add: new ngsijs ~1.2.0 dependency
-- Add: new rewire ~~.0.1 dependency
+- Add: new rewire ~.0.1 dev dependency
 - Add: NGSIv2 support in both notification reception and CB update action
-- Upgrade dev dependency chai from ~1.8.0" to ~4.1.2
+- Upgrade dev dependency chai from ~1.8.0 to ~4.1.2
 - Upgrade dev dependency sinon from ~1.7.3 to ~6.1.0
 - Upgrade dev dependency sinon-chai from 2.4.0 to ~3.2.0
