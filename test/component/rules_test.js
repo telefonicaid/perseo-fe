@@ -31,76 +31,90 @@ var async = require('async'),
     rules = require('../../lib/models/rules');
 
 describe('Rules', function() {
-
     beforeEach(testEnv.commonBeforeEach);
     afterEach(testEnv.commonAfterEach);
 
     describe('#PutRules', function() {
         it('should return OK when refeshing rules to core', function(done) {
             var ruleSet = utilsT.loadDirExamples('./test/data/good_rules');
-            async.eachSeries(ruleSet, function(c, callback) {
-                clients.PostRule(c.object, function(error, data) {
+            async.eachSeries(
+                ruleSet,
+                function(c, callback) {
+                    clients.PostRule(c.object, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 200);
+                        return callback(null);
+                    });
+                },
+                function(error) {
                     should.not.exist(error);
-                    data.should.have.property('statusCode', 200);
-                    return callback(null);
-                });
-            }, function(error) {
-                should.not.exist(error);
-                rules.Refresh(done);
-            });
+                    rules.Refresh(done);
+                }
+            );
         });
     });
 
     describe('#PostRule()', function() {
         it('should return OK when a correct rule is POSTed', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_rules');
-            async.eachSeries(cases, function(c, callback) {
-                clients.PostRule(c.object, function(error, data) {
-                    should.not.exist(error);
-                    data.should.have.property('statusCode', 200);
-                    return callback(null);
-                });
-            }, function(error) {
-                should.not.exist(error);
-                return done();
-            });
-        });
-        it('should return the same rule was POSTed', function(done) {
-            var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_sms.json');
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
+            async.eachSeries(
+                cases,
+                function(c, callback) {
+                    clients.PostRule(c.object, function(error, data) {
                         should.not.exist(error);
                         data.should.have.property('statusCode', 200);
                         return callback(null);
                     });
                 },
-                function(callback) {
-                    clients.GetRule(rule.name, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        data.should.have.property('body');
-                        data.body.data.should.have.property('name', rule.name);
-                        data.body.data.should.have.property('text', rule.text);
-                        return callback();
-                    });
+                function(error) {
+                    should.not.exist(error);
+                    return done();
                 }
-            ], done);
+            );
+        });
+        it('should return the same rule was POSTed', function(done) {
+            var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_sms.json');
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        clients.GetRule(rule.name, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            data.should.have.property('body');
+                            data.body.data.should.have.property('name', rule.name);
+                            data.body.data.should.have.property('text', rule.text);
+                            return callback();
+                        });
+                    },
+                ],
+                done
+            );
         });
         it('should return an error if core endpoint is not working', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_rules');
             utilsT.setServerCode(400);
             utilsT.setServerMessage('what a pity!');
-            async.eachSeries(cases, function(c, callback) {
-                clients.PostRule(c.object, function(error, data) {
+            async.eachSeries(
+                cases,
+                function(c, callback) {
+                    clients.PostRule(c.object, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 500);
+                        return callback(null);
+                    });
+                },
+                function(error) {
                     should.not.exist(error);
-                    data.should.have.property('statusCode', 500);
-                    return callback(null);
-                });
-            }, function(error) {
-                should.not.exist(error);
-                done();
-            });
+                    done();
+                }
+            );
         });
         it('should return BAD REQUEST when POSTing a rule without name', function(done) {
             var rule = utilsT.loadExample('./test/data/bad_rules/rule_without_name.json');
@@ -174,7 +188,7 @@ describe('Rules', function() {
         });
         it('should return BAD REQUEST when POSTing a rule with a name that is not a string', function(done) {
             var rule = utilsT.loadExample('./test/data/bad_rules/rule_without_name.json');
-            rule.name = {x: 1};
+            rule.name = { x: 1 };
             clients.PostRule(rule, function(error, data) {
                 should.not.exist(error);
                 data.should.have.property('statusCode', 400);
@@ -191,43 +205,53 @@ describe('Rules', function() {
         });
         it('should return BAD REQUEST when POSTing an existent rule', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_email.json');
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 400);
-                        return callback(null);
-                    });
-                }
-            ], done);
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 400);
+                            return callback(null);
+                        });
+                    },
+                ],
+                done
+            );
         });
         it('should return an error when something goes wrong in database', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_rules');
-            async.series([
-                utilsT.dropRulesCollection,
-                function(callback0) {
-                    async.eachSeries(cases, function(c, callback) {
-                        clients.PostRule(c.object, function(error, data) {
-                            should.not.exist(error);
-                            data.should.have.property('statusCode', 500);
-                            return callback(null);
-                        });
-                    }, function(error) {
-                        should.not.exist(error);
-                        callback0();
-                    });
+            async.series(
+                [
+                    utilsT.dropRulesCollection,
+                    function(callback0) {
+                        async.eachSeries(
+                            cases,
+                            function(c, callback) {
+                                clients.PostRule(c.object, function(error, data) {
+                                    should.not.exist(error);
+                                    data.should.have.property('statusCode', 500);
+                                    return callback(null);
+                                });
+                            },
+                            function(error) {
+                                should.not.exist(error);
+                                callback0();
+                            }
+                        );
+                    },
+                ],
+                function(error) {
+                    should.not.exist(error);
+                    done();
                 }
-            ], function(error) {
-                should.not.exist(error);
-                done();
-            });
+            );
         });
     });
     describe('#DeletetRule()', function() {
@@ -240,22 +264,25 @@ describe('Rules', function() {
         });
         it('should be OK to delete an existent rule', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_sms.json');
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.DeleteRule(rule.name, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
-                }
-            ], done);
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        clients.DeleteRule(rule.name, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback();
+                        });
+                    },
+                ],
+                done
+            );
         });
         it('should return an error if core endpoint is not working', function(done) {
             utilsT.setServerCode(400);
@@ -268,24 +295,31 @@ describe('Rules', function() {
         });
         it('should return an error when something goes wrong in database', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_rules');
-            async.series([
-                utilsT.dropRulesCollection,
-                function(callback0) {
-                    async.eachSeries(cases, function(c, callback) {
-                        clients.DeleteRule(c.object.name, function(error, data) {
-                            should.not.exist(error);
-                            data.should.have.property('statusCode', 500);
-                            return callback(null);
-                        });
-                    }, function(error) {
-                        should.not.exist(error);
-                        callback0();
-                    });
+            async.series(
+                [
+                    utilsT.dropRulesCollection,
+                    function(callback0) {
+                        async.eachSeries(
+                            cases,
+                            function(c, callback) {
+                                clients.DeleteRule(c.object.name, function(error, data) {
+                                    should.not.exist(error);
+                                    data.should.have.property('statusCode', 500);
+                                    return callback(null);
+                                });
+                            },
+                            function(error) {
+                                should.not.exist(error);
+                                callback0();
+                            }
+                        );
+                    },
+                ],
+                function(error) {
+                    should.not.exist(error);
+                    done();
                 }
-            ], function(error) {
-                should.not.exist(error);
-                done();
-            });
+            );
         });
     });
     describe('#GetRule()', function() {
@@ -298,46 +332,54 @@ describe('Rules', function() {
         });
         it('should return OK when the rule exist', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_sms.json');
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.GetRule(rule.name, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
-                }
-            ], done);
-
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        clients.GetRule(rule.name, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback();
+                        });
+                    },
+                ],
+                done
+            );
         });
         it('should return an error when something goes wrong in database', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_rules');
-            async.series([
-                utilsT.dropRulesCollection,
-                function(callback0) {
-                    async.eachSeries(cases, function(c, callback) {
-                        clients.GetRule(c.object.name, function(error, data) {
-                            should.not.exist(error);
-                            data.should.have.property('statusCode', 500);
-                            return callback(null);
-                        });
-                    }, function(error) {
-                        should.not.exist(error);
-                        callback0();
-                    });
+            async.series(
+                [
+                    utilsT.dropRulesCollection,
+                    function(callback0) {
+                        async.eachSeries(
+                            cases,
+                            function(c, callback) {
+                                clients.GetRule(c.object.name, function(error, data) {
+                                    should.not.exist(error);
+                                    data.should.have.property('statusCode', 500);
+                                    return callback(null);
+                                });
+                            },
+                            function(error) {
+                                should.not.exist(error);
+                                callback0();
+                            }
+                        );
+                    },
+                ],
+                function(error) {
+                    should.not.exist(error);
+                    done();
                 }
-            ], function(error) {
-                should.not.exist(error);
-                done();
-            });
+            );
         });
-
     });
     describe('#GetAllRules()', function() {
         it('should return an empty set when there are no rules', function(done) {
@@ -348,19 +390,22 @@ describe('Rules', function() {
             });
         });
         it('should return an error when something goes wrong in database', function(done) {
-            async.series([
-                utilsT.dropRulesCollection,
-                function(callback) {
-                    clients.GetAllRules(function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 500);
-                        return callback(null);
-                    });
+            async.series(
+                [
+                    utilsT.dropRulesCollection,
+                    function(callback) {
+                        clients.GetAllRules(function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 500);
+                            return callback(null);
+                        });
+                    },
+                ],
+                function(error) {
+                    should.not.exist(error);
+                    done();
                 }
-            ], function(error) {
-                should.not.exist(error);
-                done();
-            });
+            );
         });
     });
 });

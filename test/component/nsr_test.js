@@ -39,24 +39,24 @@ describe('Entity', function() {
     describe('#alertFunc()', function() {
         var entities = [
                 {
-                    _id: {id: 'eA', servicePath: DEFAULT_SUBSERVICE, type: 'type e1'},
+                    _id: { id: 'eA', servicePath: DEFAULT_SUBSERVICE, type: 'type e1' },
                     attrs: {
-                        'at': {value: 1, modDate: 0},
-                        'other': {value: 'this is a value', modDate: 0}
-                    }
+                        at: { value: 1, modDate: 0 },
+                        other: { value: 'this is a value', modDate: 0 },
+                    },
                 },
                 {
-                    _id: {id: 'eB', servicePath: DEFAULT_SUBSERVICE, type: ''},
+                    _id: { id: 'eB', servicePath: DEFAULT_SUBSERVICE, type: '' },
                     attrs: {
-                        'at': {value: 2, modDate: Date.now() / 1000 - 30 * 60}
-                    }
+                        at: { value: 2, modDate: Date.now() / 1000 - 30 * 60 },
+                    },
                 },
                 {
-                    _id: {id: 'eC', servicePath: DEFAULT_SUBSERVICE},
+                    _id: { id: 'eC', servicePath: DEFAULT_SUBSERVICE },
                     attrs: {
-                        'at': {value: 3, modDate: -1}
-                    }
-                }
+                        at: { value: 3, modDate: -1 },
+                    },
+                },
             ],
             checkInterval = 1,
             rule = utilsT.loadExample('./test/data/no_signal/generic_nonsignal.json');
@@ -67,49 +67,54 @@ describe('Entity', function() {
         this.timeout(2 * checkInterval * 60e3);
         it('should return silent entities', function(done) {
             var start = Date.now();
-            async.series([
-                function(cb) {
-                    utilsT.createEntitiesCollection.bind({}, DEFAULT_SERVICE),
-                        async.eachSeries(entities, utilsT.addEntity.bind({}, DEFAULT_SERVICE), cb);
-                },
-                function(callback) {
-                    clients.PostVR(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 201);
-                        return callback(null);
-                    });
-                },
-                function(cb) {
-                    // wait checker set at AddNSRule to wake up, created by POST of VR
-                    setTimeout(cb, 1.25 * checkInterval * 60e3);
-                },
-                function(cb) {
-                    async.eachSeries(entities, function(entity) {
-                        executionsStore.LastTime(
-                            {
-                                'event': {
-                                    service: DEFAULT_SERVICE,
-                                    subservice: DEFAULT_SUBSERVICE,
-                                    ruleName: rule.name,
-                                    id: entity._id.id
-                                },
-                                'action': {index: 0}
+            async.series(
+                [
+                    function(cb) {
+                        utilsT.createEntitiesCollection.bind({}, DEFAULT_SERVICE),
+                            async.eachSeries(entities, utilsT.addEntity.bind({}, DEFAULT_SERVICE), cb);
+                    },
+                    function(callback) {
+                        clients.PostVR(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 201);
+                            return callback(null);
+                        });
+                    },
+                    function(cb) {
+                        // wait checker set at AddNSRule to wake up, created by POST of VR
+                        setTimeout(cb, 1.25 * checkInterval * 60e3);
+                    },
+                    function(cb) {
+                        async.eachSeries(
+                            entities,
+                            function(entity) {
+                                executionsStore.LastTime(
+                                    {
+                                        event: {
+                                            service: DEFAULT_SERVICE,
+                                            subservice: DEFAULT_SUBSERVICE,
+                                            ruleName: rule.name,
+                                            id: entity._id.id,
+                                        },
+                                        action: { index: 0 },
+                                    },
+                                    function(error, time) {
+                                        should.not.exist(error);
+                                        time.should.not.be.equal(0);
+                                        time.should.be.greaterThan(start);
+                                        return cb();
+                                    }
+                                );
                             },
-                            function(error, time) {
-                                should.not.exist(error);
-                                time.should.not.be.equal(0);
-                                time.should.be.greaterThan(start);
-                                return cb();
-                            });
-                    }, cb);
-
+                            cb
+                        );
+                    },
+                ],
+                function(err, results) {
+                    // asserts
+                    done(err);
                 }
-            ], function(err, results) {
-                // asserts
-                done(err);
-            });
+            );
         });
-
     });
 });
-

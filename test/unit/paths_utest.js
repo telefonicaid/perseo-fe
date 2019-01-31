@@ -27,7 +27,6 @@ var should = require('should'),
     paths = require('../../lib/models/paths');
 
 describe('Paths', function() {
-
     describe('#validService()', function() {
         it('should return null with a valid service', function() {
             var cases = ['a', 'aa', new Array(50).join('x')];
@@ -120,4 +119,3 @@ describe('Paths', function() {
         });
     });
 });
-

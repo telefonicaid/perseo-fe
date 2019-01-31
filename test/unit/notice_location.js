@@ -27,11 +27,16 @@ var should = require('should'),
     notices = require('../../lib/models/notices');
 
 describe('Notices', function() {
-
     describe('#parseLocation()', function() {
         it('should return latitude, longitude with a valid location', function() {
-            var cases = [[0, 0], [41.8919300, 12.5113300], [40.4165000, -3.7025600],
-                [-33.4569400, -70.6482700], [-75.1019400, 123.3952800], [53.386944, -2.919444]];
+            var cases = [
+                [0, 0],
+                [41.89193, 12.51133],
+                [40.4165, -3.70256],
+                [-33.45694, -70.64827],
+                [-75.10194, 123.39528],
+                [53.386944, -2.919444],
+            ];
             // Be careful with precision errors
 
             cases.forEach(function(c) {
@@ -79,4 +84,3 @@ describe('Notices', function() {
         });
     });
 });
-

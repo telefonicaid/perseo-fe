@@ -40,29 +40,37 @@ describe('Notices', function() {
     describe('#PosNotice()', function() {
         it('Good notices should be good', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_notices');
-            async.eachSeries(cases, function(c, callback) {
-                clients.PostNotice(c.object, function(error, data) {
+            async.eachSeries(
+                cases,
+                function(c, callback) {
+                    clients.PostNotice(c.object, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 200);
+                        return callback(null);
+                    });
+                },
+                function(error) {
                     should.not.exist(error);
-                    data.should.have.property('statusCode', 200);
-                    return callback(null);
-                });
-            }, function(error) {
-                should.not.exist(error);
-                done();
-            });
+                    done();
+                }
+            );
         });
         it('Invalid JSON should be an error', function(done) {
             var cases = ['', '{', '[1,2,]'];
-            async.eachSeries(cases, function(c, callback) {
-                clients.PostNotice(c.object, function(error, data) {
+            async.eachSeries(
+                cases,
+                function(c, callback) {
+                    clients.PostNotice(c.object, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 400);
+                        return callback(null);
+                    });
+                },
+                function(error) {
                     should.not.exist(error);
-                    data.should.have.property('statusCode', 400);
-                    return callback(null);
-                });
-            }, function(error) {
-                should.not.exist(error);
-                done();
-            });
+                    done();
+                }
+            );
         });
         it('id as an attribute should be an error', function(done) {
             var n = utilsT.loadExample('./test/data/bad_notices/notice_id_as_attr.json');
@@ -84,16 +92,20 @@ describe('Notices', function() {
             var cases = utilsT.loadDirExamples('./test/data/good_notices');
             utilsT.setServerCode(400);
             utilsT.setServerMessage('what a pity!');
-            async.eachSeries(cases, function(c, callback) {
-                clients.PostNotice(c.object, function(error, data) {
+            async.eachSeries(
+                cases,
+                function(c, callback) {
+                    clients.PostNotice(c.object, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 500);
+                        return callback(null);
+                    });
+                },
+                function(error) {
                     should.not.exist(error);
-                    data.should.have.property('statusCode', 500);
-                    return callback(null);
-                });
-            }, function(error) {
-                should.not.exist(error);
-                done();
-            });
+                    done();
+                }
+            );
         });
         it('several servicepaths should be OK', function(done) {
             var n = utilsT.loadExample('./test/data/notices_several_sp/several_servicepath.json'),
@@ -102,22 +114,25 @@ describe('Notices', function() {
             options.headers = {};
             options.headers[constants.SERVICE_HEADER] = config.DEFAULT_SERVICE;
             options.headers[constants.SUBSERVICE_HEADER] = '/A,/B,/C';
-            options.url = util.format('http://%s:%s%s',
+            options.url = util.format(
+                'http://%s:%s%s',
                 config.endpoint.host,
                 config.endpoint.port,
-                config.endpoint.noticesPath);
+                config.endpoint.noticesPath
+            );
             options.json = n;
             request.post(options, function localPostNotice(error, response, body) {
                 should.not.exist(error);
-                if (response.headers['content-type'] === 'application/json; charset=utf-8' &&
-                    typeof body === 'string') {
+                if (
+                    response.headers['content-type'] === 'application/json; charset=utf-8' &&
+                    typeof body === 'string'
+                ) {
                     body = JSON.parse(body);
                 }
-                data = {statusCode: response.statusCode, body: body, headers: response.headers};
+                data = { statusCode: response.statusCode, body: body, headers: response.headers };
                 data.should.have.property('statusCode', 200);
                 return done();
             });
         });
     });
 });
-

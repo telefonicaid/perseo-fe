@@ -42,7 +42,7 @@ describe('Metrics', function() {
             // exhaustive assert of existence only in this test, for quick detecting this kind of problems
             should.exist(decorated);
             should.exist(decorated.sum);
-            should.exist(decorated.services);  // exhaustive assert of existence only here, for quick detecting
+            should.exist(decorated.services); // exhaustive assert of existence only here, for quick detecting
             should.exist(decorated.services[service]);
             should.exist(decorated.services[service].sum);
 
@@ -52,16 +52,18 @@ describe('Metrics', function() {
     });
     describe('service time (average)', function() {
         it('should be the average when more than one transaction, the same service/subservice', function() {
-            var times = [9.538113116286695,
-                         83.72875661589205,
-                         6.256202259100974,
-                         85.36320026032627,
-                         88.29136565327644,
-                         88.75782943796366,
-                         98.26397101860493,
-                         42.91834740433842,
-                         94.48413769714534,
-                         7.29342435952276],
+            var times = [
+                    9.538113116286695,
+                    83.72875661589205,
+                    6.256202259100974,
+                    85.36320026032627,
+                    88.29136565327644,
+                    88.75782943796366,
+                    98.26397101860493,
+                    42.91834740433842,
+                    94.48413769714534,
+                    7.29342435952276,
+                ],
                 average = 0,
                 decorated;
 
@@ -83,4 +85,3 @@ describe('Metrics', function() {
         });
     });
 });
-

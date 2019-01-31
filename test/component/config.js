@@ -32,34 +32,41 @@ var async = require('async'),
 function postRuleOK(done) {
     var cases = utilsT.loadDirExamples('./test/data/good_rules');
     utilsT.getConfig().nextCore = {};
-    async.eachSeries(cases, function(c, callback) {
-        clients.PostRule(c.object, function(error, data) {
+    async.eachSeries(
+        cases,
+        function(c, callback) {
+            clients.PostRule(c.object, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 200);
+                return callback(null);
+            });
+        },
+        function(error) {
             should.not.exist(error);
-            data.should.have.property('statusCode', 200);
-            return callback(null);
-        });
-    }, function(error) {
-        should.not.exist(error);
-        return done();
-    });
+            return done();
+        }
+    );
 }
 
 function postNoticeOK(done) {
     var cases = utilsT.loadDirExamples('./test/data/good_notices');
-    async.eachSeries(cases, function(c, callback) {
-        clients.PostNotice(c.object, function(error, data) {
+    async.eachSeries(
+        cases,
+        function(c, callback) {
+            clients.PostNotice(c.object, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 200);
+                return callback(null);
+            });
+        },
+        function(error) {
             should.not.exist(error);
-            data.should.have.property('statusCode', 200);
-            return callback(null);
-        });
-    }, function(error) {
-        should.not.exist(error);
-        done();
-    });
+            done();
+        }
+    );
 }
 
 describe('Config', function() {
-
     beforeEach(testEnv.commonBeforeEach);
     afterEach(testEnv.commonAfterEach);
 
@@ -74,21 +81,21 @@ describe('Config', function() {
         it('should return OK when posting a notice', postNoticeOK);
     });
     describe('#With next core only for rules', function() {
-        utilsT.getConfig().nextCore = {rulesURL: 'http://averyfarwayhost:1234'};
+        utilsT.getConfig().nextCore = { rulesURL: 'http://averyfarwayhost:1234' };
         it('should return OK when posting a rule', postRuleOK);
         it('should return OK when posting a notice', postNoticeOK);
     });
     describe('#With next core only for notices', function() {
-        utilsT.getConfig().nextCore = {noticesURL: 'http://averyfarwayhost:1234'};
+        utilsT.getConfig().nextCore = { noticesURL: 'http://averyfarwayhost:1234' };
         it('should return OK when posting a rule', postRuleOK);
         it('should return OK when posting a notice', postNoticeOK);
     });
     describe('#With next core for notices and rules', function() {
         utilsT.getConfig().nextCore = {
             noticesURL: 'http://averyfarwayhost:1234',
-            rulesURL: 'http://averyfarwayhost:1234'};
+            rulesURL: 'http://averyfarwayhost:1234',
+        };
         it('should return OK when posting a rule', postRuleOK);
         it('should return OK when posting a notice', postNoticeOK);
     });
 });
-

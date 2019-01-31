@@ -23,8 +23,7 @@
 
 'use strict';
 
-var
-    async = require('async'),
+var async = require('async'),
     should = require('should'),
     util = require('util'),
     clients = require('../utils/clients'),
@@ -39,57 +38,60 @@ describe('Actions elapsed', function() {
     describe('#action.Do()', function() {
         var executedActions;
 
-        it('should serialize actions, executing only one when there is an elapsed condition,' +
-            ' even when arriving "together"', function(done) {
-            var rule = utilsT.loadExample('./test/data/good_vrs/time_card.json'),
-                action = utilsT.loadExample('./test/data/good_actions/action_sms.json'),
-                date = new Date();
-            action.ev.id += date.getTime();
-            utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
+        it(
+            'should serialize actions, executing only one when there is an elapsed condition,' +
+                ' even when arriving "together"',
+            function(done) {
+                var rule = utilsT.loadExample('./test/data/good_vrs/time_card.json'),
+                    action = utilsT.loadExample('./test/data/good_actions/action_sms.json'),
+                    date = new Date();
+                action.ev.id += date.getTime();
+                utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
 
+                async.series(
+                    [
+                        function(callback) {
+                            clients.PostVR(rule, function(error, data) {
+                                should.not.exist(error);
+                                data.should.have.property('statusCode', 201);
 
-            async.series([
-                function(callback) {
-                    clients.PostVR(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 201);
-
-                        utilsT.setServerCallback(function(req, resp) {
-                            executedActions++;
-                            resp.end('ok ' + executedActions + ' executedActions');
-                        });
-                        executedActions = 0;
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        setTimeout(callback, EXEC_GRACE_PERIOD);
-                    });
-                },
-                function(callback) {
-                    executedActions.should.be.equal(1);
-                    return callback(null);
-                }
-            ], done);
-        });
-
+                                utilsT.setServerCallback(function(req, resp) {
+                                    executedActions++;
+                                    resp.end('ok ' + executedActions + ' executedActions');
+                                });
+                                executedActions = 0;
+                                return callback(null);
+                            });
+                        },
+                        function(callback) {
+                            clients.PostAction(action, function(error, data) {
+                                should.not.exist(error);
+                                data.should.have.property('statusCode', 200);
+                                return callback(null);
+                            });
+                        },
+                        function(callback) {
+                            clients.PostAction(action, function(error, data) {
+                                should.not.exist(error);
+                                data.should.have.property('statusCode', 200);
+                                return callback(null);
+                            });
+                        },
+                        function(callback) {
+                            clients.PostAction(action, function(error, data) {
+                                should.not.exist(error);
+                                data.should.have.property('statusCode', 200);
+                                setTimeout(callback, EXEC_GRACE_PERIOD);
+                            });
+                        },
+                        function(callback) {
+                            executedActions.should.be.equal(1);
+                            return callback(null);
+                        },
+                    ],
+                    done
+                );
+            }
+        );
     });
 });
-

@@ -31,17 +31,16 @@ var should = require('should'),
     updateAction = require('../../lib/models/updateAction');
 
 describe('AxnParams', function() {
-
     describe('#buildMailOptions()', function() {
         it('should substitute params', function() {
-            var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
+            var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     parameters: {
                         from: ' x = ${x}',
                         to: 'y is ${y} ',
-                        subject: '${z} ${z} ${z}'
+                        subject: '${z} ${z} ${z}',
                     },
-                    template: 'this is "${t}"'
+                    template: 'this is "${t}"',
                 },
                 options = emailAction.buildMailOptions(action, event);
 
@@ -51,38 +50,38 @@ describe('AxnParams', function() {
             should.equal(options.text, 'this is "some text"');
         });
         it('should keep params without placeholders', function() {
-            var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
+            var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     parameters: {
                         from: ' x = 1',
                         to: 'y is y ',
-                        subject: '{z} $z $ { z }'
+                        subject: '{z} $z $ { z }',
                     },
-                    template: 'this is \"$\"'
+                    template: 'this is "$"',
                 },
                 options = emailAction.buildMailOptions(action, event);
 
             should.equal(options.from, ' x = 1');
             should.equal(options.to, 'y is y ');
             should.equal(options.subject, '{z} $z $ { z }');
-            should.equal(options.text, 'this is \"$\"');
+            should.equal(options.text, 'this is "$"');
         });
     });
     describe('#buildPostOptions()', function() {
         it('should substitute params', function() {
-            var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
+            var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     parameters: {
                         url: 'http://${x}/${y}/${z}',
-                        qs: { '${x}': 'Y${y}Y'},
-                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+'}
+                        qs: { '${x}': 'Y${y}Y' },
+                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+' },
                     },
-                    template: 'this is \"${t}\"'
+                    template: 'this is "${t}"',
                 },
                 options = postAction.buildPostOptions(action, event);
 
             should.equal(options.url, 'http://1/abc/***');
-            should.equal(options.text, 'this is \"some text\"');
+            should.equal(options.text, 'this is "some text"');
             should.equal(Object.keys(options.qs).length, 1);
             should.equal(options.qs['1'], 'YabcY');
             should.equal(Object.keys(options.headers).length, 2);
@@ -90,13 +89,13 @@ describe('AxnParams', function() {
             should.equal(options.headers['X-abc'], '+***+');
         });
         it('should substitute params w/o template also', function() {
-            var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
+            var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     parameters: {
                         url: 'http://${x}/${y}/${z}',
-                        qs: { '${x}': 'Y${y}Y'},
-                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+'}
-                    }
+                        qs: { '${x}': 'Y${y}Y' },
+                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+' },
+                    },
                 },
                 options = postAction.buildPostOptions(action, event);
 
@@ -106,19 +105,19 @@ describe('AxnParams', function() {
             should.not.exist(options.text);
         });
         it('should keep params without placeholders', function() {
-            var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
+            var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     parameters: {
                         url: 'http://localhost:8080/path/entity',
-                        headers: {'Content-type': 'application/json', 'X-Something': 'in the way she moves'},
-                        qs: {'George': 'Harrison', 'Paul': 'McCartney', 'John': 'Lennon', 'Ringo': '*'}
+                        headers: { 'Content-type': 'application/json', 'X-Something': 'in the way she moves' },
+                        qs: { George: 'Harrison', Paul: 'McCartney', John: 'Lennon', Ringo: '*' },
                     },
-                    template: 'this is \"$\"'
+                    template: 'this is "$"',
                 },
                 options = postAction.buildPostOptions(action, event);
 
             should.equal(options.url, 'http://localhost:8080/path/entity');
-            should.equal(options.text, 'this is \"$\"');
+            should.equal(options.text, 'this is "$"');
             should.equal(Object.keys(options.qs).length, 4);
             should.equal(options.qs.John, 'Lennon');
             should.equal(options.qs.Ringo, '*');
@@ -129,12 +128,12 @@ describe('AxnParams', function() {
     });
     describe('#buildSMSOptions()', function() {
         it('should substitute params', function() {
-            var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
+            var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     parameters: {
-                        to: 'http://${x}/${y}/${z}'
+                        to: 'http://${x}/${y}/${z}',
                     },
-                    template: 'this is \"${t}\"'
+                    template: 'this is "${t}"',
                 },
                 options = smsAction.buildSMSOptions(action, event);
 
@@ -142,42 +141,42 @@ describe('AxnParams', function() {
             should.equal(options.text, 'this is "some text"');
         });
         it('should keep params without placeholders', function() {
-            var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
+            var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     parameters: {
-                        to: 'http://localhost:8080/path/entity'
+                        to: 'http://localhost:8080/path/entity',
                     },
-                    template: 'this is \'$\''
+                    template: "this is '$'",
                 },
                 options = smsAction.buildSMSOptions(action, event);
 
             should.equal(options.to, 'http://localhost:8080/path/entity');
-            should.equal(options.text, 'this is \'$\'');
+            should.equal(options.text, "this is '$'");
         });
     });
     describe('#buildTwitterOptions()', function() {
         it('should substitute params', function() {
-            var event = {t: 'some text'},
+            var event = { t: 'some text' },
                 action = {
-                    template: 'this is \'${t}\''
+                    template: "this is '${t}'",
                 },
                 options = twitterAction.buildTwitterOptions(action, event);
 
-            should.equal(options.text, 'this is \'some text\'');
+            should.equal(options.text, "this is 'some text'");
         });
         it('should keep params without placeholders', function() {
-            var event = {x: 1, y: 'abc', z: '***', t: 'some text'},
+            var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
-                    template: 'this is \'$\''
+                    template: "this is '$'",
                 },
                 options = twitterAction.buildTwitterOptions(action, event);
 
-            should.equal(options.text, 'this is \'$\'');
+            should.equal(options.text, "this is '$'");
         });
     });
     describe('#buildUpdateOptions()', function() {
         it('should substitute params (old format)', function() {
-            var event = {a: 'ID', b: 'TYPE', c: 'NAME', d: 'VALUE', e: 'ISPATTERN', f: 'ATTRTYPE'},
+            var event = { a: 'ID', b: 'TYPE', c: 'NAME', d: 'VALUE', e: 'ISPATTERN', f: 'ATTRTYPE' },
                 action = {
                     parameters: {
                         id: '${a}',
@@ -185,8 +184,8 @@ describe('AxnParams', function() {
                         name: '${c}',
                         value: '${d}',
                         isPattern: '${e}',
-                        attrType: '${f}'
-                    }
+                        attrType: '${f}',
+                    },
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -198,13 +197,13 @@ describe('AxnParams', function() {
             should.equal(options.attributes[0].type, 'ATTRTYPE');
         });
         it('should keep params without placeholders (old format)', function() {
-            var event = {id: 'ID', type: 'TYPE'},
+            var event = { id: 'ID', type: 'TYPE' },
                 action = {
                     parameters: {
                         name: 'NAME',
                         value: 'VALUE',
-                        attrType: 'ATTRTYPE'
-                    }
+                        attrType: 'ATTRTYPE',
+                    },
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -223,13 +222,13 @@ describe('AxnParams', function() {
                 and the incoming event has not 'type' neither, options should
                 not include a 'type'
              */
-            var event = {id: 'ID', x: 'X'},
+            var event = { id: 'ID', x: 'X' },
                 action = {
                     parameters: {
                         name: 'NAME',
                         value: 'VALUE',
-                        attrType: '${x}'
-                    }
+                        attrType: '${x}',
+                    },
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -241,9 +240,20 @@ describe('AxnParams', function() {
             should.equal(options.attributes[0].type, 'X');
         });
         it('should substitute params (array format)', function() {
-            var event = {a: 'ID', b: 'TYPE', c: 'NAME', d: 'VALUE', e: 'ISPATTERN', f: 'ATTRTYPE',
-                    c1: 'NAME1', d1: 'VALUE1', f1: 'ATTRTYPE1',
-                    c2: 'NAME2', d2: 'VALUE2', f2: 'ATTRTYPE2' },
+            var event = {
+                    a: 'ID',
+                    b: 'TYPE',
+                    c: 'NAME',
+                    d: 'VALUE',
+                    e: 'ISPATTERN',
+                    f: 'ATTRTYPE',
+                    c1: 'NAME1',
+                    d1: 'VALUE1',
+                    f1: 'ATTRTYPE1',
+                    c2: 'NAME2',
+                    d2: 'VALUE2',
+                    f2: 'ATTRTYPE2',
+                },
                 action = {
                     parameters: {
                         id: '${a}',
@@ -253,20 +263,20 @@ describe('AxnParams', function() {
                             {
                                 name: '${c}',
                                 value: '${d}',
-                                type: '${f}'
+                                type: '${f}',
                             },
                             {
                                 name: '${c1}',
                                 value: '${d1}',
-                                type: '${f1}'
+                                type: '${f1}',
                             },
                             {
                                 name: '${c2}',
                                 value: '${d2}',
-                                type: '${f2}'
-                            }
-                        ]
-                    }
+                                type: '${f2}',
+                            },
+                        ],
+                    },
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -287,27 +297,27 @@ describe('AxnParams', function() {
             should.equal(options.attributes[2].type, 'ATTRTYPE2');
         });
         it('should keep params without placeholders (array format)', function() {
-            var event = {id: 'ID', type: 'TYPE'},
+            var event = { id: 'ID', type: 'TYPE' },
                 action = {
                     parameters: {
                         attributes: [
                             {
                                 name: 'NAME',
                                 value: 'VALUE',
-                                type: 'ATTRTYPE'
+                                type: 'ATTRTYPE',
                             },
                             {
                                 name: 'NAME1',
                                 value: 'VALUE1',
-                                type: 'ATTRTYPE1'
+                                type: 'ATTRTYPE1',
                             },
                             {
                                 name: 'NAME2',
                                 value: 'VALUE2',
-                                type: 'ATTRTYPE2'
-                            }
-                        ]
-                    }
+                                type: 'ATTRTYPE2',
+                            },
+                        ],
+                    },
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -335,17 +345,17 @@ describe('AxnParams', function() {
              and the incoming event has not 'type' neither, options should
              not include a 'type'
              */
-            var event = {id: 'ID', x: 'X'},
+            var event = { id: 'ID', x: 'X' },
                 action = {
                     parameters: {
                         attributes: [
                             {
                                 name: 'NAME',
                                 value: 'VALUE',
-                                type: '${x}'
-                            }
-                        ]
-                    }
+                                type: '${x}',
+                            },
+                        ],
+                    },
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -358,5 +368,3 @@ describe('AxnParams', function() {
         });
     });
 });
-
-
