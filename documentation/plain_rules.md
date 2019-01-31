@@ -201,7 +201,7 @@ NGSIv2 example:
             "attributes": [
                 {
                     "name":"abnormal",
-                    "type":"number",
+                    "type":"Number",
                     "value": 7
                 }
             ]
@@ -372,7 +372,7 @@ This attribute will take `null` as value.
          "attributes": [
              {
                  "name":"pressure",
-                 "type":"number",
+                 "type":"Number",
                  "value": "${Pressure}"
              }
          ]
