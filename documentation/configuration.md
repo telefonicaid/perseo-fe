@@ -60,7 +60,7 @@ In order to have perseo running, there are several basic pieces of information t
 * `config.smpp.password`: Password for the user of the SMPP server
 * `config.smpp.from`: Number from SMS are sending by SMPP server
 * `config.smpp.enabled`: SMPP is default method for SMS instead of use SMS gateway.
-* `config.orion.URL`: URL for updating contexts at Orion (Context Broker).
+* `config.orion.URL`: Context Broker base URL, e.g. https://orion.example.com:1026
 * `config.mongo.URL`: URL for connecting mongoDB.
 * `config.executionsTTL`: Time-To-Live for documents of action executions (seconds).
 * `config.checkDB.delay`:  Number of milliseconds to check DB connection (see [database aspects](admin.md#database-aspects) documentation for mode detail).

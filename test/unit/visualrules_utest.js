@@ -34,7 +34,7 @@ describe('VisualRules', function() {
             var cases = utilsT.loadDirExamples('./test/data/unit/vr_epl');
             cases.forEach(function(c) {
                 var rule = visualRules.vr2rule(c.object.VR);
-                rule.text.should.be.a.String;
+                rule.text.should.be.a.string;
                 rule.text = rule.text.replace(/\s{2,}/g, ' ');
                 c.object.text = c.object.text.replace(/\s{2,}/g, ' ');
                 should.equal(c.object.text, rule.text);
