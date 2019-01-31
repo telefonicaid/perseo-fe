@@ -30,7 +30,8 @@ var
     clients = require('../../utils/clients'),
     utilsT = require('../../utils/utilsT'),
     testEnv = require('../../utils/testEnvironment'),
-    metrics = require('../../../lib/models/metrics');
+    metrics = require('../../../lib/models/metrics'),
+    URL = require('url').URL;
 
 describe('Metrics', function() {
     beforeEach(testEnv.commonBeforeEach);
@@ -145,7 +146,7 @@ describe('Metrics', function() {
         it('should increment a successful action for update', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_update.json');
-            utilsT.getConfig().orion.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
+            utilsT.getConfig().orion.URL = new URL(util.format('http://localhost:%s', utilsT.fakeHttpServerPort));
             metrics.GetDecorated(true); // reset metrics
             async.series([
                 function(callback) {
@@ -182,7 +183,7 @@ describe('Metrics', function() {
         it('should increment a failed for update', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_update.json');
-            utilsT.getConfig().orion.URL = '';
+            utilsT.getConfig().orion.URL = new URL('http://inventedurl.notexists.com');
             metrics.GetDecorated(true); // reset metrics
             async.series([
                 function(callback) {
@@ -211,7 +212,7 @@ describe('Metrics', function() {
                             should.equal(m.services.unknownt.sum.outgoingTransactions, 1);
                             should.equal(m.services.unknownt.sum.outgoingTransactionsErrors, 1);
                             return callback();
-                        }, 50);
+                        }, 150);
                     });
                 }
             ], done);
