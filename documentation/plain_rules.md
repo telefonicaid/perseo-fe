@@ -43,8 +43,9 @@ from pattern
 
 * The *from* pattern must name the event as **ev** and the event stream from which take events must be **iotEvent**
 * A *type=* condition must be concatenated for avoiding mixing different kinds of entities
-* The name of the rule is not mandatory, but for backward compatibility, it can be present as ** ruleName ** alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it must be equal to the ‘name’ field of the rule object. If it is not present, you can still use the variable 'ruleName' in the actions, because it will be included automatically.
+* The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text.
 
+**Backward compatibility note:** since version 1.8.0 it is not mandatory to specify the name of the rule as part of the EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be present as *ruleName* alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it must be equal to the ‘name’ field of the rule object.
 
 The used entity's attributes must be cast to `float` in case of being numeric (like  in the example). Alphanumeric 
 values must be cast to `String`. Nested cast to string and to float is something we are analyzing, and could be 
