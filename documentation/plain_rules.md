@@ -43,7 +43,7 @@ from pattern
 
 * The *from* pattern must name the event as **ev** and the event stream from which take events must be **iotEvent**
 * A *type=* condition must be concatenated for avoiding mixing different kinds of entities
-* The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text.
+* The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text. The ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET /rules or GET /rules/{name}.
 
 **Backward compatibility note:** since version 1.8.0 it is not mandatory to specify the name of the rule as part of the EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be present as *ruleName* alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it must be equal to the ‘name’ field of the rule object.
 
