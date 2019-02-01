@@ -44,26 +44,26 @@ var subservice = '/test/notices/unit';
 var service = 'utest';
 
 var noticeExampleV1 = JSON.stringify({
-    'subscriptionId': '5b311ccb29adb333f843b5f3',
-    'originator': 'localhost',
-    'contextResponses': [
+    subscriptionId: '5b311ccb29adb333f843b5f3',
+    originator: 'localhost',
+    contextResponses: [
         {
-            'contextElement': {
-                'id': id,
-                'type': type,
-                'isPattern': 'false',
-                'attributes': [
+            contextElement: {
+                id: id,
+                type: type,
+                isPattern: 'false',
+                attributes: [
                     {
-                        'name': attrKey,
-                        'type': attrType,
-                        'value': attrValue
+                        name: attrKey,
+                        type: attrType,
+                        value: attrValue
                     }
                 ]
             }
         }
     ],
-    'subservice': subservice,
-    'service': service
+    subservice: subservice,
+    service: service
 });
 
 var processCBNotice = notices.__get__('processCBNotice');
@@ -71,7 +71,7 @@ var processCBNotice = notices.__get__('processCBNotice');
 // Mocks
 var mockedUid = 'MockedUID_';
 var mockedDateMilis = 442796400000;
-var uuidMock = sinon.spy(function () {
+var uuidMock = sinon.spy(function() {
     return mockedUid;
 });
 var dateNowMock = sinon.spy(function() {
@@ -90,7 +90,6 @@ var x = 441298.13043762115;
 var y = 4474481.316254241;
 var locValue = lat + ', ' + long;
 
-
 describe('Notices NGSIv1', function() {
     var noticeExample;
     beforeEach(function() {
@@ -98,13 +97,11 @@ describe('Notices NGSIv1', function() {
         noticeExample = JSON.parse(noticeExampleV1);
     });
     describe('#processCBNotice', function() {
-
         it('should accept simple notice using Number type', function(done) {
-
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-            })(function () {
+            })(function() {
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
                 expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
@@ -120,7 +117,6 @@ describe('Notices NGSIv1', function() {
         });
 
         it('should accept simple notice using geo:point type', function(done) {
-
             var parseLocationMock = sinon.spy(function() {
                 return {
                     lat: lat,
@@ -132,8 +128,8 @@ describe('Notices NGSIv1', function() {
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                'parseLocation': parseLocationMock
-            })(function () {
+                parseLocation: parseLocationMock
+            })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
@@ -157,23 +153,22 @@ describe('Notices NGSIv1', function() {
         });
 
         it('should accept simple notice using DateTime type', function(done) {
-
             var parseDateMock = sinon.spy(function() {
                 return {
-                    'ts': 1528018286296,
-                    'day': 3,
-                    'month': 6,
-                    'year': 2018,
-                    'hour': 11,
-                    'minute': 31,
-                    'second': 26
+                    ts: 1528018286296,
+                    day: 3,
+                    month: 6,
+                    year: 2018,
+                    hour: 11,
+                    minute: 31,
+                    second: 26
                 };
             });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                'parseDate': parseDateMock
-            })(function () {
+                parseDate: parseDateMock
+            })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = dateType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = dateValue;
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
@@ -200,17 +195,18 @@ describe('Notices NGSIv1', function() {
         });
 
         it('should accept notices including metadata without type', function(done) {
-
             var at = 'theMetaAttribute';
             var metaAtVal = 'mockedValue1234';
             notices.__with__({
                 'uuid.v1': uuidMock,
-                'Date.now': dateNowMock,
-            })(function () {
-                noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [{
-                    'name':  at,
-                    'value': metaAtVal
-                }];
+                'Date.now': dateNowMock
+            })(function() {
+                noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
+                    {
+                        name: at,
+                        value: metaAtVal
+                    }
+                ];
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
                 expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
@@ -228,29 +224,30 @@ describe('Notices NGSIv1', function() {
         });
 
         it('should accept notice using DateTime metadata', function(done) {
-
             var at = 'theMetaAttribute';
-            var parseDateMock = sinon.spy(function () {
+            var parseDateMock = sinon.spy(function() {
                 return {
-                    'ts': 1528018286296,
-                    'day': 3,
-                    'month': 6,
-                    'year': 2018,
-                    'hour': 11,
-                    'minute': 31,
-                    'second': 26
+                    ts: 1528018286296,
+                    day: 3,
+                    month: 6,
+                    year: 2018,
+                    hour: 11,
+                    minute: 31,
+                    second: 26
                 };
             });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                'parseDate': parseDateMock
-            })(function () {
-                noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [{
-                    'name': at,
-                    'value': dateValue,
-                    'type': dateType
-                }];
+                parseDate: parseDateMock
+            })(function() {
+                noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
+                    {
+                        name: at,
+                        value: dateValue,
+                        type: dateType
+                    }
+                ];
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
                 expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
@@ -280,8 +277,9 @@ describe('Notices NGSIv1', function() {
             var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
             noticeResult.should.be.instanceof(notices.errors.IdAsAttribute);
             expect(noticeResult.name).to.equal('ID_ATTRIBUTE');
-            expect(noticeResult.message).to.equal('id as attribute ' + JSON.stringify(noticeExample.contextResponses[0]
-                                                                                        .contextElement.attributes[0]));
+            expect(noticeResult.message).to.equal(
+                'id as attribute ' + JSON.stringify(noticeExample.contextResponses[0].contextElement.attributes[0])
+            );
             expect(noticeResult.httpCode).to.equal(400);
         });
 
@@ -290,93 +288,87 @@ describe('Notices NGSIv1', function() {
             var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
             noticeResult.should.be.instanceof(notices.errors.TypeAsAttribute);
             expect(noticeResult.name).to.equal('TYPE_ATTRIBUTE');
-            expect(noticeResult.message).to.equal('type as attribute ' + 
-                                    JSON.stringify(noticeExample.contextResponses[0].contextElement.attributes[0]));
+            expect(noticeResult.message).to.equal(
+                'type as attribute ' + JSON.stringify(noticeExample.contextResponses[0].contextElement.attributes[0])
+            );
             expect(noticeResult.httpCode).to.equal(400);
         });
 
         // Weird functionality
-        it('should accept notices and parse value as location when exist an attribute named location in metadata',
-            function(done) {
+        it('should accept notices and parse value as location when exist an attribute named location in metadata', function(done) {
+            // this feature does not seem to make sense
+            var at = 'location';
+            var parseLocationMock = sinon.spy(function() {
+                return {
+                    lat: lat,
+                    lon: long,
+                    x: x,
+                    y: y
+                };
+            });
+            notices.__with__({
+                'uuid.v1': uuidMock,
+                'Date.now': dateNowMock,
+                parseLocation: parseLocationMock
+            })(function() {
+                noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
+                    {
+                        name: at,
+                        value: locValue,
+                        type: locType
+                    }
+                ];
+                var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal('false');
+                expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                expect(noticeResult[attrKey]).to.equal(attrValue);
+                expect(noticeResult[attrKey + '__metadata__' + at]).to.equal(locValue);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locType);
+                expect(noticeResult[attrKey + '__lat']).to.equal(lat);
+                expect(noticeResult[attrKey + '__lon']).to.equal(long);
+                expect(noticeResult[attrKey + '__x']).to.equal(x);
+                expect(noticeResult[attrKey + '__y']).to.equal(y);
 
-                // this feature does not seem to make sense
-                var at = 'location';
-                var parseLocationMock = sinon.spy(function() {
-                    return {
-                        lat: lat,
-                        lon: long,
-                        x: x,
-                        y: y
-                    };
-                });
-                notices.__with__({
-                    'uuid.v1': uuidMock,
-                    'Date.now': dateNowMock,
-                    'parseLocation': parseLocationMock
-                })(function () {
-                    noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [{
-                        'name':  at,
-                        'value': locValue,
-                        'type': locType
-                    }];
-                    var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                    expect(noticeResult.noticeId).to.equal(mockedUid);
-                    expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
-                    expect(noticeResult.id).to.equal(id);
-                    expect(noticeResult.type).to.equal(type);
-                    expect(noticeResult.subservice).to.equal(subservice);
-                    expect(noticeResult.service).to.equal(service);
-                    expect(noticeResult.isPattern).to.equal('false');
-                    expect(noticeResult[attrKey + '__type']).to.equal(attrType);
-                    expect(noticeResult[attrKey]).to.equal(attrValue);
-                    expect(noticeResult[attrKey + '__metadata__' + at]).to.equal(locValue);
-                    expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locType);
-                    expect(noticeResult[attrKey + '__lat']).to.equal(lat);
-                    expect(noticeResult[attrKey + '__lon']).to.equal(long);
-                    expect(noticeResult[attrKey + '__x']).to.equal(x);
-                    expect(noticeResult[attrKey + '__y']).to.equal(y);
+                // Why call parselocation with the attribute value and not with location metadata attribute?
+                parseLocationMock.should.have.been.calledWith(attrValue);
+                parseLocationMock.should.be.calledOnce;
+                done();
+            });
+        });
 
-                    // Why call parselocation with the attribute value and not with location metadata attribute?
-                    parseLocationMock.should.have.been.calledWith(attrValue);
-                    parseLocationMock.should.be.calledOnce;
-                    done();
-                });
-            }
-        );
-
-        it('should catch correctly errors',
-            function(done) {
-
-                var error = new Error('fake error');
-                var parseLocationMock = sinon.stub().throws(error);
-                var logErrorMock = sinon.spy(
-                    function(notice) {}
-                );
-                notices.__with__({
-                    'uuid.v1': uuidMock,
-                    'Date.now': dateNowMock,
-                    'parseLocation': parseLocationMock,
-                    'myutils.logErrorIf': logErrorMock
-                })(function () {
-                    noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
-                    noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
-                    var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                    noticeResult.should.be.instanceof(notices.errors.InvalidNotice);
-                    expect(noticeResult.name).to.equal('INVALID_NOTICE');
-                    expect(noticeResult.message).to.equal('invalid notice format ' + JSON.stringify(noticeExample));
-                    expect(noticeResult.httpCode).to.equal(400);
-                    expect(parseLocationMock).to.throw(Error);
-                    expect(parseLocationMock).to.have.been.calledWith(locValue);
-                    // Checking logError
-                    logErrorMock.should.have.been.calledWith(noticeResult);
-                    logErrorMock.should.be.calledOnce;
-                    done();
-                });
-            }
-        );
+        it('should catch correctly errors', function(done) {
+            var error = new Error('fake error');
+            var parseLocationMock = sinon.stub().throws(error);
+            var logErrorMock = sinon.spy(function(notice) {});
+            notices.__with__({
+                'uuid.v1': uuidMock,
+                'Date.now': dateNowMock,
+                parseLocation: parseLocationMock,
+                'myutils.logErrorIf': logErrorMock
+            })(function() {
+                noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
+                noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
+                var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
+                noticeResult.should.be.instanceof(notices.errors.InvalidNotice);
+                expect(noticeResult.name).to.equal('INVALID_NOTICE');
+                expect(noticeResult.message).to.equal('invalid notice format ' + JSON.stringify(noticeExample));
+                expect(noticeResult.httpCode).to.equal(400);
+                expect(parseLocationMock).to.throw(Error);
+                expect(parseLocationMock).to.have.been.calledWith(locValue);
+                // Checking logError
+                logErrorMock.should.have.been.calledWith(noticeResult);
+                logErrorMock.should.be.calledOnce;
+                done();
+            });
+        });
 
         it('should fail parsing invalid location attribute', function(done) {
-
             var error = new notices.errors.InvalidLocation('fake error');
             var parseLocationMock = sinon.spy(function() {
                 return error;
@@ -384,8 +376,8 @@ describe('Notices NGSIv1', function() {
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                'parseLocation': parseLocationMock
-            })(function () {
+                parseLocation: parseLocationMock
+            })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
@@ -398,6 +390,5 @@ describe('Notices NGSIv1', function() {
                 done();
             });
         });
-
     });
 });

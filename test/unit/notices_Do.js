@@ -35,83 +35,79 @@ chai.Should();
 chai.use(sinonChai);
 
 var noticeExampleV1 = JSON.stringify({
-    'subscriptionId': '5b34e37052a01bc4c7e67c34',
-    'originator': 'localhost',
-    'contextResponses': [
+    subscriptionId: '5b34e37052a01bc4c7e67c34',
+    originator: 'localhost',
+    contextResponses: [
         {
-            'contextElement': {
-                'type': 'tipeExample1',
-                'isPattern': 'false',
-                'id': 'sensor-1',
-                'attributes': [
+            contextElement: {
+                type: 'tipeExample1',
+                isPattern: 'false',
+                id: 'sensor-1',
+                attributes: [
                     {
-                        'name': 'Attr1',
-                        'type': 'Number',
-                        'value': '123'
+                        name: 'Attr1',
+                        type: 'Number',
+                        value: '123'
                     }
                 ]
             }
         }
     ],
-    'subservice': '/test/notices/unit',
-    'service': 'utest'
+    subservice: '/test/notices/unit',
+    service: 'utest'
 });
 
-var noticeExampleV2 =  JSON.stringify({
-    'subscriptionId': '5b311ccb29adb333f843b5f3',
-    'data': [
+var noticeExampleV2 = JSON.stringify({
+    subscriptionId: '5b311ccb29adb333f843b5f3',
+    data: [
         {
-            'id': 'sensorv2-1',
-            'type': 'tipeExamplev21',
-            'Attr1': {
-                'type': 'Number',
-                'value': 122,
-                'metadata': {}
+            id: 'sensorv2-1',
+            type: 'tipeExamplev21',
+            Attr1: {
+                type: 'Number',
+                value: 122,
+                metadata: {}
             }
         }
     ],
-    'subservice': '/test/notices/unitv2',
-    'service': 'utestv2'
+    subservice: '/test/notices/unitv2',
+    service: 'utestv2'
 });
 
 // Core mocks
 var coreNotice1 = {
-    'id': 'ent1',
-    'type': 'Room',
-    'service': 'utest',
-    'subservice': '/test/notices/unit'
+    id: 'ent1',
+    type: 'Room',
+    service: 'utest',
+    subservice: '/test/notices/unit'
 };
 
 describe('Notices Do', function() {
-
     describe('#DoNotice', function() {
         var v1notice, v2notice;
 
-        beforeEach(function () {
+        beforeEach(function() {
             v1notice = JSON.parse(noticeExampleV1);
             v2notice = JSON.parse(noticeExampleV2);
         });
 
-        it('should accept NGSIv1 entities', function (done) {
-
+        it('should accept NGSIv1 entities', function(done) {
             var postEvent = 'POST_EVENT';
-            var alarmReleaseMock = sinon.spy(function () {});
-            var processCBNoticeMock = sinon.spy(function () {
+            var alarmReleaseMock = sinon.spy(function() {});
+            var processCBNoticeMock = sinon.spy(function() {
                 return coreNotice1;
             });
-            var requestWOMetricsMock = sinon.spy(
-                function (method, option, callback) {
-                    callback(null, {'httpCode': '200', 'message': 'all right'});
-                }
-            );
+            var requestWOMetricsMock = sinon.spy(function(method, option, callback) {
+                callback(null, { httpCode: '200', message: 'all right' });
+            });
             notices.__with__({
-                'processCBNotice': processCBNoticeMock,
+                processCBNotice: processCBNoticeMock,
                 'myutils.requestHelperWOMetrics': requestWOMetricsMock,
                 'config.perseoCore.noticesURL': 'http://mokedurl.org',
                 'alarm.release': alarmReleaseMock,
                 'alarm.POST_EVENT': postEvent
-            })(function () {
-                var callback = function (e, request) {
+            })(function() {
+                var callback = function(e, request) {
                     should.exist(request);
                     request.should.not.be.instanceof(Error);
                     should.equal(request.length, 1);
@@ -120,7 +116,7 @@ describe('Notices Do', function() {
                     processCBNoticeMock.should.have.been.calledWith('utest', '/test/notices/unit', v1notice, 0);
                     processCBNoticeMock.should.be.calledOnce;
                     // Checking call to requestWOMetrics
-                    var h = {'fiware-servicepath': '/test/notices/unit'};
+                    var h = { 'fiware-servicepath': '/test/notices/unit' };
                     requestWOMetricsMock.should.have.been.calledWith('post', {
                         url: 'http://mokedurl.org',
                         json: coreNotice1,
@@ -136,8 +132,7 @@ describe('Notices Do', function() {
         });
 
         it('should fail whith empty notice', function(done) {
-
-            var callback = function (e, request) {
+            var callback = function(e, request) {
                 should.exist(e);
                 should.not.exist(request);
                 should.equal(e.httpCode, 400);
@@ -149,38 +144,36 @@ describe('Notices Do', function() {
         });
 
         it('should fail whith invalid subservice', function(done) {
-
-            var callback = function (e, request) {
+            var callback = function(e, request) {
                 should.exist(e);
                 should.not.exist(request);
                 should.equal(e.httpCode, 400);
-                should.equal(e.message, 'invalid notice format Subservice must be' +
-                    ' a comma-separated list of servicePath');
+                should.equal(
+                    e.message,
+                    'invalid notice format Subservice must be' + ' a comma-separated list of servicePath'
+                );
                 done();
             };
-            notices.Do({data:[], subservice:123}, callback);
+            notices.Do({ data: [], subservice: 123 }, callback);
         });
 
         it('should accept NGSIv2 entities', function(done) {
-
             var postEvent = 'POST_EVENT';
-            var alarmReleaseMock = sinon.spy(function () {});
-            var processCBv2NoticeMock = sinon.spy(function () {
+            var alarmReleaseMock = sinon.spy(function() {});
+            var processCBv2NoticeMock = sinon.spy(function() {
                 return coreNotice1;
             });
-            var requestWOMetricsMock = sinon.spy(
-                function (method, option, callback) {
-                    callback(null, {'httpCode': '200', 'message': 'all right'});
-                }
-            );
+            var requestWOMetricsMock = sinon.spy(function(method, option, callback) {
+                callback(null, { httpCode: '200', message: 'all right' });
+            });
             notices.__with__({
                 'myutils.requestHelperWOMetrics': requestWOMetricsMock,
                 'config.perseoCore.noticesURL': 'http://mokedurl.org',
                 'alarm.release': alarmReleaseMock,
                 'alarm.POST_EVENT': postEvent,
-                'processCBv2Notice': processCBv2NoticeMock
-            })(function () {
-                var callback = function (e, request) {
+                processCBv2Notice: processCBv2NoticeMock
+            })(function() {
+                var callback = function(e, request) {
                     should.exist(request);
                     request.should.not.be.instanceof(Error);
                     should.equal(request.length, 1);
@@ -189,7 +182,7 @@ describe('Notices Do', function() {
                     processCBv2NoticeMock.should.have.been.calledWith('utestv2', '/test/notices/unitv2', v2notice, 0);
                     processCBv2NoticeMock.should.be.calledOnce;
                     // Checking call to requestWOMetrics
-                    var h = {'fiware-servicepath': '/test/notices/unit'};
+                    var h = { 'fiware-servicepath': '/test/notices/unit' };
                     requestWOMetricsMock.should.have.been.calledWith('post', {
                         url: 'http://mokedurl.org',
                         json: coreNotice1,
@@ -205,23 +198,22 @@ describe('Notices Do', function() {
         });
 
         it('should process Errors correctly', function(done) {
-
             var postEvent = 'POST_EVENT';
-            var alarmReleaseMock = sinon.spy(function () {});
+            var alarmReleaseMock = sinon.spy(function() {});
             var errorLocNotice = new notices.errors.InvalidLocation('Location_Mock');
             errorLocNotice.httpCode = 500;
-            var processCBv2NoticeMock = sinon.spy(function () {
+            var processCBv2NoticeMock = sinon.spy(function() {
                 return errorLocNotice;
             });
             var logErrorMock = sinon.spy();
             notices.__with__({
-                'processCBv2Notice': processCBv2NoticeMock,
+                processCBv2Notice: processCBv2NoticeMock,
                 'myutils.logErrorIf': logErrorMock,
                 'alarm.POST_EVENT': postEvent,
                 'config.perseoCore.noticesURL': 'http://mokedurl.org',
-                'alarm.release': alarmReleaseMock,
-            })(function () {
-                var callback = function (e, request) {
+                'alarm.release': alarmReleaseMock
+            })(function() {
+                var callback = function(e, request) {
                     should.not.exists(request);
                     should.exist(e);
                     // Check invalid Location error
@@ -240,30 +232,25 @@ describe('Notices Do', function() {
         });
 
         it('should process Error from core', function(done) {
-
             var postEvent = 'POST_EVENT';
-            var alarmRaiseMock = sinon.spy(function () {});
-            var processCBv2NoticeMock = sinon.spy(function () {
+            var alarmRaiseMock = sinon.spy(function() {});
+            var processCBv2NoticeMock = sinon.spy(function() {
                 return coreNotice1;
             });
-            var requestWOMetricsMock = sinon.spy(
-                function (method, option, callback) {
-                    callback('errorMock!');
-                }
-            );
-            var logErrorMock = sinon.spy(
-                function(notice) {}
-            );
+            var requestWOMetricsMock = sinon.spy(function(method, option, callback) {
+                callback('errorMock!');
+            });
+            var logErrorMock = sinon.spy(function(notice) {});
             notices.__with__({
                 'myutils.requestHelperWOMetrics': requestWOMetricsMock,
                 'config.perseoCore.noticesURL': 'http://mokedurl.org',
                 'alarm.raise': alarmRaiseMock,
                 'alarm.POST_EVENT': postEvent,
-                'processCBv2Notice': processCBv2NoticeMock,
-                'config.nextCore': {noticesURL: 'http://nextCoreMockURL'},
-                'myutils.logErrorIf': logErrorMock,
-            })(function () {
-                var callback = function (e, request) {
+                processCBv2Notice: processCBv2NoticeMock,
+                'config.nextCore': { noticesURL: 'http://nextCoreMockURL' },
+                'myutils.logErrorIf': logErrorMock
+            })(function() {
+                var callback = function(e, request) {
                     should.exist(e);
                     should.not.exists(request);
                     should.equal(e.httpCode, 400);
@@ -271,7 +258,7 @@ describe('Notices Do', function() {
                     processCBv2NoticeMock.should.have.been.calledWith('utestv2', '/test/notices/unitv2', v2notice, 0);
                     processCBv2NoticeMock.should.be.calledOnce;
                     // Checking call to requestWOMetrics
-                    var h = {'fiware-servicepath': '/test/notices/unit'};
+                    var h = { 'fiware-servicepath': '/test/notices/unit' };
                     should.equal(requestWOMetricsMock.calledTwice, true);
                     expect(requestWOMetricsMock).to.have.been.calledWith('post', {
                         url: 'http://mokedurl.org',
@@ -295,8 +282,7 @@ describe('Notices Do', function() {
         });
 
         it('should fail with invalid NGSIv2 data', function(done) {
-
-            var callback = function (e, request) {
+            var callback = function(e, request) {
                 should.not.exists(request);
                 should.exist(e);
                 // Check invalid notice error
@@ -304,11 +290,11 @@ describe('Notices Do', function() {
                 should.equal(e.message, 'invalid NGSIv2 notice format data must be an array, not a number');
                 done();
             };
-            v2notice.data =123;
+            v2notice.data = 123;
             notices.Do(v2notice, callback);
         });
         it('should fail with invalid NGSIv1 contextResponses', function(done) {
-            var callback = function (e, request) {
+            var callback = function(e, request) {
                 should.not.exists(request);
                 should.exist(e);
                 // Check invalid Location error
@@ -316,13 +302,12 @@ describe('Notices Do', function() {
                 should.equal(e.message, 'ContextResponses is not an array (number)');
                 done();
             };
-            v1notice.contextResponses =123;
+            v1notice.contextResponses = 123;
             notices.Do(v1notice, callback);
         });
 
         it('should fail whith invalid Servipaths', function(done) {
-
-            var callback = function (e, request) {
+            var callback = function(e, request) {
                 should.exist(e);
                 should.not.exist(request);
                 should.equal(e.httpCode, 400);

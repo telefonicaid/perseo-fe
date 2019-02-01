@@ -35,7 +35,8 @@ describe('Version', function() {
     describe('#GetVersion()', function() {
         it('should return version in package.json', function(done) {
             var packageObj = JSON.parse(fs.readFileSync('package.json')),
-                body, obj;
+                body,
+                obj;
             clients.GetVersion(function(error, data) {
                 should.not.exist(error);
                 data.should.have.property('statusCode', 200);
@@ -50,4 +51,3 @@ describe('Version', function() {
         });
     });
 });
-

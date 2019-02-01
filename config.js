@@ -31,19 +31,18 @@ var config = {};
  */
 config.logLevel = 'INFO';
 
-
 /**
  * Configures the exposed API.
  */
 config.endpoint = {
     host: 'localhost',
     port: 9090,
-    rulesPath : '/rules',
-    actionsPath : '/actions/do',
-    noticesPath : '/notices',
-    vrPath : '/m2m/vrules',
-    checkPath : '/check',
-    versionPath : '/version',
+    rulesPath: '/rules',
+    actionsPath: '/actions/do',
+    noticesPath: '/notices',
+    vrPath: '/m2m/vrules',
+    checkPath: '/check',
+    versionPath: '/version',
     logPath: '/admin/log',
     metricsPath: '/admin/metrics'
 };
@@ -58,7 +57,6 @@ config.isMaster = true;
  */
 config.slaveDelay = 500;
 
-
 /**
  * DB Configuration.
  */
@@ -66,19 +64,18 @@ config.mongo = {
     // The URI to use for the database connection. It supports replica set URIs.
     // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
     // I.e.: 'mongodb://user:pass@host1:27017,host2:27018,host3:27019/cep?replicaSet=myrep'
-    url : 'mongodb://localhost:27017/cep'
+    url: 'mongodb://localhost:27017/cep'
 };
 
 /**
  * OrionDB Configuration.
  */
 config.orionDb = {
-    url : 'mongodb://localhost:27017/orion',
-    collection : 'entities',
-    prefix : 'orion',
+    url: 'mongodb://localhost:27017/orion',
+    collection: 'entities',
+    prefix: 'orion',
     batchSize: 500
 };
-
 
 /**
  * EPL core options
@@ -87,9 +84,9 @@ config.orionDb = {
  * at core. Each <<interval>> ms, the rules are sent to core.
  */
 config.perseoCore = {
-    rulesURL : 'http://localhost:8080/perseo-core/rules',
-    noticesURL : 'http://localhost:8080/perseo-core/events',
-    interval: 60e3*5
+    rulesURL: 'http://localhost:8080/perseo-core/rules',
+    noticesURL: 'http://localhost:8080/perseo-core/events',
+    interval: 60e3 * 5
 };
 /**
  * NEXT EPL core options (with HA)
@@ -104,14 +101,13 @@ config.nextCore = {
     */
 };
 
-
 /**
  * SMTP endpoint options
  */
 config.smtp = {
     port: 25,
     host: 'smtpserver',
-    secure: false
+    secure: false,
     /*
      ,
      auth: {
@@ -119,20 +115,18 @@ config.smtp = {
      pass: 'xyz'
      }
     */
-    ,
     tls: {
-      // keep rejectUnauthorized to false when secure is also false
-      rejectUnauthorized: false
+        // keep rejectUnauthorized to false when secure is also false
+        rejectUnauthorized: false
     }
-    
 };
 
 /**
  * SMS endpoint options
  */
 config.sms = {
-    URL : 'http://sms-endpoint/smsoutbound',
-    API_KEY : '',
+    URL: 'http://sms-endpoint/smsoutbound',
+    API_KEY: '',
     API_SECRET: '',
     from: 'tel:22012;phone-context=+34'
 };
@@ -153,7 +147,7 @@ config.smpp = {
  * Orion (Context Broker) endpoint options
  */
 config.orion = {
-        URL : 'http://orion-endpoint:1026/NGSI10/updateContext'
+    URL: 'http://orion-endpoint:1026/NGSI10/updateContext'
 };
 
 /**
@@ -171,7 +165,7 @@ config.authentication = {
  * @type {{}}
  */
 config.collections = {
-    rules : 'rules',
+    rules: 'rules',
     executions: 'executions'
 };
 
@@ -190,8 +184,8 @@ config.executionsTTL = 1 * 24 * 60 * 60;
  *
  * @type {{}}
  */
-config.DEFAULT_SUBSERVICE= '/';
-config.DEFAULT_SERVICE= 'unknownt';
+config.DEFAULT_SUBSERVICE = '/';
+config.DEFAULT_SERVICE = 'unknownt';
 
 /**
  * CheckDB configuration
