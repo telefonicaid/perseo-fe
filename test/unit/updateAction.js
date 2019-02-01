@@ -35,7 +35,7 @@ chai.Should();
 chai.use(sinonChai);
 
 var metaExample = {
-    timestamp: '2018-12-05T12:34:32.00Z',
+    timestamp: '2018-12-05T12:34:32.00Z'
 };
 var action1 = {
     type: 'update',
@@ -45,131 +45,131 @@ var action1 = {
             {
                 name: 'streetLightID',
                 type: 'Text',
-                value: '${id}',
+                value: '${id}'
             },
             {
                 name: 'textNumberLit',
                 type: 'Text',
-                value: 666,
+                value: 666
             },
             {
                 name: 'textBoolLit',
                 type: 'Text',
-                value: false,
+                value: false
             },
             {
                 name: 'textObjLit',
                 type: 'Text',
-                value: { a: 1, b: 2 },
+                value: { a: 1, b: 2 }
             },
             {
                 name: 'streetLightID',
                 type: 'Text',
-                value: '${id}',
+                value: '${id}'
             },
             {
                 name: 'illuminanceLevel',
                 type: 'Number',
-                value: '${lastLightIllumNumber}',
+                value: '${lastLightIllumNumber}'
             },
             {
                 name: 'illuminanceLevel2',
                 type: 'Number',
-                value: '${lastLightIllumStringNumber}',
+                value: '${lastLightIllumStringNumber}'
             },
             {
                 name: 'illuminanceLevel3',
                 type: 'Number',
-                value: 12.5,
+                value: 12.5
             },
             {
                 name: 'lastchange',
                 type: 'DateTime',
-                value: '${stringDate}',
+                value: '${stringDate}'
             },
             {
                 name: 'lastchange2',
                 type: 'DateTime',
-                value: '${stringDateMs}',
+                value: '${stringDateMs}'
             },
             {
                 name: 'lastchange3',
                 type: 'DateTime',
-                value: '${numberDateMs}',
+                value: '${numberDateMs}'
             },
             {
                 name: 'isBool1',
                 type: 'Boolean',
                 value: '${isconnected}',
-                metadata: metaExample,
+                metadata: metaExample
             },
             {
                 name: 'isBool2',
                 type: 'Boolean',
-                value: 'TRUE',
+                value: 'TRUE'
             },
             {
                 name: 'isBool3',
                 type: 'Boolean',
-                value: 'true',
+                value: 'true'
             },
             {
                 name: 'isBool4',
                 type: 'Boolean',
-                value: 'False',
+                value: 'False'
             },
             {
                 name: 'isBool5',
                 type: 'Boolean',
-                value: 'other',
+                value: 'other'
             },
             {
                 name: 'isBool6',
                 type: 'Boolean',
-                value: true,
+                value: true
             },
             {
                 name: 'isBool7',
                 type: 'Boolean',
-                value: false,
+                value: false
             },
             {
                 name: 'district',
                 type: 'Text',
-                value: '${areaServed}',
+                value: '${areaServed}'
             },
             {
                 name: 'status',
                 type: 'Text',
-                value: '${laststatus}',
+                value: '${laststatus}'
             },
             {
                 name: 'address',
                 type: 'Address',
-                value: '${streetAddress}, ${addressLocality}',
+                value: '${streetAddress}, ${addressLocality}'
             },
             {
                 name: 'powerState',
                 type: 'Text',
-                value: '${powerState}',
+                value: '${powerState}'
             },
             {
                 name: 'refNone',
                 type: '${refNoneType}',
-                value: 'futureNull',
+                value: 'futureNull'
             },
             {
                 name: 'refNone2',
                 type: '${refNoneType}',
-                value: '123',
+                value: '123'
             },
             {
                 name: 'refNone3',
                 type: '${refNoneType}',
-                value: null,
-            },
-        ],
-    },
+                value: null
+            }
+        ]
+    }
 };
 var event1 = {
     ruleName: 'switch_on',
@@ -196,108 +196,108 @@ var event1 = {
         trans: 'f8636710-5fc6-4070-9b1e-8d414fc6522a',
         corr: 'd5f0a9cc-0258-11e9-b678-0242ac160003; perseocep=15',
         srv: 'dev_test',
-        subsrv: '/',
-    },
+        subsrv: '/'
+    }
 };
 
 var expectedChanges = {
     address: {
         value: 'Vasagatan 1, Stockholm',
-        type: 'Address',
+        type: 'Address'
     },
     status: {
         value: 'allright',
-        type: 'Text',
+        type: 'Text'
     },
     textBoolLit: {
         value: 'false',
-        type: 'Text',
+        type: 'Text'
     },
     textNumberLit: {
         value: '666',
-        type: 'Text',
+        type: 'Text'
     },
     textObjLit: {
         value: '[object Object]',
-        type: 'Text',
+        type: 'Text'
     },
     refNone: {
         value: null,
-        type: 'None',
+        type: 'None'
     },
     refNone2: {
         value: null,
-        type: 'None',
+        type: 'None'
     },
     refNone3: {
         value: null,
-        type: 'None',
+        type: 'None'
     },
     isBool1: {
         value: true,
         type: 'Boolean',
-        metadata: metaExample,
+        metadata: metaExample
     },
     isBool2: {
         value: true,
-        type: 'Boolean',
+        type: 'Boolean'
     },
     isBool3: {
         value: true,
-        type: 'Boolean',
+        type: 'Boolean'
     },
     isBool4: {
         value: false,
-        type: 'Boolean',
+        type: 'Boolean'
     },
     isBool5: {
         value: false,
-        type: 'Boolean',
+        type: 'Boolean'
     },
     isBool6: {
         value: true,
-        type: 'Boolean',
+        type: 'Boolean'
     },
     isBool7: {
         value: false,
-        type: 'Boolean',
+        type: 'Boolean'
     },
     powerState: {
         value: 'on',
-        type: 'Text',
+        type: 'Text'
     },
     illuminanceLevel: {
         value: 80,
-        type: 'Number',
+        type: 'Number'
     },
     illuminanceLevel2: {
         value: 69,
-        type: 'Number',
+        type: 'Number'
     },
     illuminanceLevel3: {
         value: 12.5,
-        type: 'Number',
+        type: 'Number'
     },
     streetLightID: {
         value: 'AmbientLightSensor:1',
-        type: 'Text',
+        type: 'Text'
     },
     district: {
         value: 'Stockholm center',
-        type: 'Text',
+        type: 'Text'
     },
     lastchange: {
         value: '2018-12-05T11:31:39.000Z',
-        type: 'DateTime',
+        type: 'DateTime'
     },
     lastchange2: {
         value: '2019-01-30T10:11:00.657Z',
-        type: 'DateTime',
+        type: 'DateTime'
     },
     lastchange3: {
         value: '2019-01-30T10:13:49.832Z',
-        type: 'DateTime',
-    },
+        type: 'DateTime'
+    }
 };
 
 describe('doIt', function() {
@@ -321,12 +321,12 @@ describe('doIt', function() {
             var NGSIConnectionMock = sinon.spy(function() {
                 return {
                     v2: { createEntity: createEntityMock },
-                    close: NGSICloseMock,
+                    close: NGSICloseMock
                 };
             });
 
             updateAction.__with__({
-                'NGSI.Connection': NGSIConnectionMock,
+                'NGSI.Connection': NGSIConnectionMock
             })(function() {
                 var callback = function(e, request) {
                     should.exist(request);
@@ -360,12 +360,12 @@ describe('doIt', function() {
             var NGSIConnectionMock = sinon.spy(function() {
                 return {
                     v2: { createEntity: createEntityMock },
-                    close: NGSICloseMock,
+                    close: NGSICloseMock
                 };
             });
 
             updateAction.__with__({
-                'NGSI.Connection': NGSIConnectionMock,
+                'NGSI.Connection': NGSIConnectionMock
             })(function() {
                 var callback = function(e, request) {
                     should.exist(request);
@@ -400,12 +400,12 @@ describe('doIt', function() {
             var NGSIConnectionMock = sinon.spy(function() {
                 return {
                     v2: { createEntity: createEntityMock },
-                    close: NGSICloseMock,
+                    close: NGSICloseMock
                 };
             });
 
             updateAction.__with__({
-                'NGSI.Connection': NGSIConnectionMock,
+                'NGSI.Connection': NGSIConnectionMock
             })(function() {
                 var callback = function(e, request) {
                     should.not.exist(request);

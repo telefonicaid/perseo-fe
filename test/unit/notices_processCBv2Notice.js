@@ -47,16 +47,16 @@ var noticeExampleV2 = {
     data: [
         {
             id: id,
-            type: type,
-        },
+            type: type
+        }
     ],
     subservice: subservice,
-    service: service,
+    service: service
 };
 var attrKey = 'Attr1';
 noticeExampleV2.data[0][attrKey] = {
     type: attrType,
-    value: attrValue,
+    value: attrValue
 };
 noticeExampleV2 = JSON.stringify(noticeExampleV2);
 
@@ -94,7 +94,7 @@ describe('Notices NGSIv2', function() {
         it('should accept simple notice using Number type', function(done) {
             notices.__with__({
                 'uuid.v1': uuidMock,
-                'Date.now': dateNowMock,
+                'Date.now': dateNowMock
             })(function() {
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
@@ -114,14 +114,14 @@ describe('Notices NGSIv2', function() {
             var parseDateMock = sinon.spy(function() {
                 return {
                     a: 123,
-                    b: 456,
+                    b: 456
                 };
             });
 
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseDate: parseDateMock,
+                parseDate: parseDateMock
             })(function() {
                 noticeExample.data[0][attrKey].type = dateType;
                 noticeExample.data[0][attrKey].value = dateValue;
@@ -148,14 +148,14 @@ describe('Notices NGSIv2', function() {
                     lat: lat,
                     lon: long,
                     x: x,
-                    y: y,
+                    y: y
                 };
             });
 
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseLocation: parseLocationMock,
+                parseLocation: parseLocationMock
             })(function() {
                 noticeExample.data[0][attrKey].type = locType;
                 noticeExample.data[0][attrKey].value = locValue;
@@ -183,11 +183,11 @@ describe('Notices NGSIv2', function() {
             var metavalue = 'attMetaEXtraValue';
             notices.__with__({
                 'uuid.v1': uuidMock,
-                'Date.now': dateNowMock,
+                'Date.now': dateNowMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
                 meta[at] = {
-                    value: metavalue,
+                    value: metavalue
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
@@ -212,18 +212,18 @@ describe('Notices NGSIv2', function() {
                     lat: lat,
                     lon: long,
                     x: x,
-                    y: y,
+                    y: y
                 };
             });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseLocation: parseLocationMock,
+                parseLocation: parseLocationMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
                 meta[at] = {
                     value: locValue,
-                    type: locType,
+                    type: locType
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
@@ -254,19 +254,19 @@ describe('Notices NGSIv2', function() {
                     day: 3,
                     month: 6,
                     year: 2018,
-                    hour: 11,
+                    hour: 11
                     // ...
                 };
             });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseDate: parseDateMock,
+                parseDate: parseDateMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
                 meta[at] = {
                     value: dateValue,
-                    type: dateType,
+                    type: dateType
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
@@ -300,13 +300,13 @@ describe('Notices NGSIv2', function() {
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseDate: parseDateMock,
+                parseDate: parseDateMock
             })(function() {
                 // Set Invalid DateType metadata attribute
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
                 meta[at] = {
                     value: invalidMetaDate,
-                    type: dateType,
+                    type: dateType
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidDateTime);
@@ -330,12 +330,12 @@ describe('Notices NGSIv2', function() {
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseDate: parseDateMock,
+                parseDate: parseDateMock
             })(function() {
                 // Set Invalid DateType attribute
                 noticeExample.data[0].Attr1 = {
                     value: invalidAttDate,
-                    type: dateType,
+                    type: dateType
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidDateTime);
@@ -359,12 +359,12 @@ describe('Notices NGSIv2', function() {
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseLocation: parseLocationMock,
+                parseLocation: parseLocationMock
             })(function() {
                 // Set Invalid location attribute
                 noticeExample.data[0].Attr1 = {
                     value: invalidLoc,
-                    type: locType,
+                    type: locType
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidLocation);
@@ -389,13 +389,13 @@ describe('Notices NGSIv2', function() {
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseLocation: parseLocationMock,
+                parseLocation: parseLocationMock
             })(function() {
                 // Set Invalid location metadata attribute
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
                 meta[at] = {
                     value: invalidLoc,
-                    type: locType,
+                    type: locType
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidLocation);
@@ -420,13 +420,13 @@ describe('Notices NGSIv2', function() {
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
                 parseLocation: parseLocationMock,
-                'myutils.logErrorIf': logErrorMock,
+                'myutils.logErrorIf': logErrorMock
             })(function() {
                 // Set location metadata attribute
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
                 meta[at] = {
                     value: locValue,
-                    type: locType,
+                    type: locType
                 };
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
                 noticeResult.should.be.instanceof(notices.errors.InvalidV2Notice);
@@ -479,10 +479,10 @@ describe('Notices NGSIv2', function() {
                         metadata: {
                             metaAttr1: {
                                 type: 'geo:point',
-                                value: '47.55555, -ll3.333x-333',
-                            },
-                        },
-                    },
+                                value: '47.55555, -ll3.333x-333'
+                            }
+                        }
+                    }
                 },
                 {
                     id: 'sensor-2',
@@ -493,10 +493,10 @@ describe('Notices NGSIv2', function() {
                         metadata: {
                             metaAttr1: {
                                 type: 'geo:point',
-                                value: '47.55555, -ll3.333x-333',
-                            },
-                        },
-                    },
+                                value: '47.55555, -ll3.333x-333'
+                            }
+                        }
+                    }
                 },
                 {
                     id: 'sensor-3',
@@ -507,10 +507,10 @@ describe('Notices NGSIv2', function() {
                         metadata: {
                             metaAttr1: {
                                 type: 'geo:point',
-                                value: '47.55555, -333.333333',
-                            },
-                        },
-                    },
+                                value: '47.55555, -333.333333'
+                            }
+                        }
+                    }
                 },
                 {
                     id: 'sensor-4',
@@ -518,8 +518,8 @@ describe('Notices NGSIv2', function() {
                     Attr1: {
                         type: 'geo:point',
                         value: '470.418889, -3.691944',
-                        metadata: {},
-                    },
+                        metadata: {}
+                    }
                 },
                 {
                     id: 'sensor-5',
@@ -530,10 +530,10 @@ describe('Notices NGSIv2', function() {
                         metadata: {
                             metaAttr1: {
                                 type: 'geo:point',
-                                value: 'x4x7x.5555x5-, -3.33333',
-                            },
-                        },
-                    },
+                                value: 'x4x7x.5555x5-, -3.33333'
+                            }
+                        }
+                    }
                 },
                 {
                     id: 'sensor-6',
@@ -544,11 +544,11 @@ describe('Notices NGSIv2', function() {
                         metadata: {
                             metaAttr1: {
                                 type: 'geo:point',
-                                value: '47.55555, 3.33333',
-                            },
-                        },
-                    },
-                },
+                                value: '47.55555, 3.33333'
+                            }
+                        }
+                    }
+                }
             ];
             noticeExample.subservice =
                 '/test/notices/unit,/test/notices/unit,/test/notices/unit,' +
@@ -577,10 +577,10 @@ describe('Notices NGSIv2', function() {
                         metadata: {
                             metaAttr1: {
                                 value: '2018-96-03T09:31:26.296Z',
-                                type: 'DateTime',
-                            },
-                        },
-                    },
+                                type: 'DateTime'
+                            }
+                        }
+                    }
                 },
                 {
                     id: 'sensor-2',
@@ -591,11 +591,11 @@ describe('Notices NGSIv2', function() {
                         metadata: {
                             metaAttr1: {
                                 value: '2018-06-03T09:31:26.296Z',
-                                type: 'DateTime',
-                            },
-                        },
-                    },
-                },
+                                type: 'DateTime'
+                            }
+                        }
+                    }
+                }
             ];
             noticeExample.subservice = '/test/notices/unit,/test/notices/unit';
             notices.Do(noticeExample, callback);

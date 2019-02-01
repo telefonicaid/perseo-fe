@@ -56,14 +56,14 @@ var noticeExampleV1 = JSON.stringify({
                     {
                         name: attrKey,
                         type: attrType,
-                        value: attrValue,
-                    },
-                ],
-            },
-        },
+                        value: attrValue
+                    }
+                ]
+            }
+        }
     ],
     subservice: subservice,
-    service: service,
+    service: service
 });
 
 var processCBNotice = notices.__get__('processCBNotice');
@@ -100,7 +100,7 @@ describe('Notices NGSIv1', function() {
         it('should accept simple notice using Number type', function(done) {
             notices.__with__({
                 'uuid.v1': uuidMock,
-                'Date.now': dateNowMock,
+                'Date.now': dateNowMock
             })(function() {
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
@@ -122,13 +122,13 @@ describe('Notices NGSIv1', function() {
                     lat: lat,
                     lon: long,
                     x: x,
-                    y: y,
+                    y: y
                 };
             });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseLocation: parseLocationMock,
+                parseLocation: parseLocationMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
@@ -161,13 +161,13 @@ describe('Notices NGSIv1', function() {
                     year: 2018,
                     hour: 11,
                     minute: 31,
-                    second: 26,
+                    second: 26
                 };
             });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseDate: parseDateMock,
+                parseDate: parseDateMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = dateType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = dateValue;
@@ -199,13 +199,13 @@ describe('Notices NGSIv1', function() {
             var metaAtVal = 'mockedValue1234';
             notices.__with__({
                 'uuid.v1': uuidMock,
-                'Date.now': dateNowMock,
+                'Date.now': dateNowMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
                     {
                         name: at,
-                        value: metaAtVal,
-                    },
+                        value: metaAtVal
+                    }
                 ];
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
@@ -233,20 +233,20 @@ describe('Notices NGSIv1', function() {
                     year: 2018,
                     hour: 11,
                     minute: 31,
-                    second: 26,
+                    second: 26
                 };
             });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseDate: parseDateMock,
+                parseDate: parseDateMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
                     {
                         name: at,
                         value: dateValue,
-                        type: dateType,
-                    },
+                        type: dateType
+                    }
                 ];
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
@@ -303,20 +303,20 @@ describe('Notices NGSIv1', function() {
                     lat: lat,
                     lon: long,
                     x: x,
-                    y: y,
+                    y: y
                 };
             });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseLocation: parseLocationMock,
+                parseLocation: parseLocationMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
                     {
                         name: at,
                         value: locValue,
-                        type: locType,
-                    },
+                        type: locType
+                    }
                 ];
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
                 expect(noticeResult.noticeId).to.equal(mockedUid);
@@ -350,7 +350,7 @@ describe('Notices NGSIv1', function() {
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
                 parseLocation: parseLocationMock,
-                'myutils.logErrorIf': logErrorMock,
+                'myutils.logErrorIf': logErrorMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
@@ -376,7 +376,7 @@ describe('Notices NGSIv1', function() {
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock,
-                parseLocation: parseLocationMock,
+                parseLocation: parseLocationMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;

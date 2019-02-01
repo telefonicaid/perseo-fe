@@ -111,7 +111,7 @@ describe('VisualRules', function() {
                                 callback0();
                             }
                         );
-                    },
+                    }
                 ],
                 function(error) {
                     should.not.exist(error);
@@ -145,7 +145,7 @@ describe('VisualRules', function() {
                             data.should.have.property('statusCode', 204);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -179,7 +179,7 @@ describe('VisualRules', function() {
                                 callback0();
                             }
                         );
-                    },
+                    }
                 ],
                 function(error) {
                     should.not.exist(error);
@@ -217,7 +217,7 @@ describe('VisualRules', function() {
                             should.deepEqual(data.body.data, rule);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -242,7 +242,7 @@ describe('VisualRules', function() {
                                 callback0();
                             }
                         );
-                    },
+                    }
                 ],
                 function(error) {
                     should.not.exist(error);
@@ -280,7 +280,7 @@ describe('VisualRules', function() {
                             should.deepEqual(data.body.data[0], rule);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -295,7 +295,7 @@ describe('VisualRules', function() {
                             data.should.have.property('statusCode', 500);
                             return callback(null);
                         });
-                    },
+                    }
                 ],
                 function(error) {
                     should.not.exist(error);
@@ -331,7 +331,7 @@ describe('VisualRules', function() {
                             data.should.have.property('statusCode', 200);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -354,7 +354,7 @@ describe('VisualRules', function() {
                             data.should.have.property('statusCode', 400);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -377,7 +377,7 @@ describe('VisualRules', function() {
                             data.should.have.property('statusCode', 400);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -412,7 +412,7 @@ describe('VisualRules', function() {
                                 callback0();
                             }
                         );
-                    },
+                    }
                 ],
                 function(error) {
                     should.not.exist(error);
@@ -454,7 +454,7 @@ describe('VisualRules', function() {
                             data.body.data.cards[0].id.should.be.equal(originalID);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );

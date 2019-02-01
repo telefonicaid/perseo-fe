@@ -38,9 +38,9 @@ describe('AxnParams', function() {
                     parameters: {
                         from: ' x = ${x}',
                         to: 'y is ${y} ',
-                        subject: '${z} ${z} ${z}',
+                        subject: '${z} ${z} ${z}'
                     },
-                    template: 'this is "${t}"',
+                    template: 'this is "${t}"'
                 },
                 options = emailAction.buildMailOptions(action, event);
 
@@ -55,9 +55,9 @@ describe('AxnParams', function() {
                     parameters: {
                         from: ' x = 1',
                         to: 'y is y ',
-                        subject: '{z} $z $ { z }',
+                        subject: '{z} $z $ { z }'
                     },
-                    template: 'this is "$"',
+                    template: 'this is "$"'
                 },
                 options = emailAction.buildMailOptions(action, event);
 
@@ -74,9 +74,9 @@ describe('AxnParams', function() {
                     parameters: {
                         url: 'http://${x}/${y}/${z}',
                         qs: { '${x}': 'Y${y}Y' },
-                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+' },
+                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+' }
                     },
-                    template: 'this is "${t}"',
+                    template: 'this is "${t}"'
                 },
                 options = postAction.buildPostOptions(action, event);
 
@@ -94,8 +94,8 @@ describe('AxnParams', function() {
                     parameters: {
                         url: 'http://${x}/${y}/${z}',
                         qs: { '${x}': 'Y${y}Y' },
-                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+' },
-                    },
+                        headers: { 'X-${x}': '-${z}-', 'X-${y}': '+${z}+' }
+                    }
                 },
                 options = postAction.buildPostOptions(action, event);
 
@@ -110,9 +110,9 @@ describe('AxnParams', function() {
                     parameters: {
                         url: 'http://localhost:8080/path/entity',
                         headers: { 'Content-type': 'application/json', 'X-Something': 'in the way she moves' },
-                        qs: { George: 'Harrison', Paul: 'McCartney', John: 'Lennon', Ringo: '*' },
+                        qs: { George: 'Harrison', Paul: 'McCartney', John: 'Lennon', Ringo: '*' }
                     },
-                    template: 'this is "$"',
+                    template: 'this is "$"'
                 },
                 options = postAction.buildPostOptions(action, event);
 
@@ -131,9 +131,9 @@ describe('AxnParams', function() {
             var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     parameters: {
-                        to: 'http://${x}/${y}/${z}',
+                        to: 'http://${x}/${y}/${z}'
                     },
-                    template: 'this is "${t}"',
+                    template: 'this is "${t}"'
                 },
                 options = smsAction.buildSMSOptions(action, event);
 
@@ -144,10 +144,10 @@ describe('AxnParams', function() {
             var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     parameters: {
-                        to: 'http://localhost:8080/path/entity',
+                        to: 'http://localhost:8080/path/entity'
                     },
                     /*jshint quotmark: double */
-                    template: "this is '$'",
+                    template: "this is '$'"
                     /*jshint quotmark: single */
                 },
                 options = smsAction.buildSMSOptions(action, event);
@@ -163,7 +163,7 @@ describe('AxnParams', function() {
             var event = { t: 'some text' },
                 action = {
                     /*jshint quotmark: double */
-                    template: "this is '${t}'",
+                    template: "this is '${t}'"
                     /*jshint quotmark: single */
                 },
                 options = twitterAction.buildTwitterOptions(action, event);
@@ -175,7 +175,7 @@ describe('AxnParams', function() {
             var event = { x: 1, y: 'abc', z: '***', t: 'some text' },
                 action = {
                     /*jshint quotmark: double */
-                    template: "this is '$'",
+                    template: "this is '$'"
                     /*jshint quotmark: single */
                 },
                 options = twitterAction.buildTwitterOptions(action, event);
@@ -194,8 +194,8 @@ describe('AxnParams', function() {
                         name: '${c}',
                         value: '${d}',
                         isPattern: '${e}',
-                        attrType: '${f}',
-                    },
+                        attrType: '${f}'
+                    }
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -212,8 +212,8 @@ describe('AxnParams', function() {
                     parameters: {
                         name: 'NAME',
                         value: 'VALUE',
-                        attrType: 'ATTRTYPE',
-                    },
+                        attrType: 'ATTRTYPE'
+                    }
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -237,8 +237,8 @@ describe('AxnParams', function() {
                     parameters: {
                         name: 'NAME',
                         value: 'VALUE',
-                        attrType: '${x}',
-                    },
+                        attrType: '${x}'
+                    }
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -262,7 +262,7 @@ describe('AxnParams', function() {
                     f1: 'ATTRTYPE1',
                     c2: 'NAME2',
                     d2: 'VALUE2',
-                    f2: 'ATTRTYPE2',
+                    f2: 'ATTRTYPE2'
                 },
                 action = {
                     parameters: {
@@ -273,20 +273,20 @@ describe('AxnParams', function() {
                             {
                                 name: '${c}',
                                 value: '${d}',
-                                type: '${f}',
+                                type: '${f}'
                             },
                             {
                                 name: '${c1}',
                                 value: '${d1}',
-                                type: '${f1}',
+                                type: '${f1}'
                             },
                             {
                                 name: '${c2}',
                                 value: '${d2}',
-                                type: '${f2}',
-                            },
-                        ],
-                    },
+                                type: '${f2}'
+                            }
+                        ]
+                    }
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -314,20 +314,20 @@ describe('AxnParams', function() {
                             {
                                 name: 'NAME',
                                 value: 'VALUE',
-                                type: 'ATTRTYPE',
+                                type: 'ATTRTYPE'
                             },
                             {
                                 name: 'NAME1',
                                 value: 'VALUE1',
-                                type: 'ATTRTYPE1',
+                                type: 'ATTRTYPE1'
                             },
                             {
                                 name: 'NAME2',
                                 value: 'VALUE2',
-                                type: 'ATTRTYPE2',
-                            },
-                        ],
-                    },
+                                type: 'ATTRTYPE2'
+                            }
+                        ]
+                    }
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 
@@ -362,10 +362,10 @@ describe('AxnParams', function() {
                             {
                                 name: 'NAME',
                                 value: 'VALUE',
-                                type: '${x}',
-                            },
-                        ],
-                    },
+                                type: '${x}'
+                            }
+                        ]
+                    }
                 },
                 options = updateAction.buildUpdateOptions(action, event);
 

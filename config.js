@@ -44,7 +44,7 @@ config.endpoint = {
     checkPath: '/check',
     versionPath: '/version',
     logPath: '/admin/log',
-    metricsPath: '/admin/metrics',
+    metricsPath: '/admin/metrics'
 };
 
 /**
@@ -64,7 +64,7 @@ config.mongo = {
     // The URI to use for the database connection. It supports replica set URIs.
     // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
     // I.e.: 'mongodb://user:pass@host1:27017,host2:27018,host3:27019/cep?replicaSet=myrep'
-    url: 'mongodb://localhost:27017/cep',
+    url: 'mongodb://localhost:27017/cep'
 };
 
 /**
@@ -74,7 +74,7 @@ config.orionDb = {
     url: 'mongodb://localhost:27017/orion',
     collection: 'entities',
     prefix: 'orion',
-    batchSize: 500,
+    batchSize: 500
 };
 
 /**
@@ -86,7 +86,7 @@ config.orionDb = {
 config.perseoCore = {
     rulesURL: 'http://localhost:8080/perseo-core/rules',
     noticesURL: 'http://localhost:8080/perseo-core/events',
-    interval: 60e3 * 5,
+    interval: 60e3 * 5
 };
 /**
  * NEXT EPL core options (with HA)
@@ -117,8 +117,8 @@ config.smtp = {
     */
     tls: {
         // keep rejectUnauthorized to false when secure is also false
-        rejectUnauthorized: false,
-    },
+        rejectUnauthorized: false
+    }
 };
 
 /**
@@ -128,7 +128,7 @@ config.sms = {
     URL: 'http://sms-endpoint/smsoutbound',
     API_KEY: '',
     API_SECRET: '',
-    from: 'tel:22012;phone-context=+34',
+    from: 'tel:22012;phone-context=+34'
 };
 
 /**
@@ -140,14 +140,14 @@ config.smpp = {
     systemid: '',
     password: '',
     from: '346666666',
-    enabled: false,
+    enabled: false
 };
 
 /**
  * Orion (Context Broker) endpoint options
  */
 config.orion = {
-    URL: 'http://orion-endpoint:1026/NGSI10/updateContext',
+    URL: 'http://orion-endpoint:1026/NGSI10/updateContext'
 };
 
 /**
@@ -157,7 +157,7 @@ config.authentication = {
     host: 'keystone',
     port: '5001',
     user: 'user',
-    password: 'password',
+    password: 'password'
 };
 
 /**
@@ -166,7 +166,7 @@ config.authentication = {
  */
 config.collections = {
     rules: 'rules',
-    executions: 'executions',
+    executions: 'executions'
 };
 
 /**
@@ -200,7 +200,7 @@ config.checkDB = {
     delay: 5e3,
     reconnectTries: 1e3,
     reconnectInterval: 5e3,
-    bufferMaxEntries: 5,
+    bufferMaxEntries: 5
 };
 
 /**

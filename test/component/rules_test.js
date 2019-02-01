@@ -94,7 +94,7 @@ describe('Rules', function() {
                             data.body.data.should.have.property('text', rule.text);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -125,7 +125,7 @@ describe('Rules', function() {
 
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -157,7 +157,7 @@ describe('Rules', function() {
 
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -188,7 +188,7 @@ describe('Rules', function() {
 
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -316,7 +316,7 @@ describe('Rules', function() {
                             data.should.have.property('statusCode', 400);
                             return callback(null);
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -341,7 +341,7 @@ describe('Rules', function() {
                                 callback0();
                             }
                         );
-                    },
+                    }
                 ],
                 function(error) {
                     should.not.exist(error);
@@ -375,7 +375,7 @@ describe('Rules', function() {
                             data.should.have.property('statusCode', 200);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -409,7 +409,7 @@ describe('Rules', function() {
                                 callback0();
                             }
                         );
-                    },
+                    }
                 ],
                 function(error) {
                     should.not.exist(error);
@@ -443,7 +443,7 @@ describe('Rules', function() {
                             data.should.have.property('statusCode', 200);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -468,7 +468,7 @@ describe('Rules', function() {
                                 callback0();
                             }
                         );
-                    },
+                    }
                 ],
                 function(error) {
                     should.not.exist(error);
@@ -495,7 +495,7 @@ describe('Rules', function() {
                             data.should.have.property('statusCode', 500);
                             return callback(null);
                         });
-                    },
+                    }
                 ],
                 function(error) {
                     should.not.exist(error);

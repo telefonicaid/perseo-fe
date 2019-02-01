@@ -79,7 +79,7 @@ describe('Actions', function() {
                             data.should.have.property('statusCode', 200);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -104,7 +104,7 @@ describe('Actions', function() {
                             data.should.have.property('statusCode', 200);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -135,7 +135,7 @@ describe('Actions', function() {
                             data.should.have.property('statusCode', 200);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -165,7 +165,7 @@ describe('Actions', function() {
                             data.should.have.property('statusCode', 200);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -237,9 +237,9 @@ describe('Actions', function() {
                                     service: action.ev.service,
                                     subservice: action.ev.subservice,
                                     ruleName: rule.name,
-                                    id: action.ev.id,
+                                    id: action.ev.id
                                 },
-                                action: { index: 0 },
+                                action: { index: 0 }
                             },
 
                             function(error, time) {
@@ -250,7 +250,7 @@ describe('Actions', function() {
                                 return callback();
                             }
                         );
-                    },
+                    }
                 ],
                 done
             );
@@ -286,9 +286,9 @@ describe('Actions', function() {
                                     service: action.ev.service,
                                     subservice: action.ev.subservice,
                                     ruleName: rule.name,
-                                    id: action.ev.id,
+                                    id: action.ev.id
                                 },
-                                action: { index: 0 },
+                                action: { index: 0 }
                             },
                             function(error, time) {
                                 should.not.exist(error);
@@ -314,9 +314,9 @@ describe('Actions', function() {
                                     service: action.ev.service,
                                     subservice: action.ev.subservice,
                                     ruleName: rule.name,
-                                    id: action.ev.id,
+                                    id: action.ev.id
                                 },
-                                action: { index: 0 },
+                                action: { index: 0 }
                             },
                             function(error, time) {
                                 should.not.exist(error);
@@ -324,7 +324,7 @@ describe('Actions', function() {
                                 return callback();
                             }
                         );
-                    },
+                    }
                 ],
                 done
             );
@@ -385,7 +385,7 @@ describe('Actions', function() {
                             data.should.have.property('statusCode', 500);
                             callback();
                         });
-                    },
+                    }
                 ],
                 done
             );

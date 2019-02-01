@@ -93,7 +93,7 @@ describe('Config', function() {
     describe('#With next core for notices and rules', function() {
         utilsT.getConfig().nextCore = {
             noticesURL: 'http://averyfarwayhost:1234',
-            rulesURL: 'http://averyfarwayhost:1234',
+            rulesURL: 'http://averyfarwayhost:1234'
         };
         it('should return OK when posting a rule', postRuleOK);
         it('should return OK when posting a notice', postNoticeOK);

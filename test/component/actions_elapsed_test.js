@@ -87,7 +87,7 @@ describe('Actions elapsed', function() {
                         function(callback) {
                             executedActions.should.be.equal(1);
                             return callback(null);
-                        },
+                        }
                     ],
                     done
                 );

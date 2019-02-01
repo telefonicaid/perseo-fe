@@ -71,7 +71,7 @@ describe('Auth', function() {
                                 data.should.have.property('statusCode', 200);
                                 return callback();
                             });
-                        },
+                        }
                     ],
                     function(error) {
                         if (error) {
@@ -107,7 +107,7 @@ describe('Auth', function() {
                             data.should.have.property('statusCode', 200);
                             return callback();
                         });
-                    },
+                    }
                 ],
                 function(error) {
                     if (error) {

@@ -33,8 +33,8 @@ describe('noSignal', function() {
             type: 'sms',
             template: '${device.asset.UserProps.threshold.major} message',
             parameters: {
-                to: '12345678',
-            },
+                to: '12345678'
+            }
         },
         subservice: '/',
         service: 'unknownt',
@@ -44,8 +44,8 @@ describe('noSignal', function() {
             reportInterval: 900,
             id: null,
             idRegexp: '^.*',
-            type: null,
-        },
+            type: null
+        }
     };
     describe('#addNSRule()', function() {
         it('should reject to add a rule with invalid check interval', function() {

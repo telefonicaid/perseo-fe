@@ -42,21 +42,21 @@ describe('Entity', function() {
                     _id: { id: 'eA', servicePath: DEFAULT_SUBSERVICE, type: 'type e1' },
                     attrs: {
                         at: { value: 1, modDate: 0 },
-                        other: { value: 'this is a value', modDate: 0 },
-                    },
+                        other: { value: 'this is a value', modDate: 0 }
+                    }
                 },
                 {
                     _id: { id: 'eB', servicePath: DEFAULT_SUBSERVICE, type: '' },
                     attrs: {
-                        at: { value: 2, modDate: Date.now() / 1000 - 30 * 60 },
-                    },
+                        at: { value: 2, modDate: Date.now() / 1000 - 30 * 60 }
+                    }
                 },
                 {
                     _id: { id: 'eC', servicePath: DEFAULT_SUBSERVICE },
                     attrs: {
-                        at: { value: 3, modDate: -1 },
-                    },
-                },
+                        at: { value: 3, modDate: -1 }
+                    }
+                }
             ],
             checkInterval = 1,
             rule = utilsT.loadExample('./test/data/no_signal/generic_nonsignal.json');
@@ -94,9 +94,9 @@ describe('Entity', function() {
                                             service: DEFAULT_SERVICE,
                                             subservice: DEFAULT_SUBSERVICE,
                                             ruleName: rule.name,
-                                            id: entity._id.id,
+                                            id: entity._id.id
                                         },
-                                        action: { index: 0 },
+                                        action: { index: 0 }
                                     },
                                     function(error, time) {
                                         should.not.exist(error);
@@ -108,7 +108,7 @@ describe('Entity', function() {
                             },
                             cb
                         );
-                    },
+                    }
                 ],
                 function(err, results) {
                     // asserts

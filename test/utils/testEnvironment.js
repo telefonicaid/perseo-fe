@@ -75,7 +75,7 @@ function commonBeforeEach(done) {
                     }
                     callback(err);
                 });
-            },
+            }
         ],
         done
     );
@@ -122,7 +122,7 @@ function commonAfterEach(done) {
                     }
                     callback(err);
                 });
-            },
+            }
         ],
         done
     );

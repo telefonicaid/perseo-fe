@@ -91,7 +91,7 @@ describe('Actions', function() {
                                     should.equal(array.length(), 0);
                                     return callback();
                                 }, 100);
-                            },
+                            }
                         ],
                         callbackES
                     );

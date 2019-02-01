@@ -47,14 +47,14 @@ var noticeExampleV1 = JSON.stringify({
                     {
                         name: 'Attr1',
                         type: 'Number',
-                        value: '123',
-                    },
-                ],
-            },
-        },
+                        value: '123'
+                    }
+                ]
+            }
+        }
     ],
     subservice: '/test/notices/unit',
-    service: 'utest',
+    service: 'utest'
 });
 
 var noticeExampleV2 = JSON.stringify({
@@ -66,12 +66,12 @@ var noticeExampleV2 = JSON.stringify({
             Attr1: {
                 type: 'Number',
                 value: 122,
-                metadata: {},
-            },
-        },
+                metadata: {}
+            }
+        }
     ],
     subservice: '/test/notices/unitv2',
-    service: 'utestv2',
+    service: 'utestv2'
 });
 
 // Core mocks
@@ -79,7 +79,7 @@ var coreNotice1 = {
     id: 'ent1',
     type: 'Room',
     service: 'utest',
-    subservice: '/test/notices/unit',
+    subservice: '/test/notices/unit'
 };
 
 describe('Notices Do', function() {
@@ -105,7 +105,7 @@ describe('Notices Do', function() {
                 'myutils.requestHelperWOMetrics': requestWOMetricsMock,
                 'config.perseoCore.noticesURL': 'http://mokedurl.org',
                 'alarm.release': alarmReleaseMock,
-                'alarm.POST_EVENT': postEvent,
+                'alarm.POST_EVENT': postEvent
             })(function() {
                 var callback = function(e, request) {
                     should.exist(request);
@@ -120,7 +120,7 @@ describe('Notices Do', function() {
                     requestWOMetricsMock.should.have.been.calledWith('post', {
                         url: 'http://mokedurl.org',
                         json: coreNotice1,
-                        headers: h,
+                        headers: h
                     });
                     requestWOMetricsMock.should.be.calledOnce;
                     alarmReleaseMock.should.have.been.calledWith(postEvent);
@@ -171,7 +171,7 @@ describe('Notices Do', function() {
                 'config.perseoCore.noticesURL': 'http://mokedurl.org',
                 'alarm.release': alarmReleaseMock,
                 'alarm.POST_EVENT': postEvent,
-                processCBv2Notice: processCBv2NoticeMock,
+                processCBv2Notice: processCBv2NoticeMock
             })(function() {
                 var callback = function(e, request) {
                     should.exist(request);
@@ -186,7 +186,7 @@ describe('Notices Do', function() {
                     requestWOMetricsMock.should.have.been.calledWith('post', {
                         url: 'http://mokedurl.org',
                         json: coreNotice1,
-                        headers: h,
+                        headers: h
                     });
                     requestWOMetricsMock.should.be.calledOnce;
                     alarmReleaseMock.should.have.been.calledWith(postEvent);
@@ -211,7 +211,7 @@ describe('Notices Do', function() {
                 'myutils.logErrorIf': logErrorMock,
                 'alarm.POST_EVENT': postEvent,
                 'config.perseoCore.noticesURL': 'http://mokedurl.org',
-                'alarm.release': alarmReleaseMock,
+                'alarm.release': alarmReleaseMock
             })(function() {
                 var callback = function(e, request) {
                     should.not.exists(request);
@@ -248,7 +248,7 @@ describe('Notices Do', function() {
                 'alarm.POST_EVENT': postEvent,
                 processCBv2Notice: processCBv2NoticeMock,
                 'config.nextCore': { noticesURL: 'http://nextCoreMockURL' },
-                'myutils.logErrorIf': logErrorMock,
+                'myutils.logErrorIf': logErrorMock
             })(function() {
                 var callback = function(e, request) {
                     should.exist(e);
@@ -263,12 +263,12 @@ describe('Notices Do', function() {
                     expect(requestWOMetricsMock).to.have.been.calledWith('post', {
                         url: 'http://mokedurl.org',
                         json: coreNotice1,
-                        headers: h,
+                        headers: h
                     });
                     expect(requestWOMetricsMock).to.have.been.calledWith('post', {
                         url: 'http://nextCoreMockURL',
                         json: coreNotice1,
-                        headers: h,
+                        headers: h
                     });
                     alarmRaiseMock.should.have.been.calledWith(postEvent);
                     alarmRaiseMock.should.be.calledOnce;

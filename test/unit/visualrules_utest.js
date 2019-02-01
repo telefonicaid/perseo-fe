@@ -49,7 +49,7 @@ describe('VisualRules', function() {
                 'DIFFERENT_TO',
                 'GREATER_OR_EQUAL_THAN',
                 'MINOR_OR_EQUAL_THAN',
-                'MATCH',
+                'MATCH'
             ];
             cases.forEach(function(c) {
                 var errOp = visualRules.errorOperator(c);

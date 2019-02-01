@@ -40,16 +40,16 @@ function basicNotice() {
                         {
                             name: 'position',
                             type: 'geo:point',
-                            value: '40.418889, -3.691944',
-                        },
-                    ],
+                            value: '40.418889, -3.691944'
+                        }
+                    ]
                 },
                 statusCode: {
                     code: '200',
-                    reasonPhrase: 'OK',
-                },
-            },
-        ],
+                    reasonPhrase: 'OK'
+                }
+            }
+        ]
     };
 }
 describe('Notices', function() {
@@ -77,7 +77,7 @@ describe('Notices', function() {
             bn.contextResponses[0].contextElement.attributes.push({
                 name: 'birthDate',
                 type: 'DateTime',
-                value: iso8601,
+                value: iso8601
             });
             processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
@@ -96,7 +96,7 @@ describe('Notices', function() {
             bn.contextResponses[0].contextElement.attributes.push({
                 name: 'birthDate',
                 type: 'urn:x-ogc:def:trs:IDAS:1.0:ISO8601',
-                value: iso8601,
+                value: iso8601
             });
             processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
@@ -114,7 +114,7 @@ describe('Notices', function() {
                 processed;
             bn.contextResponses[0].contextElement.attributes.push({
                 name: 'TimeInstant',
-                value: iso8601,
+                value: iso8601
             });
             processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
@@ -140,9 +140,9 @@ describe('Notices', function() {
                     {
                         name: 'when',
                         type: 'DateTime',
-                        value: iso8601,
-                    },
-                ],
+                        value: iso8601
+                    }
+                ]
             });
             processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
@@ -166,9 +166,9 @@ describe('Notices', function() {
                     {
                         name: 'when',
                         type: 'urn:x-ogc:def:trs:IDAS:1.0:ISO8601',
-                        value: iso8601,
-                    },
-                ],
+                        value: iso8601
+                    }
+                ]
             });
             processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
@@ -190,9 +190,9 @@ describe('Notices', function() {
                 metadatas: [
                     {
                         name: 'TimeInstant',
-                        value: iso8601,
-                    },
-                ],
+                        value: iso8601
+                    }
+                ]
             });
             processed = notices.ProcessCBNotice('s', 'sp', bn, 0);
             should.exist(processed);
