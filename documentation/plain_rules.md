@@ -7,7 +7,7 @@ The “anatomy” of a rule is as follows
 ```json
 {
    "name":"blood_rule_update",
-   "text":"select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pressure, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+   "text":"select *, *, ev.BloodPressure? as Pressure, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
    "action":{
       "type":"update",
       "parameters":{
@@ -36,16 +36,16 @@ EPL is documented in [Esper website](http://www.espertech.com/esper/esper-docume
 A EPL statement to use with perseo could be:
 
 ```
-select *, "blood_rule_update" as ruleName,
-         ev.BloodPressure? as Pressure, ev.id? as Meter
+select *, ev.BloodPressure? as Pressure, ev.id? as Meter
 from pattern
- [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type="BloodMeter")]
+    [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type="BloodMeter")]
 ```
 
-
-* The rule name must be present with **ruleName** alias. It must be equal to the ‘name’ field of the rule object
 * The *from* pattern must name the event as **ev** and the event stream from which take events must be **iotEvent**
 * A *type=* condition must be concatenated for avoiding mixing different kinds of entities
+* The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text. The ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET /rules or GET /rules/{name}.
+
+**Backward compatibility note:** since version 1.8.0 it is not mandatory to specify the name of the rule as part of the EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be present as *ruleName* alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it must be equal to the ‘name’ field of the rule object.
 
 The used entity's attributes must be cast to `float` in case of being numeric (like  in the example). Alphanumeric 
 values must be cast to `String`. Nested cast to string and to float is something we are analyzing, and could be 
@@ -527,7 +527,7 @@ could be used by a rule so
 ```json
 {
     "name": "blood_rule_email_md",
-    "text": "select *,\"blood_rule_email_md\" as ruleName, *,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(BloodPressure__metadata__crs__system?,String)=\"WGS84\" and type=\"BloodMeter\")]",
+    "text": "select *, *,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(BloodPressure__metadata__crs__system?,String)=\"WGS84\" and type=\"BloodMeter\")]",
     "action": {
         "type": "email",
         "template": "Meter ${Meter} has pression ${Pression} (GEN RULE) and system is ${BloodPressure__metadata__crs__system}",
@@ -666,7 +666,7 @@ An example of rule taking advantage of these derived attributes could be:
 ```json
 {
     "name": "rule_distance",
-    "text": "select *, \"rule_distance\" as ruleName from pattern [every ev=iotEvent(Math.pow((cast(cast(position__x?,String),float) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),float) - 9764160.736945232), 2) < Math.pow(5e3,2))]",
+    "text": "select *, from pattern [every ev=iotEvent(Math.pow((cast(cast(position__x?,String),float) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),float) - 9764160.736945232), 2) < Math.pow(5e3,2))]",
     "action": {
         "type": "email",
         "template": "${id} (${type}) is at ${position__lat}, ${position__lon} (${position__x}, ${position__y})",
@@ -846,7 +846,7 @@ A rule that will check if the employee has been hired in the last half hour, cou
 ```json
 {
     "name": "rule_time",
-    "text": "select *, \"rule_time\" as ruleName from pattern [every ev=iotEvent(cast(cast(hire__ts?,String),float) > current_timestamp - 30*60*1000)]",
+    "text": "select *, from pattern [every ev=iotEvent(cast(cast(hire__ts?,String),float) > current_timestamp - 30*60*1000)]",
     "action": {
         "type": "email",
         "template": "So glad with our new ${role}, ${id}!",

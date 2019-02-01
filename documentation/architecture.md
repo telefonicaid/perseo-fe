@@ -191,7 +191,7 @@ A simplified format in JSON can be used to represent rules. The former visual ru
 ```json
 {
 	"name" : "prueba-test",
-	"text" : "select *,\"prueba-test\" as ruleName  from pattern [every ev=iotEvent((cast(id?, String)  regexp  \"asd\"))]",
+	"text" : "select * from pattern [every ev=iotEvent((cast(id?, String)  regexp  \"asd\"))]",
 	"action" : {
 		"type" : "email",
 		"template" : "DCA message",
