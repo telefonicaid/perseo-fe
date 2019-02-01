@@ -49,7 +49,7 @@ Example:
 	},
 	"subservice" : "/",
 	"service" : "unknownt",
-	"text" : "select *,\"ReglaId\" as ruleName from pattern [every ev=iotEvent((cast(`id`?, String)  regexp  \"^value.*\"))]"
+	"text" : "select * from pattern [every ev=iotEvent((cast(`id`?, String)  regexp  \"^value.*\"))]"
 }
 
 ```
