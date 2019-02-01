@@ -7,7 +7,7 @@
 - Remove: old unused development dependencies
   * grunt and grunt related module
   * closure-linter-wrapper
-- Add 'ruleName' as variable automatically in rule text field (EPL) on rule creation time (#208)
+- Add 'ruleName' as variable automatically in rule text field (EPL) on rule creation time (#307)
 - Change on the PERSEO_ORION_URL env var behaviour. Now it represents Context Broker base URL instead of the
   updateContext endpoint
 - Add: new ngsijs ~1.2.0 dependency
