@@ -24,7 +24,10 @@
     "test": "mocha --recursive 'test/**/*.js' --reporter spec --timeout 3000 --ui bdd --exit",
     "test:watch": "npm run test -- -w ./lib",
     "lint": "jshint lib/ --config .jshintrc && jshint test/ --config test/.jshintrc",
+    "lint:md": "remark 'README.md' documentation",
+    "lint:text": "textlint 'README.md' 'documentation/*.md' 'documentation/**/*.md'",
     "prettier": "prettier --config .prettierrc.json --write ./**/**/*.js **/*.js *.js",
+    "prettier:text": "prettier 'README.md' 'documentation/*.md' 'documentation/**/*.md' --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
     "test:coverage": "istanbul cover _mocha -- --recursive 'test/**/*.js' --reporter spec --exit",
     "test:coveralls": "npm run test:coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "watch": "watch 'npm test && npm run lint' ./lib ./test"
@@ -39,11 +42,18 @@
     "chai": "~4.1.2",
     "proxyquire": "0.5.1",
     "prettier": "~1.14.2",
+    "remark-cli": "^6.0.1",
+    "remark-preset-lint-recommended": "^3.0.2",
     "rewire": "~4.0.1",
     "should": "8.2.2",
     "watch": "~1.0.2",
     "sinon": "~6.1.0",
-    "sinon-chai": "~3.2.0"
+    "sinon-chai": "~3.2.0",
+    "textlint": "^11.0.1",
+    "textlint-rule-common-misspellings": "^1.0.1",
+    "textlint-rule-no-dead-link": "^4.4.1",
+    "textlint-rule-terminology": "^1.1.30",
+    "textlint-rule-write-good": "^1.6.2"
   },
   "keywords": [],
   "dependencies": {
@@ -69,6 +79,10 @@
   "lint-staged": {
     "*.js": [
       "prettier --config .prettierrc.json --write",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
       "git add"
     ]
   }
