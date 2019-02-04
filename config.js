@@ -147,7 +147,7 @@ config.smpp = {
  * Orion (Context Broker) endpoint options
  */
 config.orion = {
-    URL: 'http://orion-endpoint:1026/NGSI10/updateContext'
+    URL: 'http://orion-endpoint:1026'
 };
 
 /**
