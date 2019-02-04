@@ -30,8 +30,7 @@ var fs = require('fs'),
     fakeServerPort = 9753,
     fakeServerCode = 200,
     fakeServerMessage = 'All right',
-    fakeServerCallback,
-    URL = require('url').URL;
+    fakeServerCallback
 
 function loadExample(fileName) {
     var f = fs.readFileSync(fileName);
