@@ -17,7 +17,7 @@ Perseo implements a REST-based API that can be used to get relevant operational 
 
 #### Get metrics
 
-```
+```text
 GET /admin/metrics
 ```
 
@@ -29,7 +29,7 @@ At the first level there are two keys: **services** and **sum**. In sequence, **
 are service names and whose values are objects with information about the corresponding service. The **sum** value is an
 object with information for the aggregated information for all services.
 
-```
+```json
 {
   "services": {
     "service1": <service 1 info>,
@@ -46,7 +46,7 @@ an object whose keys are subservice names and whose values are objects with info
 subservice. The **sum** value is an object with information for the aggregated information for all subservices in the
 given services.
 
-```
+```json
 {
   "subservs": {
     "subservice1": <subservice 1 info>,
@@ -63,7 +63,7 @@ the `Fiware-ServicePath` header) `/gardens` then the key used for it would be `g
 
 Regarding subservice information object, keys are the name of the different metrics.
 
-```
+```json
 {
   "metric1": <metric 1>,
   "metric2": <metric 2>,
@@ -83,7 +83,7 @@ Some additional remarks:
 
 ### Reset metrics
 
-```
+```text
 DELETE /admin/metrics
 ```
 
@@ -93,7 +93,7 @@ This operation resets all metrics, as if Perseo would had just been started.
 
 ### Get and reset
 
-```
+```text
 GET /admin/metrics?reset=true
 ```
 

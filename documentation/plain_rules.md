@@ -554,7 +554,7 @@ suffixes beginning with double underscore and the hierarchy can be walked down b
 
 For example: The metadata in an event/notice like
 
-```
+```json
 {
   "subscriptionId" : "51c04a21d714fb3b37d7d5a7",
   "originator" : "localhost",

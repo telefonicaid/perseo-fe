@@ -26,7 +26,7 @@ Each log line contains several fields of the form _name_`=` _value_, separated b
 -   `op` description of the operation being done. Generally, the path of the URL invoked.
 -   `msg` message
 
-```
+```text
 time=2014-12-16T12:01:46.487Z | lvl=ERROR | corr=62d2f662-37de-4dcf-ba02-013642501a2d | trans=62d2f662-37de-4dcf-ba02-013642501a2d | op=/actions/do | msg=emailAction.SendMail connect ECONNREFUSED
 ```
 
@@ -35,13 +35,13 @@ Logs for errors can show additional info in the message, giving a hint of the ro
 
 The log level can be changed at run-time, with an HTTP PUT request
 
-```
+```bash
  curl --request PUT <host>:<port>/admin/log?level=<FATAL|ERROR|WARN|INFO|DEBUG>
 ```
 
 The log level can be retrieved at run-time, with an HTTP GET request
 
-```
+```bash
  curl --request GET <host>:<port>/admin/log
 ```
 

@@ -10,14 +10,14 @@ To start the service, use either the service command: service perseo start
 
 Or just the launch script:
 
-```
+```bash
 /etc/init.d/perseo start
 ```
 
 For testing purposes it might be interesting to launch the process directly without the service. That can be done
 executing the following command from the project root directory:
 
-```
+```bash
 ./bin/perseo
 ```
 
@@ -28,13 +28,13 @@ the default configuration (in /opt/perseo/config.js) is used.
 
 To stop the service, use either the service command:
 
-```
+```bash
 service perseo stop
 ```
 
 Or just the launch script:
 
-```
+```bash
 /etc/init.d/perseo stop
 ```
 
@@ -44,13 +44,13 @@ Or just the launch script:
 
 The status of the process can be retrieved using the service command:
 
-```
+```bash
 service perseo status
 ```
 
 It also can be checked with ps, using a filter with the command name:
 
-```
+```bash
 ps -ef | grep "bin/perseo"
 ```
 
@@ -60,14 +60,14 @@ In both cases a result of 0 (echoing $?) indicates the process is supposed to be
 
 The following command:
 
-```
+```bash
 netstat -ntpl | grep 9090
 ```
 
 can be used to check the process is listening in the appropriate port (provided the port is the standard 9090). The
 result should resemble this line:
 
-```
+```text
 tcp   0   0  0.0.0.0:1026     0.0.0.0:*   LISTEN   12179/node
 ```
 
@@ -112,7 +112,7 @@ The different configuration parameters introduced above are described also in th
 -   'service' is the service associated to the subscription
 -   'subservice' is the subservice associated to the subscription
 
-```
+```bash
 (curl http://orion-machine:1026/v1/subscribeContext -s -S --header 'Content-Type: application/json' --header 'Accept: application/json' --header 'Fiware-Service: service' –header 'Fiware-ServicePath: subservice' -d @- | python -mjson.tool) <<EOF
 {
     "entities": [

@@ -131,8 +131,8 @@ An index guarantees that every rule is identified by the tuple (name, service, s
 
 The index is created/ensured when perseo-fe starts, but it can be created from a mongoDB shell with
 
-```
-db.rules.ensureIndex({name: 1, subservice: 1, service: 1}, {unique: true})
+```javascript
+db.rules.ensureIndex({ name: 1, subservice: 1, service: 1 }, { unique: true });
 ```
 
 ### Executions
@@ -141,6 +141,6 @@ A TTL index deletes documents with a life longer than one day
 
 The index is created/ensured when perseo-fe starts, but it can be created from a mongoDB shell with
 
-```
-db.executions.ensureIndex({lastTime: 1},{expireAfterSeconds: 86400 } )
+```javascript
+db.executions.ensureIndex({ lastTime: 1 }, { expireAfterSeconds: 86400 });
 ```
