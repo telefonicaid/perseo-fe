@@ -79,28 +79,6 @@ function dropRules(callback) {
 function dropExecutions(callback) {
     remove(config.collections.executions, callback);
 }
-function dropEntities(callback) {
-    MongoClient.connect(
-        new URL('v1/updateContext', config.orion.URL),
-        function(err, db) {
-            if (err) {
-                return callback(err);
-            }
-            db.collection(config.orionDb.collection, {}, function(err, coll) {
-                if (err) {
-                    return callback(err);
-                }
-                coll.remove({}, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    db.close();
-                    return callback(null, result);
-                });
-            });
-        }
-    );
-}
 
 function dropCollection(collection, callback) {
     MongoClient.connect(
