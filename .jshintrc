@@ -16,7 +16,6 @@
   "maxlen": 120,
   "node": true,
   "expr": true,
-  "unused": "vars",
   "esversion": 6,
   "globals": {
     "describe":true,
