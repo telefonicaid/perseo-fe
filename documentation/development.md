@@ -30,10 +30,29 @@ npm test
 
 jshint
 
-Uses provided .jshintrc flag file. To check source code style, type
+Uses the provided `.jshintrc` flag file. To check source code style, type
 
 ```bash
 npm run lint
+```
+
+### Documentation guidelines
+
+remark
+
+Uses the provided `.remarkrc.js` flag file. To check consistency of the Markdown markup, type
+
+```bash
+npm run lint:md
+```
+
+textlint
+
+Uses the provided `.textlintrc` flag file. To check for spelling and grammar errors, dead links and keyword consistency,
+type
+
+```bash
+npm run lint:text
 ```
 
 ### Continuous testing
@@ -71,4 +90,14 @@ restored.
 ```bash
 # Use git-bash on Windows
 npm run clean
+```
+
+### Prettify Code
+
+Runs the [prettier](https://prettier.io) code formatter to ensure consistent code style (whitespacing, parameter
+placement and breakup of long lines etc.) within the codebase.
+
+```bash
+# Use git-bash on Windows
+npm run prettier
 ```
