@@ -6,7 +6,11 @@
 
 #### Start service
 
-To start the service, use either the service command: service perseo start
+To start the service, use either the service command:
+
+```bash
+service perseo start
+```
 
 Or just the launch script:
 

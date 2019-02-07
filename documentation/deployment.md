@@ -66,8 +66,9 @@ and will be listening on port `8080`):
 docker run -d --name perseo_core -h perseocore -p 8080:8080 telefonicaiot/perseo-core:master -perseo_fe_url <perseo_fe_addr>:9090
 ```
 
-where <perseo*fe_addr> must be the hostname or IP address of the \_machine hosting the Perseo FE Container*. Please note
-that it is a good idea to expose port `8080` to the host so that it can be verified that Perseo Core is up and running.
+where `<perseo_fe_addr>` must be the hostname or IP address of the _machine hosting the Perseo FE Container_. Please
+note that it is a good idea to expose port `8080` to the host so that it can be verified that Perseo Core is up and
+running.
 
 Then a container running Perseo frontend has to be instantiated and run:
 
@@ -171,10 +172,10 @@ In order to undeploy the proxy just kill the process and remove the directory.
 
 ### Log Rotation
 
-Independently of how the service is installed, the log files will need an external rotation (e.g.: the logrotate
+Independently of how the service is installed, the log files will need an external rotation (e.g.: the `logrotate`
 command) to avoid disk full problems.
 
-Logrotate is installed as RPM dependency along with perseo. The system is configured to rotate every day and whenever
+`logrotate` is installed as RPM dependency along with perseo. The system is configured to rotate every day and whenever
 the log file size is greater than 100MB (checked very 30 minutes by default):
 
 -   For daily rotation: `/etc/logrotate.d/logrotate-perseo-daily` : which enables daily log rotation
