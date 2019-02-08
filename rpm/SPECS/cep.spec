@@ -162,6 +162,26 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Fri Feb 08 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.8.0
+- Add: NGSIv2 support in both notification reception and CB update action
+- Change on the PERSEO_ORION_URL env var behaviour. Now it represents Context Broker base URL instead of the
+  updateContext endpoint
+- Add: 'ruleName' as variable automatically in rule text field (EPL) on rule creation time (#307)
+- Set Nodejs 8.12.0 as minimum version in packages.json (effectively removing Nodev4 and Nodev6 as supported versions)
+- Add: use NodeJS 8 in Dockerfile
+- Add: use PM2 in Dockerfile
+- Add: new ngsijs ~1.2.0 dependency
+- Add: new rewire ~4.0.1 dev dependency
+- Upgrade depedency logops from 1.0.0-alpha.7 to 2.1.0
+- Upgrade dev dependency istanbul from ~0.1.34 to ~0.4.5
+- Upgrade dev dependency mocha from 2.4.5 to to 5.2.0
+- Upgrade dev dependency chai from ~1.8.0 to ~4.1.2
+- Upgrade dev dependency sinon from ~1.7.3 to ~6.1.0
+- Upgrade dev dependency sinon-chai from 2.4.0 to ~3.2.0
+- Remove: old unused development dependencies
+  * grunt and grunt related module
+  * closure-linter-wrapper
+
 * Thu Sep 20 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.0
 - Add: new parameter to updateAction card: actionType: APPEND (default) or UPDATE (#278)
 - Using precise dependencies (~=) in packages.json
