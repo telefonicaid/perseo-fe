@@ -102,7 +102,7 @@ placement and breakup of long lines etc.) within the codebase.
 npm run prettier
 ```
 
-To ensure consistent markdown formatting run the following:
+To ensure consistent Markdown formatting run the following:
 
 ```bash
 # Use git-bash on Windows
