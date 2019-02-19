@@ -1,0 +1,33 @@
+site_name: Perseo Context-aware Complex Event Processing
+site_description: Perseo Documentation
+repo_url: https://github.com/Ficodes/perseo-fe
+theme: readthedocs
+extra_css: ['https://fiware.org/style/fiware_readthedocs.css', 'css/mkdocs.css']
+#google_analytics: ['UA-84269043-1', 'wirecloud.readthedocs.io']
+
+pages:
+- 'Introduction': 'index.md'
+- 'Architecture': 'legacy/architecture.md'
+- 'Logs & Alarms': 'legacy/logs.md'
+- 'O&M':
+    - 'Deployment': 'legacy/deployment.md'
+    - 'Configuration': 'legacy/configuration.md'
+    - 'Administration': 'legacy/admin.md'
+    - 'Metrics API': 'legacy/metrics_api.md'
+- 'Open API': 
+    - 'API overview': 'legacy/api.md'
+    - 'Plain rules': 'legacy/plain_rules.md'
+    - 'Errors': 'legacy/errors.md'
+- 'Data model': 'legacy/models.md'
+- 'Available actions for PEP': 'legacy/pep_actions.md'
+- 'Documentation for developers of perseo': 'legacy/development.md'
+
+markdown_extensions:
+    - markdown_github.headerid
+    - markdown_github.superfences
+    - markdown_github.magiclink
+    - codehilite:
+        guess_lang: False
+    - toc:
+        permalink: True
+        separator: "."

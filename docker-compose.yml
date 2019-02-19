@@ -1,0 +1,52 @@
+version: '3.4'
+services:
+    perseo-mongo:
+        image: mongo:3.2
+        volumes:
+            - ./mongodata:/data/db
+        networks:
+            - perseo
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+    perseo-core:
+        #image: telefonicaiot/perseo-core:1.1.0
+        image: fiware/perseo-core
+        environment:
+            - PERSEO_FE_URL=http://perseo-fe:9090
+            - MAX_AGE=6000
+        networks:
+            - perseo
+        depends_on:
+            - perseo-mongo
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+    perseo-fe:
+        image: fiware/perseo
+        networks:
+            perseo:
+            main:
+        ports:
+            - 9090:9090
+        depends_on:
+            - perseo-core
+        environment:
+            - PERSEO_MONGO_ENDPOINT=perseo-mongo
+            - PERSEO_CORE_URL=http://perseo-core:8080
+            - PERSEO_LOG_LEVEL=debug
+            - PERSEO_ORION_URL=http://orion:1026/
+            - PERSEO_SMTP_HOST=www.ficodes.com
+            - PERSEO_SMTP_PORT=25
+            - PERSEO_SMTP_SECURE=false
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+networks:
+    perseo:
+
+    main:

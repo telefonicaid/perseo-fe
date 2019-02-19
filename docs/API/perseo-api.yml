@@ -1,0 +1,242 @@
+# TODO This is an initial Perseo API description. Incomplete
+# TODO security
+# TODO HEADERS
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "Perseo"
+  termsOfService: ""
+  contact:
+    email: ""
+  license:
+    name: "GNU Affero General Public License v3.0"
+    url: "https://www.gnu.org/licenses/gpl-3.0.en.html"
+
+host: "perseo"
+basePath: "/"
+
+tags:
+- name: "notice"
+  description: "Perseo notice"
+- name: "rule"
+  description: "Perseo rule"
+- name: "version"
+  description: "Perseo version"
+
+schemes:
+- "https"
+- "http"
+
+paths:
+  /notices:
+    post:
+      tags:
+      - "notice"
+      summary: "Send notification to perseo"
+      description: ""
+      operationId: "newNotification"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Notice Object"
+        required: true
+        schema:
+          $ref: "#/definitions/Notice"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+        # TODO check errors
+        405:
+          description: "Invalid input"
+
+  /rules:
+    get:
+      tags:
+      - "rule"
+      summary: "List All Rules"
+      description: "Returns complete rule list"
+      operationId: "gelAllRules"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Rule"
+    post:
+      tags:
+      - "rule"
+      summary: "Add new rule"
+      description: ""
+      operationId: "addNewRule"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Rule Object"
+        required: true
+        schema:
+          $ref: "#/definitions/Rule"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Rule" # TODO ceck that this endpoint returns the same structure that is returned in get /rules. I supose that is something as rule wrapper with error field or something similar ??
+        # TODO check errors
+        405:
+          description: "Invalid input"
+
+  /rules/{ruleName}:
+    get:
+      tags:
+      - "rule"
+      summary: "Get rule named ruleName"
+      description: "returns the rule named ruleName information"
+      operationId: "getRuleByName"
+      parameters:
+        - in: path
+          name: ruleName
+          schema:
+            type: string
+          required: true
+          description: The rule name.
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Rule"
+    delete:
+      tags:
+      - "rule"
+      summary: "Delete rule"
+      description: ""
+      operationId: "deleteRule"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/DeleteRuleResponse" # TODO this is possible a generic response
+        # TODO check errors
+        405:
+          description: "Invalid input"
+
+  /version:
+    get:
+      tags:
+      - "version"
+      summary: "Perseo Version"
+      description: "Returns the perseo version"
+      operationId: "getVersion"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Version"
+
+  /admin/log:
+    get:
+      tags:
+      - "log"
+      summary: "Get Perseo log level"
+      description: "Returns the Perseo log level"
+      operationId: "gelLogLevel"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/LogInfo"
+    put:
+      tags:
+      - "log"
+      summary: "Set Perseo log level"
+      description: "Set the Perseo log level"
+      operationId: "changeLogLevel"
+      parameters:
+      - in: query
+        name: level
+        required: true
+        schema:
+          $ref: '#/definitions/LogLevel'
+      responses:
+        200:
+          description: "successful operation"
+
+
+# TODO security
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+
+definitions:
+
+# TODO get from ngsi orion notification model
+  Notice:
+
+# TODO check if /notices 200 return something
+  DefaultResponse:
+
+# TODO rule info definition
+  Rule:
+
+# TODO probably generic response
+  DeleteRuleResponse:
+    #    {
+    #        "error": null,
+    #        "data": [
+    #            {
+    #                "n": 1,
+    #                "ok": 1
+    #            },
+    #            [
+    #                {
+    #                    "code": 200,
+    #                    "body": "{\"name\":\"timer_test_rule@ficodes/demos/preparation/fiwaresummit2\",\"timeLastStateChange\":1536582583545,\"text\":\"context ctxt$ficodes$demos$preparation$fiwaresummit2 select \\\"timer_test_rule\\\" as ruleName, *, current_timestamp() as currentTS from pattern [every timer:interval(30 sec)]\",\"state\":\"DESTROYED\"}\n"
+    #                },
+    #                null
+    #            ],
+    #            null
+    #        ]
+    #    }
+
+  # TODO check version response
+  Version:
+
+  # TODO check loglevel response
+  LogInfo:
+
+  LogLevel:
+    type: "string"
+    description: "Perseo log levels"
+    enum:
+    - "FATAL"
+    - "ERROR"
+    - "WARN"
+    - "INFO"
+    - "DEBUG"
+
+# TODO put reference to the repository, or the dockerhub image?
+externalDocs:
+  description: ""
+  url: ""

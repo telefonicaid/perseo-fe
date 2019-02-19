@@ -106,7 +106,7 @@ describe('Metrics', function() {
                                 return callback();
                             }, 50);
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -149,7 +149,7 @@ describe('Metrics', function() {
                                 return callback();
                             }, 50);
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -191,7 +191,7 @@ describe('Metrics', function() {
                                 return callback();
                             }, 50);
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -232,7 +232,7 @@ describe('Metrics', function() {
                                 return callback();
                             }, 150);
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -274,7 +274,7 @@ describe('Metrics', function() {
                                 return callback();
                             }, 50);
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -316,7 +316,7 @@ describe('Metrics', function() {
                                 return callback();
                             }, 50);
                         });
-                    },
+                    }
                 ],
                 done
             );
@@ -364,7 +364,7 @@ describe('Metrics', function() {
                                 return callback();
                             }, 50);
                         });
-                    },
+                    }
                 ],
                 done
             );
