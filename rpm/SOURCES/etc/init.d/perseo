@@ -41,6 +41,7 @@ PARAM=$1
 NAME=perseo
 EXECUTABLE=bin/${NAME}
 PROXY_PATH=/opt/perseo
+PROXY_USER=cep
 PIDFILE=$PROXY_PATH/$NAME.pid
 LOG_PATH=/var/log/perseo/perseo.log
 
