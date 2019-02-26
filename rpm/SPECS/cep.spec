@@ -99,19 +99,21 @@ fi
 %post
 echo "[INFO] Configuring application"
 
-    echo "[INFO] Creating the home Perseo directory"
-    mkdir -p _install_dir
-    echo "[INFO] Creating log directory"
-    mkdir -p %{_perseoCep_log_dir}
-    chown -R %{_project_user}:%{_project_user} %{_perseoCep_log_dir}
-    chown -R %{_project_user}:%{_project_user} _install_dir
-    chmod g+s %{_perseoCep_log_dir}
-    setfacl -d -m g::rwx %{_perseoCep_log_dir}
-    setfacl -d -m o::rx %{_perseoCep_log_dir}
+echo "[INFO] Creating the home Perseo directory"
+mkdir -p _install_dir
+echo "[INFO] Creating log directory"
+mkdir -p %{_perseoCep_log_dir}
+touch %{_perseoCep_log_dir}/perseo.log
+chown -f %{_project_user}:%{_project_user} %{_perseoCep_log_dir}
+chown -f %{_project_user}:%{_project_user} %{_perseoCep_log_dir}/perseo.log*
+chown -R %{_project_user}:%{_project_user} _install_dir
+chmod g+s %{_perseoCep_log_dir}
+setfacl -d -m g::rwx %{_perseoCep_log_dir}
+setfacl -d -m o::rx %{_perseoCep_log_dir}
 
-    echo "[INFO] Configuring application service"
-    cd /etc/init.d
-    chkconfig --add %{_service_name}
+echo "[INFO] Configuring application service"
+cd /etc/init.d
+chkconfig --add %{_service_name}
 
 echo "Done"
 
@@ -127,18 +129,18 @@ if [ $1 == 0 ]; then
 
   echo "[INFO] Removing application log files"
   # Log
-  [ -d %{_perseoCep_log_dir} ] && rm -rfv %{_perseoCep_log_dir}
+  [ -d %{_perseoCep_log_dir} ] && rm -rf %{_perseoCep_log_dir}
 
   echo "[INFO] Removing application files"
   # Installed files
-  [ -d %{_install_dir} ] && rm -rfv %{_install_dir}
+  [ -d %{_install_dir} ] && rm -rf %{_install_dir}
 
   echo "[INFO] Removing application user"
   userdel -fr %{_project_user}
 
   echo "[INFO] Removing application service"
   chkconfig --del %{_service_name}
-  rm -Rf /etc/init.d/%{_service_name}
+  rm -f /etc/init.d/%{_service_name}
   echo "Done"
 fi
 
