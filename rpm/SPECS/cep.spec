@@ -129,18 +129,18 @@ if [ $1 == 0 ]; then
 
   echo "[INFO] Removing application log files"
   # Log
-  [ -d %{_perseoCep_log_dir} ] && rm -rfv %{_perseoCep_log_dir}
+  [ -d %{_perseoCep_log_dir} ] && rm -rf %{_perseoCep_log_dir}
 
   echo "[INFO] Removing application files"
   # Installed files
-  [ -d %{_install_dir} ] && rm -rfv %{_install_dir}
+  [ -d %{_install_dir} ] && rm -rf %{_install_dir}
 
   echo "[INFO] Removing application user"
   userdel -fr %{_project_user}
 
   echo "[INFO] Removing application service"
   chkconfig --del %{_service_name}
-  rm -Rf /etc/init.d/%{_service_name}
+  rm -f /etc/init.d/%{_service_name}
   echo "Done"
 fi
 
