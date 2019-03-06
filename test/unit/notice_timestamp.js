@@ -26,28 +26,27 @@
 var should = require('should'),
     notices = require('../../lib/models/notices');
 
-
 function basicNotice() {
     return {
-        'subscriptionId': '57f73930e0e2c975a712b8fd',
-        'originator': 'localhost',
-        'contextResponses': [
+        subscriptionId: '57f73930e0e2c975a712b8fd',
+        originator: 'localhost',
+        contextResponses: [
             {
-                'contextElement': {
-                    'type': 'Trunk',
-                    'isPattern': 'false',
-                    'id': 'T1',
-                    'attributes': [
+                contextElement: {
+                    type: 'Trunk',
+                    isPattern: 'false',
+                    id: 'T1',
+                    attributes: [
                         {
-                            'name': 'position',
-                            'type': 'geo:point',
-                            'value': '40.418889, -3.691944'
+                            name: 'position',
+                            type: 'geo:point',
+                            value: '40.418889, -3.691944'
                         }
                     ]
                 },
-                'statusCode': {
-                    'code': '200',
-                    'reasonPhrase': 'OK'
+                statusCode: {
+                    code: '200',
+                    reasonPhrase: 'OK'
                 }
             }
         ]
@@ -57,7 +56,7 @@ describe('Notices', function() {
     describe('#ProcessCBNotice()', function() {
         it('should add a noticeTS pseudo-attribute for every notice', function() {
             var bn = basicNotice(),
-               before = Date.now(),
+                before = Date.now(),
                 after,
                 processed;
 
@@ -140,8 +139,8 @@ describe('Notices', function() {
                 metadatas: [
                     {
                         name: 'when',
-                        'type' : 'DateTime',
-                        'value' : iso8601
+                        type: 'DateTime',
+                        value: iso8601
                     }
                 ]
             });
@@ -166,8 +165,8 @@ describe('Notices', function() {
                 metadatas: [
                     {
                         name: 'when',
-                        'type' : 'urn:x-ogc:def:trs:IDAS:1.0:ISO8601',
-                        'value' : iso8601
+                        type: 'urn:x-ogc:def:trs:IDAS:1.0:ISO8601',
+                        value: iso8601
                     }
                 ]
             });
@@ -191,7 +190,7 @@ describe('Notices', function() {
                 metadatas: [
                     {
                         name: 'TimeInstant',
-                        'value': iso8601
+                        value: iso8601
                     }
                 ]
             });
@@ -205,4 +204,3 @@ describe('Notices', function() {
         });
     });
 });
-

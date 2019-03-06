@@ -28,23 +28,23 @@ var should = require('should'),
 
 describe('noSignal', function() {
     var rule = {
-        'name': 'NSR1',
-        'action': {
-            'type': 'sms',
-            'template': '${device.asset.UserProps.threshold.major} message',
-            'parameters': {
-                'to': '12345678'
+        name: 'NSR1',
+        action: {
+            type: 'sms',
+            template: '${device.asset.UserProps.threshold.major} message',
+            parameters: {
+                to: '12345678'
             }
         },
-        'subservice': '/',
-        'service': 'unknownt',
-        'nosignal': {
-            'checkInterval': '<< TO BE REPLACED >>',
-            'attribute': 'at',
-            'reportInterval': 900,
-            'id': null,
-            'idRegexp': '^.*',
-            'type': null
+        subservice: '/',
+        service: 'unknownt',
+        nosignal: {
+            checkInterval: '<< TO BE REPLACED >>',
+            attribute: 'at',
+            reportInterval: 900,
+            id: null,
+            idRegexp: '^.*',
+            type: null
         }
     };
     describe('#addNSRule()', function() {
@@ -54,13 +54,17 @@ describe('noSignal', function() {
         });
         it('should use minimum interval when adding a rule with a too small interval', function() {
             rule.nosignal.checkInterval = 0;
-            should.strictEqual(noSignal.AddNSRule(rule.service, rule.subservice, rule.name, rule.nosignal),
-                noSignal.getMinIntervalMs());
+            should.strictEqual(
+                noSignal.AddNSRule(rule.service, rule.subservice, rule.name, rule.nosignal),
+                noSignal.getMinIntervalMs()
+            );
         });
         it('should add a rule with valid interval', function() {
             rule.nosignal.checkInterval = Math.ceil(noSignal.getMinIntervalMs() / noSignal.getIntervalUnit()) * 2;
-            should.strictEqual(noSignal.AddNSRule(rule.service, rule.subservice, rule.name, rule.nosignal),
-                rule.nosignal.checkInterval * noSignal.getIntervalUnit());
+            should.strictEqual(
+                noSignal.AddNSRule(rule.service, rule.subservice, rule.name, rule.nosignal),
+                rule.nosignal.checkInterval * noSignal.getIntervalUnit()
+            );
         });
     });
     describe('#GetNSArrRule()', function() {
@@ -70,10 +74,8 @@ describe('noSignal', function() {
             rule.nosignal.checkInterval = '2';
             should.notEqual(noSignal.AddNSRule(rule.service, rule.subservice, rule.name, rule.nosignal), 0);
             gotNSRule = noSignal.GetNSArrRule(rule.service, rule.subservice, rule.name);
-            should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal),
-                gotNSRule);
+            should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal), gotNSRule);
         });
-
     });
 
     describe('#refreshAll()', function() {
@@ -83,8 +85,7 @@ describe('noSignal', function() {
             rule.name = 'rule to add';
             noSignal.RefreshAllRules([rule]);
             insertedRule = noSignal.GetNSArrRule(rule.service, rule.subservice, rule.name);
-            should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal),
-                insertedRule);
+            should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal), insertedRule);
         });
         it('should delete a missing rule', function() {
             var deletedRule;
@@ -95,7 +96,7 @@ describe('noSignal', function() {
             // remove it  by refreshing
             noSignal.RefreshAllRules([]);
             deletedRule = noSignal.GetNSArrRule(rule.service, rule.subservice, rule.name);
-           should.not.exist(deletedRule);
+            should.not.exist(deletedRule);
         });
         it('should update a changed rule', function() {
             var updatedRule;
@@ -106,10 +107,7 @@ describe('noSignal', function() {
             rule.nosignal.checkInterval = '24';
             noSignal.RefreshAllRules([rule]);
             updatedRule = noSignal.GetNSArrRule(rule.service, rule.subservice, rule.name);
-            should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal),
-                updatedRule);
+            should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal), updatedRule);
         });
     });
 });
-
-

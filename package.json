@@ -1,7 +1,8 @@
 {
   "name": "perseo",
   "description": "IOT CEP front End",
-  "version": "1.7.0-next",
+  "license": "AGPL-3.0-only",
+  "version": "1.8.0-next",
   "homepage": "",
   "author": {
     "name": "crbrox",
@@ -23,18 +24,36 @@
     "test": "mocha --recursive 'test/**/*.js' --reporter spec --timeout 3000 --ui bdd --exit",
     "test:watch": "npm run test -- -w ./lib",
     "lint": "jshint lib/ --config .jshintrc && jshint test/ --config test/.jshintrc",
+    "lint:md": "remark 'README.md' documentation",
+    "lint:text": "textlint 'README.md' 'documentation/*.md' 'documentation/**/*.md'",
+    "prettier": "prettier --config .prettierrc.json --write ./**/**/*.js **/*.js *.js",
+    "prettier:text": "prettier 'README.md' 'documentation/*.md' 'documentation/**/*.md' --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
     "test:coverage": "istanbul cover _mocha -- --recursive 'test/**/*.js' --reporter spec --exit",
     "test:coveralls": "npm run test:coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "watch": "watch 'npm test && npm run lint' ./lib ./test"
   },
   "devDependencies": {
     "coveralls": "~3.0.2",
+    "husky": "~1.1.0",
     "istanbul": "~0.4.5",
     "jshint": "~2.9.6",
+    "lint-staged": "~7.3.0",
     "mocha": "5.2.0",
+    "chai": "~4.1.2",
     "proxyquire": "0.5.1",
+    "prettier": "~1.14.2",
+    "remark-cli": "~6.0.1",
+    "remark-preset-lint-recommended": "~3.0.2",
+    "rewire": "~4.0.1",
     "should": "8.2.2",
-    "watch": "~1.0.2"
+    "watch": "~1.0.2",
+    "sinon": "~6.1.0",
+    "sinon-chai": "~3.2.0",
+    "textlint": "~11.0.1",
+    "textlint-rule-common-misspellings": "~1.0.1",
+    "textlint-rule-no-dead-link": "~4.4.1",
+    "textlint-rule-terminology": "~1.1.30",
+    "textlint-rule-write-good": "~1.6.2"
   },
   "keywords": [],
   "dependencies": {
@@ -43,6 +62,7 @@
     "express": "~4.16.1",
     "logops": "2.1.0",
     "mongodb": "~2.2.31",
+    "ngsijs": "~1.2.0",
     "nodemailer": "~1.11.0",
     "nodemailer-smtp-transport": "~0.1.13",
     "request": "~2.83.0",
@@ -50,5 +70,20 @@
     "utm-converter": "~0.1.1",
     "uuid": "~1.4.2",
     "smpp": "0.3.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --config .prettierrc.json --write",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
+      "git add"
+    ]
   }
 }

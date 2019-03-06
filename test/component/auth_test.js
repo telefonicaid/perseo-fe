@@ -23,15 +23,15 @@
 
 'use strict';
 
-var
-    async = require('async'),
+var async = require('async'),
     should = require('should'),
     util = require('util'),
     clients = require('../utils/clients'),
     utilsT = require('../utils/utilsT'),
     testEnv = require('../utils/testEnvironment'),
     EventEmitter = require('events').EventEmitter,
-    updateDone = new EventEmitter();
+    updateDone = new EventEmitter(),
+    URL = require('url').URL;
 
 describe('Auth', function() {
     beforeEach(testEnv.commonBeforeEach);
@@ -45,21 +45,58 @@ describe('Auth', function() {
             action.ev.id += date.getTime();
             utilsT.getConfig().authentication.host = 'localhost';
             utilsT.getConfig().authentication.port = utilsT.fakeHttpServerPort;
-            utilsT.getConfig().orion.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
+            utilsT.getConfig().orion.URL = new URL(util.format('http://localhost:%s', utilsT.fakeHttpServerPort));
             updateDone.once('updated_renew', done);
             updateDone.once('updated_first', function(error) {
                 if (error) {
                     return done(error);
                 }
-                async.series([
+                async.series(
+                    [
+                        function(callback) {
+                            var respCodes = [401, 201, 200];
+                            utilsT.setServerCallback(function(req, resp) {
+                                resp.writeHead(respCodes.shift(), { 'x-subject-token': 'thisIsAnAccessToken2' });
+                                resp.end('ok');
+                                if (respCodes.length === 0) {
+                                    // all requests done
+                                    updateDone.emit('updated_renew', null);
+                                }
+                            });
+                            return callback();
+                        },
+                        function(callback) {
+                            clients.PostAction(action, function(error, data) {
+                                should.not.exist(error);
+                                data.should.have.property('statusCode', 200);
+                                return callback();
+                            });
+                        }
+                    ],
+                    function(error) {
+                        if (error) {
+                            return done(error);
+                        }
+                    }
+                );
+            });
+            async.series(
+                [
                     function(callback) {
-                        var respCodes = [401, 201, 200];
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback();
+                        });
+                    },
+                    function(callback) {
+                        var respCodes = [201, 200];
                         utilsT.setServerCallback(function(req, resp) {
-                            resp.writeHead(respCodes.shift(),
-                                {'x-subject-token': 'thisIsAnAccessToken2'});
+                            resp.writeHead(respCodes.shift(), { 'x-subject-token': 'thisIsAnAccessToken' });
                             resp.end('ok');
-                            if (respCodes.length === 0) { // all requests done
-                                updateDone.emit('updated_renew', null);
+                            if (respCodes.length === 0) {
+                                // all requests done
+                                updateDone.emit('updated_first', null);
                             }
                         });
                         return callback();
@@ -71,44 +108,13 @@ describe('Auth', function() {
                             return callback();
                         });
                     }
-                ], function(error) {
+                ],
+                function(error) {
                     if (error) {
                         return done(error);
                     }
-                });
-            });
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
-                },
-                function(callback) {
-                    var respCodes = [201, 200];
-                    utilsT.setServerCallback(function(req, resp) {
-                        resp.writeHead(respCodes.shift(),
-                            {'x-subject-token': 'thisIsAnAccessToken'});
-                        resp.end('ok');
-                        if (respCodes.length === 0) { // all requests done
-                            updateDone.emit('updated_first', null);
-                        }
-                    });
-                    return callback();
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
                 }
-            ], function(error) {
-                if (error) {
-                    return done(error);
-                }
-            });
+            );
         });
     });
 });

@@ -23,8 +23,7 @@
 
 'use strict';
 
-var
-    async = require('async'),
+var async = require('async'),
     should = require('should'),
     clients = require('../utils/clients'),
     utilsT = require('../utils/utilsT'),
@@ -37,60 +36,71 @@ describe('Actions', function() {
     afterEach(testEnv.commonAfterEach);
 
     describe('#PostAction()', function() {
-
         it('should not keep invalid actions in queue', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/error_in_axn_rules/'),
                 action = utilsT.loadExample('./test/data/good_actions/action_sms.json');
 
-            async.eachSeries(cases, function(c, callbackES) {
-                var rule = c.object;
-                // To be sure it's the same name in rule and action
-                action.ruleName = rule.name;
-                action.ev.id = 'device_err_axn';
-                action.ev.type = 'type_err_axn';
-                async.series([
-                    function(callback) {
-                        clients.PostRule(rule, function(error, data) {
-                            should.not.exist(error);
-                            data.should.have.property('statusCode', 200);
-                            return callback(null);
-                        });
-                    },
-                    function(callback) {
-                        clients.PostAction(action, function(error, data) {
-                            should.not.exist(error);
-                            data.should.have.property('statusCode', 200);
-                            return callback();
-                        });
-                    },
-                    function(callback) {
-                        clients.PostAction(action, function(error, data) {
-                            should.not.exist(error);
-                            data.should.have.property('statusCode', 200);
-                            return callback();
-                        });
-                    },
-                    function(callback) {
-                        clients.PostAction(action, function(error, data) {
-                            should.not.exist(error);
-                            data.should.have.property('statusCode', 200);
-                            return callback();
-                        });
-                    },
-                    function(callback) {
-                        setTimeout(function() {
-                            var array = actions.getInProcessArray(config.DEFAULT_SERVICE, config.DEFAULT_SUBSERVICE,
-                                rule.name, action.ev.id, action.ev.type);
-                            // Should not be any action in queue
-                            should.equal(array.length(), 0);
-                            return callback();
-                        }, 100);
-                    }
-                ], callbackES);
-            }, function(error) {
-                should.not.exist(error);
-                done();
-            });
+            async.eachSeries(
+                cases,
+                function(c, callbackES) {
+                    var rule = c.object;
+                    // To be sure it's the same name in rule and action
+                    action.ruleName = rule.name;
+                    action.ev.id = 'device_err_axn';
+                    action.ev.type = 'type_err_axn';
+                    async.series(
+                        [
+                            function(callback) {
+                                clients.PostRule(rule, function(error, data) {
+                                    should.not.exist(error);
+                                    data.should.have.property('statusCode', 200);
+                                    return callback(null);
+                                });
+                            },
+                            function(callback) {
+                                clients.PostAction(action, function(error, data) {
+                                    should.not.exist(error);
+                                    data.should.have.property('statusCode', 200);
+                                    return callback();
+                                });
+                            },
+                            function(callback) {
+                                clients.PostAction(action, function(error, data) {
+                                    should.not.exist(error);
+                                    data.should.have.property('statusCode', 200);
+                                    return callback();
+                                });
+                            },
+                            function(callback) {
+                                clients.PostAction(action, function(error, data) {
+                                    should.not.exist(error);
+                                    data.should.have.property('statusCode', 200);
+                                    return callback();
+                                });
+                            },
+                            function(callback) {
+                                setTimeout(function() {
+                                    var array = actions.getInProcessArray(
+                                        config.DEFAULT_SERVICE,
+                                        config.DEFAULT_SUBSERVICE,
+                                        rule.name,
+                                        action.ev.id,
+                                        action.ev.type
+                                    );
+                                    // Should not be any action in queue
+                                    should.equal(array.length(), 0);
+                                    return callback();
+                                }, 100);
+                            }
+                        ],
+                        callbackES
+                    );
+                },
+                function(error) {
+                    should.not.exist(error);
+                    done();
+                }
+            );
         });
     });
 });

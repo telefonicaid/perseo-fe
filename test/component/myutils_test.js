@@ -31,7 +31,7 @@ describe('Myutils', function() {
         describe('When there are not variables', function() {
             it('should return the same string passed', function() {
                 var str = 'a string without vars',
-                    map = {without: 'XXXX', vars: 'YYYYY'},
+                    map = { without: 'XXXX', vars: 'YYYYY' },
                     newStr;
                 newStr = myutils.expandVar(str, map);
                 should.exist(newStr);
@@ -42,14 +42,15 @@ describe('Myutils', function() {
     describe('#RequestHelper()', function() {
         describe('When there is a network problem', function() {
             it('should return error', function(done) {
-                var url = 'http://incredibleifthishostexistsicantbelievemyeyes.io';
-                myutils.requestHelper('get', {url: url}, function(error) {
+                var host = 'incredibleifthishostexistsicantbelievemyeyes.io';
+                var url = 'http://' + host;
+                myutils.requestHelper('get', { url: url }, function(error) {
                     should.exist(error);
-                    error.should.be.an.Error;
+                    error.host.should.be.equal(host);
+                    error.code.should.be.equal('ENOTFOUND');
                 });
                 done();
             });
         });
     });
 });
-
