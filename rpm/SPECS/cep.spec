@@ -99,19 +99,21 @@ fi
 %post
 echo "[INFO] Configuring application"
 
-    echo "[INFO] Creating the home Perseo directory"
-    mkdir -p _install_dir
-    echo "[INFO] Creating log directory"
-    mkdir -p %{_perseoCep_log_dir}
-    chown -R %{_project_user}:%{_project_user} %{_perseoCep_log_dir}
-    chown -R %{_project_user}:%{_project_user} _install_dir
-    chmod g+s %{_perseoCep_log_dir}
-    setfacl -d -m g::rwx %{_perseoCep_log_dir}
-    setfacl -d -m o::rx %{_perseoCep_log_dir}
+echo "[INFO] Creating the home Perseo directory"
+mkdir -p _install_dir
+echo "[INFO] Creating log directory"
+mkdir -p %{_perseoCep_log_dir}
+touch %{_perseoCep_log_dir}/perseo.log
+chown -f %{_project_user}:%{_project_user} %{_perseoCep_log_dir}
+chown -f %{_project_user}:%{_project_user} %{_perseoCep_log_dir}/perseo.log*
+chown -R %{_project_user}:%{_project_user} _install_dir
+chmod g+s %{_perseoCep_log_dir}
+setfacl -d -m g::rwx %{_perseoCep_log_dir}
+setfacl -d -m o::rx %{_perseoCep_log_dir}
 
-    echo "[INFO] Configuring application service"
-    cd /etc/init.d
-    chkconfig --add %{_service_name}
+echo "[INFO] Configuring application service"
+cd /etc/init.d
+chkconfig --add %{_service_name}
 
 echo "Done"
 
@@ -127,18 +129,18 @@ if [ $1 == 0 ]; then
 
   echo "[INFO] Removing application log files"
   # Log
-  [ -d %{_perseoCep_log_dir} ] && rm -rfv %{_perseoCep_log_dir}
+  [ -d %{_perseoCep_log_dir} ] && rm -rf %{_perseoCep_log_dir}
 
   echo "[INFO] Removing application files"
   # Installed files
-  [ -d %{_install_dir} ] && rm -rfv %{_install_dir}
+  [ -d %{_install_dir} ] && rm -rf %{_install_dir}
 
   echo "[INFO] Removing application user"
   userdel -fr %{_project_user}
 
   echo "[INFO] Removing application service"
   chkconfig --del %{_service_name}
-  rm -Rf /etc/init.d/%{_service_name}
+  rm -f /etc/init.d/%{_service_name}
   echo "Done"
 fi
 
@@ -162,6 +164,26 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Fri Feb 08 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.8.0
+- Add: NGSIv2 support in both notification reception and CB update action
+- Change on the PERSEO_ORION_URL env var behaviour. Now it represents Context Broker base URL instead of the
+  updateContext endpoint
+- Add: 'ruleName' as variable automatically in rule text field (EPL) on rule creation time (#307)
+- Set Nodejs 8.12.0 as minimum version in packages.json (effectively removing Nodev4 and Nodev6 as supported versions)
+- Add: use NodeJS 8 in Dockerfile
+- Add: use PM2 in Dockerfile
+- Add: new ngsijs ~1.2.0 dependency
+- Add: new rewire ~4.0.1 dev dependency
+- Upgrade depedency logops from 1.0.0-alpha.7 to 2.1.0
+- Upgrade dev dependency istanbul from ~0.1.34 to ~0.4.5
+- Upgrade dev dependency mocha from 2.4.5 to to 5.2.0
+- Upgrade dev dependency chai from ~1.8.0 to ~4.1.2
+- Upgrade dev dependency sinon from ~1.7.3 to ~6.1.0
+- Upgrade dev dependency sinon-chai from 2.4.0 to ~3.2.0
+- Remove: old unused development dependencies
+  * grunt and grunt related module
+  * closure-linter-wrapper
+
 * Thu Sep 20 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.0
 - Add: new parameter to updateAction card: actionType: APPEND (default) or UPDATE (#278)
 - Using precise dependencies (~=) in packages.json

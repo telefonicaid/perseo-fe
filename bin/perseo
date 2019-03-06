@@ -29,7 +29,8 @@ var app = require('../lib/perseo'),
     logger = require('logops'),
     constants = require('../lib/constants'),
     config = require('../config'),
-    context = {op: 'perseo', comp: constants.COMPONENT_NAME};
+    context = {op: 'perseo', comp: constants.COMPONENT_NAME},
+    URL = require('url').URL;
 
 logger.format = logger.formatters.pipe;
 
@@ -105,7 +106,7 @@ function loadConfiguration() {
         config.nextCore.noticesURL = process.env.PERSEO_NEXT_URL + '/perseo-core/events';
     }
     if (process.env.PERSEO_ORION_URL) {
-        config.orion.URL = process.env.PERSEO_ORION_URL;
+        config.orion.URL = new URL(process.env.PERSEO_ORION_URL);
     }
     if (process.env.PERSEO_LOG_LEVEL) {
         config.logLevel = process.env.PERSEO_LOG_LEVEL;

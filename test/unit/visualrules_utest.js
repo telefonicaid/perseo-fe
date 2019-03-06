@@ -28,13 +28,12 @@ var should = require('should'),
     visualRules = require('../../lib/models/visualRules');
 
 describe('VisualRules', function() {
-
     describe('#vr2rule()', function() {
         it('should generate the right EPL', function() {
             var cases = utilsT.loadDirExamples('./test/data/unit/vr_epl');
             cases.forEach(function(c) {
                 var rule = visualRules.vr2rule(c.object.VR);
-                rule.text.should.be.a.String;
+                rule.text.should.be.a.string;
                 rule.text = rule.text.replace(/\s{2,}/g, ' ');
                 c.object.text = c.object.text.replace(/\s{2,}/g, ' ');
                 should.equal(c.object.text, rule.text);
@@ -50,23 +49,15 @@ describe('VisualRules', function() {
                 'DIFFERENT_TO',
                 'GREATER_OR_EQUAL_THAN',
                 'MINOR_OR_EQUAL_THAN',
-                'MATCH'];
+                'MATCH'
+            ];
             cases.forEach(function(c) {
                 var errOp = visualRules.errorOperator(c);
                 should(errOp).be.null;
             });
         });
         it('should return an error with invalid operators', function() {
-            var cases = [
-                'GREATER_THA',
-                'equal_to',
-                '<',
-                '',
-                null,
-                undefined,
-                42,
-                {}
-            ];
+            var cases = ['GREATER_THA', 'equal_to', '<', '', null, undefined, 42, {}];
             cases.forEach(function(c) {
                 var errOp = visualRules.errorOperator(c);
                 errOp.should.be.an.instanceOf(visualRules.errors.UnknownOperator);
@@ -74,4 +65,3 @@ describe('VisualRules', function() {
         });
     });
 });
-

@@ -43,9 +43,6 @@ describe('Db', function() {
                 should.not.exist(database);
                 done();
             });
-
         });
     });
 });
-
-

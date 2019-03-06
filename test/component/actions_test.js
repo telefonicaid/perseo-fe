@@ -23,8 +23,7 @@
 
 'use strict';
 
-var
-    async = require('async'),
+var async = require('async'),
     should = require('should'),
     util = require('util'),
     clients = require('../utils/clients'),
@@ -35,7 +34,8 @@ var
     constants = require('../../lib/constants'),
     request = require('request'),
     config = require('../../config'),
-    EXEC_GRACE_PERIOD = 500;
+    EXEC_GRACE_PERIOD = 500,
+    URL = require('url').URL;
 
 describe('Actions', function() {
     beforeEach(testEnv.commonBeforeEach);
@@ -44,146 +44,164 @@ describe('Actions', function() {
     describe('#PostAction()', function() {
         it('should return ok with a valid action', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_actions');
-            async.eachSeries(cases, function(c, callback) {
-                clients.PostAction(c.object, function(error, data) {
+            async.eachSeries(
+                cases,
+                function(c, callback) {
+                    clients.PostAction(c.object, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 200);
+                        return callback(null);
+                    });
+                },
+                function(error) {
                     should.not.exist(error);
-                    data.should.have.property('statusCode', 200);
-                    return callback(null);
-                });
-            }, function(error) {
-                should.not.exist(error);
-                done();
-            });
+                    done();
+                }
+            );
         });
 
         it('should return ok with a valid action with a rule for sms', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_sms.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_sms.json');
             utilsT.getConfig().sms.URL = 'http://thisshouldbenothingnotaCB';
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
-                }
-            ], done);
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        clients.PostAction(action, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback();
+                        });
+                    }
+                ],
+                done
+            );
         });
 
         it('should return ok with a valid action with a rule for update', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_update.json');
-            utilsT.getConfig().orion.URL = 'http://thisshouldbenothingnotaCB';
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
-                }
-            ], done);
+            utilsT.getConfig().orion.URL = new URL('http://thisshouldbenothingnotaCB');
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        clients.PostAction(action, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback();
+                        });
+                    }
+                ],
+                done
+            );
         });
         it('should return ok with a valid action with a rule for email', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_email.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_email.json');
             utilsT.getConfig().smtp.host = 'averyfarwayhosthatnotexist';
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    utilsT.setServerCallback(function(req, resp) {
-                        resp.end('ok');
-                        return done();
-                    });
-                    callback();
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
-                }
-            ], done);
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        utilsT.setServerCallback(function(req, resp) {
+                            resp.end('ok');
+                            return done();
+                        });
+                        callback();
+                    },
+                    function(callback) {
+                        clients.PostAction(action, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback();
+                        });
+                    }
+                ],
+                done
+            );
         });
         it('should return ok with a valid action with a rule for post', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_post.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_post.json');
-            async.series([
-                function(callback) {
-                    clients.PostRule(rule, function(error, data) {
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        utilsT.setServerCallback(function(req, resp) {
+                            resp.end('ok');
+                            return done();
+                        });
+                        callback();
+                    },
+                    function(callback) {
+                        clients.PostAction(action, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback();
+                        });
+                    }
+                ],
+                done
+            );
+        });
+        it('should return an error if rule name is missing', function(done) {
+            var cases = [{}, { id: 'something' }];
+            async.eachSeries(
+                cases,
+                function(c, callback) {
+                    clients.PostAction(c, function(error, data) {
                         should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
+                        data.should.have.property('statusCode', 400);
                         return callback(null);
                     });
                 },
-                function(callback) {
-                    utilsT.setServerCallback(function(req, resp) {
-                        resp.end('ok');
-                        return done();
-                    });
-                    callback();
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        return callback();
-                    });
-                }
-            ], done);
-        });
-        it('should return an error if rule name is missing', function(done) {
-            var cases = [
-                {},
-                {id: 'something'}
-            ];
-            async.eachSeries(cases, function(c, callback) {
-                clients.PostAction(c, function(error, data) {
+                function(error) {
                     should.not.exist(error);
-                    data.should.have.property('statusCode', 400);
-                    return callback(null);
-                });
-            }, function(error) {
-                should.not.exist(error);
-                done();
-            });
+                    done();
+                }
+            );
         });
         it('should return an error when executing an action without rule name', function(done) {
-            var cases = [
-                {},
-                {id: 'something'}
-            ];
-            async.eachSeries(cases, function(c, callback) {
-                actions.Do(c, function(error) {
-                    should.exist(error);
-                    callback(null);
-                });
-            }, function(error) {
-                should.not.exist(error);
-                done();
-            });
+            var cases = [{}, { id: 'something' }];
+            async.eachSeries(
+                cases,
+                function(c, callback) {
+                    actions.Do(c, function(error) {
+                        should.exist(error);
+                        callback(null);
+                    });
+                },
+                function(error) {
+                    should.not.exist(error);
+                    done();
+                }
+            );
         });
     });
 
@@ -196,108 +214,120 @@ describe('Actions', function() {
                 date = new Date();
             action.ev.id += date.getTime();
             utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
-            async.series([
-                function(callback) {
-                    clients.PostVR(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 201);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        setTimeout(callback, EXEC_GRACE_PERIOD);
-                    });
-                },
-                function(callback) {
-                    executionsStore.LastTime({
-                            'event': {
-                                service: action.ev.service,
-                                subservice: action.ev.subservice,
-                                ruleName: rule.name,
-                                id: action.ev.id
-                            },
-                            'action': {index: 0}
-                        },
-
-                        function(error, time) {
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostVR(rule, function(error, data) {
                             should.not.exist(error);
-                            time.should.not.be.equal(0);
-                            time.should.be.lessThan(Date.now());
-                            time.should.be.greaterThan(start);
-                            return callback();
+                            data.should.have.property('statusCode', 201);
+                            return callback(null);
                         });
-                }
-            ], done);
+                    },
+                    function(callback) {
+                        clients.PostAction(action, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            setTimeout(callback, EXEC_GRACE_PERIOD);
+                        });
+                    },
+                    function(callback) {
+                        executionsStore.LastTime(
+                            {
+                                event: {
+                                    service: action.ev.service,
+                                    subservice: action.ev.subservice,
+                                    ruleName: rule.name,
+                                    id: action.ev.id
+                                },
+                                action: { index: 0 }
+                            },
+
+                            function(error, time) {
+                                should.not.exist(error);
+                                time.should.not.be.equal(0);
+                                time.should.be.lessThan(Date.now());
+                                time.should.be.greaterThan(start);
+                                return callback();
+                            }
+                        );
+                    }
+                ],
+                done
+            );
         });
 
-       it('should not execute an action when has been executed too recently', function(done) {
+        it('should not execute an action when has been executed too recently', function(done) {
             var rule = utilsT.loadExample('./test/data/good_vrs/time_card.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_sms.json'),
                 lastTime = 0,
                 date = new Date();
             action.ev.id += date.getTime();
             utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
-            async.series([
-                function(callback) {
-                    clients.PostVR(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 201);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        setTimeout(callback, EXEC_GRACE_PERIOD);
-                    });
-                },
-                function(callback) {
-                    executionsStore.LastTime({
-                            'event': {
-                                service: action.ev.service,
-                                subservice: action.ev.subservice,
-                                ruleName: rule.name,
-                                id: action.ev.id
-                            },
-                            'action': {index: 0}
-                        },
-                        function(error, time) {
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostVR(rule, function(error, data) {
                             should.not.exist(error);
-                            time.should.not.be.equal(0);
-                            time.should.be.lessThan(Date.now());
-                            time.should.be.greaterThan(start);
-                            lastTime = time;
-                            return callback();
+                            data.should.have.property('statusCode', 201);
+                            return callback(null);
                         });
-                },
-                function(callback) {
-                    clients.PostAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        setTimeout(callback, EXEC_GRACE_PERIOD);
-                    });
-                },
-                function(callback) {
-                    executionsStore.LastTime({
-                            'event': {
-                                service: action.ev.service,
-                                subservice: action.ev.subservice,
-                                ruleName: rule.name,
-                                id: action.ev.id
-                            },
-                            'action': {index: 0}
-                        },
-                        function(error, time) {
+                    },
+                    function(callback) {
+                        clients.PostAction(action, function(error, data) {
                             should.not.exist(error);
-                            time.should.be.equal(lastTime);
-                            return callback();
+                            data.should.have.property('statusCode', 200);
+                            setTimeout(callback, EXEC_GRACE_PERIOD);
                         });
-                }
-            ], done);
+                    },
+                    function(callback) {
+                        executionsStore.LastTime(
+                            {
+                                event: {
+                                    service: action.ev.service,
+                                    subservice: action.ev.subservice,
+                                    ruleName: rule.name,
+                                    id: action.ev.id
+                                },
+                                action: { index: 0 }
+                            },
+                            function(error, time) {
+                                should.not.exist(error);
+                                time.should.not.be.equal(0);
+                                time.should.be.lessThan(Date.now());
+                                time.should.be.greaterThan(start);
+                                lastTime = time;
+                                return callback();
+                            }
+                        );
+                    },
+                    function(callback) {
+                        clients.PostAction(action, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            setTimeout(callback, EXEC_GRACE_PERIOD);
+                        });
+                    },
+                    function(callback) {
+                        executionsStore.LastTime(
+                            {
+                                event: {
+                                    service: action.ev.service,
+                                    subservice: action.ev.subservice,
+                                    ruleName: rule.name,
+                                    id: action.ev.id
+                                },
+                                action: { index: 0 }
+                            },
+                            function(error, time) {
+                                should.not.exist(error);
+                                time.should.be.equal(lastTime);
+                                return callback();
+                            }
+                        );
+                    }
+                ],
+                done
+            );
         });
 
         it('should not execute an action when has been triggered with the same correlator', function(done) {
@@ -311,8 +341,12 @@ describe('Actions', function() {
                 options.headers[constants.SERVICE_HEADER] = config.DEFAULT_SERVICE;
                 options.headers[constants.SUBSERVICE_HEADER] = config.DEFAULT_SUBSERVICE;
                 options.headers[constants.CORRELATOR_HEADER] = 'thesamecorrelator';
-                options.url = util.format('http://%s:%s%s', config.endpoint.host,
-                    config.endpoint.port, config.endpoint.actionsPath);
+                options.url = util.format(
+                    'http://%s:%s%s',
+                    config.endpoint.host,
+                    config.endpoint.port,
+                    config.endpoint.actionsPath
+                );
                 options.body = action;
                 options.json = true;
 
@@ -320,36 +354,41 @@ describe('Actions', function() {
                     if (error) {
                         return callback(error, null);
                     }
-                    if (response.headers['content-type'] === 'application/json; charset=utf-8' &&
-                        typeof body === 'string') {
+                    if (
+                        response.headers['content-type'] === 'application/json; charset=utf-8' &&
+                        typeof body === 'string'
+                    ) {
                         body = JSON.parse(body);
                     }
-                    return callback(error, {statusCode: response.statusCode, body: body, headers: response.headers});
+                    return callback(error, { statusCode: response.statusCode, body: body, headers: response.headers });
                 });
             }
-            async.series([
-                function(callback) {
-                    clients.PostVR(rule, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 201);
-                        return callback(null);
-                    });
-                },
-                function(callback) {
-                    postAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 200);
-                        setTimeout(callback, EXEC_GRACE_PERIOD);
-                    });
-                },
-                function(callback) {
-                    postAction(action, function(error, data) {
-                        should.not.exist(error);
-                        data.should.have.property('statusCode', 500);
-                        callback();
-                    });
-                }
-            ], done);
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostVR(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 201);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        postAction(action, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            setTimeout(callback, EXEC_GRACE_PERIOD);
+                        });
+                    },
+                    function(callback) {
+                        postAction(action, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 500);
+                            callback();
+                        });
+                    }
+                ],
+                done
+            );
         });
     });
 });

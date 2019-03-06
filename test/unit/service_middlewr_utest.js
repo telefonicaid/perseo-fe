@@ -31,26 +31,24 @@ describe('service middleware', function() {
         camelWord = 'camelCaseWord';
     describe('#service()', function() {
         it('should transform to lower case', function() {
-            var req = { headers: {}},
+            var req = { headers: {} },
                 err;
             req.headers[serviceHeader] = camelWord;
             err = service.checkServiceHeaders(req);
             should.not.exist(err);
             should.equal(req.service, camelWord.toLowerCase());
         });
-
     });
     describe('#subservice()', function() {
         var subserviceHeader = 'fiware-servicepath',
             camelWord = '/camelCaseWord';
         it('should not transform to lower case', function() {
-            var req = { headers: {}},
+            var req = { headers: {} },
                 err;
             req.headers[subserviceHeader] = camelWord;
             err = service.checkServiceHeaders(req);
             should.not.exist(err);
             should.equal(req.subservice, camelWord);
         });
-
     });
 });

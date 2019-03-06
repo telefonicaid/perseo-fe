@@ -44,7 +44,7 @@ function commonRequest(method, url, object, callback) {
         if (response.headers['content-type'] === 'application/json; charset=utf-8' && typeof body === 'string') {
             body = JSON.parse(body);
         }
-        return callback(error, {statusCode: response.statusCode, body: body, headers: response.headers});
+        return callback(error, { statusCode: response.statusCode, body: body, headers: response.headers });
     });
 }
 
@@ -57,18 +57,27 @@ function PostRule(rule, callback) {
     commonRequest('post', url, rule, callback);
 }
 function DeleteRule(ruleName, callback) {
-    var url = util.format('http://%s:%s%s/%s', config.endpoint.host,
-        config.endpoint.port, config.endpoint.rulesPath, ruleName);
+    var url = util.format(
+        'http://%s:%s%s/%s',
+        config.endpoint.host,
+        config.endpoint.port,
+        config.endpoint.rulesPath,
+        ruleName
+    );
     commonRequest('del', url, null, callback);
 }
 function GetRule(ruleName, callback) {
-    var url = util.format('http://%s:%s%s/%s', config.endpoint.host,
-        config.endpoint.port, config.endpoint.rulesPath, ruleName);
+    var url = util.format(
+        'http://%s:%s%s/%s',
+        config.endpoint.host,
+        config.endpoint.port,
+        config.endpoint.rulesPath,
+        ruleName
+    );
     commonRequest('get', url, null, callback);
 }
 function GetAllRules(callback) {
-    var url = util.format('http://%s:%s%s', config.endpoint.host,
-        config.endpoint.port, config.endpoint.rulesPath);
+    var url = util.format('http://%s:%s%s', config.endpoint.host, config.endpoint.port, config.endpoint.rulesPath);
     commonRequest('get', url, null, callback);
 }
 
@@ -77,26 +86,37 @@ function PostVR(rule, callback) {
     commonRequest('post', url, rule, callback);
 }
 function PutVR(ruleName, rule, callback) {
-    var url = util.format('http://%s:%s%s/%s',
+    var url = util.format(
+        'http://%s:%s%s/%s',
         config.endpoint.host,
         config.endpoint.port,
         config.endpoint.vrPath,
-        ruleName);
+        ruleName
+    );
     commonRequest('put', url, rule, callback);
 }
 function DeleteVR(ruleName, callback) {
-    var url = util.format('http://%s:%s%s/%s', config.endpoint.host,
-        config.endpoint.port, config.endpoint.vrPath, ruleName);
+    var url = util.format(
+        'http://%s:%s%s/%s',
+        config.endpoint.host,
+        config.endpoint.port,
+        config.endpoint.vrPath,
+        ruleName
+    );
     commonRequest('del', url, null, callback);
 }
 function GetVR(ruleName, callback) {
-    var url = util.format('http://%s:%s%s/%s', config.endpoint.host,
-        config.endpoint.port, config.endpoint.vrPath, ruleName);
+    var url = util.format(
+        'http://%s:%s%s/%s',
+        config.endpoint.host,
+        config.endpoint.port,
+        config.endpoint.vrPath,
+        ruleName
+    );
     commonRequest('get', url, null, callback);
 }
 function GetAllVR(callback) {
-    var url = util.format('http://%s:%s%s', config.endpoint.host,
-        config.endpoint.port, config.endpoint.vrPath);
+    var url = util.format('http://%s:%s%s', config.endpoint.host, config.endpoint.port, config.endpoint.vrPath);
     commonRequest('get', url, null, callback);
 }
 function PostAction(action, callback) {
@@ -104,18 +124,21 @@ function PostAction(action, callback) {
     commonRequest('post', url, action, callback);
 }
 function GetVersion(callback) {
-    var url = util.format('http://%s:%s%s', config.endpoint.host,
-        config.endpoint.port, config.endpoint.versionPath);
+    var url = util.format('http://%s:%s%s', config.endpoint.host, config.endpoint.port, config.endpoint.versionPath);
     commonRequest('get', url, null, callback);
 }
 function PutLogLevel(level, callback) {
-    var url = util.format('http://%s:%s%s?level=%s', config.endpoint.host,
-        config.endpoint.port, config.endpoint.logPath, level);
+    var url = util.format(
+        'http://%s:%s%s?level=%s',
+        config.endpoint.host,
+        config.endpoint.port,
+        config.endpoint.logPath,
+        level
+    );
     commonRequest('put', url, null, callback);
 }
 function GetLogLevel(callback) {
-    var url = util.format('http://%s:%s%s', config.endpoint.host,
-        config.endpoint.port, config.endpoint.logPath);
+    var url = util.format('http://%s:%s%s', config.endpoint.host, config.endpoint.port, config.endpoint.logPath);
     commonRequest('get', url, null, callback);
 }
 

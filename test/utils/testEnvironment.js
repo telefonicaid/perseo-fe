@@ -76,7 +76,8 @@ function commonBeforeEach(done) {
                     callback(err);
                 });
             }
-        ], done
+        ],
+        done
     );
 }
 function commonAfterEach(done) {
