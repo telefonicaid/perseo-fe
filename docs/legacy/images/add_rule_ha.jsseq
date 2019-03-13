@@ -1,0 +1,8 @@
+portal->perseo: visual rule
+perseo->core: EPL text
+core-->perseo: ok
+perseo->mongodb: rule
+mongodb-->perseo: ok
+perseo-->portal: ok
+perseo->nextCore: EPL text
+nextCore-->perseo: ok
