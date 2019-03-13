@@ -42,5 +42,7 @@ ENV PERSEO_CORE_URL=http://corehost:8080
 USER node
 ENV NODE_ENV=production
 
+HEALTHCHECK CMD curl --fail http://localhost:9090/version || exit 1
+
 ENTRYPOINT ["pm2-runtime", "bin/perseo"]
 CMD ["-- ", "config.js"]
