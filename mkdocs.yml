@@ -5,30 +5,31 @@ theme: readthedocs
 extra_css: ['https://fiware.org/style/fiware_readthedocs.css', "https://fiware.org/style/fiware_readthedocs_core.css"]
 #google_analytics: ['UA-84269043-1', 'wirecloud.readthedocs.io']
 
-nav:
+pages:
 - 'Introduction': 'index.md'
-- 'Architecture': 'legacy/architecture.md'
-- 'Logs & Alarms': 'legacy/logs.md'
+- 'Architecture': 'architecture/architecture.md'
 - 'O&M':
-    - 'Deployment': 'legacy/deployment.md'
-    - 'Configuration': 'legacy/configuration.md'
-    - 'Administration': 'legacy/admin.md'
+    - 'Deployment': 'admin/deployment.md'
+    - 'Configuration': 'admin/old_configuration.md'
+    - 'Administration': 'admin/index.md'
     - 'Metrics API': 'API/metrics_api.md'
+    - 'Logs & Alarms': 'admin/logs.md'
 - 'Open API':
     - 'API overview': 'API/index.md'
-    - 'Plain rules': 'legacy/plain_rules.md'
-    - 'Errors': 'legacy/errors.md'
-- 'Data model': 'legacy/models.md'
-- 'Available actions for PEP': 'legacy/pep_actions.md'
-- 'Documentation for developers of perseo': 'legacy/development.md'
+    - 'Actions': 'API/pep_actions.md'
+    - 'Plain rules': 'API/plain_rules.md'
+    - 'Errors': 'API/errors.md'
+- 'Data model': 'models/models.md'
+#- 'Available actions for PEP': 'API/pep_actions.md'
+- 'Documentation for developers of perseo': 'developer/development.md'
 - 'Roadmap': 'roadmap.md'
 
-#markdown_extensions:
+markdown_extensions:
 #    - markdown_github.headerid
-#    - markdown_github.superfences
-#    - markdown_github.magiclink
-#    - codehilite:
-#        guess_lang: False
-#    - toc:
-#        permalink: True
-#        separator: "."
+    - markdown_github.superfences
+    - markdown_github.magiclink
+    - codehilite:
+        guess_lang: False
+    - toc:
+        permalink: True
+        separator: "."

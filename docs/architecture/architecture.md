@@ -27,7 +27,7 @@ periodically by perseo "FE".
 
 Database used by perseo for storing rules and executions of actions.
 
-![Imagen](images/components.png)
+![Imagen](../images/components.png)
 
 ## External components that interact with Perseo
 
@@ -268,11 +268,11 @@ loop. The fact is logged and the action is ignored.
 
 ### External data flow
 
-![Imagen](images/dfd-0.png)
+![Imagen](../images/dfd-0.png)
 
 ### Internal data flow
 
-![Imagen](images/dfd-1.png)
+![Imagen](../images/dfd-1.png)
 
 ## HA
 
@@ -288,11 +288,11 @@ Events and rules can be sent to the perseo FEs by a load balancer in a round-rob
 the event/rule, this one will arrive to both cores. Both will make the same inferences and each one will trigger an
 action if it is necessary.
 
-![Imagen](images/ha.png)
+![Imagen](../images/ha.png)
 
 Only the master FE will execute the action in fact, unless the slave had seen the master as unavailable.
 
-![Imagen](images/haaxn.png)
+![Imagen](../images/haaxn.png)
 
 <a name="Scenarios"></a>
 
@@ -303,28 +303,28 @@ API). However, the same diagrams will aplly in the case of other actors, clients
 
 ### Adding a rule (without HA)
 
-![Imagen](images/add_rule_sinHA.png)
+![Imagen](../images/add_rule_sinHA.png)
 
 ### Adding a rule (with HA)
 
-![Imagen](images/add_rule_ha.png)
+![Imagen](../images/add_rule_ha.png)
 
 ### Notification from Context Broker
 
-![Imagen](images/notify.png)
+![Imagen](../images/notify.png)
 
 ### Executing an action (master)
 
-![Imagen](images/fire_action.png)
+![Imagen](../images/fire_action.png)
 
 ### Executing an action (slave)
 
-![Imagen](images/fire_action_slave.png)
+![Imagen](../images/fire_action_slave.png)
 
 ### No-update action
 
-![Imagen](images/nosignal.png)
+![Imagen](../images/nosignal.png)
 
 ### Update action with token renewal
 
-![Imagen](images/token_access.png)
+![Imagen](../images/token_access.png)

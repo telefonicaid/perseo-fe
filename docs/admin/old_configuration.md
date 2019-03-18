@@ -1,5 +1,7 @@
 <a name="configuration"></a>
 
+![Legacy](../images/legacy.png)
+
 ## Configuration
 
 There are two ways of configuring Perseo CEP:

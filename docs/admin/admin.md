@@ -77,8 +77,9 @@ tcp   0   0  0.0.0.0:1026     0.0.0.0:*   LISTEN   12179/node
 
 ### Database aspects
 
-Perseo FE uses MongoDB for persistence (have a look to the [data models](models.md) document for more detail regarding
-how the data in the DB is structured). Perseo FE supports both standalone and replica set configurations for the DB.
+Perseo FE uses MongoDB for persistence (have a look to the [data models](../models/models.md) document for more detail
+regarding how the data in the DB is structured). Perseo FE supports both standalone and replica set configurations for
+the DB.
 
 At startup time, Perseo tries to connect to CB. If this connection fails, then Perseo will decline to run and log a
 `FATAL` error pointing out the problem with DB.
@@ -102,8 +103,7 @@ accumulate in the buffer, eventually overpassing `checkDB.bufferMaxEntries` and 
 
 In a DB alarm situation, the ping operation also allows to release the alarm, once the DB connection is OK again.
 
-The different configuration parameters introduced above are described also in the
-[configuration document](configuration.md).
+The different configuration parameters introduced above are described also in the [Administrator Guide](index.md).
 
 ### How to subscribe to Context Broker
 
