@@ -6,12 +6,10 @@
 /report/
 /.c9revisions/
 /.settings/
-/data/
 
 .settings
 .classpath
 .project
 .metadata
 npm-debug.log
-.DS_Store
 package-lock.json
