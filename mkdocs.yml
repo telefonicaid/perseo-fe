@@ -30,8 +30,18 @@ pages:
 
 markdown_extensions:
 #    - markdown_github.headerid
-    - markdown_github.superfences
-    - markdown_github.magiclink
+    - markdown.extensions.tables
+    - pymdownx.betterem
+    - pymdownx.tilde:
+        subscript: False
+    - pymdownx.superfences
+    - pymdownx.magiclink:
+        repo_url_shortener: True
+        repo_url_shorthand: True
+        provider: "github"
+        user: "Ficodes"
+        repo: "perseo-fe"
+    - pymdownx.tasklist
     - codehilite:
         guess_lang: False
     - toc:
