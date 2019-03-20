@@ -50,22 +50,19 @@ systems, such as Web (HTTP), Email (SMTP) or SMS (SMPP) servers.
 
 ## Installation
 
-The instructions to install Perseo can be found in the
-[Installation Guide](https://perseo.readthedocs.io/en/latest/admin/)
+The instructions to install Perseo can be found in the [Installation Guide](admin/index.md)
 
 ## Usage
 
-Information about how to use Perseo can be found in the
-[User & Programmers Manual](https://perseo.readthedocs.io/en/latest/user/)
+Information about how to use Perseo can be found in the [User & Programmers Manual](user/index.md)
 
 ## API
 
-APIs and examples of their usage can be found [here](https://perseo.readthedocs.io/en/latest/api.html)
+APIs and examples of their usage can be found [here](API/index.md)
 
 ## Testing
 
-For performing a basic end-to-end test, you can follow the detailed instructions
-[here](https://perseo.readthedocs.io/en/latest/test.html).
+For performing a basic end-to-end test, you can follow the detailed instructions [here](admin/index.md).
 
 ## Quality Assurance
 
