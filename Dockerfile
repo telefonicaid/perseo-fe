@@ -16,7 +16,7 @@
 # For those usages not covered by the GNU Affero General Public License please contact with iot_support at tid dot es
 #
 
-FROM node:8.12.0-slim
+FROM node:8.15.1-slim
 
 MAINTAINER FIWARE Perseo Team. TelefÃ³nica I+D
 
