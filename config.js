@@ -29,7 +29,7 @@ var config = {};
  * Default log level. Can be one of: 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'
  * @type {string}
  */
-config.logLevel = 'INFO';
+config.logLevel = 'DEBUG';
 
 /**
  * Configures the exposed API.
@@ -105,16 +105,14 @@ config.nextCore = {
  * SMTP endpoint options
  */
 config.smtp = {
-    port: 25,
-    host: 'smtpserver',
+    port: 9292,
+    host: '127.0.0.1',
     secure: false,
-    /*
-     ,
-     auth: {
+    /*auth: {
      user: 'abc',
      pass: 'xyz'
-     }
-    */
+    },   */
+
     tls: {
         // keep rejectUnauthorized to false when secure is also false
         rejectUnauthorized: false
