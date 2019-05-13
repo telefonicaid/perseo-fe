@@ -58,7 +58,6 @@ function loadConfiguration() {
         'PERSEO_SMTP_SECURE',
         'PERSEO_SMTP_AUTH_USER',
         'PERSEO_SMTP_AUTH_PASS',
-        'PERSEO_SMTP_AUTH_PASS',
         'PERSEO_SMTP_TLS_REJECTUNAUTHORIZED',
         'PERSEO_SMS_URL',
         'PERSEO_SMS_API_KEY',
