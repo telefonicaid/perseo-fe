@@ -1,1 +1,2 @@
+- Replace findOne + orderby to find + sort + limit in LastTime executionsStore (#339)
 - Upgrade from node:8.12.0-slim to node:8.16.0-slim as base image in Dockerfile
