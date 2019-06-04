@@ -164,6 +164,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue Jun 04 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.9.0
+- Upgrade from node:8.12.0-slim to node:8.16.0-slim as base image in Dockerfile
+- Add: allow SMS actions with multiple phone destinations (#337)
+- Fix: replace findOne + orderby to find + sort + limit in LastTime executionsStore (#339)
+
 * Fri Feb 08 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.8.0
 - Add: NGSIv2 support in both notification reception and CB update action
 - Change on the PERSEO_ORION_URL env var behaviour. Now it represents Context Broker base URL instead of the
