@@ -11,7 +11,7 @@ if you don't already have.
 
 You can check if it works by running the following shell commands:
 
-```
+```text
 # Docker
 docker --version
 
@@ -31,7 +31,7 @@ If you want to quickly deploy all the Perseo CEP components to start experimenti
 
 -   Download (or create locally) a copy of [this docker-compose.yml](/../../docker-compose.yml) file.
 
-```
+```yml
 version: '3.4'
 services:
     perseo-mongo:
@@ -86,23 +86,23 @@ networks:
 
 -   Then start it up:
 
-```
+```bash
 # same path were you have placed the docker-compose.yml
-$ docker-compose up -d
+docker-compose up -d
 ```
 
 -   After a while, check that all containers are running (up):
 
-```
-$ docker ps
+```bash
+docker ps
 ```
 
 -   Now you're ready to use Perseo as instructed in the [User & Programmer Manual](../user/index.md).
 
 -   When you are done experimenting, remember to teardown the compose.
 
-```
-$ docker-compose down -v
+```bash
+docker-compose down -v
 ```
 
 #### Reuse External Orion Instance

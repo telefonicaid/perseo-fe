@@ -8,7 +8,7 @@ The Perseo Metrics API is a REST-based API that can be used to get relevant oper
 
 #### Get metrics
 
-```
+```text
 GET /admin/metrics
 ```
 
@@ -27,7 +27,7 @@ object with information for the aggregated information for all services.
     "service2": <service 2 info>,
     ...
     "serviceN": <service N info>
-  }
+  },
   "sum": <aggregated info for all services>
 }
 ```
@@ -37,14 +37,14 @@ an object whose keys are subservice names and whose values are objects with info
 subservice. The **sum** value is an object with information for the aggregated information for all subservices in the
 given services.
 
-```
+```json
 {
   "subservs": {
     "subservice1": <subservice 1 info>,
     "subservice2": <subservice 2 info>,
     ...
     "subserviceN": <subservice N info>
-  }
+  },
   "sum": <aggregated info for all subservice in the given service>
 }
 ```
@@ -72,7 +72,7 @@ Some additional remarks:
 
 #### Reset metrics
 
-```
+```text
 DELETE /admin/metrics
 ```
 
@@ -80,7 +80,7 @@ This operation resets all metrics, as if Perseo would had just been started.
 
 #### Get and reset
 
-```
+```text
 GET /admin/metrics?reset=true
 ```
 
