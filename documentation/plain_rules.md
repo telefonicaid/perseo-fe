@@ -145,7 +145,8 @@ Sends a SMS to a number set as an action parameter with the body of the message 
     }
 ```
 
-The field `parameters` include a field `to` with the number to send the message to.
+The field `parameters` include a field `to` with the number, or numbers separated by whiestpace charaters, to send the
+message to.
 
 The `template` and `to` fields perform [attribute substitution](#string-substitution-syntax).
 

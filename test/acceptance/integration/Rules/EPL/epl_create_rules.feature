@@ -71,6 +71,21 @@ Feature: Append a new rule in Perseo manager
     Then I receive an "200" http code in rules request
     And Validate that rule name is created successfully in db
 
+  @happy_path
+  Scenario: Append a sms multiple rule in Perseo manager
+    # Gen EPL
+    Given an EPL sentence with name "sms_rule"
+    And the entity_type "Room" for the EPL
+    And the attributes for the EPL
+      | attribute_id | attribute_value_type | attribute_operation | attribute_value |
+      | temperature  | float                | >                   | 1.5             |
+    And generate the epl sentence with the data defined before
+    # Create the Rule
+    And set the sms action with text "the new temperature is ${temperature}" and number "666999666 777777"
+    And with the epl generated and the action, append a new rule in perseo with name "sms_rule"
+    # Validations
+    Then I receive an "200" http code in rules request
+    And Validate that rule name is created successfully in db
 
   @happy_path
   Scenario: Append a post rule in Perseo manager
