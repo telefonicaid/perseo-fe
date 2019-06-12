@@ -1,13 +1,12 @@
 # Perseo Context-Aware CEP
 
-[![FIWARE Processing, analysis and visualization of context information](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/visualization.svg)](https://www.fiware.org/developers/catalogue/)
+[![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: AGPLv3+](https://img.shields.io/badge/License-AGPLv3+-blue.svg)](./LICENSE)
 [![Docker Status](https://img.shields.io/docker/pulls/fiware/perseo.svg)](https://hub.docker.com/r/fiware/perseo/)
 [![Support badge](https://img.shields.io/badge/tag-fiware--perseo-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware-perseo)
 <br> [![Documentation badge](https://img.shields.io/readthedocs/perseo.svg)](https://perseo.readthedocs.io/en/latest/)
 [![Build Status](https://travis-ci.org/telefonicaid/perseo-fe.svg?branch=master)](https://travis-ci.org/telefonicaid/perseo-fe)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
-[![Swagger Validator](https://img.shields.io/swagger/valid/2.0/https/raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v2.0/json/petstore-expanded.json.svg)](https://app.swaggerhub.com/apis/smartsdk/ngsi-tsdb)
 
 ## Overview
 
@@ -93,6 +92,10 @@ This project is part of [FIWARE](https://fiware.org/) and has been rated as foll
 
 | :dart: [Roadmap](documentation/roadmap.md) |
 | ------------------------------------------ |
+
+
+| :dart: [Roadmap](documentation/roadmap.md) | :books: [Esper Reference Documentation](http://esper.espertech.com/release-6.1.0/esper-reference/html/index.html) |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
 
 
 ## License
