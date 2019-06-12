@@ -1,6 +1,4 @@
-<a name="collections"></a>
-
-## Collections
+## Data model
 
 ### Rules
 

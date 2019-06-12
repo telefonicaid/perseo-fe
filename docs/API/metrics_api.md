@@ -1,10 +1,8 @@
-## <a name="top"></a>Metrics API
+## Metrics API
 
 ### Introduction
 
 The Perseo Metrics API is a REST-based API that can be used to get relevant operational metrics.
-
-[Top](#top)
 
 ### Operations
 
@@ -22,7 +20,7 @@ At the first level there are two keys: **services** and **sum**. In sequence, **
 are service names and whose values are objects with information about the corresponding service. The **sum** value is an
 object with information for the aggregated information for all services.
 
-```
+```json
 {
   "services": {
     "service1": <service 1 info>,
@@ -56,7 +54,7 @@ the `Fiware-ServicePath` header) `/gardens` then the key used for it would be `g
 
 Regarding subservice information object, keys are the name of the different metrics.
 
-```
+```json
 {
   "metric1": <metric 1>,
   "metric2": <metric 2>,
@@ -72,8 +70,6 @@ Some additional remarks:
 -   Requests corresponding to invalid services or subservices are not included in the payload (i.e. their associated
     metrics are just ignored).
 
-[Top](#top)
-
 #### Reset metrics
 
 ```
@@ -81,8 +77,6 @@ DELETE /admin/metrics
 ```
 
 This operation resets all metrics, as if Perseo would had just been started.
-
-[Top](#top)
 
 #### Get and reset
 
@@ -92,8 +86,6 @@ GET /admin/metrics?reset=true
 
 This operation (in fact, a variant of [get metrics](#get-metrics)) get results and, at the same time in an atomical way,
 resets metrics.
-
-[Top](#top)
 
 ### Metrics
 
@@ -151,5 +143,3 @@ The following metrics are used only by Perseo:
     -   **failedActionEmail**
     -   **failedActionHttpPost**
     -   **failedActionTwitter**
-
-[Top](#top)
