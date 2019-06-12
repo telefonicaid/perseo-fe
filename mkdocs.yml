@@ -18,11 +18,9 @@ pages:
     - 'Logs & Alarms': 'admin/logs.md'
 - 'Open API':
     - 'API': 'API/api.md'
-    - 'API overview': 'API/index.md'
     - 'Actions': 'API/pep_actions.md'
     - 'Plain rules': 'API/plain_rules.md'
     - 'Errors': 'API/errors.md'
-    - 'Events': 'API/event_api.md'
 - 'Data model': 'models/models.md'
 #- 'Available actions for PEP': 'API/pep_actions.md'
 - 'Documentation for developers of perseo': 'developer/development.md'
