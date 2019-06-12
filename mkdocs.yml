@@ -13,7 +13,7 @@ pages:
 - 'User Guide': 'user/index.md'
 - 'O&M':
     - 'Deployment': 'admin/deployment.md'
-    - 'Configuration': 'admin/old_configuration.md'
+    - 'Configuration': 'admin/configuration.md'
     - 'Administration': 'admin/admin.md'
     - 'Metrics API': 'API/metrics_api.md'
     - 'Logs & Alarms': 'admin/logs.md'

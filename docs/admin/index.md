@@ -137,7 +137,7 @@ required.
 | `PERSEO_NOTICES_PATH`     | `'/notices'`  | Path for incoming notices                                           |
 | `PERSEO_RULES_PATH`       | `'/rules'`    | Path for incoming rules                                             |
 
--   For legacy SMS and SMPP support, please refer to [this file](old_configuration.md).
+-   For legacy SMS and SMPP support, please refer to [this file](configuration.md).
 
 #### perseo-core
 
