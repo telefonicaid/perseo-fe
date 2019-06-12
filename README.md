@@ -17,6 +17,10 @@ communication protocol for events, and thus, Perseo is able to seamless and join
 This project is part of [FIWARE](https://www.fiware.org). You can find more FIWARE components in the
 [FIWARE catalogue](https://catalogue.fiware.org).
 
+| :books: [Documentation](https://perseo.readthedocs.io/en/latest) | :whale: [Docker Hub](https://hub.docker.com/r/fiware/perseo/) | :dart: [Roadmap](documentation/roadmap.md) |
+| ---------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------ |
+
+
 ## Content
 
 -   [Background](#background)
@@ -89,14 +93,6 @@ This project is part of [FIWARE](https://fiware.org/) and has been rated as foll
 -   Refer to the
     [Esper Reference Documentation](http://esper.espertech.com/release-6.1.0/esper-reference/html/index.html) for info
     on how to use EPL as a rule language.
-
-| :dart: [Roadmap](documentation/roadmap.md) |
-| ------------------------------------------ |
-
-
-| :dart: [Roadmap](documentation/roadmap.md) | :books: [Esper Reference Documentation](http://esper.espertech.com/release-6.1.0/esper-reference/html/index.html) |
-| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-
 
 ## License
 
