@@ -1,5 +1,3 @@
-<a name="administration"></a>
-
 ## Administration
 
 ### Service operations

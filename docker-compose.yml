@@ -1,3 +1,21 @@
+#
+# Copyright 2016 Telefonica Investigación y Desarrollo, S.A.U
+#
+# This file is part of perseo-fe
+#
+# perseo-fe is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+# General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+# perseo-fe is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+# for more details.
+#
+# You should have received a copy of the GNU Affero General Public License along with perseo-fe. If not, see
+# http://www.gnu.org/licenses/.
+#
+# For those usages not covered by the GNU Affero General Public License please contact with iot_support at tid dot es
+#
+
 version: '3.4'
 services:
     perseo-mongo:
@@ -11,7 +29,6 @@ services:
             restart_policy:
                 condition: on-failure
     perseo-core:
-        #image: telefonicaiot/perseo-core:1.1.0
         image: fiware/perseo-core
         environment:
             - PERSEO_FE_URL=http://perseo-fe:9090
@@ -38,9 +55,6 @@ services:
             - PERSEO_CORE_URL=http://perseo-core:8080
             - PERSEO_LOG_LEVEL=debug
             - PERSEO_ORION_URL=http://orion:1026/
-            - PERSEO_SMTP_HOST=www.ficodes.com
-            - PERSEO_SMTP_PORT=25
-            - PERSEO_SMTP_SECURE=false
         deploy:
             replicas: 1
             restart_policy:
@@ -48,5 +62,4 @@ services:
 
 networks:
     perseo:
-
     main:

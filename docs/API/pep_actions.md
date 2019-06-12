@@ -1,5 +1,3 @@
-<a name="actions"></a>
-
 ## Available actions
 
 The available actions are:

@@ -1,22 +1,25 @@
 # Perseo Context-Aware CEP
 
-[![FIWARE Processing, analysis and visualization of context information](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/visualization.svg)](https://www.fiware.org/developers/catalogue/)
+[![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: AGPLv3+](https://img.shields.io/badge/License-AGPLv3+-blue.svg)](./LICENSE)
 [![Docker Status](https://img.shields.io/docker/pulls/fiware/perseo.svg)](https://hub.docker.com/r/fiware/perseo/)
 [![Support badge](https://img.shields.io/badge/tag-fiware--perseo-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware-perseo)
 <br> [![Documentation badge](https://img.shields.io/readthedocs/perseo.svg)](https://perseo.readthedocs.io/en/latest/)
 [![Build Status](https://travis-ci.org/telefonicaid/perseo-fe.svg?branch=master)](https://travis-ci.org/telefonicaid/perseo-fe)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
-[![Swagger Validator](https://img.shields.io/swagger/valid/2.0/https/raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v2.0/json/petstore-expanded.json.svg)](https://app.swaggerhub.com/apis/smartsdk/ngsi-tsdb)
 
 ## Overview
 
 Perseo is a Complex Event Processing (CEP) software designed to be fully _NGSIv2_-compliant. It uses NGSIv2 as the
 communication protocol for events, and thus, Perseo is able to seamless and jointly work with _context brokers_ such as
-[Orion](https://github.com/telefonicaid/fiware-orion).
+[Orion Context Broker](https://github.com/telefonicaid/fiware-orion).
 
 This project is part of [FIWARE](https://www.fiware.org). You can find more FIWARE components in the
 [FIWARE catalogue](https://catalogue.fiware.org).
+
+| :books: [Documentation](https://perseo.readthedocs.io/en/latest) | :whale: [Docker Hub](https://hub.docker.com/r/fiware/perseo/) | :dart: [Roadmap](documentation/roadmap.md) |
+| ---------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------ |
+
 
 ## Content
 
@@ -67,33 +70,11 @@ APIs and examples of their usage can be found [here](https://perseo.readthedocs.
 For performing a basic end-to-end test, you can follow the detailed instructions
 [here](https://perseo.readthedocs.io/en/latest/test.html).
 
-## Quality Assurance
-
-This project is part of [FIWARE](https://fiware.org/) and has been rated as follows:
-
--   **Version Tested:**
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Version&url=https://fiware.github.io/catalogue/json/perseo.json&query=$.version&colorB=blue)
--   **Documentation:**
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Completeness&url=https://fiware.github.io/catalogue/json/perseo.json&query=$.docCompleteness&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Usability&url=https://fiware.github.io/catalogue/json/perseo.json&query=$.docSoundness&colorB=blue)
--   **Responsiveness:**
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Time%20to%20Respond&url=https://fiware.github.io/catalogue/json/perseo.json&query=$.timeToCharge&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Time%20to%20Fix&url=https://fiware.github.io/catalogue/json/perseo.json&query=$.timeToFix&colorB=blue)
--   **FIWARE Testing:**
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Tests%20Passed&url=https://fiware.github.io/catalogue/json/perseo.json&query=$.failureRate&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Scalability&url=https://fiware.github.io/catalogue/json/perseo.json&query=$.scalability&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Performance&url=https://fiware.github.io/catalogue/json/perseo.json&query=$.performance&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Stability&url=https://fiware.github.io/catalogue/json/perseo.json&query=$.stability&colorB=blue)
-
 ## More Information
 
 -   Refer to the
     [Esper Reference Documentation](http://esper.espertech.com/release-6.1.0/esper-reference/html/index.html) for info
     on how to use EPL as a rule language.
-
-| :dart: [Roadmap](documentation/roadmap.md) |
-| ------------------------------------------ |
-
 
 ## License
 

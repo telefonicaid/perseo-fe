@@ -1,5 +1,3 @@
-<a name="overview"></a>
-
 # Architecture
 
 -   [Components](#Components)
@@ -7,9 +5,9 @@
 -   [Data flow](#Dataflow)
 -   [Scenarios](#Scenarios)
 
-<a name="Components"></a>
-
 ## Components
+
+![Perseo Components](../images/PerseoComponents.png)
 
 ### perseo
 
@@ -73,8 +71,6 @@ host.
 The interaction with a Context Broker through a PEP proxy requires an access token that must be refreshed periodically.
 The "trust token" associated with a rule that executes an update-action must be exchanged by an "access token" at the
 Authorization Server, when the access token has expired.
-
-<a name="Concepts"></a>
 
 ## Concepts
 
@@ -262,8 +258,6 @@ between perseo and orion, like a ping-pong game. So, if perseo-core sends an act
 the same rule) has been executed with that correlator already, it declines executing it. It could be part of an infinite
 loop. The fact is logged and the action is ignored.
 
-<a name="Dataflow"></a>
-
 ## Data flow
 
 ### External data flow
@@ -293,8 +287,6 @@ action if it is necessary.
 Only the master FE will execute the action in fact, unless the slave had seen the master as unavailable.
 
 ![Imagen](../images/haaxn.png)
-
-<a name="Scenarios"></a>
 
 ## Scenarios
 
