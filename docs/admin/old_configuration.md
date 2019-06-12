@@ -1,5 +1,3 @@
-<a name="configuration"></a>
-
 ![Legacy](../images/legacy.png)
 
 ## Configuration

@@ -4,17 +4,33 @@ This document describes how to use Perseo CEP.
 
 ## Content
 
--   [Setting things up](#Setting things up)
--   [Perseo Rules](#Perseo Rules) - [Rules sintax](#Perseo Rules)
--   [Actions](#Actions)
--   [String substitution syntax](#String substitution syntax)
--   [Data types](#Data types)
--   [Examples](#Examples)
+-   [Introduction](#introduction)
+-   [Perseo Rules](#perseo-rules)
+-   [Actions](#actions)
+-   [String substitution syntax](#string-substitution-syntax)
+-   [Metadata and object values](#metadata-and-object-values)
+-   [Examples](#examples-of-epl-rules)
 
-## Setting things up
+## Introduction
+
+Perseo is an [Esper-based](http://www.espertech.com/esper/) Complex Event Processing (CEP) software designed to be fully
+_NGSIv2_-compliant. It uses NGSIv2 as the communication protocol for events, and thus, Perseo is able to seamless and
+jointly work with _context brokers_ such as [Orion Context Broker](https://github.com/telefonicaid/fiware-orion).
+
+Perseo follows a straightforward idea: listening to events coming from context information to identify patterns
+described by rules, in order to immediately react upon them by triggering actions.
+
+By leveraging on the
+[notifications mechanism](http://fiware-orion.readthedocs.io/en/latest/user/walkthrough_apiv2/index.html#subscriptions),
+clients instruct Orion CB to notify Perseo of the changes in the entities they care about (`Event API`). Details of this
+process are explained in the [Orion Subscription part of the User Manual](user/index.md#orion-subscription). Then, rules
+to the CORE Rule Engine can be easily managed using the publicly available WireCloud operational dashboard, or making
+use of any of the REST clients able to programmaticly use the Perseo's `Rule API`. These rules will identify patterns
+that will trigger actions with Orion to create or update entities, or with other different components or external
+systems, such as Web (HTTP), Email (SMTP) or SMS (SMPP) servers.
 
 Perseo allows you to create/edit/delete rules through its API. You can find more accurate information about the Perseo
-API [here](<(https://perseo.readthedocs.io/en/latest/api.html)>)
+API [here](https://perseo.readthedocs.io/en/latest/API/api/)
 
 ## Perseo Rules
 
@@ -120,8 +136,6 @@ following:
 -   Any other value is interpreted as the name of an attribute in the entity which triggers the rule, and the
     placeholder is substituted by the value of that attribute.
 
-This also implies for
-
 All alias for simple event attributes or "complex" calculated values can be directly used in the placeholder with their
 name. And any of the original event attributes (with the special cases for `id` and `type` meaning entity ID and type,
 respectively) can be referred too.
@@ -134,8 +148,13 @@ This substitution can be used in the following fields:
 -   `template` for `twitter` action
 -   `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
 
-You will find more information about substitution syntax
-[here](https://perseo.readthedocs.io/en/latest/API/plain_rules/#string-substitution-syntax).
+You will find more information about substitution syntax in each action information:
+
+-   [update action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#update-attribute-action)
+-   [sms action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#sms-action)
+-   [email action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#email-action)
+-   [post action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#http-request-action)
+-   [twitter action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#twitter-action)
 
 ## Metadata and object values
 
@@ -156,6 +175,7 @@ You will find more information about metadata and object values
 
 ## Examples of EPL rules
 
+-   [Basic Perseo Rules](https://github.com/telefonicaid/perseo-fe/tree/master/examples)
 -   [Rules withPatterns](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_patterns.html)
 -   [Rules with Match-Recognize](http://esper.espertech.com/release-6.1.0/esper-reference/html/match-recognize.html)
 -   Timed Rules:

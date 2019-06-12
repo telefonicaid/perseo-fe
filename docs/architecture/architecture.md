@@ -7,6 +7,8 @@
 
 ## Components
 
+![Perseo Components](../images/PerseoComponents.png)
+
 ### perseo
 
 The CEP "front-end", it is in charge of processing incoming events and rules, storing rules and executing actions.

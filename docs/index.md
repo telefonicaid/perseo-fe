@@ -1,10 +1,10 @@
 # Perseo Context-Aware CEP
 
-Perseo is an [Esper](http://www.espertech.com/esper/)-based Complex Event Processing (CEP) software designed to be fully
+Perseo is an [Esper-based](http://www.espertech.com/esper/) Complex Event Processing (CEP) software designed to be fully
 _NGSIv2_-compliant. It uses NGSIv2 as the communication protocol for events, and thus, Perseo is able to seamless and
 jointly work with _context brokers_ such as [Orion Context Broker](https://github.com/telefonicaid/fiware-orion).
 
-![Perseo Components](docs/images/PerseoComponents.png)
+![Perseo Components](images/PerseoComponents.png)
 
 Perseo follows a straightforward idea: listening to events coming from context information to identify patterns
 described by rules, in order to immediately react upon them by triggering actions.
