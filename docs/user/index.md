@@ -6,7 +6,6 @@ This document describes how to use Perseo...
 
 -   [Setting things up](#Setting things up)
 -   [Perseo Rules](#Perseo Rules) - [Rules sintax](#Perseo Rules) - [Actions](#Actions)
--
 
 ## Setting things up
 
@@ -52,7 +51,7 @@ consideration the following guidelines:
 
 Following there is an example of a valid EPL clause ready to be used with Perseo:
 
-```
+```text
 select *, ev.BloodPressure? as Pressure, ev.id? as Meter
 from pattern
      [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type="BloodMeter")]
@@ -316,7 +315,7 @@ suffixes beginning with double underscore and the hierarchy can be walked down b
 
 For example: The metadata in an event/notice like
 
-```
+```json
 {
   "subscriptionId" : "51c04a21d714fb3b37d7d5a7",
   "originator" : "localhost",

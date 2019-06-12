@@ -28,7 +28,6 @@ pages:
 - 'Roadmap': 'roadmap.md'
 
 markdown_extensions:
-#    - markdown_github.headerid
     - markdown.extensions.tables
     - pymdownx.betterem
     - pymdownx.tilde:
@@ -37,7 +36,7 @@ markdown_extensions:
         repo_url_shortener: True
         repo_url_shorthand: True
         provider: "github"
-        user: "Ficodes"
+        user: "telefonicaid"
         repo: "perseo-fe"
     - pymdownx.tasklist
     - toc:
