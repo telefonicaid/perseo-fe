@@ -98,8 +98,10 @@ function loadConfiguration() {
             process.env.PERSEO_MONGO_ENDPOINT + '/orion' + (
             process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '');
     }
-    if (process.env.PERSEO_IS_MASTER) {
-        config.isMaster = process.env.PERSEO_IS_MASTER;
+    if (process.env.PERSEO_IS_MASTER === 'true') {
+        config.isMaster = true;
+    } else if (process.env.PERSEO_IS_MASTER === 'false') {
+        config.isMaster = false;
     }
     if (process.env.PERSEO_SLAVE_DELAY) {
         config.slaveDelay = process.env.PERSEO_SLAVE_DELAY;
