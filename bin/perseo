@@ -49,6 +49,8 @@ function loadConfiguration() {
         'PERSEO_MONGO_REPLICASET',
         'PERSEO_MONGO_USER',
         'PERSEO_MONGO_PASSWORD',
+        'PERSEO_IS_MASTER',
+        'PERSEO_SLAVE_DELAY',
         'PERSEO_CORE_URL',
         'PERSEO_NEXT_URL',
         'PERSEO_ORION_URL',
@@ -95,6 +97,12 @@ function loadConfiguration() {
             process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD ? process.env.PERSEO_MONGO_USER + ':' + process.env.PERSEO_MONGO_PASSWORD + '@' : '') +
             process.env.PERSEO_MONGO_ENDPOINT + '/orion' + (
             process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '');
+    }
+    if (process.env.PERSEO_IS_MASTER) {
+        config.isMaster = process.env.PERSEO_IS_MASTER;
+    }
+    if (process.env.PERSEO_SLAVE_DELAY) {
+        config.slaveDelay = process.env.PERSEO_SLAVE_DELAY;
     }
     if (process.env.PERSEO_CORE_URL) {
         config.perseoCore.rulesURL = process.env.PERSEO_CORE_URL + '/perseo-core/rules';
