@@ -20,6 +20,8 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_MONGO_REPLICASET            | ReplicaSet name for Mongo DB.                                                              |
 | PERSEO_MONGO_USER                  | User for Mongo DB.                                                                         |
 | PERSEO_MONGO_PASSWORD              | Password for Mongo DB.                                                                     |
+| PERSEO_IS_MASTER                   | true if this one is the master or false it is the slave                                    |
+| PERSEO_SLAVE_DELAY                 | Slave's delay to try to execute an action (milliseconds).                                  |
 | PERSEO_CORE_URL                    | Full URL where Perseo Core is listening (e.g: `http://63.34.124.1:8080`).                  |
 | PERSEO_NEXT_URL                    | Full URL where Perseo Core replicated node is listening. Same format as above.             |
 | PERSEO_ORION_URL                   | Full URL of the Orion Context Broker (e.g: `http://64.124.28.15:1026`).                    |
