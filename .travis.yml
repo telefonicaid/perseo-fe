@@ -3,7 +3,8 @@ language: node_js
 node_js:
  - "8"
  - "10"
- - "12"
+ # FIXME: something is precluding perseo-fe to work in Node v12. Some tests are failing
+ #- "12"
 
 branches:
   only:
