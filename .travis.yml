@@ -3,6 +3,7 @@ language: node_js
 node_js:
  - "8"
  - "10"
+ - "12"
 
 branches:
   only:
@@ -14,7 +15,7 @@ services:
 addons:
   apt:
     sources:
-    - mongodb-3.2-precise
+    - mongodb-3.6-precise
     packages:
     - mongodb-org-server
 
