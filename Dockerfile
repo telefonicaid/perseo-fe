@@ -16,9 +16,9 @@
 # For those usages not covered by the GNU Affero General Public License please contact with iot_support at tid dot es
 #
 
-FROM node:8.16.0-slim
+FROM node:8.16.1-slim
 
-MAINTAINER FIWARE Perseo Team. TelefÃ³nica I+D
+MAINTAINER FIWARE Perseo Team. Telefónica I+D
 
 COPY . /opt/perseo-fe/
 WORKDIR /opt/perseo-fe
