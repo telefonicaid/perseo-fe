@@ -2,4 +2,4 @@
 - Add new logs about rule provision, deleting, etc (#346)
 - Add config env vars for isMaster and slaveDelay
 - Upgrade NodeJS version from 8.16.0 to 8.16.1 in Dockerfile due to security issues
-
+- Upgrade ngsijs version from 1.2.0 to 1.2.1
