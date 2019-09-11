@@ -1,3 +1,4 @@
+- Add count to response to get all rules (cep + vr)
 - Add update entity using NGSIv2 with a trust token
 - Add new logs about rule provision, deleting, etc (#346)
 - Add config env vars for isMaster and slaveDelay
