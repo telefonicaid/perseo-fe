@@ -11,7 +11,7 @@ The “anatomy” of a rule is as follows
     "name": "blood_rule_update",
     "text": "select *, *, ev.BloodPressure? as Pressure, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
     "action": {
-        "type": "update",        
+        "type": "update",
         "parameters": {
             "attributes": [
                 {
