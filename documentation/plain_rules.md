@@ -13,9 +13,13 @@ The “anatomy” of a rule is as follows
     "action": {
         "type": "update",
         "parameters": {
-            "name": "abnormal",
-            "value": "true",
-            "type": "boolean"
+            "attributes": [
+                {
+                    "name": "abnormal",
+                    "value": "true",
+                    "type": "boolean"
+                }
+            ]
         }
     }
 }
