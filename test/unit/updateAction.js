@@ -171,8 +171,6 @@ var action1 = {
         ]
     }
 };
-var action2 = action1;
-action2.parameters.filter = { type: 'AmbientLightSensor' };
 var event1 = {
     ruleName: 'switch_on',
     id: 'AmbientLightSensor:1',
@@ -201,7 +199,6 @@ var event1 = {
         subsrv: '/'
     }
 };
-var event2 = event1;
 var expectedChanges = {
     address: {
         value: 'Vasagatan 1, Stockholm',
@@ -300,6 +297,13 @@ var expectedChanges = {
         value: '2019-01-30T10:13:49.832Z',
         type: 'DateTime'
     }
+};
+
+var queryOptions = { type: 'AmbientLightSensor' };
+
+var expectedChanges2 = {
+    actionType: 'APPEND',
+    entities: []
 };
 
 describe('doIt', function() {
@@ -426,21 +430,33 @@ describe('doIt', function() {
 
         it('should accept NGSIv2 entities with filter', function(done) {
             // Mocks
-            var createEntityThen = sinon.spy(function(successCB, errorCB) {
+            var listEntitiesThen = sinon.spy(function(successCB, errorCB) {
                 setTimeout(function() {
                     successCB({ httpCode: '200', message: 'all right' }); // success callback
                 }, 0);
                 return '__TEST';
             });
-            var createEntityMock = sinon.spy(function(changes, options) {
-                return { then: createEntityThen };
+            var batchUpdateThen = sinon.spy(function(successCB, errorCB) {
+                setTimeout(function() {
+                    successCB({ httpCode: '200', message: 'all right' }); // success callback
+                }, 0);
+                return '__TEST';
+            });
+            var listEntitiesMock = sinon.spy(function(changes, options) {
+                return { then: listEntitiesThen };
+            });
+            var batchUpdateMock = sinon.spy(function(changes, options) {
+                return { then: batchUpdateThen };
             });
             var NGSICloseMock = sinon.spy(function() {
                 return 'closed';
             });
             var NGSIConnectionMock = sinon.spy(function() {
                 return {
-                    v2: { createEntity: createEntityMock },
+                    v2: {
+                        listEntities: listEntitiesMock,
+                        batchUpdate: batchUpdateMock
+                    },
                     close: NGSICloseMock
                 };
             });
@@ -452,15 +468,15 @@ describe('doIt', function() {
                     should.exist(request);
                     should.not.exist(e);
                     should.equal(request.httpCode, 200);
-                    expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test2';
-                    expectedChanges.type = 'NGSIv2TypesTest2';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
+                    queryOptions.type = 'NGSIv2TypesTest2';
+                    listEntitiesMock.should.be.calledOnceWith(queryOptions);
+                    batchUpdateMock.should.be.calledOnceWith(expectedChanges2, { upsert: true });
                     done();
                 };
-                action2.parameters.id = '${id}_NGSIv2Test2';
-                action2.parameters.type = 'NGSIv2TypesTest2';
-                action2.parameters.filter = { type: 'NGSIv2TypesTest2' };
-                updateAction.doIt(action2, event2, callback);
+                action1.parameters.id = '${id}_NGSIv2Test2';
+                action1.parameters.type = 'NGSIv2TypesTest2';
+                action1.parameters.filter = { type: 'NGSIv2TypesTest2' };
+                updateAction.doIt(action1, event1, callback);
             });
         });
     });
