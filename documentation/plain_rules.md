@@ -68,8 +68,9 @@ a future version. Use it by now. All the attributes in the notification from Ori
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
 
-Please, be carefull with using non-ascii characters in the EPL syntax. It will provoke an error. You can find information on
-how to scape characters at [Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
+Please, be carefull with using non-ascii characters in the EPL syntax. It will provoke an error. You can find
+information on how to scape characters at
+[Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
 
 <a name="actions"></a>
 
@@ -193,6 +194,7 @@ The `parameters` map includes the following fields:
 -   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
+-   filter: a NGSI filter.
 
 NGSIv1 example:
 
