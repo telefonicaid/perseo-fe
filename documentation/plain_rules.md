@@ -176,8 +176,8 @@ The `template`, `from`, `to` and `subject` fields perform [string substitution](
 
 ### update attribute action
 
-Updates one or more attributes of a given entity (in the Context Broker instance specified in the Perseo configuration).
-The `parameters` map includes the following fields:
+Updates one or more attributes of a given entity or as a result of filter (in the Context Broker instance specified in
+the Perseo configuration). The `parameters` map includes the following fields:
 
 -   id: optional, the ID of the entity which attribute is to be updated (by default the ID of the entity that triggers
     the rule is used, i.e. `${id}`)
@@ -194,7 +194,7 @@ The `parameters` map includes the following fields:
 -   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
--   filter: a NGSI filter.
+-   filter: optional, a NGSI filter. If provided then updateAction is done over result of query.
 
 NGSIv1 example:
 
