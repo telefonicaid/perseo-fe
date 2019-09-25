@@ -72,8 +72,9 @@ a future version. Use it by now. All the attributes in the notification from Ori
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
 
-Please, be carefull with using non-ascii characters in the EPL syntax. It will provoke an error. You can find information on
-how to scape characters at [Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
+Please, be carefull with using non-ascii characters in the EPL syntax. It will provoke an error. You can find
+information on how to scape characters at
+[Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
 
 <a name="actions"></a>
 
@@ -179,15 +180,15 @@ The `template`, `from`, `to` and `subject` fields perform [string substitution](
 
 ### update attribute action
 
-Updates one or more attributes of a given entity (in the Context Broker instance specified in the Perseo configuration).
-The `parameters` map includes the following fields:
+Updates one or more attributes of a given entity or as a result of filter (in the Context Broker instance specified in
+the Perseo configuration). The `parameters` map includes the following fields:
 
 -   id: optional, the ID of the entity which attribute is to be updated (by default the ID of the entity that triggers
     the rule is used, i.e. `${id}`)
 -   type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that
     triggers the rule is usedi.e. `${type}`)
 -   version: optional, The NGSI version for the update action. Set this attribute to `2` or `"2"` if you want to use
-    NGSv2 format. `1` by default
+    NGSv2 format. `1` by default. However, if `filter` is used, this field is ignored and NGSIv2 is used.
 -   isPattern: optional, `false` by default. (Only for NGSIv1. If `version` is set to 2, this attribute will be ignored)
 -   attributes: _mandatory_, array of target attributes to update. Each element of the array must contain the fields
     -   **name**: _mandatory_, attribute name to set
@@ -197,6 +198,7 @@ The `parameters` map includes the following fields:
 -   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
+-   filter: optional, a NGSI filter. If provided then updateAction is done over result of query.
 
 NGSIv1 example:
 
@@ -454,6 +456,33 @@ This attribute will take `null` as value.
 
 Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
 
+**Complete example using NGSv2 update action with filter in a rule:**
+
+```json
+{
+    "name": "blood_rule_update",
+    "text": "select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pressure from pattern [every ev=iotEvent(BloodPressure? > 1.5 and type=\"BloodMeter\")]",
+    "action": {
+        "type": "update",
+        "filter": {
+            "type": "SensorMetter",
+            "q": "status:on"
+        },
+        "parameters": {
+            "id": "${id}_example",
+            "version": 2,
+            "attributes": [
+                {
+                    "name": "pressure",
+                    "type": "Number",
+                    "value": "${Pressure}"
+                }
+            ]
+        }
+    }
+}
+```
+
 ### HTTP request action
 
 Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. The
@@ -632,8 +661,8 @@ respectively.
 
 The formats are
 
--   [NGSV1 deprecated format](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Publish/Subscribe_Broker_-_Orion_Context_Broker_-_User_and_Programmers_Guide_R3#Defining_location_attribute)
--   [NGSIV1 current format](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/user/geolocation.md#defining-location-attribute)
+-   [NGSIv1 deprecated format](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Publish/Subscribe_Broker_-_Orion_Context_Broker_-_User_and_Programmers_Guide_R3#Defining_location_attribute)
+-   [NGSIv2 current format](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/user/geolocation.md#defining-location-attribute)
 
 So, a notification in the deprecated format like
 
