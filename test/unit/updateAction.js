@@ -172,7 +172,7 @@ var action1 = {
     }
 };
 var action2 = action1;
-action2['filter'] = { type: 'AmbientLightSensor' };
+action2.filter = { type: 'AmbientLightSensor' };
 var event1 = {
     ruleName: 'switch_on',
     id: 'AmbientLightSensor:1',
