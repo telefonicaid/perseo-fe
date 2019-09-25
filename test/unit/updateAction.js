@@ -452,13 +452,14 @@ describe('doIt', function() {
                     should.exist(request);
                     should.not.exist(e);
                     should.equal(request.httpCode, 200);
-                    expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
-                    expectedChanges.type = 'NGSIv2TypesTest';
+                    expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test2';
+                    expectedChanges.type = 'NGSIv2TypesTest2';
                     createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
                     done();
                 };
-                action2.parameters.id = '${id}_NGSIv2Test';
-                action2.parameters.type = 'NGSIv2TypesTest';
+                action2.parameters.id = '${id}_NGSIv2Test2';
+                action2.parameters.type = 'NGSIv2TypesTest2';
+                action2.parameters.filter = { type: 'NGSIv2TypesTest2' };
                 updateAction.doIt(action2, event2, callback);
             });
         });
