@@ -251,8 +251,6 @@ NGSIv2 example:
     }
 ```
 
-**Note:** NGSIv2 update actions ignore the trust token for now.
-
 When using NGSIv2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
 `value` is a String, Perseo will parse the value taking into account the `type` field, this only applies to _`Number`_,
 _`Boolean`_ and _`None`_ types.
@@ -453,6 +451,32 @@ This attribute will take `null` as value.
 ```
 
 Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
+
+**Complete example using NGSv2 update action with filter in a rule:**
+
+```json
+{
+    "name": "blood_rule_update",
+    "text": "select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pressure from pattern [every ev=iotEvent(BloodPressure? > 1.5 and type=\"BloodMeter\")]",
+    "action": {
+        "type": "update",
+        "filter": {
+            "type": "SensorMetter"
+        },
+        "parameters": {
+            "id": "${id}_example",
+            "version": 2,
+            "attributes": [
+                {
+                    "name": "pressure",
+                    "type": "Number",
+                    "value": "${Pressure}"
+                }
+            ]
+        }
+    }
+}
+```
 
 ### HTTP request action
 
