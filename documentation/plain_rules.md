@@ -195,6 +195,8 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
 -   filter: optional, a NGSI filter. If provided then updateAction is done over result of query.
+-   version: optional, The NGSI version for the update action. Set this attribute to `2` or `"2"` if you want to use
+    NGSv2 format. `1` by default. However, if `filter` is used, this field is ignored and NGSIv2 is used.
 
 NGSIv1 example:
 
@@ -461,7 +463,8 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
     "action": {
         "type": "update",
         "filter": {
-            "type": "SensorMetter"
+            "type": "SensorMetter",
+            "q": "status:on"
         },
         "parameters": {
             "id": "${id}_example",

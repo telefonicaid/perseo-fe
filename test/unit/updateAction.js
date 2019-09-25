@@ -302,7 +302,7 @@ var expectedChanges = {
 var queryOptions = { type: 'AmbientLightSensor' };
 
 var expectedChanges2 = {
-    actionType: 'APPEND',
+    actionType: 'append',
     entities: []
 };
 
