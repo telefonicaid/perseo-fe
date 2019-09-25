@@ -171,6 +171,8 @@ var action1 = {
         ]
     }
 };
+var action2 = action1;
+action2['filter'] = { type: 'AmbientLightSensor' };
 var event1 = {
     ruleName: 'switch_on',
     id: 'AmbientLightSensor:1',
@@ -199,7 +201,7 @@ var event1 = {
         subsrv: '/'
     }
 };
-
+var event2 = event1;
 var expectedChanges = {
     address: {
         value: 'Vasagatan 1, Stockholm',
@@ -419,6 +421,45 @@ describe('doIt', function() {
                 action1.parameters.id = '${id}_NGSIv2Test';
                 action1.parameters.type = 'NGSIv2TypesTest';
                 updateAction.doIt(action1, event1, callback);
+            });
+        });
+
+        it('should accept NGSIv2 entities with filter', function(done) {
+            // Mocks
+            var createEntityThen = sinon.spy(function(successCB, errorCB) {
+                setTimeout(function() {
+                    successCB({ httpCode: '200', message: 'all right' }); // success callback
+                }, 0);
+                return '__TEST';
+            });
+            var createEntityMock = sinon.spy(function(changes, options) {
+                return { then: createEntityThen };
+            });
+            var NGSICloseMock = sinon.spy(function() {
+                return 'closed';
+            });
+            var NGSIConnectionMock = sinon.spy(function() {
+                return {
+                    v2: { createEntity: createEntityMock },
+                    close: NGSICloseMock
+                };
+            });
+
+            updateAction.__with__({
+                'NGSI.Connection': NGSIConnectionMock
+            })(function() {
+                var callback = function(e, request) {
+                    should.exist(request);
+                    should.not.exist(e);
+                    should.equal(request.httpCode, 200);
+                    expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
+                    expectedChanges.type = 'NGSIv2TypesTest';
+                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
+                    done();
+                };
+                action2.parameters.id = '${id}_NGSIv2Test';
+                action2.parameters.type = 'NGSIv2TypesTest';
+                updateAction.doIt(action2, event2, callback);
             });
         });
     });
