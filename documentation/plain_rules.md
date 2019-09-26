@@ -661,8 +661,8 @@ respectively.
 
 The formats are
 
--   [NGSIv1 deprecated format](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Publish/Subscribe_Broker_-_Orion_Context_Broker_-_User_and_Programmers_Guide_R3#Defining_location_attribute)
--   [NGSIv2 current format](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/user/geolocation.md#defining-location-attribute)
+-   [NGSIv1 deprecated format](https://fiware-orion.readthedocs.io/en/1.15.1/user/geolocation/index.html#defining-location-attribute)
+-   [NGSIv2 current format](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties of entities"
 
 So, a notification in the deprecated format like
 
@@ -787,7 +787,10 @@ that will send an email when the entity with attribute `position` is less than 5
 circle equation, `(x - a)^2 + (y - b)^2 = d^2`, being `(a, b)` 618618.8286057833 and 9764160.736945232 the UTMC
 coordinates of Cuenca and `d` the distance of 5 000 m.
 
-Note: for long distances the precision of the computations and the distortion of the projection can introduce some
+Notes:
+
+* NGSIv2 allows several geo location formats (geo:point, geo:line, geo:box, geo:polygon and geo:json). At the present moment, Perseo only supports geo:point.
+* For long distances the precision of the computations and the distortion of the projection can introduce some
 degree of inaccuracy.
 
 ## Time fields
