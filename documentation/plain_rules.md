@@ -198,7 +198,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
--   filter: optional, a NGSI filter. If provided then updateAction is done over result of query.
+-   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. Needs also `version: 2` option
 
 NGSIv1 example:
 
