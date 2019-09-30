@@ -1,3 +1,4 @@
+- Add try expandVars for number and boolean (#362)
 - Add NGSI filter to updateAction (#335)
 - Add count to response to get all rules (cep + vr)
 - Add update entity using NGSIv2 with a trust token (#317)
