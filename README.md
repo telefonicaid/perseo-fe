@@ -26,6 +26,7 @@ CEP implementation for IoT platform
 -   [Data model](documentation/models.md)
 -   [Available actions for PEP](documentation/pep_actions.md)
 -   [Documentation for developers of perseo](documentation/development.md)
+-   [Development documentation (Third Iteration)](documentation/eslint.md)
 
 | :dart: [Roadmap](documentation/roadmap.md) |
 | ------------------------------------------ |
