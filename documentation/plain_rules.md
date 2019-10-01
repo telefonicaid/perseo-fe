@@ -1021,7 +1021,7 @@ will send to core the "event"
     "subservice": "/",
     "service": "unknownt",
     "myJsonValue__color": "blue",
-    "myArrayValue__0": "green"
+    "myArrayValue__0": "green",
     "myArrayValue__1": "black"
 }
 ```
