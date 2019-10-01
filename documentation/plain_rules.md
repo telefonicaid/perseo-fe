@@ -1,5 +1,21 @@
 # Plain rules
 
+- [Introduction](#introduction)
+- [EPL text](#epl-text)
+- [Actions](#actions)
+    - [String substitution syntax](#string-substitution-syntax)
+    - [SMS action](#sms-action)
+    - [email action](#email-action)
+    - [update attribute action](#update-attribute-action)
+    - [HTTP request action](#http-request-action)
+    - [twitter action](#twitter-action)
+- [Metadata and object values](#metadata-and-object-values)
+- [Location fields](#location-fields)
+- [Time fields](#time-fields)
+- [JSON and Array fields](#json-and-array-fields)
+
+## Introduction
+
 Plain rules allow a full customization of a rule with specific needs by means of setting the final EPL statement used by
 the Esper engine inside perseo-core. In order to work with perseo (front-end) properly, the EPL statement must fulfill
 several conventions for the rule to be able to operate on the incoming events and trigger adequate actions.
@@ -967,5 +983,49 @@ A rule that will check if the employee has been hired in the last half hour, cou
             "subject": "Welcome ${id}!"
         }
     }
+}
+```
+
+## JSON and Array fields
+
+Some attributes like JSON and Array based, will generate a pseudo-attribute with the
+same name as the attribute and a suffix "\_\_" followed by element name (for the case of JSON) or the ordinal (for the case of arrays), with the parsed value. This value makes easier to write the EPL text which involves time comparisons. 
+
+So, an incoming notification like this:
+
+```json
+{
+    "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+    "data": [
+        {
+            "id": "John Doe",
+            "type": "employee",
+            "myJsonValue": {
+                "type": "myType1",
+                "value": { "color": "blue" }
+            },
+            "myArrayValue": {
+                "type": "myType2",
+                "value": [ "green", "blue" ]
+            }                       
+        }
+    ]
+}
+```
+
+will send to core the "event"
+
+```json
+{
+    "noticeId": "799635b0-914f-11e6-836b-bf1691c99768",
+    "noticeTS": 1476368120971,
+    "id": "John Doe",
+    "type": "employee",
+    "isPattern": "false",
+    "subservice": "/",
+    "service": "unknownt",
+    "myJsonValue__color": "blue",
+    "myArrayValue__0": "green",
+    "myArrayValue__1": "black"
 }
 ```
