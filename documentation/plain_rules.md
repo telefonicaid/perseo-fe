@@ -995,7 +995,7 @@ So, an incoming notification like
                     {
                         "name": "myArrayValue",
                         "type": "myType2",
-                        "value": [ "green": "blue" ]
+                        "value": [ "green", "blue" ]
                     }
                 ],
                 "type": "employee",
