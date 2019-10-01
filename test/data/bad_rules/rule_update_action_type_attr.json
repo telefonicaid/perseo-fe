@@ -5,6 +5,7 @@
         "type": "update",
         "template": "Meter ${Meter} has pression ${Pression}: ${ev__complejo__saludo} (GEN RULE)",
         "parameters": {
+            "version": "1",
             "name": "type",
             "value": "TYPE_VALUE"
         }
