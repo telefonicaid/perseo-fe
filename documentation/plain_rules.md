@@ -970,8 +970,6 @@ A rule that will check if the employee has been hired in the last half hour, cou
 }
 ```
 
-
-
 ## Json and Array fields
 
 Some attributes like JSON and Array based, will generate a pseudo-attribute with the
