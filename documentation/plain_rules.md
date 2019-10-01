@@ -139,7 +139,7 @@ This substitution can be used in the following fields:
 -   `template` for `twitter` action
 -   `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
 
-Value of `update` action and text of `post` action are expanded to numerical or boolean values instead of string values when is possible.
+Attribute value of `update` action and template of `post` action are expanded to numerical or boolean values instead of string values when is possible.
 
 ### SMS action
 
