@@ -267,14 +267,19 @@ NGSIv2 example:
                     "name":"abnormal",
                     "type":"Number",
                     "value": 7
-                }
+                },
+                {
+                   "name": "locationCopy",
+                   "type": "MyCustomTypo",
+                   "value": "{\"type\":\"Point\",\"coordinates\":[${Lat},${Lon}]}"
+              }
             ]
         }
     }
 ```
 
 When using NGSIv2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
-`value` is a String, Perseo will parse the value taking into account the `type` field, this only applies to _`Number`_,
+`value` is a String, Perseo will try parse the value to know real value and finally Perseo will parse the value taking into account the `type` field, this only applies to _`Number`_,
 _`Boolean`_ and _`None`_ types.
 
 **Data Types for NGSIv2:**
