@@ -1013,41 +1013,6 @@ So, an incoming notification like this:
 }
 ```
 
-
-which NGSIv1 equivalent is:
-
-```json
-{
-    "subscriptionId": "51c04a21d714fb3b37d7d5a7",
-    "originator": "localhost",
-    "contextResponses": [
-        {
-            "contextElement": {
-              "attributes": [
-                    {
-                        "name": "myJsonValue",
-                        "type": "myType1",
-                        "value": { "color": "blue" }
-                    },
-                    {
-                        "name": "myArrayValue",
-                        "type": "myType2",
-                        "value": [ "green", "blue" ]
-                    }
-                ],
-                "type": "employee",
-                "isPattern": "false",
-                "id": "John Doe"
-            },
-            "statusCode": {
-                "code": "200",
-                "reasonPhrase": "OK"
-            }
-        }
-    ]
-}
-```
-
 will send to core the "event"
 
 ```json
