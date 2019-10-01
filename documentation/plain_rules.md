@@ -139,6 +139,8 @@ This substitution can be used in the following fields:
 -   `template` for `twitter` action
 -   `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
 
+Value of `update` action and text of `post` action are expanded to numerical or boolean values instead of string values when is possible.
+
 ### SMS action
 
 Sends a SMS to a number set as an action parameter with the body of the message built from the template
