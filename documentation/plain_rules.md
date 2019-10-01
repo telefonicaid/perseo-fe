@@ -622,10 +622,10 @@ For example: The metadata in an event/notice like
             "metadatas": [{
               "crs": {
                 "value": {"system": "WGS84"}
-              }]
-            }
+              }
+            }]            
           },
-                {
+         {
             "name" : "TimeInstant",
             "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
             "value" : "2014-04-29T13:18:05Z"
