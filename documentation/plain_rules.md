@@ -969,3 +969,61 @@ A rule that will check if the employee has been hired in the last half hour, cou
     }
 }
 ```
+
+
+
+## Json and Array fields
+
+Some attributes like JSON and Array based, will generate a pseudo-attribute with the
+same name as the attribute and a suffix "\_\_" followed by element name (for the case of JSON) or the ordinal (for the case of arrays), with the parsed value. This value makes easier to write the EPL text which involves time comparisons. 
+
+So, an incoming notification like
+
+```json
+{
+    "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+    "originator": "localhost",
+    "contextResponses": [
+        {
+            "contextElement": {
+              "attributes": [
+                    {
+                        "name": "myJsonValue",
+                        "type": "myType1",
+                        "value": { "color": "blue" }
+                    },
+                    {
+                        "name": "myArrayValue",
+                        "type": "myType2",
+                        "value": [ "green": "blue" ]
+                    }
+                ],
+                "type": "employee",
+                "isPattern": "false",
+                "id": "John Doe"
+            },
+            "statusCode": {
+                "code": "200",
+                "reasonPhrase": "OK"
+            }
+        }
+    ]
+}
+```
+
+will send to core the "event"
+
+```json
+{
+    "noticeId": "799635b0-914f-11e6-836b-bf1691c99768",
+    "noticeTS": 1476368120971,
+    "id": "John Doe",
+    "type": "employee",
+    "isPattern": "false",
+    "subservice": "/",
+    "service": "unknownt",
+    "myJsonValue__color": "blue",
+    "myArrayValue__0": "green"
+    "myArrayValue__1": "black"
+}
+```
