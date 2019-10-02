@@ -1,18 +1,18 @@
 # Plain rules
 
-- [Introduction](#introduction)
-- [EPL text](#epl-text)
-- [Actions](#actions)
-    - [String substitution syntax](#string-substitution-syntax)
-    - [SMS action](#sms-action)
-    - [email action](#email-action)
-    - [update attribute action](#update-attribute-action)
-    - [HTTP request action](#http-request-action)
-    - [twitter action](#twitter-action)
-- [Metadata and object values](#metadata-and-object-values)
-- [Location fields](#location-fields)
-- [Time fields](#time-fields)
-- [JSON and Array fields](#json-and-array-fields)
+-   [Introduction](#introduction)
+-   [EPL text](#epl-text)
+-   [Actions](#actions)
+    -   [String substitution syntax](#string-substitution-syntax)
+    -   [SMS action](#sms-action)
+    -   [email action](#email-action)
+    -   [update attribute action](#update-attribute-action)
+    -   [HTTP request action](#http-request-action)
+    -   [twitter action](#twitter-action)
+-   [Metadata and object values](#metadata-and-object-values)
+-   [Location fields](#location-fields)
+-   [Time fields](#time-fields)
+-   [JSON and Array fields](#json-and-array-fields)
 
 ## Introduction
 
@@ -155,7 +155,8 @@ This substitution can be used in the following fields:
 -   `template` for `twitter` action
 -   `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
 
-Attribute value of `update` action and template of `post` action are expanded to numerical, boolean or JSON stringyfied values instead of string values when is possible.
+Attribute value of `update` action and template of `post` action are expanded to numerical, boolean or JSON stringyfied
+values instead of string values when is possible.
 
 ### SMS action
 
@@ -206,7 +207,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that
     triggers the rule is usedi.e. `${type}`)
 -   version: optional, The NGSI version for the update action. Set this attribute to `2` or `"2"` if you want to use
-    NGSv2 format. `1` by default.
+    NGSv2 format. `2` by default.
 -   isPattern: optional, `false` by default. (Only for NGSIv1. If `version` is set to 2, this attribute will be ignored)
 -   attributes: _mandatory_, array of target attributes to update. Each element of the array must contain the fields
     -   **name**: _mandatory_, attribute name to set
@@ -216,7 +217,8 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
--   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. Needs also `version: 2` option (if `version` is `1` the filter is ignored).
+-   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. Needs also
+    `version: 2` option (if `version` is `1` the filter is ignored).
 
 NGSIv1 example:
 
@@ -622,10 +624,10 @@ For example: The metadata in an event/notice like
             "metadatas": [{
               "crs": {
                 "value": {"system": "WGS84"}
-              }]
-            }
+              }
+            }]            
           },
-                {
+         {
             "name" : "TimeInstant",
             "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
             "value" : "2014-04-29T13:18:05Z"
@@ -680,7 +682,8 @@ respectively.
 The formats are
 
 -   [NGSIv1 deprecated format](https://fiware-orion.readthedocs.io/en/1.15.1/user/geolocation/index.html#defining-location-attribute)
--   [NGSIv2 current format](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties of entities"
+-   [NGSIv2 current format](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties
+    of entities"
 
 So, a notification in the deprecated format like
 
@@ -807,9 +810,10 @@ coordinates of Cuenca and `d` the distance of 5 000 m.
 
 Notes:
 
-* NGSIv2 allows several geo location formats (geo:point, geo:line, geo:box, geo:polygon and geo:json). At the present moment, Perseo only supports geo:point.
-* For long distances the precision of the computations and the distortion of the projection can introduce some
-degree of inaccuracy.
+-   NGSIv2 allows several geo location formats (geo:point, geo:line, geo:box, geo:polygon and geo:json). At the present
+    moment, Perseo only supports geo:point.
+-   For long distances the precision of the computations and the distortion of the projection can introduce some degree
+    of inaccuracy.
 
 ## Time fields
 
@@ -990,8 +994,9 @@ A rule that will check if the employee has been hired in the last half hour, cou
 
 ## JSON and Array fields
 
-Some attributes like JSON and Array based, will generate a pseudo-attribute with the
-same name as the attribute and a suffix "\_\_" followed by element name (for the case of JSON) or the ordinal (for the case of arrays), with the parsed value. This value makes easier to write the EPL text which involves time comparisons. 
+Some attributes like JSON and Array based, will generate a pseudo-attribute with the same name as the attribute and a
+suffix "\_\_" followed by element name (for the case of JSON) or the ordinal (for the case of arrays), with the parsed
+value. This value makes easier to write the EPL text which involves time comparisons.
 
 So, an incoming notification like this:
 
@@ -1008,8 +1013,8 @@ So, an incoming notification like this:
             },
             "myArrayValue": {
                 "type": "myType2",
-                "value": [ "green", "blue" ]
-            }                       
+                "value": ["green", "blue"]
+            }
         }
     ]
 }
