@@ -1,3 +1,4 @@
+- Add missed correlatorid headers in updateAction with NGSIv2
 - Set default version to 2 (NGSIv2) for updateAction by default
 - Add try expandVars for numeric, boolean and json in attributes of updateAction and text of postAction (#362)
 - Add NGSI filter to updateAction (#335)
