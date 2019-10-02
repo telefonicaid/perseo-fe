@@ -159,7 +159,7 @@ Attribute value of `update` action and template of `post` action are expanded to
 values instead of string values when is possible. For example, if we have `{"a": "${x}"}`:
 
 * If the value of attribute `x` is `42` then it will expand do `{"a": 42}` and not to `{"a": "42"}`
-* If the value of attribute `x` is `{"hello": "world"}` then it will expand to `{"a": "{/"hello/":/"world/"}"}` (expand to native JSON, i.e. `{"a": {"hello": "world"}}`, is not supported)
+* If the value of attribute `x` is `{"hello": "world"}` then it will expand to `{"a": "{\"hello\":\"world\"}"}` (expand to native JSON, i.e. `{"a": {"hello": "world"}}`, is not supported)
 
 ### SMS action
 
