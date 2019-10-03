@@ -473,8 +473,8 @@ describe('doIt', function() {
                     batchUpdateMock.should.be.calledOnceWith(expectedChanges2, { upsert: true });
                     done();
                 };
-                action1.parameters.id = '${id}_NGSIv2Test2';
                 action1.parameters.type = 'NGSIv2TypesTest2';
+                action1.parameters.version = 2;
                 action1.parameters.filter = { type: 'NGSIv2TypesTest2' };
                 updateAction.doIt(action1, event1, callback);
             });
