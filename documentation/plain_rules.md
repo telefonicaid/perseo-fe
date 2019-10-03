@@ -492,7 +492,6 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
             "q": "status:on"
         },
         "parameters": {
-            "id": "${id}_example",
             "version": 2,
             "attributes": [
                 {
