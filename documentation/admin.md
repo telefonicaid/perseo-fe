@@ -117,28 +117,28 @@ The different configuration parameters introduced above are described also in th
 -   'subservice' is the subservice associated to the subscription
 
 ```bash
-(curl http://orion-machine:1026/v1/subscribeContext -s -S --header 'Content-Type: application/json' --header 'Accept: application/json' --header 'Fiware-Service: service' –header 'Fiware-ServicePath: subservice' -d @- | python -mjson.tool) <<EOF
+(curl http://orion-machine:1026/v2/subscriptions -s -S --header 'Content-Type: application/json' --header 'Fiware-Service: service' –header 'Fiware-ServicePath: subservice' -d @- | python -mjson.tool) <<EOF
 {
+  "description": "Subscription to feed the CEP",
+  "subject": {
     "entities": [
-        {
-            "type": "BloodMeter",
-            "isPattern": "true",
-            "id": ".*"
-        }
+      {
+        "idPattern": ".*",
+        "type": "BloodMeter"
+      }
     ],
-    "attributes": [
-    ],
-    "reference": "http://perseo-machine:9090/notices",
-    "duration": "P1Y",
-    "notifyConditions": [
-        {
-            "type": "ONCHANGE",
-            "condValues": [
-                "BloodPressure"
-            ]
-        }
-    ],
-    "throttling": "PT1S"
+    "condition": {
+      "attrs": [ ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://perseo-machine:9090/notices"
+    },
+    "attrs": [
+      "BloodPressure"
+    ]
+  }
 }
 EOF
 ```
