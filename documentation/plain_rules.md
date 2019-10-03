@@ -491,11 +491,11 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
     "text": "select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pressure from pattern [every ev=iotEvent(BloodPressure? > 1.5 and type=\"BloodMeter\")]",
     "action": {
         "type": "update",
-        "filter": {
-            "type": "SensorMetter",
-            "q": "status:on"
-        },
         "parameters": {
+            "filter": {
+                "type": "SensorMetter",
+                "q": "status:on"
+            },
             "version": 2,
             "attributes": [
                 {
