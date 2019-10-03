@@ -220,8 +220,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
--   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. Needs also
-    `version: 2` option (if `version` is `1` the filter is ignored).
+-   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored).
 
 NGSIv1 example:
 
@@ -497,7 +496,6 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
             "q": "status:on"
         },
         "parameters": {
-            "id": "${id}_example",
             "version": 2,
             "attributes": [
                 {
