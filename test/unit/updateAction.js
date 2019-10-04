@@ -340,7 +340,7 @@ describe('doIt', function() {
                     should.equal(request.httpCode, 200);
                     expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
                     expectedChanges.type = 'NGSIv2TypesTest';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges);
+                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: false });
                     done();
                 };
                 action1.parameters.id = '${id}_NGSIv2Test';
@@ -379,7 +379,7 @@ describe('doIt', function() {
                     should.equal(request.httpCode, 200);
                     expectedChanges.id = 'AmbientLightSensor:1';
                     expectedChanges.type = 'AmbientLightSensor';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
+                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: false });
                     done();
                 };
                 delete action1.parameters.id;
@@ -419,7 +419,7 @@ describe('doIt', function() {
                     e.should.be.instanceof(Error);
                     expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
                     expectedChanges.type = 'NGSIv2TypesTest';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
+                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: false });
                     done();
                 };
                 action1.parameters.id = '${id}_NGSIv2Test';
@@ -470,7 +470,7 @@ describe('doIt', function() {
                     should.equal(request.httpCode, 200);
                     queryOptions.type = 'NGSIv2TypesTest2';
                     listEntitiesMock.should.be.calledOnceWith(queryOptions);
-                    batchUpdateMock.should.be.calledOnceWith(expectedChanges2, { upsert: true });
+                    batchUpdateMock.should.be.calledOnceWith(expectedChanges2);
                     done();
                 };
                 action1.parameters.type = 'NGSIv2TypesTest2';
