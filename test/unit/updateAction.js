@@ -340,7 +340,7 @@ describe('doIt', function() {
                     should.equal(request.httpCode, 200);
                     expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
                     expectedChanges.type = 'NGSIv2TypesTest';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
+                    createEntityMock.should.be.calledOnceWith(expectedChanges);
                     done();
                 };
                 action1.parameters.id = '${id}_NGSIv2Test';
