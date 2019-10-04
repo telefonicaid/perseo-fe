@@ -158,8 +158,9 @@ This substitution can be used in the following fields:
 Attribute value of `update` action and template of `post` action are expanded to numerical, boolean or JSON stringyfied
 values instead of string values when is possible. For example, if we have `{"a": "${x}"}`:
 
-* If the value of attribute `x` is `42` then it will expand do `{"a": 42}` and not to `{"a": "42"}`
-* If the value of attribute `x` is `{"hello": "world"}` then it will expand to `{"a": "{\"hello\":\"world\"}"}` (expand to native JSON, i.e. `{"a": {"hello": "world"}}`, is not supported)
+-   If the value of attribute `x` is `42` then it will expand do `{"a": 42}` and not to `{"a": "42"}`
+-   If the value of attribute `x` is `{"hello": "world"}` then it will expand to `{"a": "{\"hello\":\"world\"}"}`
+    (expand to native JSON, i.e. `{"a": {"hello": "world"}}`, is not supported)
 
 ### SMS action
 
@@ -210,7 +211,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that
     triggers the rule is usedi.e. `${type}`)
 -   version: optional, The NGSI version for the update action. Set this attribute to `2` or `"2"` if you want to use
-    NGSv2 format. `2` by default.
+    NGSv2 format. `1` by default.
 -   isPattern: optional, `false` by default. (Only for NGSIv1. If `version` is set to 2, this attribute will be ignored)
 -   attributes: _mandatory_, array of target attributes to update. Each element of the array must contain the fields
     -   **name**: _mandatory_, attribute name to set
@@ -220,7 +221,9 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
--   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored).
+-   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the
+    `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
+    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored).
 
 NGSIv1 example:
 
@@ -283,8 +286,8 @@ NGSIv2 example:
 ```
 
 When using NGSIv2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
-`value` is a String, Perseo will try cast value to number, boolean or null (without paying attention to the attribute type). If the casting fails then String is used.
-_`Boolean`_ and _`None`_ types.
+`value` is a String, Perseo will try cast value to number, boolean or null (without paying attention to the attribute
+type). If the casting fails then String is used. _`Boolean`_ and _`None`_ types.
 
 **Data Types for NGSIv2:**
 
@@ -617,38 +620,40 @@ For example: The metadata in an event/notice like
 
 ```json
 {
-  "subscriptionId" : "51c04a21d714fb3b37d7d5a7",
-  "originator" : "localhost",
-  "contextResponses" : [
-    {
-      "contextElement" : {
-        "attributes" : [
-          {
-            "name" : "BloodPressure",
-            "type" : "centigrade",
-            "value" : "2",
-            "metadatas": [{
-              "crs": {
-                "value": {"system": "WGS84"}
-              }
-            }]            
-          },
-         {
-            "name" : "TimeInstant",
-            "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
-            "value" : "2014-04-29T13:18:05Z"
-          }
-        ],
-        "type" : "BloodMeter",
-        "isPattern" : "false",
-        "id" : "bloodm1"
-      },
-      "statusCode" : {
-        "code" : "200",
-        "reasonPhrase" : "OK"
-      }
-    }
-  ]
+    "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+    "originator": "localhost",
+    "contextResponses": [
+        {
+            "contextElement": {
+                "attributes": [
+                    {
+                        "name": "BloodPressure",
+                        "type": "centigrade",
+                        "value": "2",
+                        "metadatas": [
+                            {
+                                "crs": {
+                                    "value": { "system": "WGS84" }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "TimeInstant",
+                        "type": "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
+                        "value": "2014-04-29T13:18:05Z"
+                    }
+                ],
+                "type": "BloodMeter",
+                "isPattern": "false",
+                "id": "bloodm1"
+            },
+            "statusCode": {
+                "code": "200",
+                "reasonPhrase": "OK"
+            }
+        }
+    ]
 }
 ```
 
