@@ -50,7 +50,7 @@ var action1 = {
             {
                 name: 'textNumberLit',
                 type: 'Text',
-                value: 666
+                value: '666'
             },
             {
                 name: 'textBoolLit',
@@ -212,15 +212,16 @@ var expectedChanges = {
                 type: 'Text'
             },
             textBoolLit: {
-                value: 'false',
+                value: false,
                 type: 'Text'
             },
             textNumberLit: {
-                value: '666',
+                value: 666,
                 type: 'Text'
             },
             textObjLit: {
-                value: '[object Object]',
+                value: { a: 1, b: 2 },
+                //value: '[object Object]',
                 type: 'Text'
             },
             refNone: {
@@ -228,7 +229,7 @@ var expectedChanges = {
                 type: 'None'
             },
             refNone2: {
-                value: null,
+                value: 123,
                 type: 'None'
             },
             refNone3: {
@@ -253,7 +254,7 @@ var expectedChanges = {
                 type: 'Boolean'
             },
             isBool5: {
-                value: false,
+                value: 'other',
                 type: 'Boolean'
             },
             isBool6: {
@@ -293,11 +294,11 @@ var expectedChanges = {
                 type: 'DateTime'
             },
             lastchange2: {
-                value: '2019-01-30T10:11:00.657Z',
+                value: 1548843060657,
                 type: 'DateTime'
             },
             lastchange3: {
-                value: '2019-01-30T10:13:49.832Z',
+                value: 1548843229832,
                 type: 'DateTime'
             }
         }
