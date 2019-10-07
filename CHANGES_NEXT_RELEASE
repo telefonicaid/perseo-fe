@@ -1,4 +1,4 @@
-- Include stripped data into event (#377)
+- Include stripped (non flatten) data into event (#377)
 - Refactor updateAction doItWithToken to include version 1 and 2
 - Add missed correlatorid headers in updateAction with NGSIv2
 - Set default version to 2 (NGSIv2) for updateAction by default
