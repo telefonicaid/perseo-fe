@@ -340,7 +340,7 @@ describe('doIt', function() {
                     should.equal(request.httpCode, 200);
                     expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
                     expectedChanges.type = 'NGSIv2TypesTest';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: false });
+                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
                     done();
                 };
                 action1.parameters.id = '${id}_NGSIv2Test';
@@ -379,7 +379,7 @@ describe('doIt', function() {
                     should.equal(request.httpCode, 200);
                     expectedChanges.id = 'AmbientLightSensor:1';
                     expectedChanges.type = 'AmbientLightSensor';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: false });
+                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
                     done();
                 };
                 delete action1.parameters.id;
@@ -419,7 +419,7 @@ describe('doIt', function() {
                     e.should.be.instanceof(Error);
                     expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
                     expectedChanges.type = 'NGSIv2TypesTest';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: false });
+                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
                     done();
                 };
                 action1.parameters.id = '${id}_NGSIv2Test';
