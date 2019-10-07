@@ -55,7 +55,7 @@ var action1 = {
             {
                 name: 'textBoolLit',
                 type: 'Text',
-                value: false
+                value: 'false'
             },
             {
                 name: 'textObjLit',
@@ -106,7 +106,7 @@ var action1 = {
             {
                 name: 'isBool2',
                 type: 'Boolean',
-                value: 'TRUE'
+                value: 'true'
             },
             {
                 name: 'isBool3',
@@ -116,7 +116,7 @@ var action1 = {
             {
                 name: 'isBool4',
                 type: 'Boolean',
-                value: 'False'
+                value: 'false'
             },
             {
                 name: 'isBool5',
@@ -156,7 +156,7 @@ var action1 = {
             {
                 name: 'refNone',
                 type: '${refNoneType}',
-                value: 'futureNull'
+                value: null
             },
             {
                 name: 'refNone2',
@@ -182,7 +182,7 @@ var event1 = {
     addressLocality: 'Stockholm',
     laststatus: 'allright',
     powerState: 'on',
-    stringDate: '2018-12-05T11:31:39.00Z',
+    stringDate: '2018-12-05T11:31:39.000Z',
     stringDateMs: '1548843060657',
     numberDateMs: 1548843229832,
     subservice: '/',
