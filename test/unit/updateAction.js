@@ -221,7 +221,6 @@ var expectedChanges = {
             },
             textObjLit: {
                 value: { a: 1, b: 2 },
-                //value: '[object Object]',
                 type: 'Text'
             },
             refNone: {
