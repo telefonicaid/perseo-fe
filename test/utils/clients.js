@@ -77,7 +77,12 @@ function GetRule(ruleName, callback) {
     commonRequest('get', url, null, callback);
 }
 function GetAllRules(callback) {
-    var url = util.format('http://%s:%s%s', config.endpoint.host, config.endpoint.port, config.endpoint.rulesPath);
+    var url = util.format(
+        'http://%s:%s%s',
+        config.endpoint.host,
+        config.endpoint.port,
+        config.endpoint.rulesPath + '?limit=100&offset=0&options=count'
+    );
     commonRequest('get', url, null, callback);
 }
 
