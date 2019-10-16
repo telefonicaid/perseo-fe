@@ -200,103 +200,108 @@ var event1 = {
     }
 };
 var expectedChanges = {
-    address: {
-        value: 'Vasagatan 1, Stockholm',
-        type: 'Address'
-    },
-    status: {
-        value: 'allright',
-        type: 'Text'
-    },
-    textBoolLit: {
-        value: 'false',
-        type: 'Text'
-    },
-    textNumberLit: {
-        value: '666',
-        type: 'Text'
-    },
-    textObjLit: {
-        value: '[object Object]',
-        type: 'Text'
-    },
-    refNone: {
-        value: null,
-        type: 'None'
-    },
-    refNone2: {
-        value: null,
-        type: 'None'
-    },
-    refNone3: {
-        value: null,
-        type: 'None'
-    },
-    isBool1: {
-        value: true,
-        type: 'Boolean',
-        metadata: metaExample
-    },
-    isBool2: {
-        value: true,
-        type: 'Boolean'
-    },
-    isBool3: {
-        value: true,
-        type: 'Boolean'
-    },
-    isBool4: {
-        value: false,
-        type: 'Boolean'
-    },
-    isBool5: {
-        value: false,
-        type: 'Boolean'
-    },
-    isBool6: {
-        value: true,
-        type: 'Boolean'
-    },
-    isBool7: {
-        value: false,
-        type: 'Boolean'
-    },
-    powerState: {
-        value: 'on',
-        type: 'Text'
-    },
-    illuminanceLevel: {
-        value: 80,
-        type: 'Number'
-    },
-    illuminanceLevel2: {
-        value: 69,
-        type: 'Number'
-    },
-    illuminanceLevel3: {
-        value: 12.5,
-        type: 'Number'
-    },
-    streetLightID: {
-        value: 'AmbientLightSensor:1',
-        type: 'Text'
-    },
-    district: {
-        value: 'Stockholm center',
-        type: 'Text'
-    },
-    lastchange: {
-        value: '2018-12-05T11:31:39.000Z',
-        type: 'DateTime'
-    },
-    lastchange2: {
-        value: '2019-01-30T10:11:00.657Z',
-        type: 'DateTime'
-    },
-    lastchange3: {
-        value: '2019-01-30T10:13:49.832Z',
-        type: 'DateTime'
-    }
+    actionType: 'append',
+    entities: [
+        {
+            address: {
+                value: 'Vasagatan 1, Stockholm',
+                type: 'Address'
+            },
+            status: {
+                value: 'allright',
+                type: 'Text'
+            },
+            textBoolLit: {
+                value: 'false',
+                type: 'Text'
+            },
+            textNumberLit: {
+                value: '666',
+                type: 'Text'
+            },
+            textObjLit: {
+                value: '[object Object]',
+                type: 'Text'
+            },
+            refNone: {
+                value: null,
+                type: 'None'
+            },
+            refNone2: {
+                value: null,
+                type: 'None'
+            },
+            refNone3: {
+                value: null,
+                type: 'None'
+            },
+            isBool1: {
+                value: true,
+                type: 'Boolean',
+                metadata: metaExample
+            },
+            isBool2: {
+                value: true,
+                type: 'Boolean'
+            },
+            isBool3: {
+                value: true,
+                type: 'Boolean'
+            },
+            isBool4: {
+                value: false,
+                type: 'Boolean'
+            },
+            isBool5: {
+                value: false,
+                type: 'Boolean'
+            },
+            isBool6: {
+                value: true,
+                type: 'Boolean'
+            },
+            isBool7: {
+                value: false,
+                type: 'Boolean'
+            },
+            powerState: {
+                value: 'on',
+                type: 'Text'
+            },
+            illuminanceLevel: {
+                value: 80,
+                type: 'Number'
+            },
+            illuminanceLevel2: {
+                value: 69,
+                type: 'Number'
+            },
+            illuminanceLevel3: {
+                value: 12.5,
+                type: 'Number'
+            },
+            streetLightID: {
+                value: 'AmbientLightSensor:1',
+                type: 'Text'
+            },
+            district: {
+                value: 'Stockholm center',
+                type: 'Text'
+            },
+            lastchange: {
+                value: '2018-12-05T11:31:39.000Z',
+                type: 'DateTime'
+            },
+            lastchange2: {
+                value: '2019-01-30T10:11:00.657Z',
+                type: 'DateTime'
+            },
+            lastchange3: {
+                value: '2019-01-30T10:13:49.832Z',
+                type: 'DateTime'
+            }
+        }
+    ]
 };
 
 var queryOptions = { type: 'AmbientLightSensor' };
@@ -312,21 +317,21 @@ describe('doIt', function() {
 
         it('should accept NGSIv2 entities', function(done) {
             // Mocks
-            var createEntityThen = sinon.spy(function(successCB, errorCB) {
+            var batchUpdateThen = sinon.spy(function(successCB, errorCB) {
                 setTimeout(function() {
                     successCB({ httpCode: '200', message: 'all right' }); // success callback
                 }, 0);
                 return '__TEST';
             });
-            var createEntityMock = sinon.spy(function(changes, options) {
-                return { then: createEntityThen };
+            var batchUpdateMock = sinon.spy(function(changes, options) {
+                return { then: batchUpdateThen };
             });
             var NGSICloseMock = sinon.spy(function() {
                 return 'closed';
             });
             var NGSIConnectionMock = sinon.spy(function() {
                 return {
-                    v2: { createEntity: createEntityMock },
+                    v2: { batchUpdate: batchUpdateMock },
                     close: NGSICloseMock
                 };
             });
@@ -338,9 +343,9 @@ describe('doIt', function() {
                     should.exist(request);
                     should.not.exist(e);
                     should.equal(request.httpCode, 200);
-                    expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
-                    expectedChanges.type = 'NGSIv2TypesTest';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
+                    expectedChanges.entities[0].id = 'AmbientLightSensor:1_NGSIv2Test';
+                    expectedChanges.entities[0].type = 'NGSIv2TypesTest';
+                    batchUpdateMock.should.be.calledOnceWith(expectedChanges);
                     done();
                 };
                 action1.parameters.id = '${id}_NGSIv2Test';
@@ -351,21 +356,21 @@ describe('doIt', function() {
 
         it('should accept NGSIv2 entities without type and id', function(done) {
             // Mocks
-            var createEntityThen = sinon.spy(function(successCB, errorCB) {
+            var batchUpdateThen = sinon.spy(function(successCB, errorCB) {
                 setTimeout(function() {
                     successCB({ httpCode: '200', message: 'all right' }); // success callback
                 }, 0);
                 return '__TEST';
             });
-            var createEntityMock = sinon.spy(function(changes, options) {
-                return { then: createEntityThen };
+            var batchUpdateMock = sinon.spy(function(changes, options) {
+                return { then: batchUpdateThen };
             });
             var NGSICloseMock = sinon.spy(function() {
                 return 'closed';
             });
             var NGSIConnectionMock = sinon.spy(function() {
                 return {
-                    v2: { createEntity: createEntityMock },
+                    v2: { batchUpdate: batchUpdateMock },
                     close: NGSICloseMock
                 };
             });
@@ -377,9 +382,9 @@ describe('doIt', function() {
                     should.exist(request);
                     should.not.exist(e);
                     should.equal(request.httpCode, 200);
-                    expectedChanges.id = 'AmbientLightSensor:1';
-                    expectedChanges.type = 'AmbientLightSensor';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
+                    expectedChanges.entities[0].id = 'AmbientLightSensor:1';
+                    expectedChanges.entities[0].type = 'AmbientLightSensor';
+                    batchUpdateMock.should.be.calledOnceWith(expectedChanges);
                     done();
                 };
                 delete action1.parameters.id;
@@ -391,21 +396,21 @@ describe('doIt', function() {
         it('should control failed update actions', function(done) {
             // Mocks
             var theCBError = new Error();
-            var createEntityThen = sinon.spy(function(successCB, errorCB) {
+            var batchUpdateThen = sinon.spy(function(successCB, errorCB) {
                 setTimeout(function() {
                     errorCB(theCBError); // success callback
                 }, 0);
                 return '__TEST';
             });
-            var createEntityMock = sinon.spy(function(changes, options) {
-                return { then: createEntityThen };
+            var batchUpdateMock = sinon.spy(function(changes, options) {
+                return { then: batchUpdateThen };
             });
             var NGSICloseMock = sinon.spy(function() {
                 return 'closed';
             });
             var NGSIConnectionMock = sinon.spy(function() {
                 return {
-                    v2: { createEntity: createEntityMock },
+                    v2: { batchUpdate: batchUpdateMock },
                     close: NGSICloseMock
                 };
             });
@@ -417,9 +422,9 @@ describe('doIt', function() {
                     should.not.exist(request);
                     should.exist(e);
                     e.should.be.instanceof(Error);
-                    expectedChanges.id = 'AmbientLightSensor:1_NGSIv2Test';
-                    expectedChanges.type = 'NGSIv2TypesTest';
-                    createEntityMock.should.be.calledOnceWith(expectedChanges, { upsert: true });
+                    expectedChanges.entities[0].id = 'AmbientLightSensor:1_NGSIv2Test';
+                    expectedChanges.entities[0].type = 'NGSIv2TypesTest';
+                    batchUpdateMock.should.be.calledOnceWith(expectedChanges);
                     done();
                 };
                 action1.parameters.id = '${id}_NGSIv2Test';
@@ -470,7 +475,7 @@ describe('doIt', function() {
                     should.equal(request.httpCode, 200);
                     queryOptions.type = 'NGSIv2TypesTest2';
                     listEntitiesMock.should.be.calledOnceWith(queryOptions);
-                    batchUpdateMock.should.be.calledOnceWith(expectedChanges2, { upsert: true });
+                    batchUpdateMock.should.be.calledOnceWith(expectedChanges2);
                     done();
                 };
                 action1.parameters.type = 'NGSIv2TypesTest2';

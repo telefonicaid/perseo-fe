@@ -211,7 +211,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that
     triggers the rule is usedi.e. `${type}`)
 -   version: optional, The NGSI version for the update action. Set this attribute to `2` or `"2"` if you want to use
-    NGSv2 format. `1` by default.
+    NGSv2 format. `2` by default.
 -   isPattern: optional, `false` by default. (Only for NGSIv1. If `version` is set to 2, this attribute will be ignored)
 -   attributes: _mandatory_, array of target attributes to update. Each element of the array must contain the fields
     -   **name**: _mandatory_, attribute name to set
