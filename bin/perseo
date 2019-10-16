@@ -72,8 +72,8 @@ function loadConfiguration() {
         'PERSEO_SMPP_FROM',
         'PERSEO_SMPP_ENABLED',
         'PERSEO_NOTICES_PATH',
-        'PERSEO_RULES_PATH'
-
+        'PERSEO_RULES_PATH',
+        'PERSEO_CAST_TYPES'
     ];
 
     for (var i = 0; i < environmentValues.length; i++) {
@@ -154,6 +154,7 @@ function loadConfiguration() {
     config.smpp.enabled = process.env.PERSEO_SMPP_ENABLED || config.smpp.enabled;
     config.endpoint.noticesPath = process.env.PERSEO_NOTICES_PATH || config.endpoint.noticesPath;
     config.endpoint.rulesPath = process.env.PERSEO_RULES_PATH || config.endpoint.rulesPath;
+    config.castTypes = process.env.PERSEO_CAST_TYPES || config.castTypes;
 }
 
 loadConfiguration();

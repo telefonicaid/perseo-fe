@@ -214,4 +214,9 @@ config.checkDB = {
  */
 config.restBase = null;
 
+/**
+ * Cast attribute values in updateAction using NGSIv2 types
+ */
+config.castTypes = false;
+
 module.exports = config;
