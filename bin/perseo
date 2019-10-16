@@ -72,8 +72,11 @@ function loadConfiguration() {
         'PERSEO_SMPP_FROM',
         'PERSEO_SMPP_ENABLED',
         'PERSEO_NOTICES_PATH',
-        'PERSEO_RULES_PATH'
-
+        'PERSEO_RULES_PATH',
+        'PERSEO_AUTHENTICATION_HOST',
+        'PERSEO_AUTHENTICATION_PORT',
+        'PERSEO_AUTHENTICATION_USER',
+        'PERSEO_AUTHENTICATION_PASSWORD'
     ];
 
     for (var i = 0; i < environmentValues.length; i++) {
@@ -154,6 +157,12 @@ function loadConfiguration() {
     config.smpp.enabled = process.env.PERSEO_SMPP_ENABLED || config.smpp.enabled;
     config.endpoint.noticesPath = process.env.PERSEO_NOTICES_PATH || config.endpoint.noticesPath;
     config.endpoint.rulesPath = process.env.PERSEO_RULES_PATH || config.endpoint.rulesPath;
+
+    config.authentication = config.authentication || {};
+    config.authentication.host = process.env.PERSEO_AUTHENTICATION_HOST || config.authentication.host;
+    config.authentication.port = process.env.PERSEO_AUTHENTICATION_PORT || config.authentication.port;
+    config.authentication.user = process.env.PERSEO_AUTHENTICATION_USER || config.authentication.user;
+    config.authentication.password = process.env.PERSEO_AUTHENTICATION_PASSWORD || config.authentication.password;
 }
 
 loadConfiguration();
