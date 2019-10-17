@@ -1003,7 +1003,7 @@ A rule that will check if the employee has been hired in the last half hour, cou
 }
 ```
 
-## JSON and Array fields
+## JSON and Array fields in attributes
 
 Some attributes like JSON and Array based, will generate a pseudo-attribute with the same name as the attribute and a
 suffix "\_\_" followed by element name (for the case of JSON) or the ordinal (for the case of arrays), with the parsed
@@ -1045,5 +1045,38 @@ will send to core the "event"
     "myJsonValue__color": "blue",
     "myArrayValue__0": "green",
     "myArrayValue__1": "black"
+}
+```
+
+Additionally all attributes are also included in non flatten format in the event into the `stripped` section:
+
+```json
+{
+    "noticeId": "799635b0-914f-11e6-836b-bf1691c99768",
+    "noticeTS": 1476368120971,
+    "id": "John Doe",
+    "type": "employee",
+    "isPattern": "false",
+    "subservice": "/",
+    "service": "unknownt",
+    "myJsonValue__color": "blue",
+    "myArrayValue__0": "green",
+    "myArrayValue__1": "black",
+    "stripped": [
+        {
+            "myJsonValue": {
+                "type": "myType1",
+                "value": {
+                    "color": "blue"
+                }
+            }
+        },
+        {
+            "myArrayValue": {
+                "type": "myType2",
+                "value": ["green", "black"]
+            }
+        }
+    ]
 }
 ```

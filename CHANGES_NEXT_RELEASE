@@ -1,3 +1,4 @@
+- Include stripped (non flatten) data into event (#377)
 - Add: castType (PERSEO_CAST_TYPE) to enable NGSIv2 type based casting (default is to use JSON native types in values)
 - Add authentication config env vars (#349)
 - Add full support for pagination in APIs /rules and /vrules (#364)
