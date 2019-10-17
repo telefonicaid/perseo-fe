@@ -48,6 +48,9 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_AUTHENTICATION_PORT         | Port of the authentication endpoint                                                        |
 | PERSEO_AUTHENTICATION_USER         | User to perform authentication                                                             |
 | PERSEO_AUTHENTICATION_PASSWORD     | Password for the user to perform authentication                                            |
+| PERSEO_CAST_TYPE                   | Cast or not attribute values to expected type conform NGSIv2 (false by default)            |
+
+> > > > > > > Stashed changes
 
 ### Basic Configuration
 
@@ -101,5 +104,6 @@ Options for Authentication through PEP (for update action)
 -   `config.authentication.port`: port,
 -   `config.authentication.user`: provisioned user for CEP in Keystone
 -   `config.authentication.password`: provisioned password for CEP in Keystone
+-   `config.castTypes`: cast or not attribute values to expected type conform NGSIv2 (false by default)
 
 URL format for mongoDB could be found at `http://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html`
