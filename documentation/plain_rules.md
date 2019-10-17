@@ -1048,8 +1048,31 @@ will send to core the "event"
 }
 ```
 
-Additionally all attributes are also included in non flatten format in the event into the `stripped` section: {
-"noticeId": "799635b0-914f-11e6-836b-bf1691c99768", "noticeTS": 1476368120971, "id": "John Doe", "type": "employee",
-"isPattern": "false", "subservice": "/", "service": "unknownt", "myJsonValue**color": "blue", "myArrayValue**0":
-"green", "myArrayValue\_\_1": "black" "stripped": [ "myJsonValue": { "type": "myType1", "value": { "color": "blue" } },
-"myArrayValue": { "type": "myType2", "value": ["green", "blue"] } ] }
+Additionally all attributes are also included in non flatten format in the event into the `stripped` section:
+
+```json
+{
+	"noticeId": "799635b0-914f-11e6-836b-bf1691c99768",
+	"noticeTS": 1476368120971,
+	"id": "John Doe",
+	"type": "employee",
+	"isPattern": "false",
+	"subservice": "/",
+	"service": "unknownt",
+	"myJsonValue**color": "blue",
+	"myArrayValue**0": "green",
+	"myArrayValue\_\_1": "black"
+	"stripped": 
+        "myJsonValue": {
+			"type": "myType1",
+			"value": {
+				"color": "blue"
+			}
+		},
+		"myArrayValue": {
+			"type": "myType2",
+			"value": ["green", "blue"]
+		}
+	]
+}
+```
