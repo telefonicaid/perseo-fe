@@ -50,12 +50,12 @@ var action1 = {
             {
                 name: 'textNumberLit',
                 type: 'Text',
-                value: '666'
+                value: 666
             },
             {
                 name: 'textBoolLit',
                 type: 'Text',
-                value: 'false'
+                value: false
             },
             {
                 name: 'textObjLit',
