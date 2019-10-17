@@ -1,4 +1,5 @@
 - Include stripped (non flatten) data into event (#377)
+- Add authentication config env vars (#349)
 - Add full support for pagination in APIs /rules and /vrules (#364)
 - Add Fiware-Total-Count header to response when count
 - Refactor updateAction doItWithToken to include version 1 and 2
