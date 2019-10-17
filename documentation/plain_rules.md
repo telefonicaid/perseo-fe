@@ -1062,8 +1062,8 @@ Additionally all attributes are also included in non flatten format in the event
 	"myJsonValue__color": "blue",
 	"myArrayValue__0": "green",
 	"myArrayValue__1": "black"
-	"stripped": 
-        "myJsonValue": {
+	"stripped": [{
+                "myJsonValue": {
 			"type": "myType1",
 			"value": {
 				"color": "blue"
