@@ -48,7 +48,7 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_AUTHENTICATION_PORT         | Port of the authentication endpoint                                                        |
 | PERSEO_AUTHENTICATION_USER         | User to perform authentication                                                             |
 | PERSEO_AUTHENTICATION_PASSWORD     | Password for the user to perform authentication                                            |
-| PERSEO_CAST_TYPE                   | Cast or not attribute values to expected type conform NGSIv2 (false by default)            |
+| PERSEO_CAST_TYPE                   |  If true, enable attribute value casting based in NGSIv2 attribute types if true. If false (default), the JSON native type for the attribute value is used.            |
 
 ### Basic Configuration
 
