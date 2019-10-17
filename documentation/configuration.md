@@ -50,8 +50,6 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_AUTHENTICATION_PASSWORD     | Password for the user to perform authentication                                            |
 | PERSEO_CAST_TYPE                   | Cast or not attribute values to expected type conform NGSIv2 (false by default)            |
 
-> > > > > > > Stashed changes
-
 ### Basic Configuration
 
 In order to have perseo running, there are several basic pieces of information to fill:
