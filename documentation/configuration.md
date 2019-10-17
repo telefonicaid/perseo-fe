@@ -44,6 +44,10 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_SMPP_ENABLED                | SMPP is default method for SMS instead of use SMS gateway                                  |
 | PERSEO_NOTICES_PATH                | Path for incoming notices, default value '/notices'                                        |
 | PERSEO_RULES_PATH                  | Path for incoming rules, default value '/rules'                                            |
+| PERSEO_AUTHENTICATION_HOST         | Host of the authentication endpoint                                                        |
+| PERSEO_AUTHENTICATION_PORT         | Port of the authentication endpoint                                                        |
+| PERSEO_AUTHENTICATION_USER         | User to perform authentication                                                             |
+| PERSEO_AUTHENTICATION_PASSWORD     | Password for the user to perform authentication                                            |
 
 ### Basic Configuration
 

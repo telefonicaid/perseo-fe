@@ -74,6 +74,10 @@ function loadConfiguration() {
         'PERSEO_NOTICES_PATH',
         'PERSEO_RULES_PATH',
         'PERSEO_CAST_TYPES'
+        'PERSEO_AUTHENTICATION_HOST',
+        'PERSEO_AUTHENTICATION_PORT',
+        'PERSEO_AUTHENTICATION_USER',
+        'PERSEO_AUTHENTICATION_PASSWORD'
     ];
 
     for (var i = 0; i < environmentValues.length; i++) {
