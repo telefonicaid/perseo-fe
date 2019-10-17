@@ -73,6 +73,7 @@ function loadConfiguration() {
         'PERSEO_SMPP_ENABLED',
         'PERSEO_NOTICES_PATH',
         'PERSEO_RULES_PATH',
+        'PERSEO_CAST_TYPES'
         'PERSEO_AUTHENTICATION_HOST',
         'PERSEO_AUTHENTICATION_PORT',
         'PERSEO_AUTHENTICATION_USER',
@@ -157,7 +158,7 @@ function loadConfiguration() {
     config.smpp.enabled = process.env.PERSEO_SMPP_ENABLED || config.smpp.enabled;
     config.endpoint.noticesPath = process.env.PERSEO_NOTICES_PATH || config.endpoint.noticesPath;
     config.endpoint.rulesPath = process.env.PERSEO_RULES_PATH || config.endpoint.rulesPath;
-
+    config.castTypes = process.env.PERSEO_CAST_TYPES || config.castTypes;
     config.authentication = config.authentication || {};
     config.authentication.host = process.env.PERSEO_AUTHENTICATION_HOST || config.authentication.host;
     config.authentication.port = process.env.PERSEO_AUTHENTICATION_PORT || config.authentication.port;

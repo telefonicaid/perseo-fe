@@ -106,7 +106,7 @@ var action1 = {
             {
                 name: 'isBool2',
                 type: 'Boolean',
-                value: 'TRUE'
+                value: 'true'
             },
             {
                 name: 'isBool3',
@@ -116,7 +116,7 @@ var action1 = {
             {
                 name: 'isBool4',
                 type: 'Boolean',
-                value: 'False'
+                value: 'false'
             },
             {
                 name: 'isBool5',
@@ -156,7 +156,7 @@ var action1 = {
             {
                 name: 'refNone',
                 type: '${refNoneType}',
-                value: 'futureNull'
+                value: null
             },
             {
                 name: 'refNone2',
@@ -182,7 +182,7 @@ var event1 = {
     addressLocality: 'Stockholm',
     laststatus: 'allright',
     powerState: 'on',
-    stringDate: '2018-12-05T11:31:39.00Z',
+    stringDate: '2018-12-05T11:31:39.000Z',
     stringDateMs: '1548843060657',
     numberDateMs: 1548843229832,
     subservice: '/',
@@ -212,15 +212,15 @@ var expectedChanges = {
                 type: 'Text'
             },
             textBoolLit: {
-                value: 'false',
+                value: false,
                 type: 'Text'
             },
             textNumberLit: {
-                value: '666',
+                value: 666,
                 type: 'Text'
             },
             textObjLit: {
-                value: '[object Object]',
+                value: { a: 1, b: 2 },
                 type: 'Text'
             },
             refNone: {
@@ -228,7 +228,7 @@ var expectedChanges = {
                 type: 'None'
             },
             refNone2: {
-                value: null,
+                value: 123,
                 type: 'None'
             },
             refNone3: {
@@ -253,7 +253,7 @@ var expectedChanges = {
                 type: 'Boolean'
             },
             isBool5: {
-                value: false,
+                value: 'other',
                 type: 'Boolean'
             },
             isBool6: {
@@ -293,11 +293,11 @@ var expectedChanges = {
                 type: 'DateTime'
             },
             lastchange2: {
-                value: '2019-01-30T10:11:00.657Z',
+                value: 1548843060657,
                 type: 'DateTime'
             },
             lastchange3: {
-                value: '2019-01-30T10:13:49.832Z',
+                value: 1548843229832,
                 type: 'DateTime'
             }
         }
