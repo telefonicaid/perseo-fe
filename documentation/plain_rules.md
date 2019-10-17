@@ -1061,18 +1061,22 @@ Additionally all attributes are also included in non flatten format in the event
 	"service": "unknownt",
 	"myJsonValue__color": "blue",
 	"myArrayValue__0": "green",
-	"myArrayValue__1": "black"
-	"stripped": [{
+	"myArrayValue__1": "black",
+	"stripped": [
+	     {
                 "myJsonValue": {
 			"type": "myType1",
 			"value": {
 				"color": "blue"
 			}
-		},
+		}
+             },
+	     {
 		"myArrayValue": {
 			"type": "myType2",
 			"value": ["green", "black"]
 		}
+             }
 	]
 }
 ```
