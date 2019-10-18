@@ -21,6 +21,9 @@ addons:
     - mongodb-org-server
 
 install:
+ # It seems to be a good idea to clean before install
+ # see https://travis-ci.community/t/i-needed-an-explicit-cleanup-before-starting-my-tests-to-have-then-working-again-is-that-normal/5512/2
+ - npm run clean
  - npm install
 
 before_install:
