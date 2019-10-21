@@ -9,6 +9,7 @@
     -   [update attribute action](#update-attribute-action)
     -   [HTTP request action](#http-request-action)
     -   [twitter action](#twitter-action)
+-   [`nosignal` field](#nosignal-field)
 -   [Metadata and object values](#metadata-and-object-values)
 -   [Location fields](#location-fields)
 -   [Time fields](#time-fields)
@@ -16,11 +17,9 @@
 
 ## Introduction
 
-Plain rules allow a full customization of a rule with specific needs by means of setting the final EPL statement used by
-the Esper engine inside perseo-core. In order to work with perseo (front-end) properly, the EPL statement must fulfill
-several conventions for the rule to be able to operate on the incoming events and trigger adequate actions.
+There are two kind of rules:
 
-The “anatomy” of a rule is as follows
+* Esper-based rules, which include the final EPL statement used by the Esper engine inside perseo-core. In order to work with perseo (front-end) properly, the EPL statement must fulfill several conventions for the rule to be able to operate on the incoming events and trigger adequate actions. Example:
 
 ```json
 {
@@ -41,11 +40,32 @@ The “anatomy” of a rule is as follows
 }
 ```
 
-The fields (all must be present) are
+* No signal rules. They are triggered when a given attribute is not updated in a given interval of time. They
+don't use Esper at persero-core (they are checked and triggered by perseo frontend). Example:
 
--   **name**: name of the rule, used as identifier
--   **text**: EPL statement for the rule engine in perseo-core
+
+```json
+{
+    "name": "check_temp_no_signal",
+    "nosignal": {
+        "checkInterval": "1",
+        "attribute": "temperature",
+        "reportInterval": "5",
+        "id": null,
+        "idRegexp": "^value.*",
+        "type": null
+    }
+}
+```
+
+In both types of rules `name` is a mandatory field. The other fields depend on the rule type. For EPL-based rules the following two fields are mandatory:
+
+-   **text**: EPL statement for the rule engine in perseo-core.
 -   **action**: action to be performed by perseo if the rule is fired from the core
+
+For no signal rules the following field is mandatory:
+
+-   **nosignal**: a description of the no signal condition.
 
 The rule name must consist of the ASCII characters from A to Z, from a to z, digits (0-9), underscore (\_) and dash (-).
 It can have a maximum length of 50 characters.
@@ -607,6 +627,17 @@ pre-provisioned application associated to the twitter user.
 ```
 
 The `template` field performs [string substitution](#string-substitution-syntax).
+
+## `nosignal` field
+
+The structure of the `nosignal` field for no signal rules is as follows:
+
+-   checkInterval: _optional_ or _mandatory_ ???,time in minutes for checking the attribute
+-   attribute: _optional_ or _mandatory_ ???, attribute for watch
+-   reportInterval: _optional_ or _mandatory_ ???, time in seconds to see an entity as silent
+-   id: _optional_ or _mandatory_ ???, of the entity to watch
+-   idRegexp: _optional_ or _mandatory_ ???, regular expression to match entities by ID
+-   type: _optional_ or _mandatory_ ???,: type of entities to watch
 
 ## Metadata and object values
 
