@@ -2,6 +2,7 @@
 
 -   [Introduction](#introduction)
 -   [EPL text](#epl-text)
+-   [No signal conditions](#nosignal-conditions)
 -   [Actions](#actions)
     -   [String substitution syntax](#string-substitution-syntax)
     -   [SMS action](#sms-action)
@@ -9,7 +10,6 @@
     -   [update attribute action](#update-attribute-action)
     -   [HTTP request action](#http-request-action)
     -   [twitter action](#twitter-action)
--   [`nosignal` field](#nosignal-field)
 -   [Metadata and object values](#metadata-and-object-values)
 -   [Location fields](#location-fields)
 -   [Time fields](#time-fields)
@@ -54,14 +54,27 @@ don't use Esper at persero-core (they are checked and triggered by perseo fronte
         "id": null,
         "idRegexp": "^value.*",
         "type": null
+    },
+    "action": {
+        "type": "email",
+        "template": "No signal in temperature",
+        "parameters": {
+            "to": "brox@tid.es",
+            "from": "dca_support@tid.es",
+            "subject": "temperature no signal"
+        }
     }
 }
 ```
 
-In both types of rules `name` is a mandatory field. The other fields depend on the rule type. For EPL-based rules the following two fields are mandatory:
+In both types of rules the following fields are mandatory:
+
+-   **name**: name of the rule, used as identifier
+-   **action**: action to be performed by perseo if the rule is fired from the core
+
+For EPL-based rules the following field is mandatory:
 
 -   **text**: EPL statement for the rule engine in perseo-core.
--   **action**: action to be performed by perseo if the rule is fired from the core
 
 For no signal rules the following field is mandatory:
 
@@ -111,6 +124,17 @@ Metadata is also available as explained in [Metadata and object values](#metadat
 Please, be carefull with using non-ascii characters in the EPL syntax. It will provoke an error. You can find
 information on how to scape characters at
 [Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
+
+## No signal conditions
+
+The no signal condition is specified in the `nosignal` configuration element, which is an object with the following fields:
+
+-   checkInterval: _optional_ or _mandatory_ ???,time in minutes for checking the attribute
+-   attribute: _optional_ or _mandatory_ ???, attribute for watch
+-   reportInterval: _optional_ or _mandatory_ ???, time in seconds to see an entity as silent
+-   id: _optional_ or _mandatory_ ???, of the entity to watch
+-   idRegexp: _optional_ or _mandatory_ ???, regular expression to match entities by ID
+-   type: _optional_ or _mandatory_ ???,: type of entities to watch
 
 <a name="actions"></a>
 
@@ -627,17 +651,6 @@ pre-provisioned application associated to the twitter user.
 ```
 
 The `template` field performs [string substitution](#string-substitution-syntax).
-
-## `nosignal` field
-
-The structure of the `nosignal` field for no signal rules is as follows:
-
--   checkInterval: _optional_ or _mandatory_ ???,time in minutes for checking the attribute
--   attribute: _optional_ or _mandatory_ ???, attribute for watch
--   reportInterval: _optional_ or _mandatory_ ???, time in seconds to see an entity as silent
--   id: _optional_ or _mandatory_ ???, of the entity to watch
--   idRegexp: _optional_ or _mandatory_ ???, regular expression to match entities by ID
--   type: _optional_ or _mandatory_ ???,: type of entities to watch
 
 ## Metadata and object values
 
