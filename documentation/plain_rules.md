@@ -2,6 +2,7 @@
 
 -   [Introduction](#introduction)
 -   [EPL text](#epl-text)
+-   [No signal conditions](#nosignal-conditions)
 -   [Actions](#actions)
     -   [String substitution syntax](#string-substitution-syntax)
     -   [SMS action](#sms-action)
@@ -16,11 +17,9 @@
 
 ## Introduction
 
-Plain rules allow a full customization of a rule with specific needs by means of setting the final EPL statement used by
-the Esper engine inside perseo-core. In order to work with perseo (front-end) properly, the EPL statement must fulfill
-several conventions for the rule to be able to operate on the incoming events and trigger adequate actions.
+There are two kind of rules:
 
-The “anatomy” of a rule is as follows
+* Esper-based rules, which include the final EPL statement used by the Esper engine inside perseo-core. In order to work with perseo (front-end) properly, the EPL statement must fulfill several conventions for the rule to be able to operate on the incoming events and trigger adequate actions. Example:
 
 ```json
 {
@@ -41,11 +40,45 @@ The “anatomy” of a rule is as follows
 }
 ```
 
-The fields (all must be present) are
+* No signal rules. They are triggered when a given attribute is not updated in a given interval of time. They
+don't use Esper at persero-core (they are checked and triggered by perseo frontend). Example:
+
+
+```json
+{
+    "name": "check_temp_no_signal",
+    "nosignal": {
+        "checkInterval": "1",
+        "attribute": "temperature",
+        "reportInterval": "5",
+        "id": null,
+        "idRegexp": "^value.*",
+        "type": null
+    },
+    "action": {
+        "type": "email",
+        "template": "No signal in temperature",
+        "parameters": {
+            "to": "brox@tid.es",
+            "from": "dca_support@tid.es",
+            "subject": "temperature no signal"
+        }
+    }
+}
+```
+
+In both types of rules the following fields are mandatory:
 
 -   **name**: name of the rule, used as identifier
--   **text**: EPL statement for the rule engine in perseo-core
 -   **action**: action to be performed by perseo if the rule is fired from the core
+
+For EPL-based rules the following field is mandatory:
+
+-   **text**: EPL statement for the rule engine in perseo-core.
+
+For no signal rules the following field is mandatory:
+
+-   **nosignal**: a description of the no signal condition.
 
 The rule name must consist of the ASCII characters from A to Z, from a to z, digits (0-9), underscore (\_) and dash (-).
 It can have a maximum length of 50 characters.
@@ -91,6 +124,19 @@ Metadata is also available as explained in [Metadata and object values](#metadat
 Please, be carefull with using non-ascii characters in the EPL syntax. It will provoke an error. You can find
 information on how to scape characters at
 [Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
+
+## No signal conditions
+
+The no signal condition is specified in the `nosignal` configuration element, which is an object with the following fields:
+
+-   **checkInterval**: _mandatory_, time in minutes for checking the attribute
+-   **attribute**: _mandatory_, attribute for watch
+-   **reportInterval**: _mandatory_, time in seconds to see an entity as silent
+-   **id** or **idRegexp**: _mandatory_ (but not both at the same time), id or regex of the entity to watch
+-   type: _optional_, type of entities to watch
+
+Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of 
+checkInterval could impact on performance.
 
 <a name="actions"></a>
 
