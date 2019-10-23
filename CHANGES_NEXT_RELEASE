@@ -1,4 +1,4 @@
-- Upgrade mongodb dependency to 2.2.35
+- Upgrade mongodb dependency from ~2.2.31 to ~2.2.35
 - Include stripped (non flatten) data into event (#377)
 - Add: castType (PERSEO_CAST_TYPE) to enable NGSIv2 type based casting (default is to use JSON native types in values)
 - Add authentication config env vars (#349)
