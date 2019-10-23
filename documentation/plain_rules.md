@@ -129,12 +129,14 @@ information on how to scape characters at
 
 The no signal condition is specified in the `nosignal` configuration element, which is an object with the following fields:
 
--   checkInterval: _optional_ or _mandatory_ ???,time in minutes for checking the attribute
--   attribute: _optional_ or _mandatory_ ???, attribute for watch
--   reportInterval: _optional_ or _mandatory_ ???, time in seconds to see an entity as silent
--   id: _optional_ or _mandatory_ ???, of the entity to watch
--   idRegexp: _optional_ or _mandatory_ ???, regular expression to match entities by ID
--   type: _optional_ or _mandatory_ ???,: type of entities to watch
+-   **checkInterval**: _mandatory_, time in minutes for checking the attribute
+-   **attribute**: _mandatory_, attribute for watch
+-   **reportInterval**: _mandatory_, time in seconds to see an entity as silent
+-   **id** or **idRegexp**: _mandatory_ (but not both at the same time), id or regex of the entity to watch
+-   type: _optional_, type of entities to watch
+
+Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of 
+checkInterval could impact on performance.
 
 <a name="actions"></a>
 
