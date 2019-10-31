@@ -1,0 +1,1 @@
+- Hardening: MongoDB connection logic to avoid deprecated parameteres
