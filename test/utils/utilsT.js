@@ -52,11 +52,12 @@ function loadDirExamples(filepath) {
 function remove(collection, callback) {
     MongoClient.connect(
         config.mongo.url,
+        { useNewUrlParser: true },
         function(err, db) {
             if (err) {
                 return callback(err);
             }
-            db.collection(collection, {}, function(err, coll) {
+            db.db().collection(collection, {}, function(err, coll) {
                 if (err) {
                     return callback(err);
                 }
@@ -82,11 +83,12 @@ function dropExecutions(callback) {
 function dropCollection(collection, callback) {
     MongoClient.connect(
         config.mongo.url,
+        { useNewUrlParser: true },
         function(err, db) {
             if (err) {
                 return callback(err);
             }
-            db.collection(collection, {}, function(err, col) {
+            db.db().collection(collection, {}, function(err, col) {
                 if (err) {
                     return callback(err);
                 }
@@ -111,11 +113,12 @@ function dropExecutionsCollection(callback) {
 function createRulesCollection(callback) {
     MongoClient.connect(
         config.mongo.url,
+        { useNewUrlParser: true },
         function(err, db) {
             if (err) {
                 return callback(err);
             }
-            db.collection(config.collections.rules, {}, function(err, rules) {
+            db.db().collection(config.collections.rules, {}, function(err, rules) {
                 if (err) {
                     return callback(err);
                 }
@@ -131,11 +134,12 @@ function createRulesCollection(callback) {
 function addRule(rule, callback) {
     MongoClient.connect(
         config.mongo.url,
+        { useNewUrlParser: true },
         function(err, db) {
             if (err) {
                 return callback(err);
             }
-            db.collection(config.collections.rules, {}, function(err, rules) {
+            db.db().collection(config.collections.rules, {}, function(err, rules) {
                 if (err) {
                     return callback(err);
                 }
@@ -154,6 +158,7 @@ function addRule(rule, callback) {
 function createEntitiesCollection(tenant, callback) {
     MongoClient.connect(
         config.orionDb.url,
+        { useNewUrlParser: true },
         function(err, db) {
             var db2 = db.db(config.orionDb.prefix + '-' + tenant);
             if (err) {
@@ -175,6 +180,7 @@ function createEntitiesCollection(tenant, callback) {
 function dropEntities(callback) {
     MongoClient.connect(
         config.orionDb.url,
+        { useNewUrlParser: true },
         function(err, db) {
             var db2 = db.db(config.orionDb.prefix + '-' + config.DEFAULT_TENANT);
             if (err) {
@@ -188,7 +194,10 @@ function dropEntities(callback) {
                     if (err) {
                         return callback(err);
                     }
-                    db2.close();
+                    db.close();
+                    // if (db && db.db()) {
+                    //     db.close();
+                    // }
                     return callback(null, result);
                 });
             });
@@ -198,6 +207,7 @@ function dropEntities(callback) {
 function addEntity(tenant, entity, callback) {
     MongoClient.connect(
         config.orionDb.url,
+        { useNewUrlParser: true },
         function(err, db) {
             var db2;
             if (err) {
@@ -230,7 +240,7 @@ function configTest() {
     // beginning, for the module 'actions' taking it into account
     config.sms.URL = 'http://localhost:' + fakeServerPort;
 
-    config.logLevel = 'fatal';
+    config.logLevel = 'debug';
     config.nextCore = {};
     config.orionDb.url = 'mongodb://localhost:27017/test';
     config.orionDb.prefix = 'oriontest';
