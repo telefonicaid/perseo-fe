@@ -8,7 +8,7 @@ node_js:
 
 branches:
   only:
-    - master
+    - fiqare-perseo-fe-improvements
 
 services:
  - mongodb
