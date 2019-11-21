@@ -164,6 +164,30 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue Oct 29 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.10.0
+- Add: include stripped (non flatten) data into event (#377)
+- Add: castType (PERSEO_CAST_TYPE) to enable NGSIv2 type based casting (default is to use JSON native types in values)
+- Add: authentication config env vars (#349)
+- Add: full support for pagination in APIs /rules and /vrules (#364)
+- Add: Fiware-Total-Count header to response when count
+- Add: missed correlatorid headers in updateAction with NGSIv2
+- Add: try expandVars for numeric, boolean and json in attributes of updateAction and text of postAction (#362)
+- Add: NGSI filter to updateAction (#335)
+- Add: count to response to get all rules (cep + vr)
+- Add: update entity using NGSIv2 with a trust token (#317)
+- Add: new logs about rule provision, deleting, etc (#346)
+- Add: config env vars for isMaster and slaveDelay
+- Set default version to 2 (NGSIv2) for updateAction by default
+- Refactor updateAction doItWithToken to include version 1 and 2
+- Upgrade NodeJS version from 8.16.0 to 8.16.1 in Dockerfile due to security issues
+- Upgrade ngsijs dependency from 1.2.0 to 1.2.1
+- Upgrade mongodb dependency from ~2.2.31 to ~2.2.35
+
+* Tue Jun 04 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.9.0
+- Upgrade from node:8.12.0-slim to node:8.16.0-slim as base image in Dockerfile
+- Add: allow SMS actions with multiple phone destinations (#337)
+- Fix: replace findOne + orderby to find + sort + limit in LastTime executionsStore (#339)
+
 * Fri Feb 08 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.8.0
 - Add: NGSIv2 support in both notification reception and CB update action
 - Change on the PERSEO_ORION_URL env var behaviour. Now it represents Context Broker base URL instead of the

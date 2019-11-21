@@ -1,10 +1,25 @@
 # Plain rules
 
-Plain rules allow a full customization of a rule with specific needs by means of setting the final EPL statement used by
-the Esper engine inside perseo-core. In order to work with perseo (front-end) properly, the EPL statement must fulfill
-several conventions for the rule to be able to operate on the incoming events and trigger adequate actions.
+-   [Introduction](#introduction)
+-   [EPL text](#epl-text)
+-   [No signal conditions](#nosignal-conditions)
+-   [Actions](#actions)
+    -   [String substitution syntax](#string-substitution-syntax)
+    -   [SMS action](#sms-action)
+    -   [email action](#email-action)
+    -   [update attribute action](#update-attribute-action)
+    -   [HTTP request action](#http-request-action)
+    -   [twitter action](#twitter-action)
+-   [Metadata and object values](#metadata-and-object-values)
+-   [Location fields](#location-fields)
+-   [Time fields](#time-fields)
+-   [JSON and Array fields](#json-and-array-fields)
 
-The “anatomy” of a rule is as follows
+## Introduction
+
+There are two kind of rules:
+
+* Esper-based rules, which include the final EPL statement used by the Esper engine inside perseo-core. In order to work with perseo (front-end) properly, the EPL statement must fulfill several conventions for the rule to be able to operate on the incoming events and trigger adequate actions. Example:
 
 ```json
 {
@@ -13,19 +28,57 @@ The “anatomy” of a rule is as follows
     "action": {
         "type": "update",
         "parameters": {
-            "name": "abnormal",
-            "value": "true",
-            "type": "boolean"
+            "attributes": [
+                {
+                    "name": "abnormal",
+                    "value": "true",
+                    "type": "boolean"
+                }
+            ]
         }
     }
 }
 ```
 
-The fields (all must be present) are
+* No signal rules. They are triggered when a given attribute is not updated in a given interval of time. They
+don't use Esper at persero-core (they are checked and triggered by perseo frontend). Example:
+
+
+```json
+{
+    "name": "check_temp_no_signal",
+    "nosignal": {
+        "checkInterval": "1",
+        "attribute": "temperature",
+        "reportInterval": "5",
+        "id": null,
+        "idRegexp": "^value.*",
+        "type": null
+    },
+    "action": {
+        "type": "email",
+        "template": "No signal in temperature",
+        "parameters": {
+            "to": "brox@tid.es",
+            "from": "dca_support@tid.es",
+            "subject": "temperature no signal"
+        }
+    }
+}
+```
+
+In both types of rules the following fields are mandatory:
 
 -   **name**: name of the rule, used as identifier
--   **text**: EPL statement for the rule engine in perseo-core
 -   **action**: action to be performed by perseo if the rule is fired from the core
+
+For EPL-based rules the following field is mandatory:
+
+-   **text**: EPL statement for the rule engine in perseo-core.
+
+For no signal rules the following field is mandatory:
+
+-   **nosignal**: a description of the no signal condition.
 
 The rule name must consist of the ASCII characters from A to Z, from a to z, digits (0-9), underscore (\_) and dash (-).
 It can have a maximum length of 50 characters.
@@ -67,6 +120,23 @@ must be cast to `String`. Nested cast to string and to float is something we are
 a future version. Use it by now. All the attributes in the notification from Orion are available in the event object,
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
+
+Please, be carefull with using non-ascii characters in the EPL syntax. It will provoke an error. You can find
+information on how to scape characters at
+[Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
+
+## No signal conditions
+
+The no signal condition is specified in the `nosignal` configuration element, which is an object with the following fields:
+
+-   **checkInterval**: _mandatory_, time in minutes for checking the attribute
+-   **attribute**: _mandatory_, attribute for watch
+-   **reportInterval**: _mandatory_, time in seconds to see an entity as silent
+-   **id** or **idRegexp**: _mandatory_ (but not both at the same time), id or regex of the entity to watch
+-   type: _optional_, type of entities to watch
+
+Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of 
+checkInterval could impact on performance.
 
 <a name="actions"></a>
 
@@ -131,6 +201,13 @@ This substitution can be used in the following fields:
 -   `template` for `twitter` action
 -   `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
 
+Attribute value of `update` action and template of `post` action are expanded to numerical, boolean or JSON stringyfied
+values instead of string values when is possible. For example, if we have `{"a": "${x}"}`:
+
+-   If the value of attribute `x` is `42` then it will expand do `{"a": 42}` and not to `{"a": "42"}`
+-   If the value of attribute `x` is `{"hello": "world"}` then it will expand to `{"a": "{\"hello\":\"world\"}"}`
+    (expand to native JSON, i.e. `{"a": {"hello": "world"}}`, is not supported)
+
 ### SMS action
 
 Sends a SMS to a number set as an action parameter with the body of the message built from the template
@@ -145,7 +222,8 @@ Sends a SMS to a number set as an action parameter with the body of the message 
     }
 ```
 
-The field `parameters` include a field `to` with the number to send the message to.
+The field `parameters` include a field `to` with the number, or numbers separated by whiestpace charaters, to send the
+message to.
 
 The `template` and `to` fields perform [attribute substitution](#string-substitution-syntax).
 
@@ -171,15 +249,15 @@ The `template`, `from`, `to` and `subject` fields perform [string substitution](
 
 ### update attribute action
 
-Updates one or more attributes of a given entity (in the Context Broker instance specified in the Perseo configuration).
-The `parameters` map includes the following fields:
+Updates one or more attributes of a given entity or as a result of filter (in the Context Broker instance specified in
+the Perseo configuration). The `parameters` map includes the following fields:
 
 -   id: optional, the ID of the entity which attribute is to be updated (by default the ID of the entity that triggers
     the rule is used, i.e. `${id}`)
 -   type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that
     triggers the rule is usedi.e. `${type}`)
 -   version: optional, The NGSI version for the update action. Set this attribute to `2` or `"2"` if you want to use
-    NGSv2 format. `1` by default
+    NGSv2 format. `2` by default.
 -   isPattern: optional, `false` by default. (Only for NGSIv1. If `version` is set to 2, this attribute will be ignored)
 -   attributes: _mandatory_, array of target attributes to update. Each element of the array must contain the fields
     -   **name**: _mandatory_, attribute name to set
@@ -189,6 +267,9 @@ The `parameters` map includes the following fields:
 -   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
+-   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the
+    `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
+    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored).
 
 NGSIv1 example:
 
@@ -239,17 +320,20 @@ NGSIv2 example:
                     "name":"abnormal",
                     "type":"Number",
                     "value": 7
-                }
+                },
+                {
+                   "name": "locationCopy",
+                   "type": "MyCustomTypo",
+                   "value": "{\"type\":\"Point\",\"coordinates\":[${Lat},${Lon}]}"
+              }
             ]
         }
     }
 ```
 
-**Note:** NGSIv2 update actions ignore the trust token for now.
-
 When using NGSIv2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
-`value` is a String, Perseo will parse the value taking into account the `type` field, this only applies to _`Number`_,
-_`Boolean`_ and _`None`_ types.
+`value` is a String, Perseo will try cast value to number, boolean or null (without paying attention to the attribute
+type). If the casting fails then String is used. _`Boolean`_ and _`None`_ types.
 
 **Data Types for NGSIv2:**
 
@@ -448,6 +532,32 @@ This attribute will take `null` as value.
 
 Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
 
+**Complete example using NGSv2 update action with filter in a rule:**
+
+```json
+{
+    "name": "blood_rule_update",
+    "text": "select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pressure from pattern [every ev=iotEvent(BloodPressure? > 1.5 and type=\"BloodMeter\")]",
+    "action": {
+        "type": "update",
+        "parameters": {
+            "filter": {
+                "type": "SensorMetter",
+                "q": "status:on"
+            },
+            "version": 2,
+            "attributes": [
+                {
+                    "name": "pressure",
+                    "type": "Number",
+                    "value": "${Pressure}"
+                }
+            ]
+        }
+    }
+}
+```
+
 ### HTTP request action
 
 Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. The
@@ -556,38 +666,40 @@ For example: The metadata in an event/notice like
 
 ```json
 {
-  "subscriptionId" : "51c04a21d714fb3b37d7d5a7",
-  "originator" : "localhost",
-  "contextResponses" : [
-    {
-      "contextElement" : {
-        "attributes" : [
-          {
-            "name" : "BloodPressure",
-            "type" : "centigrade",
-            "value" : "2",
-            "metadatas": [{
-              "crs": {
-                "value": {"system": "WGS84"}
-              }]
+    "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+    "originator": "localhost",
+    "contextResponses": [
+        {
+            "contextElement": {
+                "attributes": [
+                    {
+                        "name": "BloodPressure",
+                        "type": "centigrade",
+                        "value": "2",
+                        "metadatas": [
+                            {
+                                "crs": {
+                                    "value": { "system": "WGS84" }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "TimeInstant",
+                        "type": "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
+                        "value": "2014-04-29T13:18:05Z"
+                    }
+                ],
+                "type": "BloodMeter",
+                "isPattern": "false",
+                "id": "bloodm1"
+            },
+            "statusCode": {
+                "code": "200",
+                "reasonPhrase": "OK"
             }
-          },
-                {
-            "name" : "TimeInstant",
-            "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
-            "value" : "2014-04-29T13:18:05Z"
-          }
-        ],
-        "type" : "BloodMeter",
-        "isPattern" : "false",
-        "id" : "bloodm1"
-      },
-      "statusCode" : {
-        "code" : "200",
-        "reasonPhrase" : "OK"
-      }
-    }
-  ]
+        }
+    ]
 }
 ```
 
@@ -626,8 +738,9 @@ respectively.
 
 The formats are
 
--   [NGSV1 deprecated format](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Publish/Subscribe_Broker_-_Orion_Context_Broker_-_User_and_Programmers_Guide_R3#Defining_location_attribute)
--   [NGSIV1 current format](https://github.com/telefonicaid/fiware-orion/blob/master/doc/manuals/user/geolocation.md#defining-location-attribute)
+-   [NGSIv1 deprecated format](https://fiware-orion.readthedocs.io/en/1.15.1/user/geolocation/index.html#defining-location-attribute)
+-   [NGSIv2 current format](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties
+    of entities"
 
 So, a notification in the deprecated format like
 
@@ -752,8 +865,12 @@ that will send an email when the entity with attribute `position` is less than 5
 circle equation, `(x - a)^2 + (y - b)^2 = d^2`, being `(a, b)` 618618.8286057833 and 9764160.736945232 the UTMC
 coordinates of Cuenca and `d` the distance of 5 000 m.
 
-Note: for long distances the precision of the computations and the distortion of the projection can introduce some
-degree of inaccuracy.
+Notes:
+
+-   NGSIv2 allows several geo location formats (geo:point, geo:line, geo:box, geo:polygon and geo:json). At the present
+    moment, Perseo only supports geo:point.
+-   For long distances the precision of the computations and the distortion of the projection can introduce some degree
+    of inaccuracy.
 
 ## Time fields
 
@@ -929,5 +1046,83 @@ A rule that will check if the employee has been hired in the last half hour, cou
             "subject": "Welcome ${id}!"
         }
     }
+}
+```
+
+## JSON and Array fields in attributes
+
+Some attributes like JSON and Array based, will generate a pseudo-attribute with the same name as the attribute and a
+suffix "\_\_" followed by element name (for the case of JSON) or the ordinal (for the case of arrays), with the parsed
+value. This value makes easier to write the EPL text which involves time comparisons.
+
+So, an incoming notification like this:
+
+```json
+{
+    "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+    "data": [
+        {
+            "id": "John Doe",
+            "type": "employee",
+            "myJsonValue": {
+                "type": "myType1",
+                "value": { "color": "blue" }
+            },
+            "myArrayValue": {
+                "type": "myType2",
+                "value": ["green", "blue"]
+            }
+        }
+    ]
+}
+```
+
+will send to core the "event"
+
+```json
+{
+    "noticeId": "799635b0-914f-11e6-836b-bf1691c99768",
+    "noticeTS": 1476368120971,
+    "id": "John Doe",
+    "type": "employee",
+    "isPattern": "false",
+    "subservice": "/",
+    "service": "unknownt",
+    "myJsonValue__color": "blue",
+    "myArrayValue__0": "green",
+    "myArrayValue__1": "black"
+}
+```
+
+Additionally all attributes are also included in non flatten format in the event into the `stripped` section:
+
+```json
+{
+    "noticeId": "799635b0-914f-11e6-836b-bf1691c99768",
+    "noticeTS": 1476368120971,
+    "id": "John Doe",
+    "type": "employee",
+    "isPattern": "false",
+    "subservice": "/",
+    "service": "unknownt",
+    "myJsonValue__color": "blue",
+    "myArrayValue__0": "green",
+    "myArrayValue__1": "black",
+    "stripped": [
+        {
+            "myJsonValue": {
+                "type": "myType1",
+                "value": {
+                    "color": "blue"
+                }
+            }
+        },
+        {
+            "myArrayValue": {
+                "type": "myType2",
+                "value": ["green", "black"]
+            }
+        }
+    ]
 }
 ```

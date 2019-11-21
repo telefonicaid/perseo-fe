@@ -49,6 +49,8 @@ function loadConfiguration() {
         'PERSEO_MONGO_REPLICASET',
         'PERSEO_MONGO_USER',
         'PERSEO_MONGO_PASSWORD',
+        'PERSEO_IS_MASTER',
+        'PERSEO_SLAVE_DELAY',
         'PERSEO_CORE_URL',
         'PERSEO_NEXT_URL',
         'PERSEO_ORION_URL',
@@ -57,7 +59,6 @@ function loadConfiguration() {
         'PERSEO_SMTP_HOST',
         'PERSEO_SMTP_SECURE',
         'PERSEO_SMTP_AUTH_USER',
-        'PERSEO_SMTP_AUTH_PASS',
         'PERSEO_SMTP_AUTH_PASS',
         'PERSEO_SMTP_TLS_REJECTUNAUTHORIZED',
         'PERSEO_SMS_URL',
@@ -71,8 +72,12 @@ function loadConfiguration() {
         'PERSEO_SMPP_FROM',
         'PERSEO_SMPP_ENABLED',
         'PERSEO_NOTICES_PATH',
-        'PERSEO_RULES_PATH'
-
+        'PERSEO_RULES_PATH',
+        'PERSEO_CAST_TYPES',
+        'PERSEO_AUTHENTICATION_HOST',
+        'PERSEO_AUTHENTICATION_PORT',
+        'PERSEO_AUTHENTICATION_USER',
+        'PERSEO_AUTHENTICATION_PASSWORD'
     ];
 
     for (var i = 0; i < environmentValues.length; i++) {
@@ -96,6 +101,14 @@ function loadConfiguration() {
             process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD ? process.env.PERSEO_MONGO_USER + ':' + process.env.PERSEO_MONGO_PASSWORD + '@' : '') +
             process.env.PERSEO_MONGO_ENDPOINT + '/orion' + (
             process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '');
+    }
+    if (process.env.PERSEO_IS_MASTER === 'true') {
+        config.isMaster = true;
+    } else if (process.env.PERSEO_IS_MASTER === 'false') {
+        config.isMaster = false;
+    }
+    if (process.env.PERSEO_SLAVE_DELAY) {
+        config.slaveDelay = process.env.PERSEO_SLAVE_DELAY;
     }
     if (process.env.PERSEO_CORE_URL) {
         config.perseoCore.rulesURL = process.env.PERSEO_CORE_URL + '/perseo-core/rules';
@@ -145,6 +158,12 @@ function loadConfiguration() {
     config.smpp.enabled = process.env.PERSEO_SMPP_ENABLED || config.smpp.enabled;
     config.endpoint.noticesPath = process.env.PERSEO_NOTICES_PATH || config.endpoint.noticesPath;
     config.endpoint.rulesPath = process.env.PERSEO_RULES_PATH || config.endpoint.rulesPath;
+    config.castTypes = process.env.PERSEO_CAST_TYPES || config.castTypes;
+    config.authentication = config.authentication || {};
+    config.authentication.host = process.env.PERSEO_AUTHENTICATION_HOST || config.authentication.host;
+    config.authentication.port = process.env.PERSEO_AUTHENTICATION_PORT || config.authentication.port;
+    config.authentication.user = process.env.PERSEO_AUTHENTICATION_USER || config.authentication.user;
+    config.authentication.password = process.env.PERSEO_AUTHENTICATION_PASSWORD || config.authentication.password;
 }
 
 loadConfiguration();

@@ -76,3 +76,15 @@ CRUD for Visual Rules. Originally detailed in [DCA documentation](https://colabo
 | ------ | :----------------------- | ----------------------------------- |
 | PUT    | /admin/log?level={level} | Set log level of perseo             |
 | GET    | /admin/log               | Get the current log level of perseo |
+
+### Pagination
+
+Perseo-fe implements a pagination mechanism in order to help clients to retrieve large sets of resources. This mechanism
+works for all listing operations in the API (GET /rules, GET /vrules)
+
+The mechanism is based on three URI parameters:
+
+-   **limit**: in order to specify the maximum number of elements (default is 20, maximum allowed is 1000).
+-   **offset**: in order to skip a given number of elements at the beginning (default is 0)
+-   **count** (as option): if activated then a Fiware-Total-Count header is added to the response, with a count of total
+    elements.

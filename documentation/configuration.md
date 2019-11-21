@@ -20,6 +20,8 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_MONGO_REPLICASET            | ReplicaSet name for Mongo DB.                                                              |
 | PERSEO_MONGO_USER                  | User for Mongo DB.                                                                         |
 | PERSEO_MONGO_PASSWORD              | Password for Mongo DB.                                                                     |
+| PERSEO_IS_MASTER                   | true if this one is the master or false it is the slave                                    |
+| PERSEO_SLAVE_DELAY                 | Slave's delay to try to execute an action (milliseconds).                                  |
 | PERSEO_CORE_URL                    | Full URL where Perseo Core is listening (e.g: `http://63.34.124.1:8080`).                  |
 | PERSEO_NEXT_URL                    | Full URL where Perseo Core replicated node is listening. Same format as above.             |
 | PERSEO_ORION_URL                   | Full URL of the Orion Context Broker (e.g: `http://64.124.28.15:1026`).                    |
@@ -42,6 +44,11 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_SMPP_ENABLED                | SMPP is default method for SMS instead of use SMS gateway                                  |
 | PERSEO_NOTICES_PATH                | Path for incoming notices, default value '/notices'                                        |
 | PERSEO_RULES_PATH                  | Path for incoming rules, default value '/rules'                                            |
+| PERSEO_AUTHENTICATION_HOST         | Host of the authentication endpoint                                                        |
+| PERSEO_AUTHENTICATION_PORT         | Port of the authentication endpoint                                                        |
+| PERSEO_AUTHENTICATION_USER         | User to perform authentication                                                             |
+| PERSEO_AUTHENTICATION_PASSWORD     | Password for the user to perform authentication                                            |
+| PERSEO_CAST_TYPE                   |  If true, enable attribute value casting based in NGSIv2 attribute types if true. If false (default), the JSON native type for the attribute value is used.            |
 
 ### Basic Configuration
 
@@ -95,5 +102,6 @@ Options for Authentication through PEP (for update action)
 -   `config.authentication.port`: port,
 -   `config.authentication.user`: provisioned user for CEP in Keystone
 -   `config.authentication.password`: provisioned password for CEP in Keystone
+-   `config.castTypes`: cast or not attribute values to expected type conform NGSIv2 (false by default)
 
 URL format for mongoDB could be found at `http://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html`
