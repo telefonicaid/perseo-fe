@@ -21,7 +21,7 @@
   },
   "scripts": {
     "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf coverage",
-    "test": "snyk test && mocha --recursive --reporter spec --timeout 3000 --ui bdd --exit",
+    "test": "mocha --recursive --reporter spec --timeout 3000 --ui bdd --exit",
     "test:watch": "npm run test -- -w ./lib",
     "lint": "jshint lib/ --config .jshintrc && jshint test/ --config test/.jshintrc",
     "lint:md": "remark 'README.md' documentation",
