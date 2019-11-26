@@ -4,3 +4,4 @@
   - express: from ~4.16.1 to ~4.16.4
   - request: from ~2.83.0 to 2.88.0
 - Hardening: MongoDB connection logic to avoid deprecated parameteres
+- Upgrade NodeJS version from 8.16.1 to 10.17.0 in Dockerfile due to Node 8 End-of-Life 
