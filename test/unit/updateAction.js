@@ -433,7 +433,7 @@ describe('doIt', function() {
             });
         });
 
-        it('should accept NGSIv2 entities with filter', function(done) {
+        it('should accept NGSIv2 entities with filter and no entities', function(done) {
             // Mocks
             var listEntitiesThen = sinon.spy(function(successCB, errorCB) {
                 setTimeout(function() {
@@ -482,6 +482,93 @@ describe('doIt', function() {
                 action1.parameters.version = 2;
                 action1.parameters.filter = { type: 'NGSIv2TypesTest2' };
                 updateAction.doIt(action1, event1, callback);
+            });
+        });
+
+        it('should accept NGSIv2 entities with filter and some entities', function(done) {
+            var entitiesToModify = [
+                { id: 'Sensor1', type: 'NGSIv2TypesTest2' },
+                { id: 'Sensor2', type: 'NGSIv2TypesTest2' }
+            ];
+            var action = {
+                type: 'update',
+                parameters: {
+                    version: '2',
+                    filter: {
+                        type: 'NGSIv2TypesTest2'
+                    },
+                    type: 'NGSIv2TypesTest2',
+                    attributes: [
+                        {
+                            name: 'power',
+                            type: 'Text',
+                            value: 'on'
+                        }
+                    ]
+                }
+            };
+
+            var expectedChanges = {
+                actionType: 'append',
+                entities: [
+                    {
+                        id: 'Sensor1',
+                        type: 'NGSIv2TypesTest2',
+                        power: { type: 'Text', value: 'on' }
+                    },
+                    {
+                        id: 'Sensor2',
+                        type: 'NGSIv2TypesTest2',
+                        power: { type: 'Text', value: 'on' }
+                    }
+                ]
+            };
+
+            // Mocks
+            var listEntitiesThen = sinon.spy(function(successCB, errorCB) {
+                setTimeout(function() {
+                    successCB({ httpCode: '200', results: entitiesToModify }); // success callback
+                }, 0);
+                return '__TEST';
+            });
+            var batchUpdateThen = sinon.spy(function(successCB, errorCB) {
+                setTimeout(function() {
+                    successCB({ httpCode: '200', message: 'all right' }); // success callback
+                }, 0);
+                return '__TEST';
+            });
+            var listEntitiesMock = sinon.spy(function(changes, options) {
+                return { then: listEntitiesThen };
+            });
+            var batchUpdateMock = sinon.spy(function(changes, options) {
+                return { then: batchUpdateThen };
+            });
+            var NGSICloseMock = sinon.spy(function() {
+                return 'closed';
+            });
+            var NGSIConnectionMock = sinon.spy(function() {
+                return {
+                    v2: {
+                        listEntities: listEntitiesMock,
+                        batchUpdate: batchUpdateMock
+                    },
+                    close: NGSICloseMock
+                };
+            });
+
+            updateAction.__with__({
+                'NGSI.Connection': NGSIConnectionMock
+            })(function() {
+                var callback = function(e, request) {
+                    should.exist(request);
+                    should.not.exist(e);
+                    should.equal(request.httpCode, 200);
+                    queryOptions.type = 'NGSIv2TypesTest2';
+                    listEntitiesMock.should.be.calledOnceWith(queryOptions);
+                    batchUpdateMock.should.be.calledOnceWith(expectedChanges);
+                    done();
+                };
+                updateAction.doIt(action, event1, callback);
             });
         });
     });
