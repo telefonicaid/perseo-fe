@@ -220,7 +220,7 @@ function addEntity(tenant, entity, callback) {
     );
 }
 function configTest() {
-    config.mongo.url = 'mongodb://172.17.0.1:27017/perseo_testing';
+    config.mongo.url = 'mongodb://localhost:27017/perseo_testing';
     config.endpoint.port = 9182;
     config.perseoCore.noticesURL = 'http://localhost:' + fakeServerPort;
     config.perseoCore.rulesURL = 'http://localhost:' + fakeServerPort;
@@ -232,7 +232,7 @@ function configTest() {
 
     config.logLevel = 'fatal';
     config.nextCore = {};
-    config.orionDb.url = 'mongodb://172.17.0.1:27017/test';
+    config.orionDb.url = 'mongodb://localhost:27017/test';
     config.orionDb.prefix = 'oriontest';
     config.perseoCore.interval = 10 * 60e3; //Do not refresh in the middle of a long test
 }
