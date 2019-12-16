@@ -165,8 +165,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Mon Dec 16 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.11.0
-- Use event for expanding action update filter (#417 )
-- Add special context for timed rules (#411)
+- Add: special context for timed rules (#411)
+- Fix: use event for expanding action update filter (#417)
 - Update some node dependencies:
   - async: from ~0.9.2 to 2.6.2
   - express: from ~4.16.1 to ~4.16.4
