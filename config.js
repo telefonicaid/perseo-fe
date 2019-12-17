@@ -29,7 +29,7 @@ var config = {};
  * Default log level. Can be one of: 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL'
  * @type {string}
  */
-config.logLevel = 'DEBUG';
+config.logLevel = 'INFO';
 
 /**
  * Configures the exposed API.

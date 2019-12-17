@@ -8,8 +8,7 @@ node_js:
 
 branches:
   only:
-    #- master
-    - fiqare-improvements-1
+    - master
 
 services:
  - mongodb
