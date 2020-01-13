@@ -105,14 +105,16 @@ config.nextCore = {
  * SMTP endpoint options
  */
 config.smtp = {
-    port: 9292,
-    host: '127.0.0.1',
+    port: 25,
+    host: 'smtpserver',
     secure: false,
-    /*auth: {
+    /*
+     ,
+     auth: {
      user: 'abc',
      pass: 'xyz'
-    },   */
-
+     }
+    */
     tls: {
         // keep rejectUnauthorized to false when secure is also false
         rejectUnauthorized: false
