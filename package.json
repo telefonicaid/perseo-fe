@@ -2,7 +2,7 @@
   "name": "perseo",
   "description": "IOT CEP front End",
   "license": "AGPL-3.0-only",
-  "version": "1.10.0-next",
+  "version": "1.11.0-next",
   "author": {
     "name": "crbrox",
     "email": "carlos.romerobrox@telefonica.com"

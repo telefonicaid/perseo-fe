@@ -164,6 +164,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Mon Dec 16 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.11.0
+- Add: special context for timed rules (#411)
+- Fix: use event for expanding action update filter (#417)
+- Update some node dependencies:
+  - async: from ~0.9.2 to 2.6.2
+  - express: from ~4.16.1 to ~4.16.4
+  - request: from ~2.83.0 to 2.88.0
+- Hardening: MongoDB connection logic to avoid deprecated parameteres
+- Upgrade NodeJS version from 8.16.1 to 10.17.0 in Dockerfile due to Node 8 End-of-Life
+
 * Tue Oct 29 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.10.0
 - Add: include stripped (non flatten) data into event (#377)
 - Add: castType (PERSEO_CAST_TYPE) to enable NGSIv2 type based casting (default is to use JSON native types in values)
