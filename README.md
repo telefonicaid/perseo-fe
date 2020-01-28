@@ -49,3 +49,28 @@ wish to make a clarifying public statement as follows:
 > incorporate enhancements is considered a derivative work of the product. Software that merely uses or aggregates (i.e.
 > links to) an otherwise unmodified version of existing software is not considered a derivative work, and therefore it
 > does not need to be released as under the same license, or even released as open source.
+
+
+## User & Programmers Manual
+
+### Swagger
+Swagger is a framework that offers rules, tools and specifications for Apis documentation, allowing us to describe the structure of our APIs so that machines can read them. 
+
+To know more about Swagger's interface and the project's API endpoints go to http://localhost:9090/api-docs.
+
+#### Instalation
+To run Swagger in Perseo we have to install two NPM packages for NodeJs:
+- Swagger-jsdoc: allows us to document our application's endpoints with notations.
+- Swagger-ui-express: generates an interface with endpoints definitions. 
+We have to specify our swagger's version, our API's information and the route where we can find the endpoints in the project.
+<pre><code>
+ definition: {
+                swagger: '2.0', // Specification (optional, defaults to swagger: '2.0')
+                info: {
+                    title: 'Perseo Front-End', // Title (required)
+                    version: '1.7.0-fiqare' // Version (required)
+                }
+            },
+</code></pre>
+Once the project is deployed (port 9090 by default), we can access to the interface by the following link: http://localhost:9090/api-docs.
+
