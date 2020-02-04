@@ -108,3 +108,31 @@ To ensure consistent Markdown formatting run the following:
 # Use git-bash on Windows
 npm run prettier:text
 ```
+
+## User & Programmers Manual
+
+### Swagger
+
+In order to run Swagger, you need to execute the Perseo FE (as explained [here](deployment.md) and then you can access
+to: <server_host>:9090/api-docs
+
+The swagger documentation provided at /api-docs covers all the HTTP endpoint exposed by Perseo FE.
+
+#### Instalation
+
+To run Swagger in Perseo we have to install two NPM packages for NodeJs:
+
+-   Swagger-jsdoc: allows us to document our application's endpoints with notations.
+-   Swagger-ui-express: generates an interface with endpoints definitions. We have to specify our swagger's version, our
+    API's information and the route where we can find the endpoints in the project.
+    <pre><code>
+     definition: {
+                    swagger: '2.0', // Specification (optional, defaults to swagger: '2.0')
+                    info: {
+                        title: 'Perseo Front-End', // Title (required)
+                        version: '1.7.0-fiqare' // Version (required)
+                    }
+                },
+    </code></pre>
+    Once the project is deployed (port 9090 by default), we can access to the interface by the following link:
+    <http://localhost:9090/api-docs>.
