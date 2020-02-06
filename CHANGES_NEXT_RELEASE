@@ -1,0 +1,2 @@
+- Add: /api-docs endpoint providing swagger-based documentation of the HTTP endpoints exposed by Perseo FE
+- Hardening: software quality improvement based on ISO25010 recommendations
