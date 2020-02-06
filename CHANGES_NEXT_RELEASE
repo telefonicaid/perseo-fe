@@ -1,1 +1,2 @@
-- Fix nonsignal actions in HA: both nodes are executing the same rule at the same time
+- Fix nosignal actions in HA: both nodes are executing the same rule at the same time
+- Fix: improving logs system, adding more traces and changes to avoid too verbose messages at INFO level
