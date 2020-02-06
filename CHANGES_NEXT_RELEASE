@@ -1,1 +1,1 @@
-- Add more logs
+- Fix: improving logs system, adding more traces and changes to avoid too verbose messages at INFO level
