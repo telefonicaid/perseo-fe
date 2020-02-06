@@ -1,0 +1,1 @@
+- Fix nonsignal actions in HA: both nodes are executing the same rule at the same time
