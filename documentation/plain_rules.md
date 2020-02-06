@@ -2,7 +2,7 @@
 
 -   [Introduction](#introduction)
 -   [EPL text](#epl-text)
--   [No signal conditions](#nosignal-conditions)
+-   [No signal conditions](#no-signal-conditions)
 -   [Actions](#actions)
     -   [String substitution syntax](#string-substitution-syntax)
     -   [SMS action](#sms-action)
@@ -19,7 +19,9 @@
 
 There are two kind of rules:
 
-* Esper-based rules, which include the final EPL statement used by the Esper engine inside perseo-core. In order to work with perseo (front-end) properly, the EPL statement must fulfill several conventions for the rule to be able to operate on the incoming events and trigger adequate actions. Example:
+-   Esper-based rules, which include the final EPL statement used by the Esper engine inside perseo-core. In order to
+    work with perseo (front-end) properly, the EPL statement must fulfill several conventions for the rule to be able to
+    operate on the incoming events and trigger adequate actions. Example:
 
 ```json
 {
@@ -40,9 +42,8 @@ There are two kind of rules:
 }
 ```
 
-* No signal rules. They are triggered when a given attribute is not updated in a given interval of time. They
-don't use Esper at persero-core (they are checked and triggered by perseo frontend). Example:
-
+-   No signal rules. They are triggered when a given attribute is not updated in a given interval of time. They don't
+    use Esper at persero-core (they are checked and triggered by perseo frontend). Example:
 
 ```json
 {
@@ -127,7 +128,8 @@ information on how to scape characters at
 
 ## No signal conditions
 
-The no signal condition is specified in the `nosignal` configuration element, which is an object with the following fields:
+The no signal condition is specified in the `nosignal` configuration element, which is an object with the following
+fields:
 
 -   **checkInterval**: _mandatory_, time in minutes for checking the attribute
 -   **attribute**: _mandatory_, attribute for watch
@@ -135,7 +137,7 @@ The no signal condition is specified in the `nosignal` configuration element, wh
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), id or regex of the entity to watch
 -   type: _optional_, type of entities to watch
 
-Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of 
+Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of
 checkInterval could impact on performance.
 
 <a name="actions"></a>
