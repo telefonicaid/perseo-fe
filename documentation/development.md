@@ -119,4 +119,3 @@ to:
 ```
 
 The swagger documentation provided at /api-docs covers all the HTTP endpoint exposed by Perseo FE.
-
