@@ -1,5 +1,2 @@
-- Fix nosignal actions in HA: both nodes are executing the same rule at the same time
-- Add: /api-docs endpoint providing swagger-based documentation of the HTTP endpoints exposed by Perseo FE
-- Fix: improving logs system, adding more traces and changes to avoid too verbose messages at INFO level
-- Hardening: software quality improvement based on ISO25010 recommendations
+
 
