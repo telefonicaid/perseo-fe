@@ -164,6 +164,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Mon Feb 10 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
+- Fix nosignal actions in HA: both nodes are executing the same rule at the same time
+- Add: /api-docs endpoint providing swagger-based documentation of the HTTP endpoints exposed by Perseo FE
+- Fix: improving logs system, adding more traces and changes to avoid too verbose messages at INFO level
+- Hardening: software quality improvement based on ISO25010 recommendations
+
 * Mon Dec 16 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.11.0
 - Add: special context for timed rules (#411)
 - Fix: use event for expanding action update filter (#417)
