@@ -164,6 +164,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Mon Feb 10 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.1
+- Fix: broken email action
+
 * Mon Feb 10 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
 - Fix nosignal actions in HA: both nodes are executing the same rule at the same time
 - Add: /api-docs endpoint providing swagger-based documentation of the HTTP endpoints exposed by Perseo FE
