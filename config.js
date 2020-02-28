@@ -151,6 +151,13 @@ config.orion = {
 };
 
 /**
+ * Pep (proxy for Context Broker) endpoint options
+ */
+config.pep = {
+    URL: 'http://pep-endpoint:1026'
+};
+
+/**
  * Authorization endpoint
  */
 config.authentication = {
