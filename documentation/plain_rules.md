@@ -266,7 +266,10 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   **value**: _mandatory_, attribute value to set
     -   type: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is
         changed).
--   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
+-   actionType: optional, type of CB action: APPEND, UPDATE or DELETE. By default is APPEND.
+    -   APPEND: updated attributes (if previously exist in the entity) or append them to the entity (if previously doesn't exist in the entity)
+    -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
+    -   DELETE: delete attributes (or the entity itself if the attributes list is empty)    
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
 -   service: optional, service that will be used by updateAction rule instead of current event service, pep url will be used instead of contextbroker.
