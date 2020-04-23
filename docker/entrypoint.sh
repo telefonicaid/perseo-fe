@@ -46,10 +46,10 @@ file_env() {
 
 if [[  -z "$PM2_ENABLED" ]]; then
     echo "INFO: IoT Agent running standalone"
-    node /opt/iotaManager/bin/iota-manager
+    node /opt/perseo-fe/bin/perseo
 else
     echo "***********************************************"
-    echo "INFO: IoT Agent Manager encapsulated by pm2-runtime see https://pm2.io/doc/en/runtime/integration/docker/"
+    echo "INFO: PerseoFE encapsulated by pm2-runtime see https://pm2.io/doc/en/runtime/integration/docker/"
     echo "***********************************************"
-    pm2-runtime /opt/iotaManager/bin/iota-manager
+    pm2-runtime /opt/perseo-fe/bin/perseo
 fi
