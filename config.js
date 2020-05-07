@@ -84,9 +84,9 @@ config.orionDb = {
  * at core. Each <<interval>> ms, the rules are sent to core.
  */
 config.perseoCore = {
-    rulesURL: 'http://localhost:8080/perseo-core/rules',
-    noticesURL: 'http://localhost:8080/perseo-core/events',
-    interval: 60e3 * 5
+    rulesURL: 'http://localhost:8080/perseo-main/rules',
+    noticesURL: 'http://localhost:8080/perseo-main/events',
+    interval: 60e3 * 1
 };
 /**
  * NEXT EPL core options (with HA)
@@ -96,8 +96,8 @@ config.nextCore = {
     // Note this parameter is empty, so Perseo will not use HA by default
     //
     /*
-    rulesURL : 'http://next-core:8080/perseo-core/rules',
-    noticesURL : 'http://next-core:8080/perseo-core/events'
+    rulesURL : 'http://next-core:8080/perseo-main/rules',
+    noticesURL : 'http://next-core:8080/perseo-main/events'
     */
 };
 
@@ -109,11 +109,11 @@ config.smtp = {
     host: 'smtpserver',
     secure: false,
     /*
-     ,
      auth: {
      user: 'abc',
      pass: 'xyz'
      }
+     ,
     */
     tls: {
         // keep rejectUnauthorized to false when secure is also false
