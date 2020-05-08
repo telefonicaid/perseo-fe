@@ -109,11 +109,11 @@ config.smtp = {
     host: 'smtpserver',
     secure: false,
     /*
-     ,
      auth: {
      user: 'abc',
      pass: 'xyz'
      }
+     ,
     */
     tls: {
         // keep rejectUnauthorized to false when secure is also false
