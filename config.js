@@ -169,7 +169,7 @@ config.authentication = {
 
 /**
  * Collections
- * @type {{}}
+ * @type {String}
  */
 config.collections = {
     rules: 'rules',
@@ -189,7 +189,7 @@ config.executionsTTL = 1 * 24 * 60 * 60;
  * Constants for missing header fields for service (Fiware-servicepath) DEFAULT_SUBSERVICE
  * and tenant (Fiware-service) DEFAULT_TENANT
  *
- * @type {{}}
+ * @type {String}
  */
 config.DEFAULT_SUBSERVICE = '/';
 config.DEFAULT_SERVICE = 'unknownt';
