@@ -164,7 +164,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
-* Tue May 12 2020 Alvaro Vega <fermin.galanmarquez@telefonica.com> 1.13.0
+* Tue May 12 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.13.0
 - Add: service and subservice as action parameters for updateAction (#349)
 - Fix: broken email action
 - Make optional PM2 usage in docker entrypoint
