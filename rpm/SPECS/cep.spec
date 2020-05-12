@@ -164,6 +164,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue May 12 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.13.0
+- Add: service and subservice as action parameters for updateAction (#349)
+- Fix: broken email action
+- Make optional PM2 usage in docker entrypoint
+- Upgrade NodeJS version from 10.17.0 to 10.19.0 in Dockerfile
+- Set Nodejs 10.17.0 as minimum version in packages.json (effectively removing Nodev8 as supported version)
+
 * Mon Feb 10 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
 - Fix nosignal actions in HA: both nodes are executing the same rule at the same time
 - Add: /api-docs endpoint providing swagger-based documentation of the HTTP endpoints exposed by Perseo FE

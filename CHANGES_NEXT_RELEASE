@@ -1,5 +1,0 @@
-Add service and subservice as action parameters for updateAction [#349]
-Set Nodejs 10.17.0 as minimum version in packages.json (effectively removing Nodev8 as supported version)
-Fix: broken email action
-Make optional PM2 usage in docker entrypoint
-Upgrade NodeJS version from 10.17.0 to 10.19.0 in Dockerfile
