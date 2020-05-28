@@ -108,3 +108,14 @@ To ensure consistent Markdown formatting run the following:
 # Use git-bash on Windows
 npm run prettier:text
 ```
+
+### Swagger
+
+In order to run Swagger, you need to execute the Perseo FE (as explained [here](deployment.md)) and then you can access
+to:
+
+```
+<server_host>:9090/api-docs
+```
+
+The swagger documentation provided at /api-docs covers all the HTTP endpoint exposed by Perseo FE.

@@ -2,7 +2,7 @@
 
 -   [Introduction](#introduction)
 -   [EPL text](#epl-text)
--   [No signal conditions](#nosignal-conditions)
+-   [No signal conditions](#no-signal-conditions)
 -   [Actions](#actions)
     -   [String substitution syntax](#string-substitution-syntax)
     -   [SMS action](#sms-action)
@@ -19,7 +19,9 @@
 
 There are two kind of rules:
 
-* Esper-based rules, which include the final EPL statement used by the Esper engine inside perseo-core. In order to work with perseo (front-end) properly, the EPL statement must fulfill several conventions for the rule to be able to operate on the incoming events and trigger adequate actions. Example:
+-   Esper-based rules, which include the final EPL statement used by the Esper engine inside perseo-core. In order to
+    work with perseo (front-end) properly, the EPL statement must fulfill several conventions for the rule to be able to
+    operate on the incoming events and trigger adequate actions. Example:
 
 ```json
 {
@@ -40,9 +42,8 @@ There are two kind of rules:
 }
 ```
 
-* No signal rules. They are triggered when a given attribute is not updated in a given interval of time. They
-don't use Esper at persero-core (they are checked and triggered by perseo frontend). Example:
-
+-   No signal rules. They are triggered when a given attribute is not updated in a given interval of time. They don't
+    use Esper at persero-core (they are checked and triggered by perseo frontend). Example:
 
 ```json
 {
@@ -127,7 +128,8 @@ information on how to scape characters at
 
 ## No signal conditions
 
-The no signal condition is specified in the `nosignal` configuration element, which is an object with the following fields:
+The no signal condition is specified in the `nosignal` configuration element, which is an object with the following
+fields:
 
 -   **checkInterval**: _mandatory_, time in minutes for checking the attribute
 -   **attribute**: _mandatory_, attribute for watch
@@ -135,7 +137,7 @@ The no signal condition is specified in the `nosignal` configuration element, wh
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), id or regex of the entity to watch
 -   type: _optional_, type of entities to watch
 
-Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of 
+Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of
 checkInterval could impact on performance.
 
 <a name="actions"></a>
@@ -264,9 +266,14 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   **value**: _mandatory_, attribute value to set
     -   type: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is
         changed).
--   actionType: optional, type of CB action: APPEND or UPDATE. By default is APPEND.
+-   actionType: optional, type of CB action: APPEND, UPDATE or DELETE. By default is APPEND.
+    -   APPEND: updated attributes (if previously exist in the entity) or append them to the entity (if previously doesn't exist in the entity)
+    -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
+    -   DELETE: delete attributes (or the entity itself if the attributes list is empty)    
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
+-   service: optional, service that will be used by updateAction rule instead of current event service, pep url will be used instead of contextbroker.
+-   subservice: optional, subservice that will be used by updateActino rule instead of current event service, pep url will be used instead of contextbroker.
 -   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the
     `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
     `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored).

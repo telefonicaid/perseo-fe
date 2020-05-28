@@ -12,43 +12,44 @@ There are two ways of configuring Perseo CEP:
 
 The following table shows the environment variables available for Perseo configuration:
 
-| Environment variable               | Description                                                                                |
-| :--------------------------------- | :----------------------------------------------------------------------------------------- |
-| PERSEO_ENDPOINT_HOST               | Host where the CEP will listen.                                                            |
-| PERSEO_ENDPOINT_PORT               | Port where the CEP will listen.                                                            |
-| PERSEO_MONGO_ENDPOINT              | Endpoint (`host[:port]`) list for Mongo DB.                                                |
-| PERSEO_MONGO_REPLICASET            | ReplicaSet name for Mongo DB.                                                              |
-| PERSEO_MONGO_USER                  | User for Mongo DB.                                                                         |
-| PERSEO_MONGO_PASSWORD              | Password for Mongo DB.                                                                     |
-| PERSEO_IS_MASTER                   | true if this one is the master or false it is the slave                                    |
-| PERSEO_SLAVE_DELAY                 | Slave's delay to try to execute an action (milliseconds).                                  |
-| PERSEO_CORE_URL                    | Full URL where Perseo Core is listening (e.g: `http://63.34.124.1:8080`).                  |
-| PERSEO_NEXT_URL                    | Full URL where Perseo Core replicated node is listening. Same format as above.             |
-| PERSEO_ORION_URL                   | Full URL of the Orion Context Broker (e.g: `http://64.124.28.15:1026`).                    |
-| PERSEO_LOG_LEVEL                   | Log level.                                                                                 |
-| PERSEO_SMTP_HOST                   | Host of the SMTP server                                                                    |
-| PERSEO_SMTP_PORT                   | Port of the SMTP server                                                                    |
-| PERSEO_SMTP_SECURE                 | `true` if SSL should be used with the SMTP server                                          |
-| PERSEO_SMTP_AUTH_USER              | Authentication data, the username                                                          |
-| PERSEO_SMTP_AUTH_PASS              | Authentication data, the password for the user                                             |
-| PERSEO_SMTP_TLS_REJECTUNAUTHORIZED | Reject if unauthorized security is found (i.e. selfsigned certificates). Default is false. |
-| PERSEO_SMS_URL                     | URL for sending SMSs (SMPP Adapter)                                                        |
-| PERSEO_SMS_API_KEY                 | API KEY for sending SMSs, if necessary. Only for the SMPP Adapter simulator                |
-| PERSEO_SMS_API_SECRET              | API SECRET for sending SMSs, if necessary. Only for the SMPP Adapter simulator             |
-| PERSEO_SMS_FROM                    | Field `from` for the outgoing SMSs. Required by the SMPP Adapter                           |
-| PERSEO_SMPP_HOST                   | Host of the SMPP server                                                                    |
-| PERSEO_SMPP_PORT                   | Port of the SMPP server                                                                    |
-| PERSEO_SMPP_SYSTEMID               | SystemID for the user of the SMPP server                                                   |
-| PERSEO_SMPP_PASSWORD               | Password for the user of the SMPP server                                                   |
-| PERSEO_SMPP_FROM                   | Number from SMS are sending by SMPP server                                                 |
-| PERSEO_SMPP_ENABLED                | SMPP is default method for SMS instead of use SMS gateway                                  |
-| PERSEO_NOTICES_PATH                | Path for incoming notices, default value '/notices'                                        |
-| PERSEO_RULES_PATH                  | Path for incoming rules, default value '/rules'                                            |
-| PERSEO_AUTHENTICATION_HOST         | Host of the authentication endpoint                                                        |
-| PERSEO_AUTHENTICATION_PORT         | Port of the authentication endpoint                                                        |
-| PERSEO_AUTHENTICATION_USER         | User to perform authentication                                                             |
-| PERSEO_AUTHENTICATION_PASSWORD     | Password for the user to perform authentication                                            |
-| PERSEO_CAST_TYPE                   |  If true, enable attribute value casting based in NGSIv2 attribute types if true. If false (default), the JSON native type for the attribute value is used.            |
+| Environment variable               | Description                                                                                                                                                |
+| :--------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PERSEO_ENDPOINT_HOST               | Host where the CEP will listen.                                                                                                                            |
+| PERSEO_ENDPOINT_PORT               | Port where the CEP will listen.                                                                                                                            |
+| PERSEO_MONGO_ENDPOINT              | Endpoint (`host[:port]`) list for Mongo DB.                                                                                                                |
+| PERSEO_MONGO_REPLICASET            | ReplicaSet name for Mongo DB.                                                                                                                              |
+| PERSEO_MONGO_USER                  | User for Mongo DB.                                                                                                                                         |
+| PERSEO_MONGO_PASSWORD              | Password for Mongo DB.                                                                                                                                     |
+| PERSEO_IS_MASTER                   | true if this one is the master or false it is the slave                                                                                                    |
+| PERSEO_SLAVE_DELAY                 | Slave's delay to try to execute an action (milliseconds).                                                                                                  |
+| PERSEO_CORE_URL                    | Full URL where Perseo Core is listening (e.g: `http://63.34.124.1:8080`).                                                                                  |
+| PERSEO_NEXT_URL                    | Full URL where Perseo Core replicated node is listening. Same format as above.                                                                             |
+| PERSEO_ORION_URL                   | Full URL of the Orion Context Broker (e.g: `http://64.124.28.15:1026`).                                                                                    |
+| PERSEO_PEP_URL                     | Full URL of the Pep (Context Broker) (e.g: `http://64.124.28.15:10026`). This url will be used instead of PERSEO_ORION_URL when updateAction rule has set a non empty value for service and subservice.                                                                                  |
+| PERSEO_LOG_LEVEL                   | Log level.                                                                                                                                                 |
+| PERSEO_SMTP_HOST                   | Host of the SMTP server                                                                                                                                    |
+| PERSEO_SMTP_PORT                   | Port of the SMTP server                                                                                                                                    |
+| PERSEO_SMTP_SECURE                 | `true` if SSL should be used with the SMTP server                                                                                                          |
+| PERSEO_SMTP_AUTH_USER              | Authentication data, the username                                                                                                                          |
+| PERSEO_SMTP_AUTH_PASS              | Authentication data, the password for the user                                                                                                             |
+| PERSEO_SMTP_TLS_REJECTUNAUTHORIZED | Reject if unauthorized security is found (i.e. selfsigned certificates). Default is false.                                                                 |
+| PERSEO_SMS_URL                     | URL for sending SMSs (SMPP Adapter)                                                                                                                        |
+| PERSEO_SMS_API_KEY                 | API KEY for sending SMSs, if necessary. Only for the SMPP Adapter simulator                                                                                |
+| PERSEO_SMS_API_SECRET              | API SECRET for sending SMSs, if necessary. Only for the SMPP Adapter simulator                                                                             |
+| PERSEO_SMS_FROM                    | Field `from` for the outgoing SMSs. Required by the SMPP Adapter                                                                                           |
+| PERSEO_SMPP_HOST                   | Host of the SMPP server                                                                                                                                    |
+| PERSEO_SMPP_PORT                   | Port of the SMPP server                                                                                                                                    |
+| PERSEO_SMPP_SYSTEMID               | SystemID for the user of the SMPP server                                                                                                                   |
+| PERSEO_SMPP_PASSWORD               | Password for the user of the SMPP server                                                                                                                   |
+| PERSEO_SMPP_FROM                   | Number from SMS are sending by SMPP server                                                                                                                 |
+| PERSEO_SMPP_ENABLED                | SMPP is default method for SMS instead of use SMS gateway                                                                                                  |
+| PERSEO_NOTICES_PATH                | Path for incoming notices, default value '/notices'                                                                                                        |
+| PERSEO_RULES_PATH                  | Path for incoming rules, default value '/rules'                                                                                                            |
+| PERSEO_AUTHENTICATION_HOST         | Host of the authentication endpoint                                                                                                                        |
+| PERSEO_AUTHENTICATION_PORT         | Port of the authentication endpoint                                                                                                                        |
+| PERSEO_AUTHENTICATION_USER         | User to perform authentication                                                                                                                             |
+| PERSEO_AUTHENTICATION_PASSWORD     | Password for the user to perform authentication                                                                                                            |
+| PERSEO_CAST_TYPE                   | If true, enable attribute value casting based in NGSIv2 attribute types if true. If false (default), the JSON native type for the attribute value is used. |
 
 ### Basic Configuration
 

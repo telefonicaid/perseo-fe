@@ -164,6 +164,29 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue May 12 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.13.0
+- Add: service and subservice as action parameters for updateAction (#349)
+- Fix: broken email action
+- Make optional PM2 usage in docker entrypoint
+- Upgrade NodeJS version from 10.17.0 to 10.19.0 in Dockerfile
+- Set Nodejs 10.17.0 as minimum version in packages.json (effectively removing Nodev8 as supported version)
+
+* Mon Feb 10 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
+- Fix nosignal actions in HA: both nodes are executing the same rule at the same time
+- Add: /api-docs endpoint providing swagger-based documentation of the HTTP endpoints exposed by Perseo FE
+- Fix: improving logs system, adding more traces and changes to avoid too verbose messages at INFO level
+- Hardening: software quality improvement based on ISO25010 recommendations
+
+* Mon Dec 16 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.11.0
+- Add: special context for timed rules (#411)
+- Fix: use event for expanding action update filter (#417)
+- Update some node dependencies:
+  - async: from ~0.9.2 to 2.6.2
+  - express: from ~4.16.1 to ~4.16.4
+  - request: from ~2.83.0 to 2.88.0
+- Hardening: MongoDB connection logic to avoid deprecated parameteres
+- Upgrade NodeJS version from 8.16.1 to 10.17.0 in Dockerfile due to Node 8 End-of-Life
+
 * Tue Oct 29 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.10.0
 - Add: include stripped (non flatten) data into event (#377)
 - Add: castType (PERSEO_CAST_TYPE) to enable NGSIv2 type based casting (default is to use JSON native types in values)
