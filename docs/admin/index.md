@@ -111,8 +111,11 @@ You will also need to change the references to them in the `environment:` sectio
 
 ### Service Environment Variables
 
-Perseo service can be configured using the following environment variables. Please note variables marked with ✅ are
-required.
+Perseo service can be configured using the following environment variables. Keep in mind that `perseo-fe` and
+`perseo-core` services need to be configured with different variables. The variables marked with ✅ are mandatory.
+
+You can see an example of using some of the environment variables in this
+[docker-compose.yml](<(../../docker-compose.yml)>)
 
 #### perseo-fe
 
@@ -141,6 +144,7 @@ required.
 
 #### perseo-core
 
-| Variable          | Default Value | Description                       |
-| ----------------- | ------------- | --------------------------------- |
-| `PERSEO_FE_URL`✅ |               | URL where `perseo-fe` listens to. |
+| Variable          | Default Value | Description                                         |
+| ----------------- | ------------- | --------------------------------------------------- |
+| `PERSEO_FE_URL`✅ |               | URL where `perseo-fe` listens to.                   |
+| `MAX_AGE`         | 60000         | Expiration time for dangling rules in milliseconds. |
