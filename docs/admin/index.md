@@ -23,7 +23,7 @@ Just in case, if you don't want Docker, take into account that Perseo CEP is a s
 [Node.js](https://nodejs.org/es/) application and does not require more dependencies than the _Node.js interpreter_ and
 the [NPM](https://www.npmjs.com/) package utility.
 
-A [mongoDB 3.2](https://www.mongodb.com/) database should be working and accesible in order for Perseo to be started.
+A [mongoDB 3.6](https://www.mongodb.com/) database should be working and accesible in order for Perseo to be started.
 
 ### Using docker-compose
 
@@ -36,7 +36,7 @@ If you want to quickly deploy all the Perseo CEP components to start experimenti
 version: '3.4'
 services:
     perseo-mongo:
-        image: mongo:3.2
+        image: mongo:3.6
         volumes:
             - ./mongodata:/data/db
         networks:

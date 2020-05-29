@@ -19,7 +19,7 @@
 version: '3.4'
 services:
     perseo-mongo:
-        image: mongo:3.2
+        image: mongo:3.6
         volumes:
             - ./mongodata:/data/db
         networks:
