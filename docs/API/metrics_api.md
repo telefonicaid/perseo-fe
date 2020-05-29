@@ -1,8 +1,17 @@
-## Metrics API
+## <a name="top"></a>Metrics API
+
+-   [Introduction](#introduction)
+-   [Operations](#operations)
+    -   [Get metrics](#get-metrics)
+    -   [Reset metrics](#reset-metrics)
+    -   [Get and reset](#get-and-reset)
+-   [Metrics](#metrics)
 
 ### Introduction
 
 The Perseo Metrics API is a REST-based API that can be used to get relevant operational metrics.
+
+[Top](#top)
 
 ### Operations
 
@@ -70,6 +79,8 @@ Some additional remarks:
 -   Requests corresponding to invalid services or subservices are not included in the payload (i.e. their associated
     metrics are just ignored).
 
+[Top](#top)
+
 #### Reset metrics
 
 ```text
@@ -77,6 +88,8 @@ DELETE /admin/metrics
 ```
 
 This operation resets all metrics, as if Perseo would had just been started.
+
+[Top](#top)
 
 #### Get and reset
 
@@ -86,6 +99,8 @@ GET /admin/metrics?reset=true
 
 This operation (in fact, a variant of [get metrics](#get-metrics)) get results and, at the same time in an atomical way,
 resets metrics.
+
+[Top](#top)
 
 ### Metrics
 
@@ -143,3 +158,5 @@ The following metrics are used only by Perseo:
     -   **failedActionEmail**
     -   **failedActionHttpPost**
     -   **failedActionTwitter**
+
+[Top](#top)
