@@ -28,7 +28,6 @@ This project is part of [FIWARE](https://www.fiware.org). You can find more FIWA
 -   [Usage](#usage)
 -   [API](#api)
 -   [Testing](#testing)
--   [Quality Assurance](#quality-assurance)
 -   [More Information](#more-information)
 -   [License](#license)
 
