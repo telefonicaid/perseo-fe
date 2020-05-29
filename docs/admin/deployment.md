@@ -50,6 +50,19 @@ In order to link other Docker images to the Perso FE image, take into account th
 
 For the full perseo stack to work, both instances should be linked to their appropriate alias.
 
+### Using PM2
+
+The PerseoFEwithin the Docker image can be run encapsulated within the [pm2](http://pm2.keymetrics.io/) Process Manager
+by adding the `PM2_ENABLED` environment variable.
+
+```console
+docker run --name perseofe -e PM2_ENABLED=true -d fiware/perseo-fe
+```
+
+Use of pm2 is **disabled** by default. It is unnecessary and counterproductive to add an additional process manager if
+your dockerized environment is already configured to restart Node.js processes whenever they exit (e.g. when using
+[Kubernetes](https://kubernetes.io/))
+
 ### Running together with Perseo Core and Orion Context Broker
 
 Below it is shown how to run together [Perseo Core](http://github.com/telefonicaid/perseo-core) and Perseo frontend.

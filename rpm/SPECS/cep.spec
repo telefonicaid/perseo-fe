@@ -164,6 +164,48 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue May 12 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.13.0
+- Add: service and subservice as action parameters for updateAction (#349)
+- Fix: broken email action
+- Make optional PM2 usage in docker entrypoint
+- Upgrade NodeJS version from 10.17.0 to 10.19.0 in Dockerfile
+- Set Nodejs 10.17.0 as minimum version in packages.json (effectively removing Nodev8 as supported version)
+
+* Mon Feb 10 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
+- Fix nosignal actions in HA: both nodes are executing the same rule at the same time
+- Add: /api-docs endpoint providing swagger-based documentation of the HTTP endpoints exposed by Perseo FE
+- Fix: improving logs system, adding more traces and changes to avoid too verbose messages at INFO level
+- Hardening: software quality improvement based on ISO25010 recommendations
+
+* Mon Dec 16 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.11.0
+- Add: special context for timed rules (#411)
+- Fix: use event for expanding action update filter (#417)
+- Update some node dependencies:
+  - async: from ~0.9.2 to 2.6.2
+  - express: from ~4.16.1 to ~4.16.4
+  - request: from ~2.83.0 to 2.88.0
+- Hardening: MongoDB connection logic to avoid deprecated parameteres
+- Upgrade NodeJS version from 8.16.1 to 10.17.0 in Dockerfile due to Node 8 End-of-Life
+
+* Tue Oct 29 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.10.0
+- Add: include stripped (non flatten) data into event (#377)
+- Add: castType (PERSEO_CAST_TYPE) to enable NGSIv2 type based casting (default is to use JSON native types in values)
+- Add: authentication config env vars (#349)
+- Add: full support for pagination in APIs /rules and /vrules (#364)
+- Add: Fiware-Total-Count header to response when count
+- Add: missed correlatorid headers in updateAction with NGSIv2
+- Add: try expandVars for numeric, boolean and json in attributes of updateAction and text of postAction (#362)
+- Add: NGSI filter to updateAction (#335)
+- Add: count to response to get all rules (cep + vr)
+- Add: update entity using NGSIv2 with a trust token (#317)
+- Add: new logs about rule provision, deleting, etc (#346)
+- Add: config env vars for isMaster and slaveDelay
+- Set default version to 2 (NGSIv2) for updateAction by default
+- Refactor updateAction doItWithToken to include version 1 and 2
+- Upgrade NodeJS version from 8.16.0 to 8.16.1 in Dockerfile due to security issues
+- Upgrade ngsijs dependency from 1.2.0 to 1.2.1
+- Upgrade mongodb dependency from ~2.2.31 to ~2.2.35
+
 * Tue Jun 04 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.9.0
 - Upgrade from node:8.12.0-slim to node:8.16.0-slim as base image in Dockerfile
 - Add: allow SMS actions with multiple phone destinations (#337)
