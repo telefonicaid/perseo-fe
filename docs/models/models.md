@@ -1,6 +1,4 @@
-<a name="collections"></a>
-
-## Collections
+## Data model
 
 ### Rules
 
@@ -15,7 +13,7 @@ Fields:
 -   **subservice** _string_: subservice which the rule belongs to.
 -   **tex** _string_: EPL sentence for the rule, to be propagated to core
 -   **action** _object_: action to be executed when the rule is fired. Each action type has different field set as
-    described in [Plain rules](plain_rules.md#actions)
+    described in [Plain rules](../API/plain_rules.md#actions)
     -   **type** ( _string_ ): type of action.
     -   Other subfields, depending on the rule type.
 -   **VR** _object_: VisualRule object passed in by the Portal

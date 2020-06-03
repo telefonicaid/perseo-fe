@@ -267,13 +267,16 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   type: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is
         changed).
 -   actionType: optional, type of CB action: APPEND, UPDATE or DELETE. By default is APPEND.
-    -   APPEND: updated attributes (if previously exist in the entity) or append them to the entity (if previously doesn't exist in the entity)
+    -   APPEND: updated attributes (if previously exist in the entity) or append them to the entity (if previously
+        doesn't exist in the entity)
     -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
-    -   DELETE: delete attributes (or the entity itself if the attributes list is empty)    
+    -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
--   service: optional, service that will be used by updateAction rule instead of current event service, pep url will be used instead of contextbroker.
--   subservice: optional, subservice that will be used by updateActino rule instead of current event service, pep url will be used instead of contextbroker.
+-   service: optional, service that will be used by updateAction rule instead of current event service, pep url will be
+    used instead of contextbroker.
+-   subservice: optional, subservice that will be used by updateActino rule instead of current event service, pep url
+    will be used instead of contextbroker.
 -   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the
     `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
     `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored).
