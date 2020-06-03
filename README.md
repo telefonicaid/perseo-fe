@@ -53,22 +53,20 @@ Orion to create or update entities, or with other different components or extern
 
 ## Installation
 
-The instructions to install Perseo can be found in the
-[Installation Guide](https://perseo.readthedocs.io/en/latest/setup.html)
+The instructions to install Perseo can be found in the [Deployment Guide](docs/admin/deployment.md)
 
 ## Usage
 
-Information about how to use Perseo can be found in the
-[User & Programmers Manual](https://perseo.readthedocs.io/en/latest/example1.html)
+Information about how to use Perseo can be found in the [User & Programmers Manual](docs/user/index.md)
 
 ## API
 
-APIs and examples of their usage can be found [here](https://perseo.readthedocs.io/en/latest/api.html)
+APIs and examples of their usage can be found [here](docs/API/api.md)
 
 ## Testing
 
 For performing a basic end-to-end test, you can follow the detailed instructions
-[here](https://perseo.readthedocs.io/en/latest/test.html).
+[here](docs/developer/development.md#Testing).
 
 ## More Information
 

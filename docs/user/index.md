@@ -30,7 +30,7 @@ that will trigger actions with Orion to create or update entities, or with other
 systems, such as Web (HTTP), Email (SMTP) or SMS (SMPP) servers.
 
 Perseo allows you to create/edit/delete rules through its API. You can find more accurate information about the Perseo
-API [here](https://perseo.readthedocs.io/en/latest/API/api/)
+API [here](../API/api.md)
 
 ## Perseo Rules
 
@@ -79,8 +79,7 @@ from pattern
      [every ev=iotEvent(type="BloodMeter")]
 ```
 
-You will find the complete information about Perseo Rules in
-[plain rules](https://perseo.readthedocs.io/en/latest/API/plain_rules/) section.
+You will find the complete information about Perseo Rules in [plain rules](.../API/plain_rules.md) section.
 
 ### Actions
 
@@ -106,22 +105,18 @@ Actions are set by means of the `action` field of the rule. Let's see an example
 The `type` field is mandatory and must be one of the following:
 
 -   `update` - creating or updating entities and attributes of those entities in the context broker.
-    [(update action details)](https://perseo.readthedocs.io/en/latest/API/plain_rules/#update-attribute-action)
--   `sms` - sending a SMS. [(sms action details)](https://perseo.readthedocs.io/en/latest/API/plain_rules/#sms-action)
--   `email` - sending an email.
-    [(email action details)](https://perseo.readthedocs.io/en/latest/API/plain_rules/#email-action)
--   `post` - making a HTTP request to a provided URL
-    [(post action details)](https://perseo.readthedocs.io/en/latest/API/plain_rules/#http-request-action)
--   `twitter` - sending a tweet
-    [(twitter action details)](https://perseo.readthedocs.io/en/latest/API/plain_rules/#twitter-action)
+    [(update action details)](../API/plain_rules.md#update-attribute-action)
+-   `sms` - sending a SMS. [(sms action details)](../API/plain_rules.md#sms-action)
+-   `email` - sending an email. [(email action details)](../API/plain_rules.md#email-action)
+-   `post` - making a HTTP request to a provided URL [(post action details)](../API/plain_rules.md#http-request-action)
+-   `twitter` - sending a tweet [(twitter action details)](../API/plain_rules.md#twitter-action)
 
 An action can _optionally_ have a field called `interval`, aimed at limiting the frequency of the action execution (for
 the rule and entity which fired it). The value is expressed in milliseconds, and represents the minimum lapse between
 executions. Once the action is _successfully_ executed, it won't be executed again until that period of time has
 elapsed. All execution requests in between will be silently discarded.
 
-You will find more information about Perseo Actions
-[here](https://perseo.readthedocs.io/en/latest/API/plain_rules/#actions).
+You will find more information about Perseo Actions [here](../API/plain_rules.md#actions).
 
 #### String substitution syntax
 
@@ -150,11 +145,11 @@ This substitution can be used in the following fields:
 
 You will find more information about substitution syntax in each action information:
 
--   [update action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#update-attribute-action)
--   [sms action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#sms-action)
--   [email action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#email-action)
--   [post action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#http-request-action)
--   [twitter action details](https://perseo.readthedocs.io/en/latest/API/plain_rules/#twitter-action)
+-   [update action details](../API/plain_rules.md#update-attribute-action)
+-   [sms action details](../API/plain_rules.md#sms-action)
+-   [email action details](../API/plain_rules.md#email-action)
+-   [post action details](../API/plain_rules.md#http-request-action)
+-   [twitter action details](../API/plain_rules.md#twitter-action)
 
 ## Metadata and object values
 
@@ -171,7 +166,7 @@ double underscore prefix, so an attribute `x` with fields `a`, `b`, `c`, will al
 Note: be aware of the difference between the key `metadatas` used in the context broker notificacions
 
 You will find more information about metadata and object values
-[here](https://perseo.readthedocs.io/en/latest/API/plain_rules/#metadata-and-object-values).
+[here](../API/plain_rules.md#metadata-and-object-values).
 
 ## Examples of EPL rules
 
