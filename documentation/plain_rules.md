@@ -273,7 +273,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
 -   service: optional, service that will be used by updateAction rule instead of current event service, pep url will be used instead of contextbroker.
--   subservice: optional, subservice that will be used by updateActino rule instead of current event service, pep url will be used instead of contextbroker.
+-   subservice: optional, subservice that will be used by updateAction rule instead of current event service, pep url will be used instead of contextbroker.
 -   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the
     `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
     `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored).
