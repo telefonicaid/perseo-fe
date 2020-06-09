@@ -95,7 +95,7 @@ The field `text` of the rule must be a valid EPL statement and additionally must
 expectations of perseo and perseo-core.
 
 EPL is documented in [Esper site](http://www.espertech.com/esper/esper-documentation), in particular
-[version 6.1.0](http://esper.espertech.com/release-6.1.0/esper-reference/html/index.html).
+[version 7.1.0](http://esper.espertech.com/release-7.1.0/esper-reference/html/index.html).
 
 A EPL statement to use with perseo could be:
 
@@ -104,14 +104,14 @@ select *, ev.BloodPressure? as Pressure, ev.id? as Meter
 from pattern
     [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type="BloodMeter")]
 ```
-
+-   Include ` *,` in EPL select clause
 -   The _from_ pattern must name the event as **ev** and the event stream from which take events must be **iotEvent**
 -   A _type=_ condition must be concatenated for avoiding mixing different kinds of entities
 -   The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text. The
     ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET
     /rules or GET /rules/{name}.
 
-**Backward compatibility note:** since version 1.8.0 it is not mandatory to specify the name of the rule as part of the
+**Backward compatibility note:** since perseo-fe version 1.8.0 it is not mandatory to specify the name of the rule as part of the
 EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be present as
 _ruleName_ alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it must be
 equal to the ‘name’ field of the rule object.
