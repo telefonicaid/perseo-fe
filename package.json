@@ -70,7 +70,8 @@
     "swagger-ui-express": "~4.1.1",
     "twitter": "~1.7.1",
     "utm-converter": "~0.1.1",
-    "uuid": "~1.4.2"
+    "uuid": "~1.4.2",
+    "shortid": "~2.3.0"
   },
   "husky": {
     "hooks": {
