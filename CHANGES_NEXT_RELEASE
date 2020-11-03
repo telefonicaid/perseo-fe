@@ -1,3 +1,5 @@
-- Avoid stop perseo after uncaught exception
+- Avoid stop perseo after uncaught exception, just report fatal and details but continue
+- Add internalCurrentTime to nosignal event (#460)
+- Fix postAction crash using a non string template  (#459)
 - Use unique (by node) correlator_suffix to detect rule loops (#456)
 - Log checkNoSignal error using current context (#422)
