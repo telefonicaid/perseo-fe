@@ -164,6 +164,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Thr Nov 6 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.14.0
+- Add check max value used by setInterval in nonSignal rule (#464)
+- Avoid stop perseo after uncaught exception, just report fatal and details but continue
+- Add internalCurrentTime to nosignal event (#460)
+- Fix postAction crash using a non string template  (#459)
+- Use unique (by node) correlator_suffix to detect rule loops (#456)
+- Log checkNoSignal error using current context (#422)
+
 * Tue May 12 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.13.0
 - Add: service and subservice as action parameters for updateAction (#349)
 - Fix: broken email action
