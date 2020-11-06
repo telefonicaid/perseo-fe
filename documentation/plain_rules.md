@@ -131,7 +131,8 @@ information on how to scape characters at
 The no signal condition is specified in the `nosignal` configuration element, which is an object with the following
 fields:
 
--   **checkInterval**: _mandatory_, time in minutes for checking the attribute
+-   **checkInterval**: _mandatory_, time in minutes for checking the attribute. Min value is 0.5 and max is 35791, other values are truncated to them
+   (a warning log message is generated if such truncation occurs)
 -   **attribute**: _mandatory_, attribute for watch
 -   **reportInterval**: _mandatory_, time in seconds to see an entity as silent
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), id or regex of the entity to watch
