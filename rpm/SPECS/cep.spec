@@ -164,7 +164,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
-* Thr Nov 6 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.14.0
+* Fri Nov 6 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.14.0
 - Add check max value used by setInterval in nonSignal rule (#464)
 - Avoid stop perseo after uncaught exception, just report fatal and details but continue
 - Add internalCurrentTime to nosignal event (#460)
