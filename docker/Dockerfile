@@ -87,16 +87,18 @@ RUN \
 
 WORKDIR /opt/perseo-fe
 
+# hadolint ignore=DL3008
 RUN \
 	# Ensure that Git is installed prior to running npm install
 	apt-get update && \
-	apt-get install -y git && \
+	apt-get install -y --no-install-recommends git && \
 	echo "INFO: npm install --production..." && \
 	npm install --production && \
 	# Remove Git and clean apt cache
 	apt-get clean && \
 	apt-get remove -y git && \
 	apt-get -y autoremove && \
+	rm -rf /var/lib/apt/lists/* && \
 	chmod +x docker/entrypoint.sh
 
 ENV PERSEO_MONGO_HOST=mongodb

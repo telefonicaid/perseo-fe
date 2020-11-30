@@ -184,14 +184,6 @@
       "weasel": false,
       "so": false,
       "thereIs": false
-    },
-    "no-dead-link": {
-       "ignoreRedirects": true,
-       "ignore": [
-          "mailto:*",
-          "https://oauth.net",
-          "https://colabora.tid.es/dca/SitePages/Inicio.aspx"
-      ]
     }
   }
 }
