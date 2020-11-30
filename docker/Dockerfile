@@ -34,7 +34,7 @@ ENV GITHUB_ACCOUNT=${GITHUB_ACCOUNT}
 ENV GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
 ENV DOWNLOAD=${DOWNLOAD}
 
-MAINTAINER FIWARE Perseo Team. Telefónica I+D
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # IMPORTANT: For production environments use Docker Secrets to protect values of the sensitive ENV 
 # variables defined below, by adding _FILE to the name of the relevant variable.
@@ -57,9 +57,11 @@ MAINTAINER FIWARE Perseo Team. Telefónica I+D
 #
 # COPY . /opt/perseo-fe/
 #
-RUN apt-get update && \
-	# Ensure that unzip, wget and curl are installed
-	apt-get install -y --no-install-recommends unzip ca-certificates curl wget && \
+
+# hadolint ignore=DL3008
+RUN \
+	# Ensure that unzip is installed prior to downloading
+	apt-get install -y --no-install-recommends unzip ca-certificates curl && \
 	if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
 		RELEASE="${SOURCE_BRANCH}"; \
@@ -73,8 +75,8 @@ RUN apt-get update && \
 	 	echo "INFO: Building Release: ${RELEASE}"; \
 	fi && \
 	RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
-	wget --no-check-certificate -O source.zip https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip && \
-	unzip source.zip && \
+	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
+	unzip source.zip -x "*/test/**" "*/rpm/**" "*/docker/**" "*/documentation/**" "*/.*" && \
 	rm source.zip && \
 	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/perseo-fe && \
 	# Remove unzip and clean apt cache
@@ -107,6 +109,16 @@ ENV NODE_ENV=production
 EXPOSE ${PERSEO_ENDPOINT_PORT:-9090} 
 
 HEALTHCHECK CMD curl --fail http://localhost:9090/version || exit 1
+
+LABEL "maintainer"="FIWARE Perseo Team. Telefónica I+D"
+LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
+LABEL "org.opencontainers.image.documentation"="https://perseo.readthedocs.io/"
+LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
+LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
+LABEL "org.opencontainers.image.title"="Complex Event Processing component for NGSI-v2 "
+LABEL "org.opencontainers.image.description"="An Esper-based Complex Event Processing (CEP) software designed to be fully NGSIv2-compliant."
+LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
+LABEL "org.nodejs.version"="${NODE_VERSION}"
 
 ENTRYPOINT ["docker/entrypoint.sh"]
 CMD ["-- ", "config.js"]
