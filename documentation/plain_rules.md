@@ -849,6 +849,7 @@ will send to core an event with the fields `position__lat`, `position__lon`, `po
    "position__lon":-3.691944,
    "position__x":657577.4234800448,
    "position__y":9591797.935076647
+}
 ```
 
 An example of rule taking advantage of these derived attributes could be:
