@@ -46,7 +46,7 @@ file_env() {
 
 if [[  -z "$PM2_ENABLED" ]]; then
     echo "INFO: PerseoFE running standalone"
-    node /opt/perseo-fe/bin/perseo
+    node --max-old-space-size=$PERSEO_MAX_MEM /opt/perseo-fe/bin/perseo
 else
     echo "***********************************************"
     echo "INFO: PerseoFE encapsulated by pm2-runtime see https://pm2.io/doc/en/runtime/integration/docker/"
