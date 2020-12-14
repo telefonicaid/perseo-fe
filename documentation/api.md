@@ -50,6 +50,7 @@ CRUD for "plain" rules
 | GET    | /rules/{id} | Get rule with `name`ID    |
 | POST   | /rules      | Add rule                  |
 | DELETE | /rules/{id} | Delete rule with `name`ID |
+| PUT    | /rules/{id} | Update a rule with `name` ID |
 
 ### Visual Rules
 
