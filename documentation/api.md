@@ -68,7 +68,7 @@ CRUD for Visual Rules. Originally detailed in [DCA documentation](https://colabo
 
 | Method | Path     | Description           |
 | ------ | :------- | --------------------- |
-| POST   | /version | Get version of perseo |
+| GET    | /version | Get version of perseo |
 
 ### Log level
 
