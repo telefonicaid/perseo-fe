@@ -99,6 +99,7 @@ RUN \
 
 ENV PERSEO_MONGO_HOST=mongodb
 ENV PERSEO_CORE_URL=http://corehost:8080
+ENV PERSEO_MAX_MEM=2048
 
 USER node
 ENV NODE_ENV=production
