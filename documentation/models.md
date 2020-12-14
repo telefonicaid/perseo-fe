@@ -26,7 +26,7 @@ Fields:
     -   **ID** _string_: ID of the entity to watch
     -   **idRegexp** _string_: regular expression to match entities by ID
     -   **type** _string_: type of entities to watch
-    -   **internalCurrentTime** _string_: current UTC Time in ISO 8601
+    -   **internalCurrentTime** _string_: current UTC Time in ISO 8601 to use as reference of time in the rule (i.e. the "t0" of the no signal checkings)
 
 Only rules with EPL have a field _text_ and only rules for no-signal detection has a field _nosignal_.
 
