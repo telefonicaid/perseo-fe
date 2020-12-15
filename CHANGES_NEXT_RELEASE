@@ -1,2 +1,2 @@
-
+- Update mongo dep driver from 2.2.36 to 3.6.3 (#480)
 - FIX documentation API /version method (445)
