@@ -1,2 +1,4 @@
 - Add: PUT plain rule 
 - Fix: documentation API /version method (445)
+- Update mongo dep driver from 2.2.36 to 3.6.3 (#480)
+
