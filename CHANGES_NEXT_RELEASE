@@ -1,4 +1,4 @@
 - Add: PUT plain rule 
 - Fix: documentation API /version method (445)
+- Set 'null' instead of '[?]' when no data available for macro substitution (#469)
 - Update mongo dep driver from 2.2.36 to 3.6.3 (#480)
-
