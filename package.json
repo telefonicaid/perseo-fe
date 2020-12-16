@@ -49,7 +49,6 @@
     "sinon-chai": "~3.2.0",
     "textlint": "~11.0.1",
     "textlint-rule-common-misspellings": "~1.0.1",
-    "textlint-rule-no-dead-link": "~4.4.1",
     "textlint-rule-terminology": "~1.1.30",
     "textlint-rule-write-good": "~1.6.2",
     "watch": "~1.0.2"
@@ -60,7 +59,7 @@
     "body-parser": "~1.18.2",
     "express": "~4.16.4",
     "logops": "2.1.0",
-    "mongodb": "~2.2.35",
+    "mongodb": "3.6.3",
     "ngsijs": "~1.2.1",
     "nodemailer": "~1.11.0",
     "nodemailer-smtp-transport": "~0.1.13",
