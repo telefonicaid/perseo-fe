@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mongodb:
-        image: mongo:3.6
+        image: mongo:4.2
         ports:
         - 27017:27017
     strategy:
@@ -65,6 +65,7 @@ jobs:
         node-version:
           - 10.x
           - 12.x
+          - 14.x
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
@@ -83,7 +84,7 @@ jobs:
     needs: unit-test
     services:
       mongodb:
-        image: mongo:3.6
+        image: mongo:4.2
         ports:
         - 27017:27017
     steps:
