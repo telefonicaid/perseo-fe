@@ -475,7 +475,6 @@ describe('doIt', function() {
                     should.equal(request.httpCode, 200);
                     queryOptions.type = 'NGSIv2TypesTest2';
                     listEntitiesMock.should.be.calledOnceWith(queryOptions);
-                    batchUpdateMock.should.be.calledOnceWith(expectedChanges2);
                     done();
                 };
                 action1.parameters.type = 'NGSIv2TypesTest2';
