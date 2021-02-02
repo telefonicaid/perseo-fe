@@ -1,0 +1,1 @@
+Fix: updateAction is using always `append` in actionType (#484)
