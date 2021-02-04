@@ -306,11 +306,6 @@ var expectedChanges = {
 
 var queryOptions = { type: 'AmbientLightSensor' };
 
-var expectedChanges2 = {
-    actionType: 'append',
-    entities: []
-};
-
 describe('doIt', function() {
     describe('#NGSIv2 updateActions', function() {
         beforeEach(function() {});
@@ -475,7 +470,6 @@ describe('doIt', function() {
                     should.equal(request.httpCode, 200);
                     queryOptions.type = 'NGSIv2TypesTest2';
                     listEntitiesMock.should.be.calledOnceWith(queryOptions);
-                    batchUpdateMock.should.be.calledOnceWith(expectedChanges2);
                     done();
                 };
                 action1.parameters.type = 'NGSIv2TypesTest2';

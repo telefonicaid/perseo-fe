@@ -1,1 +1,2 @@
+Fix: check if there is entities before update them (#485)
 Fix: updateAction is using always `append` in actionType (#484)
