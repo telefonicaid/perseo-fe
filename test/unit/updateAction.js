@@ -306,11 +306,6 @@ var expectedChanges = {
 
 var queryOptions = { type: 'AmbientLightSensor' };
 
-var expectedChanges2 = {
-    actionType: 'append',
-    entities: []
-};
-
 describe('doIt', function() {
     describe('#NGSIv2 updateActions', function() {
         beforeEach(function() {});
