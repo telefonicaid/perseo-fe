@@ -1,3 +1,3 @@
-Add: add param to filter update to iterate to all possible results without limit (#490)
+Add: add param to filter update to iterate to all possible results without limit (#455
 Fix: check if there is entities before update them (#485)
 Fix: updateAction is using always `append` in actionType (#484)
