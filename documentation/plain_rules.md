@@ -572,6 +572,30 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
 }
 ```
 
+```json
+{
+    "name": "murule",
+    "text": "select *,'myrule' as ruleName from pattern [every ev=iotEvent(type='SensorMetter')]",
+    "action": {
+        "type": "update",
+        "parameters": {
+            "filter": {
+                "type": "SensorMetter",
+                "iterateAll": true
+            },
+            "version": 2,
+            "attributes": [
+                {
+                    "name": "power",
+                    "type": "Text",
+                    "value": "on"
+                }
+            ]
+        }
+    }
+}
+```
+
 ### HTTP request action
 
 Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. The
