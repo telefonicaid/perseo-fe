@@ -566,40 +566,38 @@ describe('doIt', function() {
             });
         });
 
-        it('should accept NGSIv2 entities with filter with limit', function(done) {
+        it('should accept NGSIv2 entities with filter without limit', function(done) {
             var entitiesToModify = [
-                { id: 'Sensor1', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor2', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor3', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor4', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor5', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor6', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor7', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor8', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor9', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor10', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor11', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor12', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor13', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor14', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor15', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor16', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor17', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor18', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor19', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor20', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor21', type: 'NGSIv2TypesTest2' },
-                { id: 'Sensor22', type: 'NGSIv2TypesTest2' }
+                { id: 'Sensor1', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor2', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor3', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor4', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor5', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor6', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor7', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor8', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor9', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor10', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor11', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor12', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor13', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor14', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor15', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor16', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor17', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor18', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor19', type: 'NGSIv2TypesTest3' },
+                { id: 'Sensor20', type: 'NGSIv2TypesTest3' }
             ];
             var action = {
                 type: 'update',
                 parameters: {
                     version: '2',
                     filter: {
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         iterateAll: true
                     },
-                    type: 'NGSIv2TypesTest2',
+                    type: 'NGSIv2TypesTest3',
                     attributes: [
                         {
                             name: 'power',
@@ -615,112 +613,102 @@ describe('doIt', function() {
                 entities: [
                     {
                         id: 'Sensor1',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor2',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor3',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor4',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor5',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor6',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor7',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor8',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor9',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor10',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor11',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor12',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor13',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor14',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor15',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor16',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor17',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor18',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor19',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     },
                     {
                         id: 'Sensor20',
-                        type: 'NGSIv2TypesTest2',
-                        power: { type: 'Text', value: 'on' }
-                    },
-                    {
-                        id: 'Sensor21',
-                        type: 'NGSIv2TypesTest2',
-                        power: { type: 'Text', value: 'on' }
-                    },
-                    {
-                        id: 'Sensor22',
-                        type: 'NGSIv2TypesTest2',
+                        type: 'NGSIv2TypesTest3',
                         power: { type: 'Text', value: 'on' }
                     }
                 ]
@@ -765,10 +753,12 @@ describe('doIt', function() {
                     should.exist(request);
                     should.not.exist(e);
                     should.equal(request.httpCode, 200);
-                    queryOptions.type = 'NGSIv2TypesTest2';
+                    queryOptions.type = 'NGSIv2TypesTest3';
                     queryOptions.iterateAll = true;
-                    listEntitiesMock.should.be.calledOnceWith(queryOptions);
-                    batchUpdateMock.should.be.calledOnceWith(expectedChanges);
+                    queryOptions.count = true;
+                    queryOptions.offset = 0;
+                    listEntitiesMock.should.be.calledWith(queryOptions);
+                    batchUpdateMock.should.be.calledWith(expectedChanges);
                     done();
                 };
                 updateAction.doIt(action, event1, callback);
