@@ -469,6 +469,8 @@ describe('doIt', function() {
                     should.not.exist(e);
                     should.equal(request.httpCode, 200);
                     queryOptions.type = 'NGSIv2TypesTest2';
+                    queryOptions.count = true;
+                    queryOptions.offset = 0;
                     listEntitiesMock.should.be.calledOnceWith(queryOptions);
                     done();
                 };
@@ -558,6 +560,8 @@ describe('doIt', function() {
                     should.not.exist(e);
                     should.equal(request.httpCode, 200);
                     queryOptions.type = 'NGSIv2TypesTest2';
+                    queryOptions.count = true;
+                    queryOptions.offset = 0;
                     listEntitiesMock.should.be.calledOnceWith(queryOptions);
                     batchUpdateMock.should.be.calledOnceWith(expectedChanges);
                     done();
@@ -594,8 +598,7 @@ describe('doIt', function() {
                 parameters: {
                     version: '2',
                     filter: {
-                        type: 'NGSIv2TypesTest3',
-                        iterateAll: true
+                        type: 'NGSIv2TypesTest3'
                     },
                     type: 'NGSIv2TypesTest3',
                     attributes: [
@@ -754,7 +757,6 @@ describe('doIt', function() {
                     should.not.exist(e);
                     should.equal(request.httpCode, 200);
                     queryOptions.type = 'NGSIv2TypesTest3';
-                    queryOptions.iterateAll = true;
                     queryOptions.count = true;
                     queryOptions.offset = 0;
                     listEntitiesMock.should.be.calledWith(queryOptions);
