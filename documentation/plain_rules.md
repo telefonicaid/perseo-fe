@@ -579,8 +579,7 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
         "type": "update",
         "parameters": {
             "filter": {
-                "type": "SensorMetter",
-                "iterateAll": true
+                "type": "SensorMetter"
             },
             "version": 2,
             "attributes": [
