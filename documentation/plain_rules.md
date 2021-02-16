@@ -104,17 +104,18 @@ select *, ev.BloodPressure? as Pressure, ev.id? as Meter
 from pattern
     [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type="BloodMeter")]
 ```
--   Include ` *,` in EPL select clause
+
+-   Include `*,` in EPL select clause
 -   The _from_ pattern must name the event as **ev** and the event stream from which take events must be **iotEvent**
 -   A _type=_ condition must be concatenated for avoiding mixing different kinds of entities
 -   The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text. The
     ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET
     /rules or GET /rules/{name}.
 
-**Backward compatibility note:** since perseo-fe version 1.8.0 it is not mandatory to specify the name of the rule as part of the
-EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be present as
-_ruleName_ alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it must be
-equal to the ‘name’ field of the rule object.
+**Backward compatibility note:** since perseo-fe version 1.8.0 it is not mandatory to specify the name of the rule as
+part of the EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be
+present as _ruleName_ alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it
+must be equal to the ‘name’ field of the rule object.
 
 The used entity's attributes must be cast to `float` in case of being numeric (like in the example). Alphanumeric values
 must be cast to `String`. Nested cast to string and to float is something we are analyzing, and could be unnecessary in
@@ -131,8 +132,8 @@ information on how to scape characters at
 The no signal condition is specified in the `nosignal` configuration element, which is an object with the following
 fields:
 
--   **checkInterval**: _mandatory_, time in minutes for checking the attribute. Min value is 0.5 and max is 35791, other values are truncated to them
-   (a warning log message is generated if such truncation occurs)
+-   **checkInterval**: _mandatory_, time in minutes for checking the attribute. Min value is 0.5 and max is 35791, other
+    values are truncated to them (a warning log message is generated if such truncation occurs)
 -   **attribute**: _mandatory_, attribute for watch
 -   **reportInterval**: _mandatory_, time in seconds to see an entity as silent
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), id or regex of the entity to watch
@@ -268,16 +269,19 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   type: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is
         changed).
 -   actionType: optional, type of CB action: APPEND, UPDATE or DELETE. By default is APPEND.
-    -   APPEND: updated attributes (if previously exist in the entity) or append them to the entity (if previously doesn't exist in the entity)
+    -   APPEND: updated attributes (if previously exist in the entity) or append them to the entity (if previously
+        doesn't exist in the entity)
     -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
-    -   DELETE: delete attributes (or the entity itself if the attributes list is empty)    
+    -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
--   service: optional, service that will be used by updateAction rule instead of current event service, pep url will be used instead of contextbroker.
--   subservice: optional, subservice that will be used by updateAction rule instead of current event service, pep url will be used instead of contextbroker.
+-   service: optional, service that will be used by updateAction rule instead of current event service, pep url will be
+    used instead of contextbroker.
+-   subservice: optional, subservice that will be used by updateAction rule instead of current event service, pep url
+    will be used instead of contextbroker.
 -   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the
     `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
-    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored).
+    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored). The value of this field is an object which keys are the possible options described in [ngsijs options](https://conwetlab.github.io/ngsijs/stable/NGSI.Connection.html#.%22v2.listEntities%22__anchor), e.g: `type`, `q`, `georel`, `geometry`, `georel`, etc. However, note that the options related with pagination (`limit`, `offset` and `count`) are ignored, as Perseo implements its own way of processing large filter results. 
 
 NGSIv1 example:
 
@@ -566,6 +570,29 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
 }
 ```
 
+```json
+{
+    "name": "murule",
+    "text": "select *,'myrule' as ruleName from pattern [every ev=iotEvent(type='SensorMetter')]",
+    "action": {
+        "type": "update",
+        "parameters": {
+            "filter": {
+                "type": "SensorMetter"
+            },
+            "version": 2,
+            "attributes": [
+                {
+                    "name": "power",
+                    "type": "Text",
+                    "value": "on"
+                }
+            ]
+        }
+    }
+}
+```
+
 ### HTTP request action
 
 Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. The
@@ -837,18 +864,18 @@ will send to core an event with the fields `position__lat`, `position__lon`, `po
 
 ```json
 {
-   "noticeId":"7b8f1c50-8eda-11e6-838d-0b633312661c",
-   "id":"Car1",
-   "type":"Vehicle",
-   "isPattern":"false",
-   "subservice":"/",
-   "service":"unknownt",
-   "position":"40.418889, -3.691944",
-   "position__type":"geo:point",
-   "position__lat":40.418889,
-   "position__lon":-3.691944,
-   "position__x":657577.4234800448,
-   "position__y":9591797.935076647
+    "noticeId": "7b8f1c50-8eda-11e6-838d-0b633312661c",
+    "id": "Car1",
+    "type": "Vehicle",
+    "isPattern": "false",
+    "subservice": "/",
+    "service": "unknownt",
+    "position": "40.418889, -3.691944",
+    "position__type": "geo:point",
+    "position__lat": 40.418889,
+    "position__lon": -3.691944,
+    "position__x": 657577.4234800448,
+    "position__y": 9591797.935076647
 }
 ```
 
