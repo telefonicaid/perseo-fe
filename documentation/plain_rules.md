@@ -281,8 +281,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
     will be used instead of contextbroker.
 -   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the
     `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
-    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored). An `options` sub-field can be used to specific 
-    [ngsijs options](https://conwetlab.github.io/ngsijs/stable/NGSI.Connection.html#.%22v2.listEntities%22__anchor) to be used. However, note that `limit`, `offset` and `count` options doesn't have any effect, as Perseo implements its own way of processing large filter results.
+    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored). The value of this field is an object which keys are the possible options described in [ngsijs options](https://conwetlab.github.io/ngsijs/stable/NGSI.Connection.html#.%22v2.listEntities%22__anchor), e.g: `type`, `q`, `georel`, `geometry`, `georel`, etc. However, note that the options related with pagination (`limit`, `offset` and `count`) are ignored, as Perseo implements its own way of processing large filter results. 
 
 NGSIv1 example:
 
