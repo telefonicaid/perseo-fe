@@ -164,6 +164,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue Jan 12 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.15.0
+- Add: PUT plain rule
+- Fix: documentation API /version method (#445)
+- Set 'null' instead of '[?]' when no data available for macro substitution (#469)
+- Update mongo dep driver from 2.2.36 to 3.6.3 (#480)
+
 * Fri Nov 6 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.14.0
 - Add check max value used by setInterval in nonSignal rule (#464)
 - Avoid stop perseo after uncaught exception, just report fatal and details but continue

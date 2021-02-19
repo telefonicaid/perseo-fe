@@ -2,7 +2,7 @@
   "name": "perseo",
   "description": "IOT CEP front End",
   "license": "AGPL-3.0-only",
-  "version": "1.14.0-next",
+  "version": "1.15.0-next",
   "author": {
     "name": "crbrox",
     "email": "carlos.romerobrox@telefonica.com"
@@ -60,7 +60,7 @@
     "body-parser": "~1.18.2",
     "express": "~4.16.4",
     "logops": "2.1.0",
-    "mongodb": "~2.2.35",
+    "mongodb": "3.6.3",
     "ngsijs": "~1.2.1",
     "nodemailer": "~1.11.0",
     "nodemailer-smtp-transport": "~0.1.13",
