@@ -38,6 +38,35 @@ process.on('uncaughtException', function(ex){
     logger.fatal(context, 'uncaughtException: %s', ex.message || ex , ex.stack && ex.stack.split('\n').join(','));
 });
 
+const fs = require('fs');
+const path = require('path');
+const SECRETS_DIR = process.env.SECRETS_DIR || '/run/secrets';
+const secrets = {};
+
+if (fs.existsSync(SECRETS_DIR)) {
+    const files = fs.readdirSync(SECRETS_DIR);
+    files.forEach(function (file) {
+        const fullPath = path.join(SECRETS_DIR, file);
+        const key = file;
+        try {
+            const data = fs.readFileSync(fullPath, 'utf8').toString().trim();
+            secrets[key] = data;
+        } catch (e) {
+            logger.error(e.message);
+        }
+    });
+}
+
+/**
+ * If an ENV is a protected Docker Secret extract the value of the secret data
+ */
+function getSecretData(key) {
+    const filepath = process.env[key + '_FILE'];
+    if (filepath) {
+        process.env[key] = secrets[path.parse(filepath).base] || process.env[key];
+    }
+}
+
 function loadConfiguration() {
     var environmentValues = [
         'PERSEO_ENDPOINT_HOST',
@@ -78,11 +107,40 @@ function loadConfiguration() {
         'PERSEO_AUTHENTICATION_PASSWORD'
     ];
 
-    for (var i = 0; i < environmentValues.length; i++) {
-        if (process.env[environmentValues[i]]) {
-            console.log('Changing %s to environment value: %s', environmentValues[i], process.env[environmentValues[i]]);
+    const protectedVariables = [
+        'PERSEO_MONGO_USER',
+        'PERSEO_MONGO_PASSWORD',
+        'PERSEO_SMTP_AUTH_USER',
+        'PERSEO_SMTP_AUTH_PASS',
+        'PERSEO_SMS_API_KEY',
+        'PERSEO_SMS_API_SECRET',
+        'PERSEO_SMPP_SYSTEMID',
+        'PERSEO_SMPP_PASSWORD',
+        'PERSEO_AUTHENTICATION_USER',
+        'PERSEO_AUTHENTICATION_PASSWORD'
+    ];
+
+    // Substitute Docker Secret Variables where set.
+    protectedVariables.forEach((key) => {
+        getSecretData(key);
+    });
+
+    environmentVariables.forEach((key) => {
+        let value = process.env[key];
+        if (value) {
+            if (
+                key.endsWith('USER') ||
+                key.endsWith('PASS') ||
+                key.endsWith('KEY') ||
+                key.endsWith('PASSWORD') ||
+                key.endsWith('SYSTEMID') ||
+                key.endsWith('SECRET')
+            ) {
+                value = '********';
+            }
+            logger.info('Setting %s to environment value: %s', key, value);
         }
-    }
+    });
 
     if (process.env.PERSEO_ENDPOINT_HOST) {
         config.endpoint.host = process.env.PERSEO_ENDPOINT_HOST;
