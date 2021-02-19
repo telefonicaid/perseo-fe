@@ -1,3 +1,1 @@
-Fix: pagination-based update action for filter results (so removing the limit to 20 entities in the previous implementation) (#455)
-Fix: check if there is entities before update them (#485)
-Fix: updateAction is using always `append` in actionType (#484)
+
