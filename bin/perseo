@@ -125,7 +125,7 @@ function loadConfiguration() {
         getSecretData(key);
     });
 
-    environmentVariables.forEach((key) => {
+    environmentValues.forEach((key) => {
         let value = process.env[key];
         if (value) {
             if (
