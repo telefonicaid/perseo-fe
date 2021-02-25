@@ -164,6 +164,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Fri Feb 19 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.16.0
+- Fix: pagination-based update action for filter results (so removing the limit to 20 entities in the previous implementation) (#455)
+- Fix: check if there is entities before update them (#485)
+- Fix: updateAction is using always `append` in actionType (#484)
+
 * Tue Jan 12 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.15.0
 - Add: PUT plain rule
 - Fix: documentation API /version method (#445)
