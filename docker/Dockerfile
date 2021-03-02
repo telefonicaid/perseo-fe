@@ -215,7 +215,7 @@ WORKDIR /opt/perseo-fe
 
 # hadolint ignore=DL3008
 RUN \
-        apt-get update && \
+	apt-get update && \
 	# Ensure that Curl is installed prior to running old entrypoints
 	apt-get install -y --no-install-recommends curl
 
