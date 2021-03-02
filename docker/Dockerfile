@@ -213,8 +213,9 @@ LABEL "org.nodejs.version"="${NODE_VERSION}"
 COPY --from=builder /opt/perseo-fe /opt/perseo-fe
 WORKDIR /opt/perseo-fe
 
-
+# hadolint ignore=DL3008
 RUN \
+        apt-get update && \
 	# Ensure that Curl is installed prior to running old entrypoints
 	apt-get install -y --no-install-recommends curl
 
