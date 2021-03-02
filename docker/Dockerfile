@@ -99,7 +99,7 @@ WORKDIR /opt/perseo-fe
 # hadolint ignore=DL3008
 RUN \
 	# Ensure that Git is installed prior to running npm install
-	apt-get install -y --no-install-recommends git && \
+	apt-get install -y --no-install-recommends git curl && \
 	echo "INFO: npm install --production..." && \
 	npm install --only=prod --no-package-lock --no-optional && \
 	# Remove Git and clean apt cache
