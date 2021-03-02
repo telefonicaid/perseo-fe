@@ -99,7 +99,7 @@ WORKDIR /opt/perseo-fe
 # hadolint ignore=DL3008
 RUN \
 	# Ensure that Git is installed prior to running npm install
-	apt-get install -y --no-install-recommends git curl && \
+	apt-get install -y --no-install-recommends git && \
 	echo "INFO: npm install --production..." && \
 	npm install --only=prod --no-package-lock --no-optional && \
 	# Remove Git and clean apt cache
@@ -212,6 +212,11 @@ LABEL "org.nodejs.version"="${NODE_VERSION}"
 
 COPY --from=builder /opt/perseo-fe /opt/perseo-fe
 WORKDIR /opt/perseo-fe
+
+
+RUN \
+	# Ensure that Curl is installed prior to running old entrypoints
+	apt-get install -y --no-install-recommends curl
 
 USER node
 ENV PERSEO_MONGO_HOST=mongodb
