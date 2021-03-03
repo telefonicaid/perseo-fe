@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Copyright 2020 Telefonica Investigación y Desarrollo, S.A.U
+# Copyright 2021 Telefónica Investigación y Desarrollo, S.A.U
 #
-# This file is part of PerseoFE
+# This file is part of the PerseoFE component
 #
 # PerseoFE is free software: you can redistribute it and/or
 # modify it under the terms of the GNU Affero General Public License as
@@ -15,10 +15,11 @@
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public
-# License along with PerseoFE. If not, see http://www.gnu.org/licenses/.
+# License along with PerseoFE.
+# If not, see http://www.gnu.org/licenses/.
 #
-# For those usages not covered by the GNU Affero General Public License please contact
-# with iot_support at tid dot es
+# For those usages not covered by the GNU Affero General Public License
+# please contact with: sc_support at telefonica dot com
 
 docker image build --build-arg SOURCE_BRANCH=$SOURCE_BRANCH \
 	--label "org.opencontainers.image.created"=$(date +%Y-%m-%d) \
@@ -26,3 +27,21 @@ docker image build --build-arg SOURCE_BRANCH=$SOURCE_BRANCH \
 	--label "org.opencontainers.image.version"=$DOCKER_TAG \
 	-t $IMAGE_NAME \
 	.
+
+docker image build --build-arg SOURCE_BRANCH=$SOURCE_BRANCH \
+	--label "org.opencontainers.image.created"=$(date +%Y-%m-%d) \
+	--label "org.opencontainers.image.revision"=$SOURCE_COMMIT \
+	--label "org.opencontainers.image.version"=$DOCKER_TAG \
+	--target=pm2 \
+	-t $IMAGE_NAME-pm2 \
+	.
+
+docker image build --build-arg SOURCE_BRANCH=$SOURCE_BRANCH \
+	--label "org.opencontainers.image.created"=$(date +%Y-%m-%d) \
+	--label "org.opencontainers.image.revision"=$SOURCE_COMMIT \
+	--label "org.opencontainers.image.version"=$DOCKER_TAG \
+	--target=distroless \
+	-t $IMAGE_NAME-distroless \
+	.
+
+
