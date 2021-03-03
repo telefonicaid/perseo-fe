@@ -3,7 +3,7 @@
 [![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: APGL](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](https://opensource.org/licenses/AGPL-3.0)
 <br/>
-[![Build badge](https://img.shields.io/travis/telefonicaid/perseo-fe.svg)](https://travis-ci.org/telefonicaid/perseo-fe/)
+[![CI](https://github.com/telefonicaid/perseo-fe/workflows/CI/badge.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/perseo-fe/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/perseo-fe?branch=master)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
 
@@ -42,7 +42,7 @@ related with the fact that different people assign different interpretations on 
 used in these licenses. Due to this, some people believe that there is a risk in just _using_ software under GPL or AGPL
 licenses (even without _modifying_ it).
 
-For the avoidance of doubt, the owners of this software licensed under an AGPL 3.0 license  
+For the avoidance of doubt, the owners of this software licensed under an AGPL 3.0 license
 wish to make a clarifying public statement as follows:
 
 > Please note that software derived as a result of modifying the source code of this software in order to fix a bug or

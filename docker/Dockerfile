@@ -105,7 +105,7 @@ RUN \
 	# Remove Git and clean apt cache
 	apt-get clean && \
 	apt-get remove -y git && \
-	apt-get -y autoremove
+	apt-get -y autoremove 
 
 ########################################################################################
 #
@@ -217,7 +217,8 @@ WORKDIR /opt/perseo-fe
 RUN \
 	apt-get update && \
 	# Ensure that Curl is installed prior to running old entrypoints
-	apt-get install -y --no-install-recommends curl
+	apt-get install -y --no-install-recommends curl && \
+	rm -rf /var/lib/apt/lists/* 
 
 USER node
 ENV PERSEO_MONGO_HOST=mongodb
