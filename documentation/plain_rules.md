@@ -123,8 +123,8 @@ a future version. Use it by now. All the attributes in the notification from Ori
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
 
-Please, be carefull with using non-ascii characters in the EPL syntax. It will provoke an error. You can find
-information on how to scape characters at
+Please, be careful with using non-ASCII characters in the EPL syntax. It will provoke an error. You can find information
+on how to scape characters at
 [Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
 
 ## No signal conditions
@@ -136,7 +136,7 @@ fields:
     values are truncated to them (a warning log message is generated if such truncation occurs)
 -   **attribute**: _mandatory_, attribute for watch
 -   **reportInterval**: _mandatory_, time in seconds to see an entity as silent
--   **id** or **idRegexp**: _mandatory_ (but not both at the same time), id or regex of the entity to watch
+-   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
 -   type: _optional_, type of entities to watch
 
 Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of
@@ -275,13 +275,17 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
--   service: optional, service that will be used by updateAction rule instead of current event service, pep url will be
+-   service: optional, service that will be used by updateAction rule instead of current event service, PEP URL will be
     used instead of contextbroker.
--   subservice: optional, subservice that will be used by updateAction rule instead of current event service, pep url
+-   subservice: optional, subservice that will be used by updateAction rule instead of current event service, PEP URL
     will be used instead of contextbroker.
--   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the
+-   filter: optional, a NGSI-v2 filter. If provided then updateAction is done over result of query. This overrides the
     `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
-    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored). The value of this field is an object which keys are the possible options described in [ngsijs options](https://conwetlab.github.io/ngsijs/stable/NGSI.Connection.html#.%22v2.listEntities%22__anchor), e.g: `type`, `q`, `georel`, `geometry`, `georel`, etc. However, note that the options related with pagination (`limit`, `offset` and `count`) are ignored, as Perseo implements its own way of processing large filter results. 
+    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored). The value of this
+    field is an object which keys are the possible options described in
+    [ngsijs options](https://conwetlab.github.io/ngsijs/stable/NGSI.Connection.html#.%22v2.listEntities%22__anchor),
+    e.g: `type`, `q`, `georel`, `geometry`, `georel`, etc. However, note that the options related with pagination
+    (`limit`, `offset` and `count`) are ignored, as Perseo implements its own way of processing large filter results.
 
 NGSIv1 example:
 
@@ -319,7 +323,7 @@ abnormal situation: Perseo logs the problem with the update but doesn't try to g
 Perseo triggers the action, the process may repeat, i.e. first update attempt fails with 401, Perseo requests a fresh
 auth token to Keystone, the second update attempt fails with 401, Perseo logs the problem and doesn't retry again.
 
-NGSIv2 example:
+NGSI-v2 example:
 
 ```json
 "action":{
@@ -343,11 +347,11 @@ NGSIv2 example:
     }
 ```
 
-When using NGSIv2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
+When using NGSI-v2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
 `value` is a String, Perseo will try cast value to number, boolean or null (without paying attention to the attribute
 type). If the casting fails then String is used. _`Boolean`_ and _`None`_ types.
 
-**Data Types for NGSIv2:**
+**Data Types for NGSI-v2:**
 
 With `Number` type attributes, Perseo can be able to manage a int/float number or a String to parse in value field.
 
@@ -542,7 +546,7 @@ This attribute will take `null` as value.
 }
 ```
 
-Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
+Note that using NGSI-v2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
 
 **Complete example using NGSv2 update action with filter in a rule:**
 
@@ -595,7 +599,7 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
 
 ### HTTP request action
 
-Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. The
+Makes an HTTP request to a URL specified in `url` inside `parameters`, sending a body built from `template`. The
 `parameters` field can specify
 
 -   method: _optional_, HTTP method to use, POST by default
@@ -773,8 +777,8 @@ respectively.
 
 The formats are
 
--   [NGSIv1 deprecated format](https://fiware-orion.readthedocs.io/en/1.15.1/user/geolocation/index.html#defining-location-attribute)
--   [NGSIv2 current format](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties
+-   [NGSI-v1 deprecated format](https://fiware-orion.readthedocs.io/en/1.15.1/user/geolocation/index.html#defining-location-attribute)
+-   [NGSI-v2 current format](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties
     of entities"
 
 So, a notification in the deprecated format like
@@ -903,8 +907,8 @@ coordinates of Cuenca and `d` the distance of 5 000 m.
 
 Notes:
 
--   NGSIv2 allows several geo location formats (geo:point, geo:line, geo:box, geo:polygon and geo:json). At the present
-    moment, Perseo only supports geo:point.
+-   NGSI-v2 allows several geo location formats (`geo:point`, `geo:line`, `geo:box`, `geo:polygon` and `geo:json`). At
+    the present moment, Perseo only supports `geo:point`.
 -   For long distances the precision of the computations and the distortion of the projection can introduce some degree
     of inaccuracy.
 
