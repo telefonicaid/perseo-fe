@@ -1,3 +1,4 @@
+Expand `location` event field to core for NGSIv2 (#504)
 Notify TimeInstant value to core for NGSIv2 (#503)
 Upgrade NodeJS version from 10.19.0 to 12 in Dockerfile
 Convert Dockerfile to multistage builds and add a distroless option
