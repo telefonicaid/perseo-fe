@@ -134,6 +134,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey + '__type']).to.equal(dateType);
+                expect(noticeResult[attrKey]).to.equal(dateValue);
                 expect(noticeResult[attrKey + '__a']).to.equal(123);
                 expect(noticeResult[attrKey + '__b']).to.equal(456);
                 parseDateMock.should.have.been.calledWith(dateValue);
