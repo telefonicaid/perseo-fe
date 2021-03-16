@@ -84,6 +84,9 @@ var x = 441298.13043762115;
 var y = 4474481.316254241;
 var locValue = lat + ', ' + long;
 
+var locType2 = 'geo:json';
+var locValue2 = { type: 'Point', coordinates: [lat, long] };
+
 describe('Notices NGSIv2', function() {
     var noticeExample;
     beforeEach(function() {
@@ -174,6 +177,43 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__x']).to.equal(x);
                 expect(noticeResult[attrKey + '__y']).to.equal(y);
                 parseLocationMock.should.have.been.calledWith(locValue);
+                parseLocationMock.should.be.calledOnce;
+                done();
+            });
+        });
+
+        it('should accept simple notice using geo:json type', function(done) {
+            var parseLocationMock = sinon.spy(function() {
+                return {
+                    lat: lat,
+                    lon: long,
+                    x: x,
+                    y: y
+                };
+            });
+
+            notices.__with__({
+                'uuid.v1': uuidMock,
+                'Date.now': dateNowMock,
+                parseLocation: parseLocationMock
+            })(function() {
+                noticeExample.data[0][attrKey].type = locType2;
+                noticeExample.data[0][attrKey].value = locValue2;
+                var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey]).to.equal(locValue2.coordinates.toString());
+                expect(noticeResult[attrKey + '__type']).to.equal(locType2);
+                expect(noticeResult[attrKey + '__lat']).to.equal(lat);
+                expect(noticeResult[attrKey + '__lon']).to.equal(long);
+                expect(noticeResult[attrKey + '__x']).to.equal(x);
+                expect(noticeResult[attrKey + '__y']).to.equal(y);
+                parseLocationMock.should.have.been.calledWith(locValue2.coordinates.toString());
                 parseLocationMock.should.be.calledOnce;
                 done();
             });
