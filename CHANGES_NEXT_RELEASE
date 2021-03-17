@@ -1,3 +1,4 @@
+Fix router logs to print object details
 Expand `location` geo:json of type Point in event field to core for NGSIv2 (#505)
 Expand `location` event field to core for NGSIv2 (#504)
 Notify TimeInstant value to core for NGSIv2 (#503)
