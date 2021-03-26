@@ -808,22 +808,6 @@ describe('doIt', function() {
                 }
             };
 
-            var expectedChanges = {
-                actionType: 'append',
-                entities: [
-                    {
-                        id: 'Sensor1',
-                        type: 'NGSIv2TypesTest4',
-                        power: { type: 'Text', value: 'on' }
-                    },
-                    {
-                        id: 'Sensor2',
-                        type: 'NGSIv2TypesTest4',
-                        power: { type: 'Text', value: 'on' }
-                    }
-                ]
-            };
-
             // Mocks
             var listEntitiesThen = sinon.spy(function(successCB, errorCB) {
                 setTimeout(function() {
