@@ -286,6 +286,38 @@ the Perseo configuration). The `parameters` map includes the following fields:
     [ngsijs options](https://conwetlab.github.io/ngsijs/stable/NGSI.Connection.html#.%22v2.listEntities%22__anchor),
     e.g: `type`, `q`, `georel`, `geometry`, `georel`, etc. However, note that the options related with pagination
     (`limit`, `offset` and `count`) are ignored, as Perseo implements its own way of processing large filter results.
+    Moreover if a filter contains a `geojsonpolygon` dict with the following format:
+
+```json
+    "filter": {
+      "geojsonpolygon": {
+          "features": [
+             {
+              "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [ 9.84375, 54.36775852406841 ],
+                    [ -4.921875, 42.032974332441405 ],
+                    [ 34.80468749999999, 40.713955826286046 ],
+                    [ 29.53125, 53.54030739150022 ],
+                    [ 9.84375, 54.36775852406841 ]
+                 ]]
+              }
+            }
+          ]
+      }
+    }
+```
+
+is translated to equivalent filter replacing `geojsonpolygon` with `georel`, `geometry` and `coords` :
+
+```json
+    "filter": {
+      "georel": "coveredBy",
+      "geometry": "polygon",
+      "coords": "54.36775852406841,9.84375;42.032974332441405,-4.921875;40.713955826286046,34.80468749999999;53.54030739150022,29.53125;54.36775852406841,9.84375";
+    }
+```
 
 NGSIv1 example:
 
