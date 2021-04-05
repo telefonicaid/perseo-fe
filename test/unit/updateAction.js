@@ -766,5 +766,99 @@ describe('doIt', function() {
                 updateAction.doIt(action, event1, callback);
             });
         });
+
+        it('should accept NGSIv2 entities with geojsonpolygon filter and some entities', function(done) {
+            var entitiesToModify = [
+                { id: 'Sensor1', type: 'NGSIv2TypesTest4' },
+                { id: 'Sensor2', type: 'NGSIv2TypesTest4' }
+            ];
+            var action = {
+                type: 'update',
+                parameters: {
+                    version: '2',
+                    filter: {
+                        type: 'NGSIv2TypesTest4',
+                        geojsonpolygon: {
+                            features: [
+                                {
+                                    geometry: {
+                                        type: 'Polygon',
+                                        coordinates: [
+                                            [
+                                                [9.84375, 54.36775852406841],
+                                                [-4.921875, 42.032974332441405],
+                                                [34.80468749999999, 40.713955826286046],
+                                                [29.53125, 53.54030739150022],
+                                                [9.84375, 54.36775852406841]
+                                            ]
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    type: 'NGSIv2TypesTest4',
+                    attributes: [
+                        {
+                            name: 'power',
+                            type: 'Text',
+                            value: 'on'
+                        }
+                    ]
+                }
+            };
+
+            // Mocks
+            var listEntitiesThen = sinon.spy(function(successCB, errorCB) {
+                setTimeout(function() {
+                    successCB({ httpCode: '200', results: entitiesToModify }); // success callback
+                }, 0);
+                return '__TEST';
+            });
+            var batchUpdateThen = sinon.spy(function(successCB, errorCB) {
+                setTimeout(function() {
+                    successCB({ httpCode: '200', message: 'all right' }); // success callback
+                }, 0);
+                return '__TEST';
+            });
+            var listEntitiesMock = sinon.spy(function(changes, options) {
+                return { then: listEntitiesThen };
+            });
+            var batchUpdateMock = sinon.spy(function(changes, options) {
+                return { then: batchUpdateThen };
+            });
+            var NGSICloseMock = sinon.spy(function() {
+                return 'closed';
+            });
+            var NGSIConnectionMock = sinon.spy(function() {
+                return {
+                    v2: {
+                        listEntities: listEntitiesMock,
+                        batchUpdate: batchUpdateMock
+                    },
+                    close: NGSICloseMock
+                };
+            });
+
+            updateAction.__with__({
+                'NGSI.Connection': NGSIConnectionMock
+            })(function() {
+                var callback = function(e, request) {
+                    should.exist(request);
+                    should.not.exist(e);
+                    should.equal(request.httpCode, 200);
+                    queryOptions.type = 'NGSIv2TypesTest4';
+                    queryOptions.count = true;
+                    queryOptions.offset = 0;
+                    queryOptions.georel = 'coveredBy';
+                    queryOptions.geometry = 'polygon';
+                    queryOptions.coords =
+                        '54.36775852406841,9.84375;42.032974332441405,-4.921875;40.713955826286046,34.80468749999999;53.54030739150022,29.53125;54.36775852406841,9.84375';
+                    listEntitiesMock.should.be.calledOnceWith(queryOptions);
+                    done();
+                };
+                updateAction.doIt(action, event1, callback);
+            });
+        });
     });
 });
