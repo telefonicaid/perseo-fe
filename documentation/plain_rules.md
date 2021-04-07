@@ -226,6 +226,25 @@ Sends a SMS to a number set as an action parameter with the body of the message 
     }
 ```
 
+Additionally SMS action could include SMPP configuration which overwrites global smpp configuration:
+
+```json
+ "action": {
+        "type": "sms",
+        "template": "Meter ${Meter} has pressure ${Pressure}.",
+        "parameters": {
+            "to": "123456789",
+            "smpp": {
+                "from": "myfrom",
+                "host": "host",
+                "port": "port",
+                "systemid": "6666666",
+                "password": "mypwd"
+            }
+        }
+    }
+```
+
 The field `parameters` include a field `to` with the number, or numbers separated by whiestpace charaters, to send the
 message to.
 
