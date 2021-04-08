@@ -237,7 +237,7 @@ Additionally SMS action could include SMS configuration which overwrites global 
             "sms"  {
                 "URL": "http://sms-endpoint/smsoutbound",
                  "API_KEY": "MYAPIKEY",
-                 "API_SECRET": 'MYSECRET',
+                 "API_SECRET": "MYSECRET",
                  "from": "tel:22012;phone-context=+34"
              }
         }
@@ -287,6 +287,32 @@ email can be set in the field `subject` in `parameters`.
 ```
 
 The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax).
+
+Additionally SMS action could include SMS configuration which overwrites global sms configuration:
+
+```json
+ "action": {
+        "type": "email",
+        "template": "Meter ${Meter} has pressure ${Pressure} (GEN RULE)",
+        "parameters": {
+            "to": "someone@telefonica.com",
+            "from": "cep@system.org",
+            "subject": "It's The End Of The World As We Know It (And I Feel Fine)",
+            "smtp": {
+               "port": 25,
+               "host": "smtpserver",
+               "secure": false,
+               "auth": {
+                  "user": "abc",
+                  "pass": "xyz"
+               },
+               "tls": {
+                  "rejectUnauthorized": false
+               }
+            }
+        }
+    }
+```
 
 ### update attribute action
 
