@@ -226,7 +226,25 @@ Sends a SMS to a number set as an action parameter with the body of the message 
     }
 ```
 
-Additionally SMS action could include SMPP configuration which overwrites global smpp configuration:
+Additionally SMS action could include SMS configuration which overwrites global sms configuration:
+
+```json
+ "action": {
+        "type": "sms",
+        "template": "Meter ${Meter} has pressure ${Pressure}.",
+        "parameters": {
+            "to": "123456789",
+            "sms"  {
+                "URL": "http://sms-endpoint/smsoutbound",
+                 "API_KEY": "MYAPIKEY",
+                 "API_SECRET": 'MYSECRET',
+                 "from": "tel:22012;phone-context=+34"
+             }
+        }
+    }
+```
+
+or SMPP configuration which overwrites global smpp configuration:
 
 ```json
  "action": {
