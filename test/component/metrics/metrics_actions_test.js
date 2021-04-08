@@ -223,7 +223,6 @@ describe('Metrics', function() {
                                 should.exists(m.services.unknownt.subservices);
                                 should.exists(m.services.unknownt.subservices['/']);
                                 msub = m.services.unknownt.subservices['/'];
-
                                 should.equal(m.services.unknownt.sum.actionEntityUpdate, 1);
                                 should.equal(m.services.unknownt.sum.okActionEntityUpdate, 0);
                                 should.equal(m.services.unknownt.sum.failedActionEntityUpdate, 1);

@@ -104,17 +104,18 @@ select *, ev.BloodPressure? as Pressure, ev.id? as Meter
 from pattern
     [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type="BloodMeter")]
 ```
--   Include ` *,` in EPL select clause
+
+-   Include `*,` in EPL select clause
 -   The _from_ pattern must name the event as **ev** and the event stream from which take events must be **iotEvent**
 -   A _type=_ condition must be concatenated for avoiding mixing different kinds of entities
 -   The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text. The
     ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET
     /rules or GET /rules/{name}.
 
-**Backward compatibility note:** since perseo-fe version 1.8.0 it is not mandatory to specify the name of the rule as part of the
-EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be present as
-_ruleName_ alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it must be
-equal to the ‘name’ field of the rule object.
+**Backward compatibility note:** since perseo-fe version 1.8.0 it is not mandatory to specify the name of the rule as
+part of the EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be
+present as _ruleName_ alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it
+must be equal to the ‘name’ field of the rule object.
 
 The used entity's attributes must be cast to `float` in case of being numeric (like in the example). Alphanumeric values
 must be cast to `String`. Nested cast to string and to float is something we are analyzing, and could be unnecessary in
@@ -122,8 +123,8 @@ a future version. Use it by now. All the attributes in the notification from Ori
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
 
-Please, be carefull with using non-ascii characters in the EPL syntax. It will provoke an error. You can find
-information on how to scape characters at
+Please, be careful with using non-ASCII characters in the EPL syntax. It will provoke an error. You can find information
+on how to scape characters at
 [Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
 
 ## No signal conditions
@@ -131,10 +132,11 @@ information on how to scape characters at
 The no signal condition is specified in the `nosignal` configuration element, which is an object with the following
 fields:
 
--   **checkInterval**: _mandatory_, time in minutes for checking the attribute
+-   **checkInterval**: _mandatory_, time in minutes for checking the attribute. Min value is 0.5 and max is 35791, other
+    values are truncated to them (a warning log message is generated if such truncation occurs)
 -   **attribute**: _mandatory_, attribute for watch
 -   **reportInterval**: _mandatory_, time in seconds to see an entity as silent
--   **id** or **idRegexp**: _mandatory_ (but not both at the same time), id or regex of the entity to watch
+-   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
 -   type: _optional_, type of entities to watch
 
 Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of
@@ -267,16 +269,55 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   type: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is
         changed).
 -   actionType: optional, type of CB action: APPEND, UPDATE or DELETE. By default is APPEND.
-    -   APPEND: updated attributes (if previously exist in the entity) or append them to the entity (if previously doesn't exist in the entity)
+    -   APPEND: updated attributes (if previously exist in the entity) or append them to the entity (if previously
+        doesn't exist in the entity)
     -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
-    -   DELETE: delete attributes (or the entity itself if the attributes list is empty)    
+    -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
--   service: optional, service that will be used by updateAction rule instead of current event service, pep url will be used instead of contextbroker.
--   subservice: optional, subservice that will be used by updateAction rule instead of current event service, pep url will be used instead of contextbroker.
--   filter: optional, a NGSIv2 filter. If provided then updateAction is done over result of query. This overrides the
+-   service: optional, service that will be used by updateAction rule instead of current event service, PEP URL will be
+    used instead of contextbroker.
+-   subservice: optional, subservice that will be used by updateAction rule instead of current event service, PEP URL
+    will be used instead of contextbroker.
+-   filter: optional, a NGSI-v2 filter. If provided then updateAction is done over result of query. This overrides the
     `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
-    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored).
+    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored). The value of this
+    field is an object which keys are the possible options described in
+    [ngsijs options](https://conwetlab.github.io/ngsijs/stable/NGSI.Connection.html#.%22v2.listEntities%22__anchor),
+    e.g: `type`, `q`, `georel`, `geometry`, `georel`, etc. However, note that the options related with pagination
+    (`limit`, `offset` and `count`) are ignored, as Perseo implements its own way of processing large filter results.
+    Moreover if a filter contains a `geojsonpolygon` dict with the following format:
+
+```json
+    "filter": {
+      "geojsonpolygon": {
+          "features": [
+             {
+              "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [ 9.84375, 54.36775852406841 ],
+                    [ -4.921875, 42.032974332441405 ],
+                    [ 34.80468749999999, 40.713955826286046 ],
+                    [ 29.53125, 53.54030739150022 ],
+                    [ 9.84375, 54.36775852406841 ]
+                 ]]
+              }
+            }
+          ]
+      }
+    }
+```
+
+is translated to equivalent filter replacing `geojsonpolygon` with `georel`, `geometry` and `coords` :
+
+```json
+    "filter": {
+      "georel": "coveredBy",
+      "geometry": "polygon",
+      "coords": "54.36775852406841,9.84375;42.032974332441405,-4.921875;40.713955826286046,34.80468749999999;53.54030739150022,29.53125;54.36775852406841,9.84375"
+    }
+```
 
 NGSIv1 example:
 
@@ -314,7 +355,7 @@ abnormal situation: Perseo logs the problem with the update but doesn't try to g
 Perseo triggers the action, the process may repeat, i.e. first update attempt fails with 401, Perseo requests a fresh
 auth token to Keystone, the second update attempt fails with 401, Perseo logs the problem and doesn't retry again.
 
-NGSIv2 example:
+NGSI-v2 example:
 
 ```json
 "action":{
@@ -338,11 +379,11 @@ NGSIv2 example:
     }
 ```
 
-When using NGSIv2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
+When using NGSI-v2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
 `value` is a String, Perseo will try cast value to number, boolean or null (without paying attention to the attribute
 type). If the casting fails then String is used. _`Boolean`_ and _`None`_ types.
 
-**Data Types for NGSIv2:**
+**Data Types for NGSI-v2:**
 
 With `Number` type attributes, Perseo can be able to manage a int/float number or a String to parse in value field.
 
@@ -537,7 +578,7 @@ This attribute will take `null` as value.
 }
 ```
 
-Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
+Note that using NGSI-v2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
 
 **Complete example using NGSv2 update action with filter in a rule:**
 
@@ -565,9 +606,32 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
 }
 ```
 
+```json
+{
+    "name": "murule",
+    "text": "select *,'myrule' as ruleName from pattern [every ev=iotEvent(type='SensorMetter')]",
+    "action": {
+        "type": "update",
+        "parameters": {
+            "filter": {
+                "type": "SensorMetter"
+            },
+            "version": 2,
+            "attributes": [
+                {
+                    "name": "power",
+                    "type": "Text",
+                    "value": "on"
+                }
+            ]
+        }
+    }
+}
+```
+
 ### HTTP request action
 
-Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. The
+Makes an HTTP request to a URL specified in `url` inside `parameters`, sending a body built from `template`. The
 `parameters` field can specify
 
 -   method: _optional_, HTTP method to use, POST by default
@@ -745,8 +809,8 @@ respectively.
 
 The formats are
 
--   [NGSIv1 deprecated format](https://fiware-orion.readthedocs.io/en/1.15.1/user/geolocation/index.html#defining-location-attribute)
--   [NGSIv2 current format](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties
+-   [NGSI-v1 deprecated format](https://fiware-orion.readthedocs.io/en/1.15.1/user/geolocation/index.html#defining-location-attribute)
+-   [NGSI-v2 current format](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties
     of entities"
 
 So, a notification in the deprecated format like
@@ -836,18 +900,19 @@ will send to core an event with the fields `position__lat`, `position__lon`, `po
 
 ```json
 {
-   "noticeId":"7b8f1c50-8eda-11e6-838d-0b633312661c",
-   "id":"Car1",
-   "type":"Vehicle",
-   "isPattern":"false",
-   "subservice":"/",
-   "service":"unknownt",
-   "position":"40.418889, -3.691944",
-   "position__type":"geo:point",
-   "position__lat":40.418889,
-   "position__lon":-3.691944,
-   "position__x":657577.4234800448,
-   "position__y":9591797.935076647
+    "noticeId": "7b8f1c50-8eda-11e6-838d-0b633312661c",
+    "id": "Car1",
+    "type": "Vehicle",
+    "isPattern": "false",
+    "subservice": "/",
+    "service": "unknownt",
+    "position": "40.418889, -3.691944",
+    "position__type": "geo:point",
+    "position__lat": 40.418889,
+    "position__lon": -3.691944,
+    "position__x": 657577.4234800448,
+    "position__y": 9591797.935076647
+}
 ```
 
 An example of rule taking advantage of these derived attributes could be:
@@ -874,8 +939,8 @@ coordinates of Cuenca and `d` the distance of 5 000 m.
 
 Notes:
 
--   NGSIv2 allows several geo location formats (geo:point, geo:line, geo:box, geo:polygon and geo:json). At the present
-    moment, Perseo only supports geo:point.
+-   NGSI-v2 allows several geo location formats (`geo:point`, `geo:line`, `geo:box`, `geo:polygon` and `geo:json`). At
+    the present moment, Perseo only supports `geo:point`.
 -   For long distances the precision of the computations and the distortion of the projection can introduce some degree
     of inaccuracy.
 
