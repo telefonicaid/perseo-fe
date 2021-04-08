@@ -164,6 +164,25 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Fri Feb 19 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.16.0
+- Fix: pagination-based update action for filter results (so removing the limit to 20 entities in the previous implementation) (#455)
+- Fix: check if there is entities before update them (#485)
+- Fix: updateAction is using always `append` in actionType (#484)
+
+* Tue Jan 12 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.15.0
+- Add: PUT plain rule
+- Fix: documentation API /version method (#445)
+- Set 'null' instead of '[?]' when no data available for macro substitution (#469)
+- Update mongo dep driver from 2.2.36 to 3.6.3 (#480)
+
+* Fri Nov 6 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.14.0
+- Add check max value used by setInterval in nonSignal rule (#464)
+- Avoid stop perseo after uncaught exception, just report fatal and details but continue
+- Add internalCurrentTime to nosignal event (#460)
+- Fix postAction crash using a non string template  (#459)
+- Use unique (by node) correlator_suffix to detect rule loops (#456)
+- Log checkNoSignal error using current context (#422)
+
 * Tue May 12 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.13.0
 - Add: service and subservice as action parameters for updateAction (#349)
 - Fix: broken email action

@@ -65,7 +65,7 @@ Some actions send an email. It is done using an SMTP server configured in perseo
 
 ### Generic HTTP server
 
-Some actions consist on making an HTTP POST to an URL provided as parameter of the action. his URL can point to any
+Some actions consist on making an HTTP POST to a URL provided as parameter of the action. This URL can point to any
 host.
 
 ### Authorization server
