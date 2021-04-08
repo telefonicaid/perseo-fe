@@ -234,12 +234,12 @@ Additionally SMS action could include SMS configuration which overwrites global 
         "template": "Meter ${Meter} has pressure ${Pressure}.",
         "parameters": {
             "to": "123456789",
-            "sms"  {
-                "URL": "http://sms-endpoint/smsoutbound",
+            "sms": {
+                 "URL": "http://sms-endpoint/smsoutbound",
                  "API_KEY": "MYAPIKEY",
                  "API_SECRET": "MYSECRET",
                  "from": "tel:22012;phone-context=+34"
-             }
+            }
         }
     }
 ```
@@ -288,7 +288,7 @@ email can be set in the field `subject` in `parameters`.
 
 The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax).
 
-Additionally SMS action could include SMS configuration which overwrites global sms configuration:
+Additionally Email action could include SMTP configuration which overwrites global sms configuration:
 
 ```json
  "action": {
