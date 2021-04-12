@@ -189,12 +189,13 @@ function loadConfiguration() {
     config.smtp.host = process.env.PERSEO_SMTP_HOST || config.smtp.host;
     if (process.env.PERSEO_SMTP_SECURE === 'true') {
         config.smtp.secure = true;
-        config.smtp.auth = config.smtp.auth || {};
-        config.smtp.auth.user = process.env.PERSEO_SMTP_AUTH_USER || config.smtp.auth.user;
-        config.smtp.auth.pass = process.env.PERSEO_SMTP_AUTH_PASS || config.smtp.auth.pass;
-    }
-    else if (process.env.PERSEO_SMTP_SECURE === 'false') {
+    } else if (process.env.PERSEO_SMTP_SECURE === 'false') {
         config.smtp.secure = false;
+    }
+    config.smtp.auth = config.smtp.auth || {};
+    config.smtp.auth.user = process.env.PERSEO_SMTP_AUTH_USER || config.smtp.auth.user;
+    config.smtp.auth.pass = process.env.PERSEO_SMTP_AUTH_PASS || config.smtp.auth.pass;
+    if (Object.keys(config.smtp.auth).length === 0) {
         delete config.smtp.auth;
     }
     if (process.env.PERSEO_SMTP_TLS_REJECTUNAUTHORIZED === 'true') {
