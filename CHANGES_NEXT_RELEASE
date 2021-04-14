@@ -1,3 +1,4 @@
+Allow use sms/smpp/smtp conf from action (#517)(#269)
 Fix config smtp auth user and password: unbind them from config smtp secure flag (#514)
 Convert geojsonpolygon filter into ngsiv2 geoquery (#512)
 Fix router logs to print object details
