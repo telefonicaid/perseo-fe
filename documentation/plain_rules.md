@@ -226,7 +226,7 @@ Sends a SMS to a number set as an action parameter with the body of the message 
     }
 ```
 
-Additionally SMS action could include SMS configuration which overwrites global sms configuration:
+Additionally SMS action could include a `sms` field to include SMS configuration which overwrites global sms configuration:
 
 ```json
  "action": {
@@ -244,7 +244,7 @@ Additionally SMS action could include SMS configuration which overwrites global 
     }
 ```
 
-or SMPP configuration which overwrites global smpp configuration:
+or include a `smpp` field to include SMPP configuration which overwrites global smpp configuration:
 
 ```json
  "action": {
