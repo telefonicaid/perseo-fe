@@ -226,7 +226,7 @@ Sends a SMS to a number set as an action parameter with the body of the message 
     }
 ```
 
-Additionally SMS action could include SMS configuration which overwrites global sms configuration:
+Additionally SMS action could include a `sms` field to include SMS configuration which overwrites global sms configuration:
 
 ```json
  "action": {
@@ -244,7 +244,7 @@ Additionally SMS action could include SMS configuration which overwrites global 
     }
 ```
 
-or SMPP configuration which overwrites global smpp configuration:
+or include a `smpp` field to include SMPP configuration which overwrites global smpp configuration:
 
 ```json
  "action": {
@@ -288,7 +288,7 @@ email can be set in the field `subject` in `parameters`.
 
 The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax).
 
-Additionally Email action could include SMTP configuration which overwrites global sms configuration:
+Additionally, Email action could include a `smtp` field to include SMTP configuration (see [nodemailer transport options for full detail](https://nodemailer.com/smtp/) which overwrites global SMTP configuration:
 
 ```json
  "action": {
