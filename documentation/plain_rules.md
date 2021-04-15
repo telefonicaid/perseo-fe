@@ -288,7 +288,7 @@ email can be set in the field `subject` in `parameters`.
 
 The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax).
 
-Additionally Email action could include SMTP configuration which overwrites global sms configuration:
+Additionally Email action could include SMTP configuration (see [nodemailer transport options for full detail](https://nodemailer.com/smtp/) which overwrites global SMTP configuration:
 
 ```json
  "action": {
