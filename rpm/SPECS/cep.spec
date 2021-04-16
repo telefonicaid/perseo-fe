@@ -164,6 +164,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Fri Apr 16 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.17.0
+- Update emailAction with 'CC' and 'BCC' message fields (#444)
+- Update dep nodemailer from 1.11.0 to 6.4.8
+- Update dep nodemailer-smtp-transport from 0.1.13 to 2.7.2
+- Allow use sms/smpp/smtp conf from action (#517)(#269)
+- Fix config smtp auth user and password: unbind them from config smtp secure flag (#514)
+- Convert geojsonpolygon filter into ngsiv2 geoquery (#512)
+- Fix router logs to print object details
+- Expand `location` geo:json of type Point in event field to core for NGSIv2 (#505)
+- Expand `location` event field to core for NGSIv2 (#504)
+- Notify TimeInstant value to core for NGSIv2 (#503)
+- Upgrade NodeJS version from 10.19.0 to 12 in Dockerfile
+- Convert Dockerfile to multistage builds and add a distroless option
+
+
 * Fri Feb 19 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.16.0
 - Fix: pagination-based update action for filter results (so removing the limit to 20 entities in the previous implementation) (#455)
 - Fix: check if there is entities before update them (#485)
