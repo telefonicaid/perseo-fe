@@ -178,7 +178,6 @@ rm -rf $RPM_BUILD_ROOT
 - Upgrade NodeJS version from 10.19.0 to 12 in Dockerfile
 - Convert Dockerfile to multistage builds and add a distroless option
 
-
 * Fri Feb 19 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.16.0
 - Fix: pagination-based update action for filter results (so removing the limit to 20 entities in the previous implementation) (#455)
 - Fix: check if there is entities before update them (#485)
