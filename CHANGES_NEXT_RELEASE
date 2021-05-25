@@ -1,1 +1,2 @@
 Fix ngsiv2 initial notification not includes al list of subservices in servicePath header when is / (#527)
+Update mongodb dep driver from 3.6.3 to 3.6.8
