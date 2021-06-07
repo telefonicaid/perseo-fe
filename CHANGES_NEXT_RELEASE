@@ -1,1 +1,2 @@
 Update mongodb dep driver from 3.6.3 to 3.6.8
+Update nodemailer dep from 4.6.8 to 4.6.18
