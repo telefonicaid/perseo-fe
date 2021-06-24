@@ -12,7 +12,7 @@ Fields:
 -   **\_ID** _ObjectId_: unique object ID used by mongoDB
 -   **name** _string_: name of the rule
 -   **description** _string_: (optional) description of the rule
--   **misc** _string_: (optional) miscelanea data of the rule
+-   **misc** _object_: (optional) miscelanea data of the rule
 -   **service** _string_ : service which the rule belongs to.
 -   **subservice** _string_: subservice which the rule belongs to.
 -   **text** _string_: EPL sentence for the rule, to be propagated to core
