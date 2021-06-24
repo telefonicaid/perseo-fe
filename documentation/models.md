@@ -13,7 +13,7 @@ Fields:
 -   **name** _string_: name of the rule
 -   **service** _string_ : service which the rule belongs to.
 -   **subservice** _string_: subservice which the rule belongs to.
--   **tex** _string_: EPL sentence for the rule, to be propagated to core
+-   **text** _string_: EPL sentence for the rule, to be propagated to core
 -   **action** _object_: action to be executed when the rule is fired. Each action type has different field set as
     described in [Plain rules](plain_rules.md#actions)
     -   **type** ( _string_ ): type of action.
