@@ -202,7 +202,7 @@ describe('Rules', function() {
                 function(c, callback) {
                     clients.PostRule(c.object, function(error, data) {
                         should.not.exist(error);
-                        data.should.have.property('statusCode', 500);
+                        data.should.have.property('statusCode', 400);
                         return callback(null);
                     });
                 },
@@ -385,7 +385,7 @@ describe('Rules', function() {
             utilsT.setServerMessage('what a pity!');
             clients.DeleteRule('a very strange rule to exist', function(error, data) {
                 should.not.exist(error);
-                data.should.have.property('statusCode', 500);
+                data.should.have.property('statusCode', 400);
                 return done();
             });
         });
