@@ -31,7 +31,6 @@ var async = require('async'),
     metrics = require('../../../lib/models/metrics');
 
 describe('Metrics', function() {
-
     beforeEach(testEnv.commonBeforeEach);
     afterEach(testEnv.commonAfterEach);
 
@@ -39,35 +38,41 @@ describe('Metrics', function() {
         it('should increment correct rules', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_rules');
             metrics.GetDecorated(true); // reset value
-            async.eachSeries(cases, function(c, callback) {
-                clients.PostRule(c.object, function(error, data) {
+            async.eachSeries(
+                cases,
+                function(c, callback) {
+                    clients.PostRule(c.object, function(error, data) {
+                        should.not.exist(error);
+                        data.should.have.property('statusCode', 200);
+                        return callback(null);
+                    });
+                },
+                function(error) {
+                    var m = metrics.GetDecorated(true),
+                        msub;
                     should.not.exist(error);
-                    data.should.have.property('statusCode', 200);
-                    return callback(null);
-                });
-            }, function(error) {
-                var m = metrics.GetDecorated(true), msub;
-                should.not.exist(error);
-                should.exists(m);
-                should.exists(m.services);
-                should.exists(m.services.unknownt);
-                should.exists(m.services.unknownt.subservices);
-                should.exists(m.services.unknownt.subservices['/']);
-                msub = m.services.unknownt.subservices['/'];
+                    should.exists(m);
+                    should.exists(m.services);
+                    should.exists(m.services.unknownt);
+                    should.exists(m.services.unknownt.subservices);
+                    should.exists(m.services.unknownt.subservices['/']);
+                    msub = m.services.unknownt.subservices['/'];
 
-                should.equal(m.services.unknownt.sum.ruleCreation, cases.length);
-                should.equal(m.services.unknownt.sum.okRuleCreation, cases.length);
-                should.equal(m.services.unknownt.sum.failedRuleCreation, 0);
+                    should.equal(m.services.unknownt.sum.ruleCreation, cases.length);
+                    should.equal(m.services.unknownt.sum.okRuleCreation, cases.length);
+                    should.equal(m.services.unknownt.sum.failedRuleCreation, 0);
 
-                return done();
-            });
+                    return done();
+                }
+            );
         });
 
         it('should increment an invalid rule creation', function(done) {
             var rule = utilsT.loadExample('./test/data/bad_rules/rule_without_name.json');
             metrics.GetDecorated(true); // reset metrics
             clients.PostRule(rule, function(error, data) {
-                var m = metrics.GetDecorated(true), msub;
+                var m = metrics.GetDecorated(true),
+                    msub;
                 should.not.exist(error);
                 data.should.have.property('statusCode', 400);
 
@@ -90,7 +95,8 @@ describe('Metrics', function() {
         it('should be increment correct delete', function(done) {
             metrics.GetDecorated(true); // reset metrics
             clients.DeleteRule('a very strange rule to exist', function(error, data) {
-                var m = metrics.GetDecorated(true), msub;
+                var m = metrics.GetDecorated(true),
+                    msub;
                 should.not.exist(error);
                 data.should.have.property('statusCode', 200);
 
@@ -113,9 +119,10 @@ describe('Metrics', function() {
             utilsT.setServerMessage('what a pity!');
             metrics.GetDecorated(true); // reset metrics
             clients.DeleteRule('a very strange rule to exist', function(error, data) {
-                var m = metrics.GetDecorated(true), msub;
+                var m = metrics.GetDecorated(true),
+                    msub;
                 should.not.exist(error);
-                data.should.have.property('statusCode', 500);
+                data.should.have.property('statusCode', 400);
 
                 should.exists(m);
                 should.exists(m.services);

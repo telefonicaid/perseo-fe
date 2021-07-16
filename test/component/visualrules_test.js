@@ -155,7 +155,7 @@ describe('VisualRules', function() {
             utilsT.setServerMessage('what a pity!');
             clients.DeleteVR('a very strange rule to exist', function(error, data) {
                 should.not.exist(error);
-                data.should.have.property('statusCode', 500);
+                data.should.have.property('statusCode', 400);
                 return done();
             });
         });
@@ -388,7 +388,7 @@ describe('VisualRules', function() {
             utilsT.setServerMessage('what a pity!');
             clients.PutVR(rule.name, rule, function(error, data) {
                 should.not.exist(error);
-                data.should.have.property('statusCode', 500);
+                data.should.have.property('statusCode', 400);
                 return done();
             });
         });
