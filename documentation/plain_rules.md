@@ -864,73 +864,16 @@ Note: be aware of the difference between the key `metadatas` used in the context
 
 ## Location fields
 
-Fields with geolocation info with the formats recognized by NGSI v1, are parsed and generate two pairs of
+Fields with geolocation info with the formats recognized by NGSI v2, are parsed and generate two pairs of
 pseudo-attributes, the first pair is for the latitude and the longitude and the second pair is for the x and y UTMC
 coordinates for the point. These pseudo-attributes ease the use of the position in the EPL sentence of the rule. These
 derived attributes have the same name of the attribute with a suffix of `__lat` and `__lon` , and `__x` and `__y`
 respectively.
 
-The formats are
+The formats are described in [NGSI-v2 spec](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties
+of entities"
 
--   [NGSI-v1 deprecated format](https://fiware-orion.readthedocs.io/en/1.15.1/user/geolocation/index.html#defining-location-attribute)
--   [NGSI-v2 current format](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties
-    of entities"
-
-So, a notification in the deprecated format like
-
-```json
-{
-    "subscriptionId": "57f73930e0e2c975a712b8fd",
-    "originator": "localhost",
-    "contextResponses": [
-        {
-            "contextElement": {
-                "type": "Vehicle",
-                "isPattern": "false",
-                "id": "Car1",
-                "attributes": [
-                    {
-                        "name": "position",
-                        "type": "coords",
-                        "value": "40.418889, -3.691944",
-                        "metadatas": [
-                            {
-                                "name": "location",
-                                "type": "string",
-                                "value": "WGS84"
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
-}
-```
-
-will propagate to the core, (and so making available to the EPL sentence) the fields `position__lat`, `position__lon` ,
-`position__x`, `position__y`
-
-```json
-{
-    "noticeId": "169b0920-8edb-11e6-838d-0b633312661c",
-    "id": "Car1",
-    "type": "Vehicle",
-    "isPattern": "false",
-    "subservice": "/",
-    "service": "unknownt",
-    "position": "40.418889, -3.691944",
-    "position__type": "coords",
-    "position__metadata__location": "WGS84",
-    "position__metadata__location__type": "string",
-    "position__lat": 40.418889,
-    "position__lon": -3.691944,
-    "position__x": 657577.4234800448,
-    "position__y": 9591797.935076647
-}
-```
-
-Analogously, a notification in "geopoint" format, like
+So, a notification in "geo:point" format like
 
 ```json
 {
@@ -959,7 +902,8 @@ Analogously, a notification in "geopoint" format, like
 }
 ```
 
-will send to core an event with the fields `position__lat`, `position__lon`, `position__x`, `position__y` also
+will propagate to the core, (and so making available to the EPL sentence) the fields `position__lat`, `position__lon` ,
+`position__x`, `position__y`
 
 ```json
 {
