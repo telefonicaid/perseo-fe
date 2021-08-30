@@ -338,10 +338,10 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
     Broker behind a PEP.
-    A trust token is a way of Kyestone to allow an user delegates a role to another user for a subservice.
+    A trust token is a way of Keystone to allow an user delegates a role to another user for a subservice.
     Complete info could be found at:
-    https://docs.openstack.org/keystone/stein/user/trusts.html
-    https://docs.openstack.org/keystone/stein/api_curl_examples.html#post-v3-os-trust-trusts
+    - https://docs.openstack.org/keystone/stein/user/trusts
+    - https://docs.openstack.org/keystone/stein/api_curl_examples.html#post-v3-os-trust-trusts
 -   service: optional, service that will be used by updateAction rule instead of current event service, PEP URL will be
     used instead of contextbroker.
 -   subservice: optional, subservice that will be used by updateAction rule instead of current event service, PEP URL
