@@ -346,7 +346,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
     used instead of contextbroker.
 -   subservice: optional, subservice that will be used by updateAction rule instead of current event service, PEP URL
     will be used instead of contextbroker.
--   filter: optional, a NGSI-v2 filter (see  Simple Query Language section at https://telefonicaid.github.io/fiware-orion/api/v2/stable). If provided then updateAction is done over result of query. This overrides the
+-   filter: optional, a NGSI-v2 filter (see  Simple Query Language section at [NGSIv2 specification](https://telefonicaid.github.io/fiware-orion/api/v2/stable)). If provided then updateAction is done over result of query. This overrides the
     `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
     `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored). The value of this
     field is an object which keys are the possible options described in
