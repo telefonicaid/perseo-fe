@@ -1,19 +1,21 @@
 # Plain rules
 
--   [Introduction](#introduction)
--   [EPL text](#epl-text)
--   [No signal conditions](#no-signal-conditions)
--   [Actions](#actions)
-    -   [String substitution syntax](#string-substitution-syntax)
-    -   [SMS action](#sms-action)
-    -   [email action](#email-action)
-    -   [update attribute action](#update-attribute-action)
-    -   [HTTP request action](#http-request-action)
-    -   [twitter action](#twitter-action)
--   [Metadata and object values](#metadata-and-object-values)
--   [Location fields](#location-fields)
--   [Time fields](#time-fields)
--   [JSON and Array fields](#json-and-array-fields)
+-   [Plain rules](#plain-rules)
+    -   [Introduction](#introduction)
+    -   [EPL text](#epl-text)
+        -   [Pre-SELECT clauses](#pre-select-clauses)
+    -   [No signal conditions](#no-signal-conditions)
+    -   [Actions](#actions)
+        -   [String substitution syntax](#string-substitution-syntax)
+        -   [SMS action](#sms-action)
+        -   [email action](#email-action)
+        -   [update attribute action](#update-attribute-action)
+        -   [HTTP request action](#http-request-action)
+        -   [twitter action](#twitter-action)
+    -   [Metadata and object values](#metadata-and-object-values)
+    -   [Location fields](#location-fields)
+    -   [Time fields](#time-fields)
+    -   [JSON and Array fields in attributes](#json-and-array-fields-in-attributes)
 
 ## Introduction
 
@@ -127,6 +129,17 @@ Please, be careful with using non-ASCII characters in the EPL syntax. It will pr
 on how to scape characters at
 [Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
 
+### Pre-SELECT clauses
+
+There are support for pre select clauses. Specifically we support `expression VAR for alias {myexpression}`. This allow
+us to use local VARS in the definition of an EPL rule, i.e:
+
+```
+expression num alias for {34+4}
+expression cas alias for {cast("1323", long)}
+select num+10 as sum, cas as casting  from iotEvent;
+```
+
 ## No signal conditions
 
 The no signal condition is specified in the `nosignal` configuration element, which is an object with the following
@@ -226,7 +239,8 @@ Sends a SMS to a number set as an action parameter with the body of the message 
     }
 ```
 
-Additionally SMS action could include a `sms` field to include SMS configuration which overwrites global sms configuration:
+Additionally SMS action could include a `sms` field to include SMS configuration which overwrites global sms
+configuration:
 
 ```json
  "action": {
@@ -288,7 +302,8 @@ email can be set in the field `subject` in `parameters`.
 
 The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax).
 
-Additionally, Email action could include a `smtp` field to include SMTP configuration (see [nodemailer transport options for full detail](https://nodemailer.com/smtp/) which overwrites global SMTP configuration:
+Additionally, Email action could include a `smtp` field to include SMTP configuration (see
+[nodemailer transport options for full detail](https://nodemailer.com/smtp/) which overwrites global SMTP configuration:
 
 ```json
  "action": {
@@ -337,19 +352,19 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
-    Broker behind a PEP.
-    A trust token is a way of Keystone to allow an user delegates a role to another user for a subservice.
-    Complete info could be found at:
+    Broker behind a PEP. A trust token is a way of Keystone to allow an user delegates a role to another user for a
+    subservice. Complete info could be found at:
     -   [Trusts concept](https://docs.openstack.org/keystone/stein/user/trusts)
     -   [Trusts API](https://docs.openstack.org/keystone/stein/api_curl_examples.html#post-v3-os-trust-trusts)
 -   service: optional, service that will be used by updateAction rule instead of current event service, PEP URL will be
     used instead of contextbroker.
 -   subservice: optional, subservice that will be used by updateAction rule instead of current event service, PEP URL
     will be used instead of contextbroker.
--   filter: optional, a NGSI-v2 filter (see  Simple Query Language section at [NGSIv2 specification](https://telefonicaid.github.io/fiware-orion/api/v2/stable)). If provided then updateAction is done over result of query. This overrides the
-    `id` field (in other words, if you use `filter` then `id` field is ignored, in fact you should not use `id` and
-    `filter` in the same rule). Needs `version: 2` option (if `version` is `1` the filter is ignored). The value of this
-    field is an object which keys are the possible options described in
+-   filter: optional, a NGSI-v2 filter (see Simple Query Language section at
+    [NGSIv2 specification](https://telefonicaid.github.io/fiware-orion/api/v2/stable)). If provided then updateAction is
+    done over result of query. This overrides the `id` field (in other words, if you use `filter` then `id` field is
+    ignored, in fact you should not use `id` and `filter` in the same rule). Needs `version: 2` option (if `version` is
+    `1` the filter is ignored). The value of this field is an object which keys are the possible options described in
     [ngsijs options](https://conwetlab.github.io/ngsijs/stable/NGSI.Connection.html#.%22v2.listEntities%22__anchor),
     e.g: `type`, `q`, `georel`, `geometry`, `georel`, etc. However, note that the options related with pagination
     (`limit`, `offset` and `count`) are ignored, as Perseo implements its own way of processing large filter results.
@@ -874,8 +889,8 @@ coordinates for the point. These pseudo-attributes ease the use of the position 
 derived attributes have the same name of the attribute with a suffix of `__lat` and `__lon` , and `__x` and `__y`
 respectively.
 
-The formats are described in [NGSI-v2 spec](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section "Geospatial properties
-of entities"
+The formats are described in [NGSI-v2 spec](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section
+"Geospatial properties of entities"
 
 So, a notification in "geo:point" format like
 
