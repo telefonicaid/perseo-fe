@@ -96,7 +96,7 @@ The field `text` of the rule must be a valid EPL statement and additionally must
 expectations of perseo and perseo-core.
 
 EPL is documented in [Esper site](http://www.espertech.com/esper/esper-documentation), in particular
-[version 8.7.0](http://esper.espertech.com/release-8.7.0/reference-esper/html/).
+[version 8.4.0](http://esper.espertech.com/release-8.4.0/reference-esper/html/).
 
 A EPL statement to use with perseo could be:
 
