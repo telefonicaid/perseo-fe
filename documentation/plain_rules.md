@@ -115,8 +115,8 @@ from pattern
     
 Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
 
-* Alias usage, e.g. `expression twoPI alias for { Math.PI * 2 }`
-* Functions usage, e.g. `expression DOUBLE {(v) => cast(cast(v,string), double)}`
+-   [Alias](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-alias) usage, e.g. `expression twoPI alias for { Math.PI * 2 }`
+-   [Functions](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-decl) usage, e.g. `expression DOUBLE {(v) => cast(cast(v,string), double)}`
 
 **Backward compatibility note:** since perseo-fe version 1.8.0 it is not mandatory to specify the name of the rule as
 part of the EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be
