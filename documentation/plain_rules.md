@@ -113,7 +113,7 @@ from pattern
     ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET
     /rules or GET /rules/{name}.
     
-Some hightligths in the 8.x version, that allow to write simpler and cleaner EPL statements:
+Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
 
 * Alias usage, e.g. `expression twoPI alias for { Math.PI * 2 }`
 * Functions usage, e.g. `expression DOUBLE {(v) => cast(cast(v,string), double)}`
