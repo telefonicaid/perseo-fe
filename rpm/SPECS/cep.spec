@@ -164,6 +164,17 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Thu Sep 30 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.18.0
+- Fix: remove cbnotif from correlator (#536)
+- Fix: failed rules updatescounter not working in metrics API
+- Fix: return error 400 from perseo-core instead of 500 (#539)
+- Update ngsijs dep from 1.2.1 to 1.3.0
+- Fix: ngsiv2 initial notification does not include a list of subservices in servicePath header when is / (#527)
+- Update mongodb dep driver from 3.6.3 to 3.6.8
+- Update nodemailer dep from 6.4.8 to 6.4.18
+- Update requests dep from 2.88.0 to 2.88.2
+- Feature: Add support for "pre select" clauses (in detail: <expression XX alias for {}> )
+
 * Fri Apr 16 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.17.0
 - Add: 'CC' and 'BCC' message fields to emailAction (#444)
 - Add: allow use sms/smpp/smtp conf from action (#517)(#269)
