@@ -1,1 +1,1 @@
-
+- Fix: reset location to not expand it in all attributes (#560)
