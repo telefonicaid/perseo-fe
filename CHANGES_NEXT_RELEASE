@@ -1,1 +1,2 @@
+- Fix: do not exit process when error < 500 is propagated from core (#558)
 - Fix: reset location to not expand it in all attributes event (#560)
