@@ -1,1 +1,1 @@
-
+- Fix: do not exit process when error < 500 is propaged from core (#558)
