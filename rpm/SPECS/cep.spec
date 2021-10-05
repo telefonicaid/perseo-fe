@@ -164,6 +164,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue Oct 5 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.19.0
+- Fix: ensure remove CR LF chars in EPL text for core (#556)
+- Fix: do not exit process when error < 500 is propagated from core, just log error (#557)
+- Fix: reset location to not expand it in all attributes event (#560)
+
 * Thu Sep 30 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.18.0
 - Add: support for "pre select" clauses (in detail: <expression XX alias for {}> )
 - Fix: remove cbnotif from correlator (#536)
