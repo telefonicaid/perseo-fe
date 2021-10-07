@@ -361,7 +361,7 @@ describe('Metrics', function() {
                                 should.equal(m.services.unknownt.sum.outgoingTransactions, 1);
                                 should.equal(m.services.unknownt.sum.outgoingTransactionsErrors, 1);
                                 return callback();
-                            }, 50);
+                            }, 500);
                         });
                     }
                 ],
