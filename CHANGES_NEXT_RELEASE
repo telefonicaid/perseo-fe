@@ -1,1 +1,2 @@
 - Add: log context rule in core involved ops (#550)
+- Fix: use more robust regex for select detection for context (#548)
