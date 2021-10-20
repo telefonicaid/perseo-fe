@@ -94,6 +94,17 @@ var p4 = 40.448949;
 var locType3 = 'geo:json';
 var locValue3 = { type: 'LineString', coordinates: [[p1, p2], [p3, p4]] };
 
+var q1 = -3.699893;
+var q2 = 40.41087;
+var q3 = -3.640863;
+var q4 = 40.345617;
+var q5 = -3.604573;
+var q6 = 40.372574;
+var q7 = -3.699893;
+var q8 = 40.41087;
+var locType4 = 'geo:json';
+var locValue4 = { type: 'Polygon', coordinates: [[[q1, q2], [q3, q4], [q5, q6], [q7, q8]]] };
+
 describe('Notices NGSIv2', function() {
     var noticeExample;
     beforeEach(function() {
@@ -228,6 +239,7 @@ describe('Notices NGSIv2', function() {
                 done();
             });
         });
+
         it('should accept simple notice using geo:json type LineString', function(done) {
             var parseLocationMock = sinon.spy(function() {
                 return {};
@@ -253,6 +265,39 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__coordinates__0__1']).to.equal(p2);
                 expect(noticeResult[attrKey + '__coordinates__1__0']).to.equal(p3);
                 expect(noticeResult[attrKey + '__coordinates__1__1']).to.equal(p4);
+                done();
+            });
+        });
+
+        it('should accept simple notice using geo:json type Polygon', function(done) {
+            var parseLocationMock = sinon.spy(function() {
+                return {};
+            });
+
+            notices.__with__({
+                'uuid.v1': uuidMock,
+                'Date.now': dateNowMock,
+                parseLocation: parseLocationMock
+            })(function() {
+                noticeExample.data[0][attrKey].type = locType4;
+                noticeExample.data[0][attrKey].value = locValue4;
+                var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey + '__type']).to.equal(locValue4.type);
+                expect(noticeResult[attrKey + '__coordinates__0__0__0']).to.equal(q1);
+                expect(noticeResult[attrKey + '__coordinates__0__0__1']).to.equal(q2);
+                expect(noticeResult[attrKey + '__coordinates__0__1__0']).to.equal(q3);
+                expect(noticeResult[attrKey + '__coordinates__0__1__1']).to.equal(q4);
+                expect(noticeResult[attrKey + '__coordinates__0__2__0']).to.equal(q5);
+                expect(noticeResult[attrKey + '__coordinates__0__2__1']).to.equal(q6);
+                expect(noticeResult[attrKey + '__coordinates__0__3__0']).to.equal(q7);
+                expect(noticeResult[attrKey + '__coordinates__0__3__1']).to.equal(q8);
                 done();
             });
         });
