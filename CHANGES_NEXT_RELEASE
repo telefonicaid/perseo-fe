@@ -1,4 +1,4 @@
-- Fix: do not parse geo:json of type Point in a special way when process event for perseo-core  (#576)
+- Fix: parse geo:json of type Point in a the same special way than geo:point when process event for perseo-core  (#576)
 - Fix: some mongodb driver warns about deprecations (#570)
 - Add: log context rule in core involved ops (#550)
 - Fix: use more robust regex for select detection for context (#548)
