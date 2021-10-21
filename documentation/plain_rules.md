@@ -126,7 +126,6 @@ must be equal to the ‘name’ field of the rule object.
 The used entity's attributes must be cast to `double` in case of being numeric (like in the example). Alphanumeric values
 must be cast to `String`. Nested cast to string and to double is something we are analyzing, and could be unnecessary in
 a future version. Use it by now. All the attributes in the notification from Orion are available in the event object,
-
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values). 
 Moreover under _ev.stripped are in JSON format all the notification fields (like id, type, attrs, etc.), so you can access to it in an EPL text using:
