@@ -946,6 +946,7 @@ will propagate to the core, (and so making available to the EPL sentence) the fi
     "isPattern": "false",
     "subservice": "/",
     "service": "unknownt",
+    "location": "\"40.418889, -3.691944\"",
     "position__type": "geo:point",
     "position__lat": 40.418889,
     "position__lon": -3.691944,
