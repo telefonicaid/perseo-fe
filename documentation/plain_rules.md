@@ -887,7 +887,7 @@ Note: be aware of the difference between the key `metadatas` used in the context
 
 ## Location fields
 
-Fields with geolocation info with the formats recognized by NGSI v2, are parsed and generate two pairs of
+Fields with geolocation info representing a point with the formats recognized by NGSI-v2, are parsed and generate two pairs of
 pseudo-attributes, the first pair is for the latitude and the longitude and the second pair is for the x and y UTMC
 coordinates for the point. These pseudo-attributes ease the use of the position in the EPL sentence of the rule. These
 derived attributes have the same name of the attribute with a suffix of `__lat` and `__lon` , and `__x` and `__y`
@@ -901,26 +901,36 @@ So, a notification in "geo:point" format like
 ```json
 {
     "subscriptionId": "57f73930e0e2c975a712b8fd",
-    "originator": "localhost",
-    "contextResponses": [
-        {
-            "contextElement": {
-                "type": "Vehicle",
-                "isPattern": "false",
-                "id": "Car1",
-                "attributes": [
-                    {
-                        "name": "position",
-                        "type": "geo:point",
-                        "value": "40.418889, -3.691944"
-                    }
-                ]
-            },
-            "statusCode": {
-                "code": "200",
-                "reasonPhrase": "OK"
-            }
+    "data": [
+      {
+        "type": "Vehicle",                
+        "id": "Car1",
+        "position": {
+          "type": "geo:point",
+          "value": "40.418889, -3.691944"
         }
+      }
+    ]
+}
+```
+
+or the equivalent `geo:json` of type `Point` like this
+
+```
+{
+    "subscriptionId": "57f73930e0e2c975a712b8fd",
+    "data": [
+      {
+        "type": "Vehicle",                
+        "id": "Car1",
+        "position": {
+          "type": "geo:json",
+          "value": {
+            "type": "Point",
+            "coordinates": [-3.691944, 40.418889]
+          }
+        }
+      }
     ]
 }
 ```
@@ -936,7 +946,6 @@ will propagate to the core, (and so making available to the EPL sentence) the fi
     "isPattern": "false",
     "subservice": "/",
     "service": "unknownt",
-    "position": "40.418889, -3.691944",
     "position__type": "geo:point",
     "position__lat": 40.418889,
     "position__lon": -3.691944,
@@ -950,7 +959,7 @@ An example of rule taking advantage of these derived attributes could be:
 ```json
 {
     "name": "rule_distance",
-    "text": "select * from iotEvent where Math.pow((cast(cast(position__x?,String),double) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),double) - 9764160.736945232), 2) < Math.pow(5e3,2)",
+    "text": "select * from iotEvent where Math.pow((cast(cast(position__x?,String),float) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),float) - 9764160.736945232), 2) < Math.pow(5e3,2)",
     "action": {
         "type": "email",
         "template": "${id} (${type}) is at ${position__lat}, ${position__lon} (${position__x}, ${position__y})",
@@ -969,8 +978,11 @@ coordinates of Cuenca and `d` the distance of 5 000 m.
 
 Notes:
 
--   NGSI-v2 allows several geo location formats (`geo:point`, `geo:line`, `geo:box`, `geo:polygon` and `geo:json`). At
-    the present moment, Perseo only supports `geo:point`.
+-   NGSI-v2 allows several geo location formats (`geo:point`, `geo:line`, `geo:box`, `geo:polygon` and `geo:json`). This
+    feature only works with `geo:point` and `geo:json` of type `Point`. However, note that all the other cases will
+    take advantage of the [JSON object expansion](#json-and-array-fields-in-attributes] done by Perseo. You can have
+    a look to [this link](https://github.com/telefonicaid/perseo-fe/issues/576#issuecomment-945697894) to have a
+    couple of examples with `geo:json` representing `LineString` and `Polygon`.
 -   For long distances the precision of the computations and the distortion of the projection can introduce some degree
     of inaccuracy.
 
