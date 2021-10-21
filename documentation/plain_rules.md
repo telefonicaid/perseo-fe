@@ -128,11 +128,12 @@ must be cast to `String`. Nested cast to string and to float is something we are
 a future version. Use it by now. All the attributes in the notification from Orion are available in the event object,
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values). 
-Moreover under _ev.stripped are in JSON format all the notification fields (like id, type, attrs, etc.), so you can access to it in an EPL text using
+Moreover under _ev.stripped are in JSON format all the notification fields (like id, type, attrs, etc.), so you can access to it in an EPL text using:
 
 ```sql
 cast(stripped?, java.util.Map).get("id")
 ```
+A full example of `ev` notification processed is avaiable at buttom of [JSON and Array fields in attributes](#json-and-array-fields-in-attributes)
 
 Please, be careful with using non-ASCII characters in the EPL syntax. It will provoke an error. You can find information
 on how to scape characters at
@@ -1205,31 +1206,53 @@ Additionally all attributes are also included in non flatten format in the event
 
 ```json
 {
-    "noticeId": "799635b0-914f-11e6-836b-bf1691c99768",
-    "noticeTS": 1476368120971,
-    "id": "John Doe",
-    "type": "employee",
-    "isPattern": "false",
-    "subservice": "/",
-    "service": "unknownt",
-    "myJsonValue__color": "blue",
-    "myArrayValue__0": "green",
-    "myArrayValue__1": "black",
-    "stripped": [
-        {
-            "myJsonValue": {
-                "type": "myType1",
-                "value": {
-                    "color": "blue"
-                }
-            }
-        },
-        {
-            "myArrayValue": {
-                "type": "myType2",
-                "value": ["green", "black"]
-            }
-        }
-    ]
+	"noticeId": "7437b060-30c5-11ec-b47f-5f4885f1fa55",
+	"noticeTS": 1634638515814,
+	"id": "thing:disp6",
+	"type": "thing",
+	"isPattern": false,
+	"subservice": "/",
+	"service": "smartcity",
+	"TimeInstant__type": "DateTime",
+	"TimeInstant": "2021-10-19T10:15:37.050Z",
+	"TimeInstant__ts": 1634638537050,
+	"TimeInstant__day": 19,
+	"TimeInstant__month": 10,
+	"TimeInstant__year": 2021,
+	"TimeInstant__hour": 10,
+	"TimeInstant__minute": 15,
+	"TimeInstant__second": 37,
+	"TimeInstant__millisecond": 50,
+	"TimeInstant__dayUTC": 19,
+	"TimeInstant__monthUTC": 10,
+	"TimeInstant__yearUTC": 2021,
+	"TimeInstant__hourUTC": 10,
+	"TimeInstant__minuteUTC": 15,
+	"TimeInstant__secondUTC": 37,
+	"TimeInstant__millisecondUTC": 50,
+	"location__type": "Point",
+	"location__coordinates__0": 53.0859375,
+	"location__coordinates__1": 53.120405283,
+	"location__lat": 53.0859375,
+	"location__lon": 53.120405283,
+	"location__x": 642009.4673614734,
+	"location__y": 5883931.8311913265,
+	"stripped": {
+		"id": "thing:disp6",
+		"type": "thing",
+		"TimeInstant": {
+			"type": "DateTime",
+			"value": "2021-10-19T10:15:37.050Z",
+			"metadata": {}
+		},
+		"location": {
+			"type": "geo:json",
+			"value": {
+				"type": "Point",
+				"coordinates": [53.0859375, 53.120405283]
+			},
+			"metadata": {}
+		}
+	}
 }
 ```
