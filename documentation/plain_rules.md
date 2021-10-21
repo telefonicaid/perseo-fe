@@ -26,14 +26,14 @@ There are two kind of rules:
 
 ```json
 {
-    "name": "blood_rule_update",
-    "text": "select *, *, ev.BloodPressure? as Pressure, ev.id? as Meter from pattern [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type=\"BloodMeter\")]",
+    "name": "humidity_rule",
+    "text": "select *, humidity? from iotEvent where type?='WheatherStation' AND cast(cast(humidity?, String), double)<20",
     "action": {
         "type": "update",
         "parameters": {
             "attributes": [
                 {
-                    "name": "abnormal",
+                    "name": "dryFloor",
                     "value": "true",
                     "type": "boolean"
                 }
@@ -101,14 +101,14 @@ EPL is documented in [Esper site](http://www.espertech.com/esper/esper-documenta
 A EPL statement to use with perseo could be:
 
 ```sql
-select *, ev.BloodPressure? as Pressure, ev.id? as Meter
-from pattern
-    [every ev=iotEvent(cast(cast(BloodPressure?,String),float)>1.5 and type="BloodMeter")]
+select *, bloodPressure? as Pressure
+from iotEvent
+where (cast(cast(bloodPressure?,String),double)>1.5 and type="BloodMeter")]
 ```
 
 -   Include `*,` in EPL select clause
--   The _from_ pattern must name the event as **ev** and the event stream from which take events must be **iotEvent**
--   A _type=_ condition must be concatenated for avoiding mixing different kinds of entities
+-   The event stream from which take events must be **iotEvent**
+-   A _type=_ condition may be concatenated for avoiding mixing different kinds of entities
 -   The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text. The
     ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET
     /rules or GET /rules/{name}.
@@ -123,15 +123,15 @@ part of the EPL text. In fact, it is not recommendable to do that. However, for 
 present as _ruleName_ alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it
 must be equal to the ‘name’ field of the rule object.
 
-The used entity's attributes must be cast to `float` in case of being numeric (like in the example). Alphanumeric values
-must be cast to `String`. Nested cast to string and to float is something we are analyzing, and could be unnecessary in
+The used entity's attributes must be cast to `double` in case of being numeric (like in the example). Alphanumeric values
+must be cast to `String`. Nested cast to string and to double is something we are analyzing, and could be unnecessary in
 a future version. Use it by now. All the attributes in the notification from Orion are available in the event object,
-**ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
+like _blodPressure?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
 
 Please, be careful with using non-ASCII characters in the EPL syntax. It will provoke an error. You can find information
 on how to scape characters at
-[Esper site](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_representation.html#eventrep-properties-escaping)
+[Esper site](https://esper.espertech.com/release-8.4.0/reference-esper/html/event_representation.html#eventrep-properties-escaping)
 
 ### Pre-SELECT clauses
 
@@ -471,7 +471,7 @@ type). If the casting fails then String is used. _`Boolean`_ and _`None`_ types.
 
 **Data Types for NGSI-v2:**
 
-With `Number` type attributes, Perseo can be able to manage a int/float number or a String to parse in value field.
+With `Number` type attributes, Perseo can be able to manage a int/double number or a String to parse in value field.
 
 -   Number from variable:
 
@@ -646,7 +646,7 @@ This attribute will take `null` as value.
 ```json
 {
     "name": "blood_rule_update",
-    "text": "select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pressure from pattern [every ev=iotEvent(BloodPressure? > 1.5 and type=\"BloodMeter\")]",
+    "text": "select *,\"blood_rule_update\" as ruleName, bloodPressure? as Pressure from iotEvent where bloodPressure? > 1.5 and type=\"BloodMeter\"",
     "action": {
         "type": "update",
         "parameters": {
@@ -671,13 +671,13 @@ Note that using NGSI-v2 the BloodPressure attribute is a Number and therefore it
 ```json
 {
     "name": "blood_rule_update",
-    "text": "select *,\"blood_rule_update\" as ruleName, *, ev.BloodPressure? as Pressure from pattern [every ev=iotEvent(BloodPressure? > 1.5 and type=\"BloodMeter\")]",
+    "text": "select *,\"blood_rule_update\" as ruleName, bloodPressure? as Pressure from iotEvent where bloodPressure? > 1.5 and type=\"BloodMeter\"",
     "action": {
         "type": "update",
         "parameters": {
             "filter": {
                 "type": "SensorMetter",
-                "q": "status:on"
+                "q": "status:on;level:ok"
             },
             "version": 2,
             "attributes": [
@@ -694,8 +694,8 @@ Note that using NGSI-v2 the BloodPressure attribute is a Number and therefore it
 
 ```json
 {
-    "name": "murule",
-    "text": "select *,'myrule' as ruleName from pattern [every ev=iotEvent(type='SensorMetter')]",
+    "name": "myrule",
+    "text": "select *,'myrule' as ruleName from iotEvent(type='SensorMetter')",
     "action": {
         "type": "update",
         "parameters": {
@@ -865,7 +865,7 @@ could be used by a rule so
 ```json
 {
     "name": "blood_rule_email_md",
-    "text": "select *, *,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(cast(BloodPressure__metadata__crs__system?,String)=\"WGS84\" and type=\"BloodMeter\")]",
+    "text": "select *, bloodPressure? as Pression, id? as Meter from iotEvent where cast(bloodPressure__metadata__crs__system?,String)=\"WGS84\" and type=\"BloodMeter\"",
     "action": {
         "type": "email",
         "template": "Meter ${Meter} has pression ${Pression} (GEN RULE) and system is ${BloodPressure__metadata__crs__system}",
@@ -887,7 +887,7 @@ Note: be aware of the difference between the key `metadatas` used in the context
 
 ## Location fields
 
-Fields with geolocation info with the formats recognized by NGSI v2, are parsed and generate two pairs of
+Fields with geolocation info representing a point with the formats recognized by NGSI-v2, are parsed and generate two pairs of
 pseudo-attributes, the first pair is for the latitude and the longitude and the second pair is for the x and y UTMC
 coordinates for the point. These pseudo-attributes ease the use of the position in the EPL sentence of the rule. These
 derived attributes have the same name of the attribute with a suffix of `__lat` and `__lon` , and `__x` and `__y`
@@ -901,26 +901,36 @@ So, a notification in "geo:point" format like
 ```json
 {
     "subscriptionId": "57f73930e0e2c975a712b8fd",
-    "originator": "localhost",
-    "contextResponses": [
-        {
-            "contextElement": {
-                "type": "Vehicle",
-                "isPattern": "false",
-                "id": "Car1",
-                "attributes": [
-                    {
-                        "name": "position",
-                        "type": "geo:point",
-                        "value": "40.418889, -3.691944"
-                    }
-                ]
-            },
-            "statusCode": {
-                "code": "200",
-                "reasonPhrase": "OK"
-            }
+    "data": [
+      {
+        "type": "Vehicle",                
+        "id": "Car1",
+        "position": {
+          "type": "geo:point",
+          "value": "40.418889, -3.691944"
         }
+      }
+    ]
+}
+```
+
+or the equivalent `geo:json` of type `Point` like this
+
+```
+{
+    "subscriptionId": "57f73930e0e2c975a712b8fd",
+    "data": [
+      {
+        "type": "Vehicle",                
+        "id": "Car1",
+        "position": {
+          "type": "geo:json",
+          "value": {
+            "type": "Point",
+            "coordinates": [-3.691944, 40.418889]
+          }
+        }
+      }
     ]
 }
 ```
@@ -936,7 +946,6 @@ will propagate to the core, (and so making available to the EPL sentence) the fi
     "isPattern": "false",
     "subservice": "/",
     "service": "unknownt",
-    "position": "40.418889, -3.691944",
     "position__type": "geo:point",
     "position__lat": 40.418889,
     "position__lon": -3.691944,
@@ -950,7 +959,7 @@ An example of rule taking advantage of these derived attributes could be:
 ```json
 {
     "name": "rule_distance",
-    "text": "select *, from pattern [every ev=iotEvent(Math.pow((cast(cast(position__x?,String),float) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),float) - 9764160.736945232), 2) < Math.pow(5e3,2))]",
+    "text": "select * from iotEvent where Math.pow((cast(cast(position__x?,String),float) - 618618.8286057833), 2) + Math.pow((cast(cast(position__y?,String),float) - 9764160.736945232), 2) < Math.pow(5e3,2)",
     "action": {
         "type": "email",
         "template": "${id} (${type}) is at ${position__lat}, ${position__lon} (${position__x}, ${position__y})",
@@ -969,8 +978,11 @@ coordinates of Cuenca and `d` the distance of 5 000 m.
 
 Notes:
 
--   NGSI-v2 allows several geo location formats (`geo:point`, `geo:line`, `geo:box`, `geo:polygon` and `geo:json`). At
-    the present moment, Perseo only supports `geo:point`.
+-   NGSI-v2 allows several geo location formats (`geo:point`, `geo:line`, `geo:box`, `geo:polygon` and `geo:json`). This
+    feature only works with `geo:point` and `geo:json` of type `Point`. However, note that all the other cases will
+    take advantage of the [JSON object expansion](#json-and-array-fields-in-attributes) done by Perseo. You can have
+    a look to [this link](https://github.com/telefonicaid/perseo-fe/issues/576#issuecomment-945697894) to have a
+    couple of examples with `geo:json` representing `LineString` and `Polygon`.
 -   For long distances the precision of the computations and the distortion of the projection can introduce some degree
     of inaccuracy.
 
@@ -1138,7 +1150,7 @@ A rule that will check if the employee has been hired in the last half hour, cou
 ```json
 {
     "name": "rule_time",
-    "text": "select *, from pattern [every ev=iotEvent(cast(cast(hire__ts?,String),float) > current_timestamp - 30*60*1000)]",
+    "text": "select * from iotEvent where cast(cast(hire__ts?,String),double) > current_timestamp - 30*60*1000",
     "action": {
         "type": "email",
         "template": "So glad with our new ${role}, ${id}!",
