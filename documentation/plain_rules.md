@@ -128,7 +128,11 @@ must be cast to `String`. Nested cast to string and to float is something we are
 a future version. Use it by now. All the attributes in the notification from Orion are available in the event object,
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values). 
-Under _ev.stripped are in JSON format all the attributes in the notification.
+Moreover under _ev.stripped are in JSON format all the notification fields (like id, type, attrs, etc.), so you can access to it in an EPL text using
+
+```sql
+cast(stripped?, java.util.Map).get("id")
+```
 
 Please, be careful with using non-ASCII characters in the EPL syntax. It will provoke an error. You can find information
 on how to scape characters at
