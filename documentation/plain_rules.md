@@ -1261,7 +1261,7 @@ Additionally all attributes are also included in non flatten format in the event
 			"type": "geo:json",
 			"value": {
 				"type": "Point",
-				"coordinates": [53.0859375, 53.120405283]
+				"coordinates": [53.120405283, 53.0859375]
 			},
 			"metadata": {}
 		}
