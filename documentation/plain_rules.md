@@ -980,7 +980,7 @@ Notes:
 
 -   NGSI-v2 allows several geo location formats (`geo:point`, `geo:line`, `geo:box`, `geo:polygon` and `geo:json`). This
     feature only works with `geo:point` and `geo:json` of type `Point`. However, note that all the other cases will
-    take advantage of the [JSON object expansion](#json-and-array-fields-in-attributes] done by Perseo. You can have
+    take advantage of the [JSON object expansion](#json-and-array-fields-in-attributes) done by Perseo. You can have
     a look to [this link](https://github.com/telefonicaid/perseo-fe/issues/576#issuecomment-945697894) to have a
     couple of examples with `geo:json` representing `LineString` and `Polygon`.
 -   For long distances the precision of the computations and the distortion of the projection can introduce some degree
