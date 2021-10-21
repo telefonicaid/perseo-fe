@@ -85,7 +85,7 @@ var y = 4474481.316254241;
 var locValue = lat + ', ' + long;
 
 var locType2 = 'geo:json';
-var locValue2 = { type: 'Point', coordinates: [lat, long] };
+var locValue2 = { type: 'Point', coordinates: [long, lat] };
 
 var p1 = -3.763423;
 var p2 = 40.419867;
