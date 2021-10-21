@@ -1,3 +1,4 @@
+- Add: include json (representated as string) in event delivered to perseo-core for each notification field: (#579)
 - Fix: some mongodb driver warns about deprecations (#570)
 - Add: log context rule in core involved ops (#550)
 - Fix: use more robust regex for select detection for context (#548)
