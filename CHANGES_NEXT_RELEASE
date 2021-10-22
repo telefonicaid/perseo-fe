@@ -1,4 +1,5 @@
-- Fix: lat long order of geo:json of type Point 
+- Add: include json (representated as string) in event delivered to perseo-core for each notification field (#579)
+- Fix: lat long order of geo:json of type Point
 - Fix: parse geo:json of type Point in a the same special way than geo:point when process event for perseo-core  (#576)
 - Fix: some mongodb driver warns about deprecations (#570)
 - Add: log context rule in core involved ops (#550)
