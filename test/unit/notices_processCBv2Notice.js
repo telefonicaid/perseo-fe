@@ -233,7 +233,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__y']).to.equal(y);
                 expect(noticeResult[attrKey + '__coordinates__0']).to.equal(long);
                 expect(noticeResult[attrKey + '__coordinates__1']).to.equal(lat);
-                parseLocationMock.should.have.been.calledWith(locValue2.coordinates.toString());
+                parseLocationMock.should.have.been.calledWith(locValue2.coordinates.reverse().toString());
                 parseLocationMock.should.be.calledOnce;
                 done();
             });
