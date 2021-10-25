@@ -977,8 +977,7 @@ This also works for metadata. For example, a notification with metadata "geo:poi
             "loc": {
               "type": "geo:point",
               "value": "2, 1"
-              }
-            }
+            }            
           }
         }
       }
