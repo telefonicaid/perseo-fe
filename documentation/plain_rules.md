@@ -961,6 +961,74 @@ will propagate to the core, (and so making available to the EPL sentence) the fi
 }
 ```
 
+This also works for metadata. For example, a notification with metadata "geo:point" format like
+
+```json
+{
+    "subscriptionId": "57f73930e0e2c975a712b8fd",
+    "data": [
+      {
+        "type": "Vehicle",                
+        "id": "Car1",
+        "A": {
+          "value": "OK",
+          "type": "Text",
+          "metadata": {
+            "loc": {
+              "type": "geo:point",
+              "value": "2, 1"
+              }
+            }
+          }
+        }
+      }
+    ]
+}
+```
+
+or the equivalent `geo:json` of type `Point` like this
+
+```
+{
+    "subscriptionId": "57f73930e0e2c975a712b8fd",
+    "data": [
+      {
+        "type": "Vehicle",                
+        "id": "Car1",
+        "A": {
+          "value": "OK",
+          "type": "Text",
+          "metadata": {
+            "loc": {
+              "type": "geo:json",
+              "value": {
+                "type": "Point",
+                "coordinates": [1, 2]
+              }
+            }
+          }
+        }
+      }
+    ]
+}
+```
+
+will propagate to the core the following with regards to attribute A:
+
+```json
+...
+"A__type":"Text",
+"A":"OK",
+"A__metadata__loc__type":"geo:json",
+"A__metadata__loc__lat":1,
+"A__metadata__loc__lon":2,
+"A__metadata__loc__x":388736.1877211452,
+"A__metadata__loc__y":110547.1056919319,
+"A__metadata__loc":"{"lat":1,"lon":2,"x":388736.1877211452,"y":110547.1056919319}"
+...
+}
+```
+
 An example of rule taking advantage of these derived attributes could be:
 
 ```json
@@ -990,6 +1058,8 @@ Notes:
     take advantage of the [JSON object expansion](#json-and-array-fields-in-attributes) done by Perseo. You can have
     a look to [this link](https://github.com/telefonicaid/perseo-fe/issues/576#issuecomment-945697894) to have a
     couple of examples with `geo:json` representing `LineString` and `Polygon`.
+-   NGSI-v2 doesn't provide location semantics to medatata information (i.e. a metadata with type `geo:json` will not
+    be used as location by Orion Context Broker). Perseo provides special mappings for them as extra feature.
 -   For long distances the precision of the computations and the distortion of the projection can introduce some degree
     of inaccuracy.
 
