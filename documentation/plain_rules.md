@@ -1014,7 +1014,7 @@ or the equivalent `geo:json` of type `Point` like this
 
 will propagate to the core the following with regards to attribute A:
 
-```json
+```
 ...
 "A__type":"Text",
 "A":"OK",
@@ -1023,7 +1023,7 @@ will propagate to the core the following with regards to attribute A:
 "A__metadata__loc__lon":2,
 "A__metadata__loc__x":388736.1877211452,
 "A__metadata__loc__y":110547.1056919319,
-"A__metadata__loc":"{"lat":1,"lon":2,"x":388736.1877211452,"y":110547.1056919319}"
+"A__metadata__loc":"{\"lat\":1,\"lon\":2,\"x\":388736.1877211452,\"y\":110547.1056919319}"
 ...
 }
 ```
