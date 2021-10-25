@@ -201,7 +201,7 @@ describe('Notices NGSIv2', function() {
             });
         });
 
-        it('should accept simple notice using geo:json type', function(done) {
+        it('should accept simple notice using geo:json type Point', function(done) {
             var parseLocationMock = sinon.spy(function() {
                 return {
                     lat: lat,
@@ -231,8 +231,8 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__lon']).to.equal(long);
                 expect(noticeResult[attrKey + '__x']).to.equal(x);
                 expect(noticeResult[attrKey + '__y']).to.equal(y);
-                expect(noticeResult[attrKey + '__coordinates__0']).to.equal(lat);
-                expect(noticeResult[attrKey + '__coordinates__1']).to.equal(long);
+                expect(noticeResult[attrKey + '__coordinates__0']).to.equal(long);
+                expect(noticeResult[attrKey + '__coordinates__1']).to.equal(lat);
                 parseLocationMock.should.have.been.calledWith(locValue2.coordinates.toString());
                 parseLocationMock.should.be.calledOnce;
                 done();
