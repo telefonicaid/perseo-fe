@@ -942,7 +942,7 @@ or the equivalent `geo:json` of type `Point` like this
 ```
 
 will propagate to the core, (and so making available to the EPL sentence) the fields `position__lat`, `position__lon` ,
-`position__x`, `position__y`
+`position__x`, `position__y` (geo:point case):
 
 ```json
 {
@@ -960,6 +960,116 @@ will propagate to the core, (and so making available to the EPL sentence) the fi
     "position__y": 9591797.935076647
 }
 ```
+
+or (geo:json case):
+
+
+```json
+{
+    "noticeId": "7b8f1c50-8eda-11e6-838d-0b633312661c",
+    "id": "Car1",
+    "type": "Vehicle",
+    "isPattern": "false",
+    "subservice": "/",
+    "service": "unknownt",
+    "location": "{\"type\": \"Point\",\"coordinates\": [-3.691944, 40.418889]}",
+    "position__type": "Point",
+    "position__coordinates__0": -3.691944,
+    "position__coordinates__1": 40.418889,
+    "position__lat": 40.418889,
+    "position__lon": -3.691944,
+    "position__x": 657577.4234800448,
+    "position__y": 9591797.935076647
+}
+```
+
+Note that in this case the type in GeoJSON overrides the type at NGSI attribute level.
+
+The mapping to `__lat`, `__lon`, `__x` and `__y` also works for metadata. For example, a notification with metadata "geo:point" format like
+
+```json
+{
+    "subscriptionId": "57f73930e0e2c975a712b8fd",
+    "data": [
+      {
+        "type": "Vehicle",                
+        "id": "Car1",
+        "A": {
+          "value": "OK",
+          "type": "Text",
+          "metadata": {
+            "loc": {
+              "type": "geo:point",
+              "value": "2, 1"
+            }            
+          }
+        }
+      }
+    ]
+}
+```
+
+or the equivalent `geo:json` of type `Point` like this
+
+```
+{
+    "subscriptionId": "57f73930e0e2c975a712b8fd",
+    "data": [
+      {
+        "type": "Vehicle",                
+        "id": "Car1",
+        "A": {
+          "value": "OK",
+          "type": "Text",
+          "metadata": {
+            "loc": {
+              "type": "geo:json",
+              "value": {
+                "type": "Point",
+                "coordinates": [1, 2]
+              }
+            }
+          }
+        }
+      }
+    ]
+}
+```
+
+will propagate to the core the following with regards to attribute A (geo:point case):
+
+```
+...
+"A__type":"Text",
+"A":"OK",
+"A__metadata__loc":"2, 1",
+"A__metadata__loc__type":"geo:point",
+"A__metadata__loc__lat":2,
+"A__metadata__loc__lon":1,
+"A__metadata__loc__x":277539.36338870926,
+"A__metadata__loc__y":221196.538733437,"
+...
+}
+```
+
+or (geo:json case):
+
+```
+...
+"A__type":"Text",
+"A":"OK",
+"A__metadata__loc":"{"type":"Point","coordinates":[1,2]}",
+"A__metadata__loc__type":"Point",
+"A__metadata__loc__coordinates__0":1,
+"A__metadata__loc__coordinates__1":2,
+"A__metadata__loc__lat":2,
+"A__metadata__loc__lon":1,
+"A__metadata__loc__x":277539.36338870926,
+"A__metadata__loc__y":221196.538733437,"
+...
+```
+
+Note that in this case the type in GeoJSON overrides the type at NGSI metadata level.
 
 An example of rule taking advantage of these derived attributes could be:
 
@@ -990,6 +1100,8 @@ Notes:
     take advantage of the [JSON object expansion](#json-and-array-fields-in-attributes) done by Perseo. You can have
     a look to [this link](https://github.com/telefonicaid/perseo-fe/issues/576#issuecomment-945697894) to have a
     couple of examples with `geo:json` representing `LineString` and `Polygon`.
+-   NGSI-v2 doesn't provide location semantics to medatata information (i.e. a metadata with type `geo:json` will not
+    be used as location by Orion Context Broker). Perseo provides special mappings for them as extra feature.
 -   For long distances the precision of the computations and the distortion of the projection can introduce some degree
     of inaccuracy.
 
