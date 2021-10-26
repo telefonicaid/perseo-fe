@@ -983,7 +983,9 @@ or (geo:json case):
 }
 ```
 
-This also works for metadata. For example, a notification with metadata "geo:point" format like
+Note that in this case the type in GeoJSON overrides the type at NGSI attribute level.
+
+The mapping to `__lat`, `__lon`, `__x` and `__y` also works for metadata. For example, a notification with metadata "geo:point" format like
 
 ```json
 {
@@ -1066,6 +1068,8 @@ or (geo:json case):
 "A__metadata__loc__y":221196.538733437,"
 ...
 ```
+
+Note that in this case the type in GeoJSON overrides the type at NGSI metadata level.
 
 An example of rule taking advantage of these derived attributes could be:
 
