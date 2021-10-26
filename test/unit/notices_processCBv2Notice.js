@@ -404,7 +404,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__metadata__' + at + '__lon']).to.equal(long);
                 expect(noticeResult[attrKey + '__metadata__' + at + '__x']).to.equal(x);
                 expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
-                parseLocationMock.should.have.been.calledWith(locValue);
+                parseLocationMock.should.have.been.calledWith(locValue2);
                 parseLocationMock.should.be.calledOnce;
                 done();
             });
