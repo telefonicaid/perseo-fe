@@ -942,7 +942,7 @@ or the equivalent `geo:json` of type `Point` like this
 ```
 
 will propagate to the core, (and so making available to the EPL sentence) the fields `position__lat`, `position__lon` ,
-`position__x`, `position__y`
+`position__x`, `position__y` (geo:point case):
 
 ```json
 {
@@ -954,6 +954,28 @@ will propagate to the core, (and so making available to the EPL sentence) the fi
     "service": "unknownt",
     "location": "\"40.418889, -3.691944\"",
     "position__type": "geo:point",
+    "position__lat": 40.418889,
+    "position__lon": -3.691944,
+    "position__x": 657577.4234800448,
+    "position__y": 9591797.935076647
+}
+```
+
+or (geo:json case):
+
+
+```json
+{
+    "noticeId": "7b8f1c50-8eda-11e6-838d-0b633312661c",
+    "id": "Car1",
+    "type": "Vehicle",
+    "isPattern": "false",
+    "subservice": "/",
+    "service": "unknownt",
+    "location": {\"type\": \"Point\",\"coordinates\": [-3.691944, 40.418889]},
+    "position__type": "geo:json",
+    "position__coordinates__0": -3.691944,
+    "position__coordinates__1": 40.418889,
     "position__lat": 40.418889,
     "position__lon": -3.691944,
     "position__x": 657577.4234800448,
@@ -1012,20 +1034,36 @@ or the equivalent `geo:json` of type `Point` like this
 }
 ```
 
-will propagate to the core the following with regards to attribute A:
+will propagate to the core the following with regards to attribute A (geo:point case):
 
 ```
 ...
 "A__type":"Text",
 "A":"OK",
-"A__metadata__loc__type":"geo:json",
-"A__metadata__loc__lat":1,
-"A__metadata__loc__lon":2,
-"A__metadata__loc__x":388736.1877211452,
-"A__metadata__loc__y":110547.1056919319,
-"A__metadata__loc":"{\"lat\":1,\"lon\":2,\"x\":388736.1877211452,\"y\":110547.1056919319}"
+"A__metadata__loc":"2, 1",
+"A__metadata__loc__lat":2,
+"A__metadata__loc__lon":1,
+"A__metadata__loc__x":277539.36338870926,
+"A__metadata__loc__y":221196.538733437,"
 ...
 }
+```
+
+or (geo:json case):
+
+```
+...
+"A__type":"Text",
+"A":"OK",
+"A__metadata__loc__type":"Point",
+"A__metadata__loc__coordinates__0":1,
+"A__metadata__loc__coordinates__1":2,
+"A__metadata__loc":"{"type":"Point","coordinates":[1,2]}",
+"A__metadata__loc__lat":2,
+"A__metadata__loc__lon":1,
+"A__metadata__loc__x":277539.36338870926,
+"A__metadata__loc__y":221196.538733437,"
+...
 ```
 
 An example of rule taking advantage of these derived attributes could be:
