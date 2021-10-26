@@ -972,7 +972,7 @@ or (geo:json case):
     "isPattern": "false",
     "subservice": "/",
     "service": "unknownt",
-    "location": {\"type\": \"Point\",\"coordinates\": [-3.691944, 40.418889]},
+    "location": "{\"type\": \"Point\",\"coordinates\": [-3.691944, 40.418889]}",
     "position__type": "geo:json",
     "position__coordinates__0": -3.691944,
     "position__coordinates__1": 40.418889,
