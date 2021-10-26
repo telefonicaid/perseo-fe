@@ -201,7 +201,7 @@ describe('Notices NGSIv2', function() {
             });
         });
 
-        it('should accept simple notice using geo:json type', function(done) {
+        it('should accept simple notice using geo:json type Point', function(done) {
             var parseLocationMock = sinon.spy(function() {
                 return {
                     lat: lat,
@@ -231,9 +231,9 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__lon']).to.equal(long);
                 expect(noticeResult[attrKey + '__x']).to.equal(x);
                 expect(noticeResult[attrKey + '__y']).to.equal(y);
-                expect(noticeResult[attrKey + '__coordinates__0']).to.equal(lat);
-                expect(noticeResult[attrKey + '__coordinates__1']).to.equal(long);
-                parseLocationMock.should.have.been.calledWith(locValue2.coordinates.toString());
+                expect(noticeResult[attrKey + '__coordinates__0']).to.equal(long);
+                expect(noticeResult[attrKey + '__coordinates__1']).to.equal(lat);
+                parseLocationMock.should.have.been.calledWith(locValue2.coordinates.reverse().toString());
                 parseLocationMock.should.be.calledOnce;
                 done();
             });
@@ -364,6 +364,47 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__metadata__' + at + '__x']).to.equal(x);
                 expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
                 parseLocationMock.should.have.been.calledWith(locValue);
+                parseLocationMock.should.be.calledOnce;
+                done();
+            });
+        });
+
+        it('should accept notices including geo:json metadata type Point', function(done) {
+            var at = 'theAttribute';
+            var parseLocationMock = sinon.spy(function() {
+                return {
+                    lat: lat,
+                    lon: long,
+                    x: x,
+                    y: y
+                };
+            });
+            notices.__with__({
+                'uuid.v1': uuidMock,
+                'Date.now': dateNowMock,
+                parseLocation: parseLocationMock
+            })(function() {
+                var meta = (noticeExample.data[0].Attr1.metadata = {});
+                meta[at] = {
+                    value: locValue2,
+                    type: locType2
+                };
+                var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey + '__type']).to.equal(attrType);
+                expect(noticeResult[attrKey]).to.equal(attrValue);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locValue2.type);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__lat']).to.equal(lat);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__lon']).to.equal(long);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__x']).to.equal(x);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
+                parseLocationMock.should.have.been.calledWith(locValue2.coordinates.reverse().toString());
                 parseLocationMock.should.be.calledOnce;
                 done();
             });
