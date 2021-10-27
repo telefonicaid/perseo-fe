@@ -376,7 +376,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   service: optional, service that will be used by updateAction rule instead of current event service. In this case, Orion PEP URL will be
     used instead of Orion URL, and then no token for auth will be negotiated.
 -   subservice: optional, subservice that will be used by updateAction rule instead of current event service, PEP URL
-    will be used instead of orion URL, and then no token for auth will be negotiated.
+    will be used instead of Orion URL, and then no token for auth will be negotiated.
 -   filter: optional, a NGSI-v2 filter (see Simple Query Language section at
     [NGSIv2 specification](https://telefonicaid.github.io/fiware-orion/api/v2/stable)). If provided then updateAction is
     done over result of query. This overrides the `id` field (in other words, if you use `filter` then `id` field is
