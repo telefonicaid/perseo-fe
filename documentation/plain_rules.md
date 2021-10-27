@@ -368,8 +368,8 @@ the Perseo configuration). The `parameters` map includes the following fields:
         doesn't exist in the entity)
     -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
--   trust: optional, trust token for getting an access token from Auth Server which can be used to get to a Context
-    Broker behind a PEP. A trust token is a way of Keystone to allow an user delegates a role to another user for a
+-   trust: optional, trust for getting an access token from Auth Server which can be used to get to a Context
+    Broker behind a PEP. A trust is a way of Keystone to allow an user (trustor) delegates a role to another user (trustee) for a
     subservice. Complete info could be found at:
     -   [Trusts concept](https://docs.openstack.org/keystone/stein/user/trusts)
     -   [Trusts API](https://docs.openstack.org/keystone/stein/api_curl_examples.html#post-v3-os-trust-trusts)
