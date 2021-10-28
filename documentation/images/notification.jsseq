@@ -1,6 +1,0 @@
-orion->perseo: notify
-perseo->core: event
-core-->perseo: ok
-perseo-->orion: ok
-perseo->nextCore: event
-nextCore-->perseo: ok

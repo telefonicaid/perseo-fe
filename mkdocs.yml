@@ -1,0 +1,43 @@
+site_name: Perseo Context-aware Complex Event Processing
+site_description: Perseo Documentation
+repo_url: https://github.com/telefonicaid/perseo-fe
+theme: readthedocs
+extra_css: ['https://www.fiware.org/style/fiware_readthedocs_processing.css']
+#google_analytics: ['UA-84269043-1', 'wirecloud.readthedocs.io']
+
+pages:
+- 'Introduction': 'index.md'
+- 'Architecture': 'architecture/architecture.md'
+- 'Admin Guide': 'admin/index.md'
+- 'User Guide': 'user/index.md'
+- 'O&M':
+    - 'Deployment': 'admin/deployment.md'
+    - 'Configuration': 'admin/configuration.md'
+    - 'Administration': 'admin/admin.md'
+    - 'Metrics API': 'API/metrics_api.md'
+    - 'Logs & Alarms': 'admin/logs.md'
+- 'Open API':
+    - 'API': 'API/api.md'
+    - 'Actions': 'API/pep_actions.md'
+    - 'Plain rules': 'API/plain_rules.md'
+    - 'Errors': 'API/errors.md'
+- 'Data model': 'models/models.md'
+#- 'Available actions for PEP': 'API/pep_actions.md'
+- 'Documentation for developers of perseo': 'developer/development.md'
+- 'Roadmap': 'roadmap.md'
+
+markdown_extensions:
+    - markdown.extensions.tables
+    - pymdownx.betterem
+    - pymdownx.tilde:
+        subscript: False
+    - pymdownx.magiclink:
+        repo_url_shortener: True
+        repo_url_shorthand: True
+        provider: "github"
+        user: "telefonicaid"
+        repo: "perseo-fe"
+    - pymdownx.tasklist
+    - toc:
+        permalink: True
+        separator: "-"

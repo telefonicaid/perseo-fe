@@ -1,5 +1,3 @@
-<a name="deployment"></a>
-
 ## Deployment
 
 ### Dependencies
