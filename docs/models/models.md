@@ -9,9 +9,11 @@ Fields:
 
 -   **\_ID** _ObjectId_: unique object ID used by mongoDB
 -   **name** _string_: name of the rule
+-   **description** _string_: (optional) description of the rule
+-   **misc** _object_: (optional) miscelanea data of the rule
 -   **service** _string_ : service which the rule belongs to.
 -   **subservice** _string_: subservice which the rule belongs to.
--   **tex** _string_: EPL sentence for the rule, to be propagated to core
+-   **text** _string_: EPL sentence for the rule, to be propagated to core
 -   **action** _object_: action to be executed when the rule is fired. Each action type has different field set as
     described in [Plain rules](../API/plain_rules.md#actions)
     -   **type** ( _string_ ): type of action.
@@ -24,6 +26,8 @@ Fields:
     -   **ID** _string_: ID of the entity to watch
     -   **idRegexp** _string_: regular expression to match entities by ID
     -   **type** _string_: type of entities to watch
+    -   **internalCurrentTime** _string_: current UTC Time in ISO 8601 to use as reference of time in the rule (i.e. the
+        "t0" of the no signal checkings)
 
 Only rules with EPL have a field _text_ and only rules for no-signal detection has a field _nosignal_.
 

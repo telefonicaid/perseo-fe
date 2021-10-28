@@ -52,10 +52,11 @@ function loadDirExamples(filepath) {
 function remove(collection, callback) {
     MongoClient.connect(
         config.mongo.url,
-        function(err, db) {
+        function(err, client) {
             if (err) {
                 return callback(err);
             }
+            const db = client.db();
             db.collection(collection, {}, function(err, coll) {
                 if (err) {
                     return callback(err);
@@ -64,7 +65,7 @@ function remove(collection, callback) {
                     if (err) {
                         return callback(err);
                     }
-                    db.close();
+                    client.close();
                     return callback(null, result);
                 });
             });
@@ -82,10 +83,11 @@ function dropExecutions(callback) {
 function dropCollection(collection, callback) {
     MongoClient.connect(
         config.mongo.url,
-        function(err, db) {
+        function(err, client) {
             if (err) {
                 return callback(err);
             }
+            const db = client.db();
             db.collection(collection, {}, function(err, col) {
                 if (err) {
                     return callback(err);
@@ -94,7 +96,7 @@ function dropCollection(collection, callback) {
                     if (err) {
                         return callback(err);
                     }
-                    db.close();
+                    client.close();
                     return callback(null, result);
                 });
             });
@@ -111,16 +113,17 @@ function dropExecutionsCollection(callback) {
 function createRulesCollection(callback) {
     MongoClient.connect(
         config.mongo.url,
-        function(err, db) {
+        function(err, client) {
             if (err) {
                 return callback(err);
             }
+            const db = client.db();
             db.collection(config.collections.rules, {}, function(err, rules) {
                 if (err) {
                     return callback(err);
                 }
                 rules.ensureIndex({ name: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                    db.close();
+                    client.close();
                     return callback(err, indexName);
                 });
             });
@@ -131,10 +134,11 @@ function createRulesCollection(callback) {
 function addRule(rule, callback) {
     MongoClient.connect(
         config.mongo.url,
-        function(err, db) {
+        function(err, client) {
             if (err) {
                 return callback(err);
             }
+            const db = client.db();
             db.collection(config.collections.rules, {}, function(err, rules) {
                 if (err) {
                     return callback(err);
@@ -143,7 +147,7 @@ function addRule(rule, callback) {
                     if (err) {
                         return callback(err);
                     }
-                    db.close();
+                    client.close();
                     return callback(null, result);
                 });
             });
@@ -154,8 +158,8 @@ function addRule(rule, callback) {
 function createEntitiesCollection(tenant, callback) {
     MongoClient.connect(
         config.orionDb.url,
-        function(err, db) {
-            var db2 = db.db(config.orionDb.prefix + '-' + tenant);
+        function(err, client) {
+            var db2 = client.db(config.orionDb.prefix + '-' + tenant);
             if (err) {
                 return callback(err);
             }
@@ -165,7 +169,7 @@ function createEntitiesCollection(tenant, callback) {
                 }
                 // We don't mind what fields have index in that collection
                 rules.ensureIndex({ modDate: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                    db2.close();
+                    client.close();
                     return callback(err, indexName);
                 });
             });
@@ -175,8 +179,8 @@ function createEntitiesCollection(tenant, callback) {
 function dropEntities(callback) {
     MongoClient.connect(
         config.orionDb.url,
-        function(err, db) {
-            var db2 = db.db(config.orionDb.prefix + '-' + config.DEFAULT_TENANT);
+        function(err, client) {
+            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_TENANT);
             if (err) {
                 return callback(err);
             }
@@ -188,7 +192,7 @@ function dropEntities(callback) {
                     if (err) {
                         return callback(err);
                     }
-                    db2.close();
+                    client.close();
                     return callback(null, result);
                 });
             });
@@ -198,12 +202,12 @@ function dropEntities(callback) {
 function addEntity(tenant, entity, callback) {
     MongoClient.connect(
         config.orionDb.url,
-        function(err, db) {
+        function(err, client) {
             var db2;
             if (err) {
                 return callback(err);
             }
-            db2 = db.db(config.orionDb.prefix + '-' + tenant);
+            db2 = client.db(config.orionDb.prefix + '-' + tenant);
             db2.collection(config.orionDb.collection, {}, function(err, entities) {
                 if (err) {
                     return callback(err);
@@ -212,7 +216,7 @@ function addEntity(tenant, entity, callback) {
                     if (err) {
                         return callback(err);
                     }
-                    db2.close();
+                    client.close();
                     return callback(null, result);
                 });
             });
