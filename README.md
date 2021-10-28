@@ -11,8 +11,8 @@
 ## Overview
 
 Perseo is a Complex Event Processing (CEP) software designed to be fully _NGSIv2_-compliant. It uses NGSIv2 as the
-communication protocol for events, and thus, Perseo is able to seamless and jointly work with _context brokers_ such as
-[Orion Context Broker](https://github.com/telefonicaid/fiware-orion).
+communication protocol for events, and thus, Perseo is able to seamless and jointly work with _context brokers_. The context broker 
+tested with Perseo and officially supported is [Orion Context Broker](https://github.com/telefonicaid/fiware-orion).
 
 This project is part of [FIWARE](https://www.fiware.org). You can find more FIWARE components in the
 [FIWARE catalogue](https://catalogue.fiware.org).
