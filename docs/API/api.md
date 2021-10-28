@@ -42,12 +42,13 @@ it could change in the future to align more closely to how Orion uses service pa
 
 CRUD for "plain" rules
 
-| Method | Path        | Description               |
-| ------ | :---------- | ------------------------- |
-| GET    | /rules      | List all rules            |
-| GET    | /rules/{id} | Get rule with `name`ID    |
-| POST   | /rules      | Add rule                  |
-| DELETE | /rules/{id} | Delete rule with `name`ID |
+| Method | Path        | Description                  |
+| ------ | :---------- | ---------------------------- |
+| GET    | /rules      | List all rules               |
+| GET    | /rules/{id} | Get rule with `name`ID       |
+| POST   | /rules      | Add rule                     |
+| DELETE | /rules/{id} | Delete rule with `name`ID    |
+| PUT    | /rules/{id} | Update a rule with `name` ID |
 
 ### Visual Rules
 
@@ -66,7 +67,7 @@ CRUD for Visual Rules. Originally detailed in [DCA documentation](https://colabo
 
 | Method | Path     | Description           |
 | ------ | :------- | --------------------- |
-| POST   | /version | Get version of perseo |
+| GET    | /version | Get version of perseo |
 
 ### Log level
 

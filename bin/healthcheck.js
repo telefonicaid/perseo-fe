@@ -20,19 +20,34 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
  */
-'use strict';
 
-/**
- * Constant strings for header with incoming requests
- *
- */
-module.exports = {
-    SUBSERVICE_HEADER: 'fiware-servicepath',
-    SERVICE_HEADER: 'fiware-service',
-    CORRELATOR_HEADER: 'fiware-correlator',
-    AUTH_HEADER: 'X-Auth-Token',
-    REALIP_HEADER: 'X-Real-IP',
-    TOTAL_COUNT_HEADER: 'fiware-total-count',
-    COMPONENT_NAME: 'perseo-fe',
-    CB_NOTIF_REGEX: / cbnotif=\d;/g
+const http = require('http');
+const port = process.env.PERSEO_ENDPOINT_PORT || '9090';
+const path = process.env.HEALTHCHECK_PATH || '/version';
+const httpCode = process.env.HEALTHCHECK_CODE || 200;
+
+const options = {
+    host: 'localhost',
+    port,
+    timeout: 2000,
+    method: 'GET',
+    path
 };
+
+const request = http.request(options, (result) => {
+    // eslint-disable-next-line no-console
+    console.info(`Performed health check, result ${result.statusCode}`);
+    if (result.statusCode === httpCode) {
+        process.exit(0);
+    } else {
+        process.exit(1);
+    }
+});
+
+request.on('error', (err) => {
+    // eslint-disable-next-line no-console
+    console.error(`An error occurred while performing health check, error: ${err}`);
+    process.exit(1);
+});
+
+request.end();

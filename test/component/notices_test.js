@@ -97,7 +97,7 @@ describe('Notices', function() {
                 function(c, callback) {
                     clients.PostNotice(c.object, function(error, data) {
                         should.not.exist(error);
-                        data.should.have.property('statusCode', 500);
+                        data.should.have.property('statusCode', 400);
                         return callback(null);
                     });
                 },
