@@ -71,7 +71,7 @@ For performing a basic end-to-end test, you can follow the detailed instructions
 ## More Information
 
 -   Refer to the
-    [Esper Reference Documentation](http://esper.espertech.com/release-6.1.0/esper-reference/html/index.html) for info
+    [Esper Reference Documentation](http://esper.espertech.com/release-8.4.0/reference-esper/html/index.html) for info
     on how to use EPL as a rule language.
 
 ## License

@@ -59,8 +59,8 @@ only for getting several actions executed.
 
 Last but no least, the `text` field contains the valid EPL statement to be send to the Esper-based core rule engine. The
 value of this field must follow the EPL syntax, that is fully documented in the
-[Esper website](http://esper.espertech.com/release-6.1.0/esper-reference/html/index.html), in
-[here](http://esper.espertech.com/release-6.1.0/esper-reference/html/epl_clauses.html).
+[Esper website](http://esper.espertech.com/release-8.4.0/reference-esper/html/index.html), in
+[here](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html).
 
 Perseo should work with any of the EPL clauses. However, you should take into consideration the following guidelines:
 
@@ -171,10 +171,10 @@ You will find more information about metadata and object values
 ## Examples of EPL rules
 
 -   [Basic Perseo Rules](https://github.com/telefonicaid/perseo-fe/tree/master/examples)
--   [Rules withPatterns](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_patterns.html)
--   [Rules with Match-Recognize](http://esper.espertech.com/release-6.1.0/esper-reference/html/match-recognize.html)
+-   [Rules withPatterns](http://esper.espertech.com/release-8.4.0/reference-esper/html/event_patterns.html)
+-   [Rules with Match-Recognize](http://esper.espertech.com/release-8.4.0/reference-esper/html/match-recognize.html)
 -   Timed Rules:
-    -   [match-recognize-interval](http://esper.espertech.com/release-6.1.0/esper-reference/html/match-recognize.html#match-recognize-interval)
-    -   [pattern-timer-interval](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_patterns.html#pattern-timer-interval)
-    -   [pattern-timer-at](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_patterns.html#pattern-timer-at)
-    -   [pattern-timer-schedule](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_patterns.html#pattern-timer-schedule)
+    -   [match-recognize-interval](http://esper.espertech.com/release-8.4.0/reference-esper/html/match-recognize.html#match-recognize-interval)
+    -   [pattern-timer-interval](http://esper.espertech.com/release-8.4.0/reference-esper/html/event_patterns.html#pattern-timer-interval)
+    -   [pattern-timer-at](http://esper.espertech.com/release-8.4.0/reference-esper/html/event_patterns.html#pattern-timer-at)
+    -   [pattern-timer-schedule](http://esper.espertech.com/release-8.4.0/reference-esper/html/event_patterns.html#pattern-timer-schedule)
