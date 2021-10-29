@@ -141,7 +141,7 @@ on how to scape characters at
 
 ### Pre-SELECT clauses
 
-There are support for pre select clauses. Specifically we support `expression VAR for alias {myexpression}`. This allow
+There are support for pre select clauses. Specifically we support `expression VAR alias for {myexpression}`. This allow
 us to use local VARS in the definition of an EPL rule, i.e:
 
 ```
