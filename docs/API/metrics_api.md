@@ -9,7 +9,7 @@
 
 ### Introduction
 
-The Perseo Metrics API is a REST-based API that can be used to get relevant operational metrics.
+Perseo implements a REST-based API that can be used to get relevant operational metrics.
 
 [Top](#top)
 
@@ -109,21 +109,21 @@ The following metrics are common with other IoT platform componentes (e.g. Orion
 -   **incomingTransactions**: number of requests consumed by Perseo. All kind of transactions (no matter if they are ok
     transactions or error transactions) count for this metric.
 -   **incomingTransactionRequestSize**: total size (bytes) in requests associated to incoming transactions ("in" from
-    the point of view of Perseo). All kind of transactions (no matter if they are ok transactions or error transactions)
+    the point of view of Perseo). All kind of transactions (no matter if they are OK transactions or error transactions)
     count for this metric.
 -   **incomingTransactionResponseSize**: total size (bytes) in responses associated to incoming transactions ("out" from
-    the point of view of Perseo). All kind of transactions (no matter if they are ok transactions or error transactions)
+    the point of view of Perseo). All kind of transactions (no matter if they are OK transactions or error transactions)
     count for this metric.
 -   **incomingTransactionErrors**: number of incoming transactions resulting in error.
 -   **serviceTime**: average time to serve a transaction. All kind of transactions (no matter if they are ok
     transactions or error transactions) count for this metric.
 -   **outgoingTransactions**: number of requests sent by Perseo (both notifications and forward requests to CPrs). All
-    kind of transactions (no matter if they are ok transactions or error transactions) count for this metric.
+    kind of transactions (no matter if they are OK transactions or error transactions) count for this metric.
 -   **outgoingTransactionRequestSize**: total size (bytes) in requests associated to outgoing transactions ("out" from
-    the point of view of Perseo). All kind of transactions (no matter if they are ok transactions or error transactions)
+    the point of view of Perseo). All kind of transactions (no matter if they are OK transactions or error transactions)
     count for this metric.
 -   **outgoingTransactionResponseSize**: total size (bytes) in responses associated to outgoing transactions ("in" from
-    the point of view of Perseo). All kind of transactions (no matter if they are ok transactions or error transactions)
+    the point of view of Perseo). All kind of transactions (no matter if they are OK transactions or error transactions)
     count for this metric.
 -   **outgoingTransactionErrors**: number of outgoing transactions resulting in error.
 
