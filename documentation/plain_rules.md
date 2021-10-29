@@ -113,7 +113,7 @@ where (cast(cast(bloodPressure?,String),double)>1.5 and type="BloodMeter")]
     ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET
     /rules or GET /rules/{name}.
     
-Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
+Some highlights in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
 
 -   [Alias](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-alias) usage, e.g. `expression twoPI alias for { Math.PI * 2 }`
 -   [Functions](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-decl) usage, e.g. `expression DOUBLE {(v) => cast(cast(v,string), double)}`
