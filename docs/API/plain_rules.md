@@ -106,12 +106,18 @@ from iotEvent
 where (cast(cast(bloodPressure?,String),double)>1.5 and type="BloodMeter")]
 ```
 
+You should take into consideration the following guidelines:
+
 -   Include `*,` in EPL select clause
--   The event stream from which take events must be **iotEvent**
--   A _type=_ condition may be concatenated for avoiding mixing different kinds of entities
--   The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text. The
-    ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET
-    /rules or GET /rules/{name}.
+-   The event stream from which take events must be `iotEvent`
+-   A `type=` condition may be concatenated for avoiding mixing different kinds of entities
+-   Entity's attributes must be cast to `float` in case of being numeric, to `String` otherwise.
+-   All the attributes of the context broker notification are available as dynamic properties of the event object `ev`.
+-   A question mark `?` is _necessary_ for EPL to refer to ‘dynamic’ values (duck typing), such as `ev.id?`.
+-   Metadata is also available as explained in the [metadata and object values](#metadata-and-object-values) section.
+-   The variable `ruleName` in automatically added to the action, even if it is not present in the EPL text. The
+    ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using `GET
+    /rules` or `GET /rules/{name}`.
 
 Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
 
@@ -120,7 +126,7 @@ Some hightligths in the Esper 8.x version, that allow to write simpler and clean
 
 **Backward compatibility note:** since perseo-fe version 1.8.0 it is not mandatory to specify the name of the rule as
 part of the EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be
-present as _ruleName_ alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it
+present as _ruleName_ alias (e.g: `select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it
 must be equal to the ‘name’ field of the rule object.
 
 The used entity's attributes must be cast to `double` in case of being numeric (like in the example). Alphanumeric values
@@ -189,13 +195,14 @@ The action must be provided in the `action` field of rule. An example:
    }
 ```
 
-The `type` field is mandatory and must be one of
+The `type` field is mandatory and must be one of the following
 
--   `update`: update an entity's attribute
--   `sms`: send a SMS
--   `email`: send an email
--   `post`: make an HTTP POST
--   `twitter`: send a twitter
+-   `update` - creating or updating entities and attributes of those entities in the context broker.
+    [(update action details)](../API/plain_rules.md#update-attribute-action)
+-   `sms` - sending a SMS. [(sms action details)](../API/plain_rules.md#sms-action)
+-   `email` - sending an email. [(email action details)](../API/plain_rules.md#email-action)
+-   `post` - making a HTTP request to a provided URL [(post action details)](../API/plain_rules.md#http-request-action)
+-   `twitter` - sending a tweet [(twitter action details)](../API/plain_rules.md#twitter-action)
 
 An action can _optionally_ have a field `interval` for limiting the frequency of the action execution (for the rule and
 entity which fired it). The value is expressed in milliseconds and is the minimum period between executions. Once the
