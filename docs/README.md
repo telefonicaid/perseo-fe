@@ -4,7 +4,6 @@ Perseo: Documentation
 
 ## Table of Contents
 
--   [Introduction](index.md)
 -   [Architecture](architecture/architecture.md)
 -   [Admin Guide](admin/index.md)
 -   [User Guide](user/index.md)
@@ -14,9 +13,9 @@ Perseo: Documentation
     -   [Administration](admin/admin.md)
     -   [Metrics API](API/metrics_api.md)
     -   [Logs & Alarms](admin/logs.md)
--   Open API
+-   API
     -   [API](API/api.md)
-    -   [Actions](API/pep_actions.md)
+    -   [Available actions for PEP](API/pep_actions.md)
     -   [Plain rules](API/plain_rules.md)
     -   [Errors](API/errors.md)
 -   [Data model](models/models.md)
