@@ -100,8 +100,7 @@ You will find more information about Perseo Actions [here](../API/plain_rules.md
 An `action` can include references to one or more of the available atributes of the context broker's notification. This
 allows you to leverage context information in a very simple way. For example, the `sms`, `email`, and `post` actions
 include a `template` field that can be used to build the body of the message/request. This text can include placeholders
-for those attributes of the generated complex event. The placeholder takes the form of `${X}`, with `X` being one of the
-following:
+for those attributes of the generated complex event. The placeholder takes the form of `${X}`, with `X` among several possibilities (entity id, attribute value, etc.).
 
 -   `id` for the id of the entity that triggers the rule.
 -   `type` for the type of the entity that triggers the rule.
