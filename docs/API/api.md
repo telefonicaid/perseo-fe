@@ -1,6 +1,6 @@
 ## API
 
-**FIXME:** a draft OpenAPI document for the API is available at [link to it] but it is not finished yet.
+A draft OpenAPI document for the API is available [here](perseo-api.yml), but it is not finished yet.
 
 A description of "plain"" rules can be found at [plain rules](plain_rules.md).
 
