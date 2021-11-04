@@ -1,6 +1,6 @@
 ## API
 
-We are working on apiary descriptions for the API methods, that will come soon ...
+**FIXME:** a draft OpenAPI document for the API is available at [link to it] but it is not finished yet.
 
 A description of "plain"" rules can be found at [plain rules](plain_rules.md).
 
