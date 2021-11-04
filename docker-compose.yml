@@ -55,6 +55,9 @@ services:
             - PERSEO_CORE_URL=http://perseo-core:8080
             - PERSEO_LOG_LEVEL=debug
             - PERSEO_ORION_URL=http://orion:1026/
+            - PERSEO_SMTP_HOST=www.hostname.com
+            - PERSEO_SMTP_PORT=25
+            - PERSEO_SMTP_SECURE=false
         deploy:
             replicas: 1
             restart_policy:

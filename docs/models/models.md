@@ -1,4 +1,4 @@
-## Data model
+## Collections
 
 ### Rules
 

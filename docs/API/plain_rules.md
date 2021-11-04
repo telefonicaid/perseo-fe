@@ -106,13 +106,19 @@ from iotEvent
 where (cast(cast(bloodPressure?,String),double)>1.5 and type="BloodMeter")]
 ```
 
+You should take into consideration the following guidelines:
+
 -   Include `*,` in EPL select clause
--   The event stream from which take events must be **iotEvent**
--   A _type=_ condition may be concatenated for avoiding mixing different kinds of entities
--   The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text. The
-    ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET
-    /rules or GET /rules/{name}.
-    
+-   The event stream from which take events must be `iotEvent`
+-   A `type=` condition may be concatenated for avoiding mixing different kinds of entities
+-   Entity's attributes must be cast to `float` in case of being numeric, to `String` otherwise.
+-   All the attributes of the context broker notification are available as dynamic properties of the event object `ev`.
+-   A question mark `?` is _necessary_ for EPL to refer to ‘dynamic’ values (duck typing), such as `ev.id?`.
+-   Metadata is also available as explained in the [metadata and object values](#metadata-and-object-values) section.
+-   The variable `ruleName` in automatically added to the action, even if it is not present in the EPL text. The
+    ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using `GET
+    /rules` or `GET /rules/{name}`.
+
 Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
 
 -   [Alias](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-alias) usage, e.g. `expression twoPI alias for { Math.PI * 2 }`
@@ -120,14 +126,15 @@ Some hightligths in the Esper 8.x version, that allow to write simpler and clean
 
 **Backward compatibility note:** since perseo-fe version 1.8.0 it is not mandatory to specify the name of the rule as
 part of the EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be
-present as _ruleName_ alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it
+present as _ruleName_ alias (e.g: `select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it
 must be equal to the ‘name’ field of the rule object.
 
 The used entity's attributes must be cast to `double` in case of being numeric (like in the example). Alphanumeric values
 must be cast to `String`. Nested cast to string and to double is something we are analyzing, and could be unnecessary in
 a future version. Use it by now. All the attributes in the notification from Orion are available in the event object,
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
-Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values). 
+Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
+
 Moreover under _ev.stripped are in JSON format all the notification fields (like id, type, attrs, etc.), so you can access to it in an EPL text using:
 
 ```sql
@@ -189,13 +196,14 @@ The action must be provided in the `action` field of rule. An example:
    }
 ```
 
-The `type` field is mandatory and must be one of
+The `type` field is mandatory and must be one of the following
 
--   `update`: update an entity's attribute
--   `sms`: send a SMS
--   `email`: send an email
--   `post`: make an HTTP POST
--   `twitter`: send a twitter
+-   `update` - creating or updating entities and attributes of those entities in the context broker.
+    [(update action details)](../API/plain_rules.md#update-attribute-action)
+-   `sms` - sending a SMS. [(sms action details)](#sms-action)
+-   `email` - sending an email. [(email action details)](#email-action)
+-   `post` - making a HTTP request to a provided URL [(post action details)](#http-request-action)
+-   `twitter` - sending a tweet [(twitter action details)](#twitter-action)
 
 An action can _optionally_ have a field `interval` for limiting the frequency of the action execution (for the rule and
 entity which fired it). The value is expressed in milliseconds and is the minimum period between executions. Once the
@@ -900,13 +908,14 @@ Note: be aware of the difference between the key `metadatas` used in the context
 
 ## Location fields
 
-Fields with geolocation info representing a point with the formats recognized by NGSI-v2, are parsed and generate two pairs of
+Fields with geolocation info representing a point with the formats recognized by NGSIv2, are parsed and generate two pairs of
+
 pseudo-attributes, the first pair is for the latitude and the longitude and the second pair is for the x and y UTMC
 coordinates for the point. These pseudo-attributes ease the use of the position in the EPL sentence of the rule. These
 derived attributes have the same name of the attribute with a suffix of `__lat` and `__lon` , and `__x` and `__y`
 respectively.
 
-The formats are described in [NGSI-v2 spec](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section
+The formats are described in [NGSIv2 spec](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section
 "Geospatial properties of entities"
 
 So, a notification in "geo:point" format like

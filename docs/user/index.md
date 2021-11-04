@@ -58,18 +58,7 @@ action objects if needed. Each of those actions will be executed when the rule i
 only for getting several actions executed.
 
 Last but no least, the `text` field contains the valid EPL statement to be send to the Esper-based core rule engine. The
-value of this field must follow the EPL syntax, that is fully documented in the
-[Esper website](http://esper.espertech.com/release-6.1.0/esper-reference/html/index.html), in
-[here](http://esper.espertech.com/release-6.1.0/esper-reference/html/epl_clauses.html).
-
-Perseo should work with any of the EPL clauses. However, you should take into consideration the following guidelines:
-
--   The name of the stream from which events will come is `iotEvent`.
--   A `type=` condition should be included to avoid mixing different kinds of entities.
--   Entity's attributes must be cast to `float` in case of being numeric, to `String` otherwise.
--   All the attributes of the context broker notification are available as dynamic properties of the event object `ev`.
--   A question mark `?` is _necessary_ for EPL to refer to ‘dynamic’ values (duck typing), such as `ev.id?`.
--   Metadata is also available as explained in the [metadata and object values](#metadata-and-object-values) section.
+value of this field must follow the EPL syntax.
 
 Following there is an example of a valid EPL simple clause ready to be used with Perseo:
 
@@ -102,20 +91,6 @@ Actions are set by means of the `action` field of the rule. Let's see an example
    }
 ```
 
-The `type` field is mandatory and must be one of the following:
-
--   `update` - creating or updating entities and attributes of those entities in the context broker.
-    [(update action details)](../API/plain_rules.md#update-attribute-action)
--   `sms` - sending a SMS. [(sms action details)](../API/plain_rules.md#sms-action)
--   `email` - sending an email. [(email action details)](../API/plain_rules.md#email-action)
--   `post` - making a HTTP request to a provided URL [(post action details)](../API/plain_rules.md#http-request-action)
--   `twitter` - sending a tweet [(twitter action details)](../API/plain_rules.md#twitter-action)
-
-An action can _optionally_ have a field called `interval`, aimed at limiting the frequency of the action execution (for
-the rule and entity which fired it). The value is expressed in milliseconds, and represents the minimum lapse between
-executions. Once the action is _successfully_ executed, it won't be executed again until that period of time has
-elapsed. All execution requests in between will be silently discarded.
-
 You will find more information about Perseo Actions [here](../API/plain_rules.md#actions).
 
 #### String substitution syntax
@@ -131,25 +106,7 @@ following:
 -   Any other value is interpreted as the name of an attribute in the entity which triggers the rule, and the
     placeholder is substituted by the value of that attribute.
 
-All alias for simple event attributes or "complex" calculated values can be directly used in the placeholder with their
-name. And any of the original event attributes (with the special cases for `id` and `type` meaning entity ID and type,
-respectively) can be referred too.
-
-This substitution can be used in the following fields:
-
--   `template`, `from`, `to` and `subject` for `email` action
--   `template`, `url`, `qs`, `headers`, `json` for `post` action
--   `template` for `sms` action
--   `template` for `twitter` action
--   `id`, `type`, `name`, `value`, `ìsPattern` for `update` action
-
-You will find more information about substitution syntax in each action information:
-
--   [update action details](../API/plain_rules.md#update-attribute-action)
--   [sms action details](../API/plain_rules.md#sms-action)
--   [email action details](../API/plain_rules.md#email-action)
--   [post action details](../API/plain_rules.md#http-request-action)
--   [twitter action details](../API/plain_rules.md#twitter-action)
+You will find more information about substitution syntax [here](../API/plain_rules.md#string-substitution-syntax)
 
 ## Metadata and object values
 
@@ -171,10 +128,10 @@ You will find more information about metadata and object values
 ## Examples of EPL rules
 
 -   [Basic Perseo Rules](https://github.com/telefonicaid/perseo-fe/tree/master/examples)
--   [Rules withPatterns](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_patterns.html)
--   [Rules with Match-Recognize](http://esper.espertech.com/release-6.1.0/esper-reference/html/match-recognize.html)
+-   [Rules withPatterns](http://esper.espertech.com/release-8.4.0/reference-esper/html/event_patterns.html)
+-   [Rules with Match-Recognize](http://esper.espertech.com/release-8.4.0/reference-esper/html/match-recognize.html)
 -   Timed Rules:
-    -   [match-recognize-interval](http://esper.espertech.com/release-6.1.0/esper-reference/html/match-recognize.html#match-recognize-interval)
-    -   [pattern-timer-interval](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_patterns.html#pattern-timer-interval)
-    -   [pattern-timer-at](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_patterns.html#pattern-timer-at)
-    -   [pattern-timer-schedule](http://esper.espertech.com/release-6.1.0/esper-reference/html/event_patterns.html#pattern-timer-schedule)
+    -   [match-recognize-interval](http://esper.espertech.com/release-8.4.0/reference-esper/html/match-recognize.html#match-recognize-interval)
+    -   [pattern-timer-interval](http://esper.espertech.com/release-8.4.0/reference-esper/html/event_patterns.html#pattern-timer-interval)
+    -   [pattern-timer-at](http://esper.espertech.com/release-8.4.0/reference-esper/html/event_patterns.html#pattern-timer-at)
+    -   [pattern-timer-schedule](http://esper.espertech.com/release-8.4.0/reference-esper/html/event_patterns.html#pattern-timer-schedule)

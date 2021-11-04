@@ -1,0 +1,14 @@
+digraph dfd1 {
+
+    perseo[shape=circle];
+	core[label=" core ", shape=circle];
+	mongo[label="mongoDB", shape=plain, style=dashed]
+
+	perseo->core[label="events"]
+	perseo->core[label="rules"]
+	core->perseo[label="actions"]
+	perseo->mongo[dir=both, label="rules,executions"]
+	{rank=same; perseo; core;}
+	{rank=max; mongo;}
+
+ }

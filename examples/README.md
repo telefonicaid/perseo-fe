@@ -120,4 +120,4 @@ The actions currently available are
 
 ## More info
 
-Detailed information about [EPL](http://esper.espertech.com/release-5.5.0/esper-reference/html/epl_clauses.html)
+Detailed information about [EPL](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html)
