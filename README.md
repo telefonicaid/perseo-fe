@@ -36,9 +36,7 @@ This project is part of [FIWARE](https://www.fiware.org). You can find more FIWA
 ## Background
 
 Perseo is an [Esper-based](http://www.espertech.com/esper/) Complex Event Processing (CEP) software designed to be fully
-_NGSI-v2_-compliant. It uses NGSI-v2 as the communication protocol for events, and thus, Perseo is able to seamless and
-jointly work with _context brokers_. The context broker tested with Perseo and officially supported is
-[Orion Context Broker](https://github.com/telefonicaid/fiware-orion).
+_NGSI-v2_-compliant.
 
 It follows a straightforward idea: listening to events coming from context information to identify patterns described by
 rules, in order to immediately react upon them by triggering actions.
