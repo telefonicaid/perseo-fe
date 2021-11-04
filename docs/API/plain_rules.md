@@ -121,7 +121,6 @@ You should take into consideration the following guidelines:
 
 Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
 
-
 -   [Alias](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-alias) usage, e.g. `expression twoPI alias for { Math.PI * 2 }`
 -   [Functions](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-decl) usage, e.g. `expression DOUBLE {(v) => cast(cast(v,string), double)}`
 
@@ -979,7 +978,6 @@ will propagate to the core, (and so making available to the EPL sentence) the fi
 ```
 
 or (geo:json case):
-
 
 ```json
 {
