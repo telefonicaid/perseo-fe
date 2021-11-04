@@ -121,6 +121,7 @@ You should take into consideration the following guidelines:
 
 Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
 
+
 -   [Alias](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-alias) usage, e.g. `expression twoPI alias for { Math.PI * 2 }`
 -   [Functions](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-decl) usage, e.g. `expression DOUBLE {(v) => cast(cast(v,string), double)}`
 
@@ -148,7 +149,7 @@ on how to scape characters at
 
 ### Pre-SELECT clauses
 
-There are support for pre select clauses. Specifically we support `expression VAR for alias {myexpression}`. This allow
+There are support for pre select clauses. Specifically we support `expression VAR alias for {myexpression}`. This allow
 us to use local VARS in the definition of an EPL rule, i.e:
 
 ```
