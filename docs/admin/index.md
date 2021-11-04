@@ -36,7 +36,7 @@ If you want to quickly deploy all the Perseo CEP components to start experimenti
 version: '3.4'
 services:
     perseo-mongo:
-        image: mongo:3.6
+        image: mongo:4.2
         volumes:
             - ./mongodata:/data/db
         networks:

@@ -75,6 +75,7 @@ For performing a basic end-to-end test, you can follow the detailed instructions
 -   Refer to the
     [Esper Reference Documentation](http://esper.espertech.com/release-8.4.0/reference-esper/html/index.html) for info
     on how to use EPL as a rule language.
+-   [Full Perseo documentation](docs/README.md)
 
 ## License
 

@@ -22,7 +22,6 @@ pages:
     - 'Plain rules': 'API/plain_rules.md'
     - 'Errors': 'API/errors.md'
 - 'Data model': 'models/models.md'
-#- 'Available actions for PEP': 'API/pep_actions.md'
 - 'Documentation for developers of perseo': 'developer/development.md'
 - 'Roadmap': 'roadmap.md'
 
