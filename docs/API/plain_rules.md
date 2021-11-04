@@ -134,6 +134,7 @@ must be cast to `String`. Nested cast to string and to double is something we ar
 a future version. Use it by now. All the attributes in the notification from Orion are available in the event object,
 **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
 Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
+
 Moreover under _ev.stripped are in JSON format all the notification fields (like id, type, attrs, etc.), so you can access to it in an EPL text using:
 
 ```sql
@@ -461,7 +462,7 @@ abnormal situation: Perseo logs the problem with the update but doesn't try to g
 Perseo triggers the action, the process may repeat, i.e. first update attempt fails with 401, Perseo requests a fresh
 auth token to Keystone, the second update attempt fails with 401, Perseo logs the problem and doesn't retry again.
 
-NGSIv2 example:
+NGSI-v2 example:
 
 ```json
 "action":{
@@ -485,11 +486,11 @@ NGSIv2 example:
     }
 ```
 
-When using NGSIv2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
+When using NGSI-v2 in the update actions, the value field perform [string substitution](#string-substitution-syntax). If
 `value` is a String, Perseo will try cast value to number, boolean or null (without paying attention to the attribute
 type). If the casting fails then String is used. _`Boolean`_ and _`None`_ types.
 
-**Data Types for NGSIv2:**
+**Data Types for NGSI-v2:**
 
 With `Number` type attributes, Perseo can be able to manage a int/double number or a String to parse in value field.
 
@@ -684,7 +685,7 @@ This attribute will take `null` as value.
 }
 ```
 
-Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
+Note that using NGSI-v2 the BloodPressure attribute is a Number and therefore it is not necessary to use `cast()`.
 
 **Complete example using NGSv2 update action with filter in a rule:**
 
@@ -737,7 +738,7 @@ Note that using NGSIv2 the BloodPressure attribute is a Number and therefore it 
 
 ### HTTP request action
 
-Makes an HTTP request to an URL specified in `url` inside `parameters`, sending a body built from `template`. The
+Makes an HTTP request to a URL specified in `url` inside `parameters`, sending a body built from `template`. The
 `parameters` field can specify
 
 -   method: _optional_, HTTP method to use, POST by default
@@ -908,12 +909,13 @@ Note: be aware of the difference between the key `metadatas` used in the context
 ## Location fields
 
 Fields with geolocation info representing a point with the formats recognized by NGSIv2, are parsed and generate two pairs of
+
 pseudo-attributes, the first pair is for the latitude and the longitude and the second pair is for the x and y UTMC
 coordinates for the point. These pseudo-attributes ease the use of the position in the EPL sentence of the rule. These
 derived attributes have the same name of the attribute with a suffix of `__lat` and `__lon` , and `__x` and `__y`
 respectively.
 
-The formats are described in [NGSI-v2 spec](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section
+The formats are described in [NGSIv2 spec](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section
 "Geospatial properties of entities"
 
 So, a notification in "geo:point" format like

@@ -164,6 +164,55 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Tue Oct 5 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.19.0
+- Fix: ensure remove CR LF chars in EPL text for core (#556)
+- Fix: do not exit process when error < 500 is propagated from core, just log error (#557)
+- Fix: reset location to not expand it in all attributes event (#560)
+
+* Thu Sep 30 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.18.0
+- Add: support for "pre select" clauses (in detail: <expression XX alias for {}> )
+- Fix: remove cbnotif from correlator (#536)
+- Fix: failed rules updatescounter not working in metrics API
+- Fix: return error 400 from perseo-core instead of 500 (#539)
+- Fix: ngsiv2 initial notification does not include a list of subservices in servicePath header when is / (#527)
+- Update ngsijs dep from 1.2.1 to 1.3.0
+- Update mongodb dep driver from 3.6.3 to 3.6.8
+- Update nodemailer dep from 6.4.8 to 6.4.18
+- Update requests dep from 2.88.0 to 2.88.2
+
+* Fri Apr 16 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.17.0
+- Add: 'CC' and 'BCC' message fields to emailAction (#444)
+- Add: allow use sms/smpp/smtp conf from action (#517)(#269)
+- Add: notify TimeInstant value to core for NGSIv2 (#503)
+- Fix: config smtp auth user and password: unbind them from config smtp secure flag (#514)
+- Fix: convert geojsonpolygon filter into ngsiv2 geoquery (#512)
+- Fix: router logs to print object details
+- Fix: expand `location` geo:json of type Point in event field to core for NGSIv2 (#505)
+- Fix: expand `location` event field to core for NGSIv2 (#504)
+- Update dep nodemailer from 1.11.0 to 6.4.8
+- Update dep nodemailer-smtp-transport from 0.1.13 to 2.7.2
+- Upgrade NodeJS version from 10.19.0 to 12 in Dockerfile
+- Convert Dockerfile to multistage builds and add a distroless option
+
+* Fri Feb 19 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.16.0
+- Fix: pagination-based update action for filter results (so removing the limit to 20 entities in the previous implementation) (#455)
+- Fix: check if there is entities before update them (#485)
+- Fix: updateAction is using always `append` in actionType (#484)
+
+* Tue Jan 12 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.15.0
+- Add: PUT plain rule
+- Fix: documentation API /version method (#445)
+- Set 'null' instead of '[?]' when no data available for macro substitution (#469)
+- Update mongo dep driver from 2.2.36 to 3.6.3 (#480)
+
+* Fri Nov 6 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.14.0
+- Add check max value used by setInterval in nonSignal rule (#464)
+- Avoid stop perseo after uncaught exception, just report fatal and details but continue
+- Add internalCurrentTime to nosignal event (#460)
+- Fix postAction crash using a non string template  (#459)
+- Use unique (by node) correlator_suffix to detect rule loops (#456)
+- Log checkNoSignal error using current context (#422)
+
 * Tue May 12 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.13.0
 - Add: service and subservice as action parameters for updateAction (#349)
 - Fix: broken email action

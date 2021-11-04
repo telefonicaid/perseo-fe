@@ -46,7 +46,7 @@ describe('Myutils', function() {
                 var url = 'http://' + host;
                 myutils.requestHelper('get', { url: url }, function(error) {
                     should.exist(error);
-                    error.host.should.be.equal(host);
+                    error.hostname.should.be.equal(host);
                     error.code.should.be.equal('ENOTFOUND');
                 });
                 done();
