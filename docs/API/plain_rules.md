@@ -199,7 +199,7 @@ The action must be provided in the `action` field of rule. An example:
 The `type` field is mandatory and must be one of the following
 
 -   `update` - creating or updating entities and attributes of those entities in the context broker.
-    [(update action details)](../API/plain_rules.md#update-attribute-action)
+    [(update action details)](#update-attribute-action)
 -   `sms` - sending a SMS. [(sms action details)](#sms-action)
 -   `email` - sending an email. [(email action details)](#email-action)
 -   `post` - making a HTTP request to a provided URL [(post action details)](#http-request-action)
@@ -908,14 +908,14 @@ Note: be aware of the difference between the key `metadatas` used in the context
 
 ## Location fields
 
-Fields with geolocation info representing a point with the formats recognized by NGSIv2, are parsed and generate two pairs of
+Fields with geolocation info representing a point with the formats recognized by NGSI-v2, are parsed and generate two pairs of
 
 pseudo-attributes, the first pair is for the latitude and the longitude and the second pair is for the x and y UTMC
 coordinates for the point. These pseudo-attributes ease the use of the position in the EPL sentence of the rule. These
 derived attributes have the same name of the attribute with a suffix of `__lat` and `__lon` , and `__x` and `__y`
 respectively.
 
-The formats are described in [NGSIv2 spec](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section
+The formats are described in [NGSI-v2 spec](http://telefonicaid.github.io/fiware-orion/api/v2/stable/), section
 "Geospatial properties of entities"
 
 So, a notification in "geo:point" format like
