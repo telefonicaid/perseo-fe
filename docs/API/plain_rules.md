@@ -200,10 +200,10 @@ The `type` field is mandatory and must be one of the following
 
 -   `update` - creating or updating entities and attributes of those entities in the context broker.
     [(update action details)](../API/plain_rules.md#update-attribute-action)
--   `sms` - sending a SMS. [(sms action details)](../API/plain_rules.md#sms-action)
--   `email` - sending an email. [(email action details)](../API/plain_rules.md#email-action)
--   `post` - making a HTTP request to a provided URL [(post action details)](../API/plain_rules.md#http-request-action)
--   `twitter` - sending a tweet [(twitter action details)](../API/plain_rules.md#twitter-action)
+-   `sms` - sending a SMS. [(sms action details)](#sms-action)
+-   `email` - sending an email. [(email action details)](#email-action)
+-   `post` - making a HTTP request to a provided URL [(post action details)](#http-request-action)
+-   `twitter` - sending a tweet [(twitter action details)](#twitter-action)
 
 An action can _optionally_ have a field `interval` for limiting the frequency of the action execution (for the rule and
 entity which fired it). The value is expressed in milliseconds and is the minimum period between executions. Once the
