@@ -4,7 +4,6 @@ Perseo: Documentation
 
 ## Table of Contents
 
--   [Introduction](index.md)
 -   [Architecture](architecture/architecture.md)
 -   [Admin Guide](admin/index.md)
 -   [User Guide](user/index.md)
