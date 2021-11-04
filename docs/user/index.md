@@ -14,7 +14,7 @@ This document describes how to use Perseo CEP.
 ## Introduction
 
 Perseo is an [Esper-based](http://www.espertech.com/esper/) Complex Event Processing (CEP) software designed to be fully
-_NGSIv2_-compliant. It uses NGSIv2 as the communication protocol for events, and thus, Perseo is able to seamless and
+_NGSI-v2_-compliant. It uses NGSI-v2 as the communication protocol for events, and thus, Perseo is able to seamless and
 jointly work with _context brokers_ such as [Orion Context Broker](https://github.com/telefonicaid/fiware-orion).
 
 Perseo follows a straightforward idea: listening to events coming from context information to identify patterns

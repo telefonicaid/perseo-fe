@@ -30,7 +30,7 @@ The following list of features are planned to be addressed in the short term, an
 -   Support of NGSI filter to support updating to groups of entities (commands)
 -   Upgrade Esper library from 6.1.0 to 7.1.0
 -   Full support for pagination in APIs /rules and /vrules
--   Explicit casting in EPL rules is no longer needed (full support of NGSIv2 based typing)
+-   Explicit casting in EPL rules is no longer needed (full support of NGSI-v2 based typing)
 -   Software quality improvement based on ISO25010 recommendations
 -   Enhanced multi-tenancy support. Leverage different "Fiware-Service" and "Fiware-ServicePath" in rules
 -   Swagger documentation

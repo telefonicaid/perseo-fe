@@ -4,17 +4,17 @@
 [![License: AGPLv3](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](./LICENSE)
 [![Docker Status](https://img.shields.io/docker/pulls/fiware/perseo.svg)](https://hub.docker.com/r/fiware/perseo/)
 [![Support badge](https://img.shields.io/badge/tag-fiware--perseo-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware-perseo)
-<br>
-[![Documentation badge](https://img.shields.io/readthedocs/perseo.svg)](https://perseo.readthedocs.io/en/latest/)
+<br> [![Documentation badge](https://img.shields.io/readthedocs/perseo.svg)](https://perseo.readthedocs.io/en/latest/)
 [![CI](https://github.com/telefonicaid/perseo-fe/workflows/CI/badge.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/perseo-fe/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/perseo-fe?branch=master)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
 
 ## Overview
 
-Perseo is a Complex Event Processing (CEP) software designed to be fully _NGSIv2_-compliant. It uses NGSIv2 as the
-communication protocol for events, and thus, Perseo is able to seamless and jointly work with _context brokers_. The context broker 
-tested with Perseo and officially supported is [Orion Context Broker](https://github.com/telefonicaid/fiware-orion).
+Perseo is a Complex Event Processing (CEP) software designed to be fully _NGSI-v2_-compliant. It uses NGSI-v2 as the
+communication protocol for events, and thus, Perseo is able to seamless and jointly work with _context brokers_. The
+context broker tested with Perseo and officially supported is
+[Orion Context Broker](https://github.com/telefonicaid/fiware-orion).
 
 This project is part of [FIWARE](https://www.fiware.org). You can find more FIWARE components in the
 [FIWARE catalogue](https://catalogue.fiware.org).
@@ -36,7 +36,7 @@ This project is part of [FIWARE](https://www.fiware.org). You can find more FIWA
 ## Background
 
 Perseo is an [Esper](http://www.espertech.com/esper/)-based Complex Event Processing (CEP) software supporting the
-NGSIv2 protocol.
+NGSI-v2 protocol.
 
 It follows a straightforward idea: listening to events coming from context information to identify patterns described by
 rules, in order to immediately react upon them by triggering actions.
