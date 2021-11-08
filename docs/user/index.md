@@ -64,10 +64,10 @@ value of this field must follow the EPL syntax.
 
 Following there is an example of a valid EPL simple clause ready to be used with Perseo:
 
-```text
-select *, ev.BloodPressure? as Pressure, ev.id? as Meter
-from pattern
-     [every ev=iotEvent(type="BloodMeter")]
+```SQL
+select *, bloodPressure? as Pressure
+from iotEvent
+   where (cast(cast(bloodPressure?,String),double)>1.5 and type="BloodMeter")]
 ```
 
 You will find the complete information about Perseo Rules in [plain rules](.../API/plain_rules.md) section.
