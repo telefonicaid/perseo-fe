@@ -164,6 +164,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Wed Nov 10 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
+- Add: log context rule in core involved ops (#550)
+- Add: include json (representated as string) in event delivered to perseo-core for each notification field (#579)
+- Fix: parse metadata geo:json of type Point in a the same special way than geo:point when process event for perseo-core (#576)
+- Fix: lat long order of geo:json of type Point 
+- Fix: parse attribute geo:json of type Point in a the same special way than geo:point when process event for perseo-core  (#576)
+- Fix: some mongodb driver warns about deprecations (#570)
+- Fix: use more robust regex for select detection for context (#548)
+        
 * Tue Oct 5 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.19.0
 - Fix: ensure remove CR LF chars in EPL text for core (#556)
 - Fix: do not exit process when error < 500 is propagated from core, just log error (#557)
