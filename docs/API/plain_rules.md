@@ -106,34 +106,46 @@ from iotEvent
 where (cast(cast(bloodPressure?,String),double)>1.5 and type="BloodMeter")]
 ```
 
--   Include `*,` in EPL select clause
--   The event stream from which take events must be **iotEvent**
--   A _type=_ condition may be concatenated for avoiding mixing different kinds of entities
--   The variable 'ruleName' in automatically added to the action, even if it is not present in the EPL text. The
-    ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using GET
-    /rules or GET /rules/{name}.
-    
-Some highlights in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
+You should take into consideration the following guidelines:
 
--   [Alias](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-alias) usage, e.g. `expression twoPI alias for { Math.PI * 2 }`
--   [Functions](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-decl) usage, e.g. `expression DOUBLE {(v) => cast(cast(v,string), double)}`
+-   Include `*,` in EPL select clause
+-   The event stream from which take events must be `iotEvent`
+-   A `type=` condition may be concatenated for avoiding mixing different kinds of entities
+-   Entity's attributes must be cast to `float` in case of being numeric, to `String` otherwise.
+-   All the attributes of the context broker notification are available as dynamic properties of the event object `ev`.
+-   A question mark `?` is _necessary_ for EPL to refer to ‘dynamic’ values (duck typing), such as `ev.id?`.
+-   Metadata is also available as explained in the [metadata and object values](#metadata-and-object-values) section.
+-   The variable `ruleName` in automatically added to the action, even if it is not present in the EPL text. The
+    ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using
+    `GET /rules` or `GET /rules/{name}`.
+
+Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
+
+-   [Alias](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-alias)
+    usage, e.g. `expression twoPI alias for { Math.PI * 2 }`
+-   [Functions](http://esper.espertech.com/release-8.4.0/reference-esper/html/epl_clauses.html#epl-syntax-expression-decl)
+    usage, e.g. `expression DOUBLE {(v) => cast(cast(v,string), double)}`
 
 **Backward compatibility note:** since perseo-fe version 1.8.0 it is not mandatory to specify the name of the rule as
 part of the EPL text. In fact, it is not recommendable to do that. However, for backward compatibility, it can be
-present as _ruleName_ alias (`e.g: select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it
+present as _ruleName_ alias (e.g: `select *, "blood_rule_update" as ruleName...`) in the select clause. If present, it
 must be equal to the ‘name’ field of the rule object.
 
-The used entity's attributes must be cast to `double` in case of being numeric (like in the example). Alphanumeric values
-must be cast to `String`. Nested cast to string and to double is something we are analyzing, and could be unnecessary in
-a future version. Use it by now. All the attributes in the notification from Orion are available in the event object,
-**ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’ values.
-Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values). 
-Moreover under _ev.stripped are in JSON format all the notification fields (like id, type, attrs, etc.), so you can access to it in an EPL text using:
+The used entity's attributes must be cast to `double` in case of being numeric (like in the example). Alphanumeric
+values must be cast to `String`. Nested cast to string and to double is something we are analyzing, and could be
+unnecessary in a future version. Use it by now. All the attributes in the notification from Orion are available in the
+event object, **ev**, like _ev.BlodPressure?_ and _ev.id?_. A question mark is _necessary_ for EPL referring ‘dynamic’
+values. Metadata is also available as explained in [Metadata and object values](#metadata-and-object-values).
+
+Moreover under \_ev.stripped are in JSON format all the notification fields (like id, type, attrs, etc.), so you can
+access to it in an EPL text using:
 
 ```sql
 cast(stripped?, java.util.Map).get("id")
 ```
-A full example of `ev` notification processed is avaiable at buttom of [JSON and Array fields in attributes](#json-and-array-fields-in-attributes)
+
+A full example of `ev` notification processed is avaiable at buttom of
+[JSON and Array fields in attributes](#json-and-array-fields-in-attributes)
 
 Please, be careful with using non-ASCII characters in the EPL syntax. It will provoke an error. You can find information
 on how to scape characters at
@@ -189,13 +201,14 @@ The action must be provided in the `action` field of rule. An example:
    }
 ```
 
-The `type` field is mandatory and must be one of
+The `type` field is mandatory and must be one of the following
 
--   `update`: update an entity's attribute
--   `sms`: send a SMS
--   `email`: send an email
--   `post`: make an HTTP POST
--   `twitter`: send a twitter
+-   `update` - creating or updating entities and attributes of those entities in the context broker.
+    [(update action details)](#update-attribute-action)
+-   `sms` - sending a SMS. [(sms action details)](#sms-action)
+-   `email` - sending an email. [(email action details)](#email-action)
+-   `post` - making a HTTP request to a provided URL [(post action details)](#http-request-action)
+-   `twitter` - sending a tweet [(twitter action details)](#twitter-action)
 
 An action can _optionally_ have a field `interval` for limiting the frequency of the action execution (for the rule and
 entity which fired it). The value is expressed in milliseconds and is the minimum period between executions. Once the
@@ -220,10 +233,10 @@ be one of the following posibilities:
     -   If we have in the EPL text `expression twoPI alias for { Math.PI * 2 }` then `${twoPI}` can be used
 -   Any other field generated by Perseo FE into the event sent to Perseo Core. This includes:
     -   [Metadata](#metadata-and-object-values), e.g. `${temperature_metadata_accuracy}`
-    -   [Specific keys within attribute object values](#metadata-and-object-values), e.g. `${myObj__a}` (being an attribute `myObj` of value
-        `{"a": 1, "b": 2}`).
-    -   [Specific items within attribute array values](#json-and-array-fields-in-attributes), e.g. `${myArray__0}` (being an attribute `myArray` of value
-        `["green", "blue"]`).
+    -   [Specific keys within attribute object values](#metadata-and-object-values), e.g. `${myObj__a}` (being an
+        attribute `myObj` of value `{"a": 1, "b": 2}`).
+    -   [Specific items within attribute array values](#json-and-array-fields-in-attributes), e.g. `${myArray__0}`
+        (being an attribute `myArray` of value `["green", "blue"]`).
     -   [Location fields](#location-fields), e.g. `${position__lat}`
     -   [Time fields](#time-fields), e.g. `${x__day}`
 
@@ -368,18 +381,18 @@ the Perseo configuration). The `parameters` map includes the following fields:
         doesn't exist in the entity)
     -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
--   trust: optional, trust for getting an access token from Auth Server which can be used to get to a Context
-    Broker behind a PEP. A trust is a way of Keystone to allow an user (trustor) delegates a role to another user (trustee) for a
-    subservice. Complete info could be found at:
+-   trust: optional, trust for getting an access token from Auth Server which can be used to get to a Context Broker
+    behind a PEP. A trust is a way of Keystone to allow an user (trustor) delegates a role to another user (trustee) for
+    a subservice. Complete info could be found at:
     -   [Trusts concept](https://docs.openstack.org/keystone/stein/user/trusts)
     -   [Trusts API](https://docs.openstack.org/keystone/stein/api_curl_examples.html#post-v3-os-trust-trusts)
--   service: optional, service that will be used by updateAction rule instead of current event service. In this case, Orion PEP URL will be
-    used instead of Orion URL, and then no token for auth will be negotiated.
--   subservice: optional, subservice that will be used by updateAction rule instead of current event subservice. In this case, Orion PEP URL
-    will be used instead of Orion URL, and then no token for auth will be negotiated.
+-   service: optional, service that will be used by updateAction rule instead of current event service. In this case,
+    Orion PEP URL will be used instead of Orion URL, and then no token for auth will be negotiated.
+-   subservice: optional, subservice that will be used by updateAction rule instead of current event subservice. In this
+    case, Orion PEP URL will be used instead of Orion URL, and then no token for auth will be negotiated.
 -   filter: optional, a NGSI-v2 filter (see Simple Query Language section at
-    [NGSIv2 specification](https://telefonicaid.github.io/fiware-orion/api/v2/stable)). If provided then updateAction is
-    done over result of query. This overrides the `id` field (in other words, if you use `filter` then `id` field is
+    [NGSI-v2 specification](https://telefonicaid.github.io/fiware-orion/api/v2/stable)). If provided then updateAction
+    is done over result of query. This overrides the `id` field (in other words, if you use `filter` then `id` field is
     ignored, in fact you should not use `id` and `filter` in the same rule). Needs `version: 2` option (if `version` is
     `1` the filter is ignored). The value of this field is an object which keys are the possible options described in
     [ngsijs options](https://conwetlab.github.io/ngsijs/stable/NGSI.Connection.html#.%22v2.listEntities%22__anchor),
@@ -900,7 +913,9 @@ Note: be aware of the difference between the key `metadatas` used in the context
 
 ## Location fields
 
-Fields with geolocation info representing a point with the formats recognized by NGSI-v2, are parsed and generate two pairs of
+Fields with geolocation info representing a point with the formats recognized by NGSI-v2, are parsed and generate two
+pairs of
+
 pseudo-attributes, the first pair is for the latitude and the longitude and the second pair is for the x and y UTMC
 coordinates for the point. These pseudo-attributes ease the use of the position in the EPL sentence of the rule. These
 derived attributes have the same name of the attribute with a suffix of `__lat` and `__lon` , and `__x` and `__y`
@@ -915,14 +930,14 @@ So, a notification in "geo:point" format like
 {
     "subscriptionId": "57f73930e0e2c975a712b8fd",
     "data": [
-      {
-        "type": "Vehicle",                
-        "id": "Car1",
-        "position": {
-          "type": "geo:point",
-          "value": "40.418889, -3.691944"
+        {
+            "type": "Vehicle",
+            "id": "Car1",
+            "position": {
+                "type": "geo:point",
+                "value": "40.418889, -3.691944"
+            }
         }
-      }
     ]
 }
 ```
@@ -934,7 +949,7 @@ or the equivalent `geo:json` of type `Point` like this
     "subscriptionId": "57f73930e0e2c975a712b8fd",
     "data": [
       {
-        "type": "Vehicle",                
+        "type": "Vehicle",
         "id": "Car1",
         "position": {
           "type": "geo:json",
@@ -970,7 +985,6 @@ will propagate to the core, (and so making available to the EPL sentence) the fi
 
 or (geo:json case):
 
-
 ```json
 {
     "noticeId": "7b8f1c50-8eda-11e6-838d-0b633312661c",
@@ -992,26 +1006,27 @@ or (geo:json case):
 
 Note that in this case the type in GeoJSON overrides the type at NGSI attribute level.
 
-The mapping to `__lat`, `__lon`, `__x` and `__y` also works for metadata. For example, a notification with metadata "geo:point" format like
+The mapping to `__lat`, `__lon`, `__x` and `__y` also works for metadata. For example, a notification with metadata
+"geo:point" format like
 
 ```json
 {
     "subscriptionId": "57f73930e0e2c975a712b8fd",
     "data": [
-      {
-        "type": "Vehicle",                
-        "id": "Car1",
-        "A": {
-          "value": "OK",
-          "type": "Text",
-          "metadata": {
-            "loc": {
-              "type": "geo:point",
-              "value": "2, 1"
-            }            
-          }
+        {
+            "type": "Vehicle",
+            "id": "Car1",
+            "A": {
+                "value": "OK",
+                "type": "Text",
+                "metadata": {
+                    "loc": {
+                        "type": "geo:point",
+                        "value": "2, 1"
+                    }
+                }
+            }
         }
-      }
     ]
 }
 ```
@@ -1023,7 +1038,7 @@ or the equivalent `geo:json` of type `Point` like this
     "subscriptionId": "57f73930e0e2c975a712b8fd",
     "data": [
       {
-        "type": "Vehicle",                
+        "type": "Vehicle",
         "id": "Car1",
         "A": {
           "value": "OK",
@@ -1103,12 +1118,12 @@ coordinates of Cuenca and `d` the distance of 5 000 m.
 Notes:
 
 -   NGSI-v2 allows several geo location formats (`geo:point`, `geo:line`, `geo:box`, `geo:polygon` and `geo:json`). This
-    feature only works with `geo:point` and `geo:json` of type `Point`. However, note that all the other cases will
-    take advantage of the [JSON object expansion](#json-and-array-fields-in-attributes) done by Perseo. You can have
-    a look to [this link](https://github.com/telefonicaid/perseo-fe/issues/576#issuecomment-945697894) to have a
-    couple of examples with `geo:json` representing `LineString` and `Polygon`.
--   NGSI-v2 doesn't provide location semantics to medatata information (i.e. a metadata with type `geo:json` will not
-    be used as location by Orion Context Broker). Perseo provides special mappings for them as extra feature.
+    feature only works with `geo:point` and `geo:json` of type `Point`. However, note that all the other cases will take
+    advantage of the [JSON object expansion](#json-and-array-fields-in-attributes) done by Perseo. You can have a look
+    to [this link](https://github.com/telefonicaid/perseo-fe/issues/576#issuecomment-945697894) to have a couple of
+    examples with `geo:json` representing `LineString` and `Polygon`.
+-   NGSI-v2 doesn't provide location semantics to medatata information (i.e. a metadata with type `geo:json` will not be
+    used as location by Orion Context Broker). Perseo provides special mappings for them as extra feature.
 -   For long distances the precision of the computations and the distortion of the projection can introduce some degree
     of inaccuracy.
 
@@ -1368,7 +1383,7 @@ will send to core the "event"
     "location__lon": 53.120405283,
     "location__x": 642009.4673614734,
     "location__y": 5883931.8311913265,
-    "location":"{\"type\":\"Point\",\"coordinates\":[53.120405283,53.0859375]}"
+    "location": "{\"type\":\"Point\",\"coordinates\":[53.120405283,53.0859375]}"
 }
 ```
 

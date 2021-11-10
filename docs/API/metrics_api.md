@@ -1,4 +1,4 @@
-#<a name="top"></a>Metrics API
+## <a name="top"></a>Metrics API
 
 -   [Introduction](#introduction)
 -   [Operations](#operations)
@@ -7,13 +7,13 @@
     -   [Get and reset](#get-and-reset)
 -   [Metrics](#metrics)
 
-## Introduction
+### Introduction
 
 Perseo implements a REST-based API that can be used to get relevant operational metrics.
 
 [Top](#top)
 
-## Operations
+### Operations
 
 #### Get metrics
 
@@ -36,7 +36,7 @@ object with information for the aggregated information for all services.
     "service2": <service 2 info>,
     ...
     "serviceN": <service N info>
-  }
+  },
   "sum": <aggregated info for all services>
 }
 ```
@@ -53,7 +53,7 @@ given services.
     "subservice2": <subservice 2 info>,
     ...
     "subserviceN": <subservice N info>
-  }
+  },
   "sum": <aggregated info for all subservice in the given service>
 }
 ```
@@ -81,7 +81,7 @@ Some additional remarks:
 
 [Top](#top)
 
-### Reset metrics
+#### Reset metrics
 
 ```text
 DELETE /admin/metrics
@@ -91,7 +91,7 @@ This operation resets all metrics, as if Perseo would had just been started.
 
 [Top](#top)
 
-### Get and reset
+#### Get and reset
 
 ```text
 GET /admin/metrics?reset=true
@@ -102,7 +102,7 @@ resets metrics.
 
 [Top](#top)
 
-## Metrics
+### Metrics
 
 The following metrics are common with other IoT platform componentes (e.g. Orion Contex Broker):
 

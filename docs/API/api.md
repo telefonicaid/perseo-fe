@@ -1,6 +1,6 @@
-<a name="API"></a>
+## API
 
-We are working on apiary descriptions for the API methods, that will come soon ...
+**FIXME:** A draft OpenAPI document for the API is available [here](perseo-api.yml), but it is not finished yet.
 
 A description of "plain"" rules can be found at [plain rules](plain_rules.md).
 
@@ -9,8 +9,6 @@ old format eventually. So, basically, the DCA's documentation is the reference.
 
 Notices/notifications follow the format defined in Orion (Context Broker) for "notify" actions.
 [Context subscriptions](https://fiware-orion.readthedocs.io/en/master/user/walkthrough_apiv2/index.html#subscriptions)
-
-## API
 
 All HTTP request must have `application/json` as MIME type. Responses are `application/json` also. Generally, the JSON
 returned as response includes a `error` field with a string describing an error or `null` if everything worked fine.

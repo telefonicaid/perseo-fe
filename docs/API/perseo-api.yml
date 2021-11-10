@@ -1,0 +1,223 @@
+#
+# Copyright 2016 Telefonica Investigación y Desarrollo, S.A.U
+#
+# This file is part of perseo-fe
+#
+# perseo-fe is free software: you can redistribute it and/or modify it under the terms of the GNU Affero
+# General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+# perseo-fe is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+# for more details.
+#
+# You should have received a copy of the GNU Affero General Public License along with perseo-fe. If not, see
+# http://www.gnu.org/licenses/.
+#
+# For those usages not covered by the GNU Affero General Public License please contact with iot_support at tid dot es
+#
+
+# TODO This is an initial Perseo API description. Incomplete
+# TODO security
+# TODO HEADERS
+openapi: 3.0.0
+info:
+  description: ""
+  version: 1.0.0
+  title: Perseo
+  termsOfService: ""
+  contact:
+    email: ""
+  license:
+    name: GNU Affero General Public License v3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+tags:
+  - name: notice
+    description: Perseo notice
+  - name: rule
+    description: Perseo rule
+  - name: version
+    description: Perseo version
+paths:
+  /notices:
+    post:
+      tags:
+        - notice
+      summary: Send notification to perseo
+      description: ""
+      operationId: newNotification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Notice"
+        description: Notice Object
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultResponse"
+        "405":
+          description: Invalid input
+  /rules:
+    get:
+      tags:
+        - rule
+      summary: List All Rules
+      description: Returns complete rule list
+      operationId: gelAllRules
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Rule"
+    post:
+      tags:
+        - rule
+      summary: Add new rule
+      description: ""
+      operationId: addNewRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Rule"
+        description: Rule Object
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rule"
+        "405":
+          description: Invalid input
+  "/rules/{ruleName}":
+    get:
+      tags:
+        - rule
+      summary: Get rule named ruleName
+      description: returns the rule named ruleName information
+      operationId: getRuleByName
+      parameters:
+        - in: path
+          name: ruleName
+          schema:
+            type: string
+          required: true
+          description: The rule name.
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rule"
+    delete:
+      tags:
+        - rule
+      summary: Delete rule
+      description: ""
+      operationId: deleteRule
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteRuleResponse"
+        "405":
+          description: Invalid input
+  /version:
+    get:
+      tags:
+        - version
+      summary: Perseo Version
+      description: Returns the perseo version
+      operationId: getVersion
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Version"
+  /admin/log:
+    get:
+      tags:
+        - log
+      summary: Get Perseo log level
+      description: Returns the Perseo log level
+      operationId: gelLogLevel
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LogInfo"
+    put:
+      tags:
+        - log
+      summary: Set Perseo log level
+      description: Set the Perseo log level
+      operationId: changeLogLevel
+      parameters:
+        - in: query
+          name: level
+          required: true
+          schema:
+            $ref: "#/components/schemas/LogLevel"
+            type: string
+      responses:
+        "200":
+          description: successful operation
+externalDocs:
+  description: ""
+  url: ""
+servers:
+  - url: https://perseo/
+  - url: http://perseo/
+
+# TODO
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+  schemas:
+    Notice:
+      type: string
+      description: TODO
+    DefaultResponse:
+      type: string
+      description: TODO
+    Rule:
+      type: string
+      description: TODO
+    DeleteRuleResponse:
+      type: string
+      description: TODO
+    Version:
+      type: string
+      description: TODO
+    LogInfo:
+      type: string
+      description: TODO
+    LogLevel:
+      type: string
+      description: Perseo log levels
+      enum:
+        - FATAL
+        - ERROR
+        - WARN
+        - INFO
+        - DEBUG

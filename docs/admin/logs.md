@@ -83,8 +83,6 @@ They should be solved in order to get perseo running.
 | [AUTH](#auth)                     | Major    | A problem in connection to Keystone. Update-actions to Orion through PEP are not working |
 | [LOOP](#loop)                     | Major    | Some rules can be provoking an infinite loop of triggered actions                        |
 
-<a name="start"></a>
-
 ### Alarm START
 
 **Severity**: Critical
@@ -99,8 +97,6 @@ They should be solved in order to get perseo running.
 file.
 
 ---
-
-<a name="core"></a>
 
 ### Alarm CORE
 
@@ -117,8 +113,6 @@ path
 
 ---
 
-<a name="post_event"></a>
-
 ### Alarm POST_EVENT
 
 **Severity**: Critical
@@ -134,8 +128,6 @@ path
 
 ---
 
-<a name="email"></a>
-
 ### Alarm EMAIL
 
 **Severity**: Critical
@@ -149,8 +141,6 @@ path
 **Action**: Check the configured SMTP Server is accessible and working properly
 
 ---
-
-<a name="sms"></a>
 
 ### Alarm SMS
 
@@ -166,8 +156,6 @@ path
 
 ---
 
-<a name="smpp"></a>
-
 ### Alarm SMPP
 
 **Severity**: Critical
@@ -182,8 +170,6 @@ path
 
 ---
 
-<a name="orion"></a>
-
 ### Alarm ORION
 
 **Severity**: Critical
@@ -197,8 +183,6 @@ path
 **Action**: Check the configured Orion path for updating is accessible and working properly
 
 ---
-
-<a name="database"></a>
 
 ### Alarm DATABASE
 
@@ -216,8 +200,6 @@ You can find more information about DB dynamics in the [database aspects](admin.
 
 ---
 
-<a name="database_orion"></a>
-
 ### Alarm DATABASE_ORION
 
 **Severity**: Critical
@@ -232,8 +214,6 @@ You can find more information about DB dynamics in the [database aspects](admin.
 
 ---
 
-<a name="auth"></a>
-
 ### Alarm AUTH
 
 **Severity**: Major
@@ -247,8 +227,6 @@ You can find more information about DB dynamics in the [database aspects](admin.
 **Action**: Check HTTP connectivity to Keystone. Check provisioned user and roles/grants.
 
 ---
-
-<a name="loop"></a>
 
 ### Alarm LOOP
 

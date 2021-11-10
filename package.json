@@ -24,10 +24,10 @@
     "test": "mocha --recursive 'test/**/*.js' --reporter spec --timeout 5000 --ui bdd --exit --color true",
     "test:watch": "npm run test -- -w ./lib",
     "lint": "jshint lib/ --config .jshintrc && jshint test/ --config test/.jshintrc",
-    "lint:md": "remark  -f '*.md' 'documentation/*.md'",
-    "lint:text": "textlint '*.md' 'documentation/*.md'",
+    "lint:md": "remark  -f '*.md' 'docs/*.md'",
+    "lint:text": "textlint '*.md' 'docs/*.md'",
     "prettier": "prettier --config .prettierrc.json --write '**/**/**/**/*.js' '**/**/**/*.js' '**/**/*.js' '**/*.js' '*.js'",
-    "prettier:text": "prettier 'README.md' 'doc/*.md' 'doc/**/*.md' --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
+    "prettier:text": "prettier 'README.md' 'docs/*.md' 'docs/**/*.md' --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
     "test:coverage": "nyc --reporter=lcov mocha --recursive 'test/**/*.js' --reporter spec --timeout 5000 --exit --color true",
     "test:coveralls": "npm run test:coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "watch": "watch 'npm test && npm run lint' ./lib ./test"
