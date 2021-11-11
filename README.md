@@ -4,8 +4,8 @@
 [![License: AGPLv3](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](./LICENSE)
 [![Docker Status](https://img.shields.io/docker/pulls/fiware/perseo.svg)](https://hub.docker.com/r/fiware/perseo/)
 [![Support badge](https://img.shields.io/badge/tag-fiware--perseo-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware-perseo)
-<br> [![Documentation badge](https://img.shields.io/readthedocs/perseo.svg)](https://fiware-perseo-fe.readthedocs.io/en/latest/)
-[![CI](https://img.shields.io/readthedocs/fiware-perseo-fe.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
+<br> [![Documentation badge](https://img.shields.io/readthedocs/fiware-perseo-fe.svg)](https://fiware-perseo-fe.readthedocs.io/en/latest/)
+[![CI](https://github.com/telefonicaid/perseo-fe/workflows/CI/badge.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/perseo-fe/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/perseo-fe?branch=master)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
 
