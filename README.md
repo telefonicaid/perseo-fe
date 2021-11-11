@@ -19,7 +19,7 @@ context broker tested with Perseo and officially supported is
 This project is part of [FIWARE](https://www.fiware.org). You can find more FIWARE components in the
 [FIWARE catalogue](https://catalogue.fiware.org).
 
-| :books: [Documentation](https://perseo.readthedocs.io/en/latest) | :whale: [Docker Hub](https://hub.docker.com/r/fiware/perseo/) | :dart: [Roadmap](documentation/roadmap.md) |
+| :books: [Documentation](https://fiware-perseo-fe.readthedocs.io/en/latest/) | :whale: [Docker Hub](https://hub.docker.com/r/fiware/perseo/) | :dart: [Roadmap](documentation/roadmap.md) |
 | ---------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------ |
 
 
