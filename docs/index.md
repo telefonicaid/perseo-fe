@@ -8,7 +8,7 @@ jointly work with _context brokers_. The context broker tested with Perseo and o
 It follows a straightforward idea: listening to events coming from context information to identify patterns described by
 rules, in order to immediately react upon them by triggering actions.
 
-![Perseo Components](docs/images/PerseoComponents.png)
+![Perseo Components](images/PerseoComponents.png)
 
 By leveraging on the
 [notifications mechanism](http://fiware-orion.readthedocs.io/en/latest/user/walkthrough_apiv2/index.html#subscriptions),
