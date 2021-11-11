@@ -2,7 +2,7 @@ site_name: Perseo Context-aware Complex Event Processing
 site_description: Perseo Documentation
 repo_url: https://github.com/telefonicaid/perseo-fe
 theme: readthedocs
-extra_css: ['https://www.fiware.org/style/fiware_readthedocs_processing.css']
+extra_css: ["https://fiware.org/style/fiware_readthedocs.css", "https://www.fiware.org/style/fiware_readthedocs_processing.css"]
 
 pages:
 - 'Introduction': 'index.md'
