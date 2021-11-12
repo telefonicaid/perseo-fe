@@ -164,7 +164,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
-* Wed Nov 10 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
+* Fri Nov 12 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
 - Add: log context rule in core involved ops (#550)
 - Add: include json (representated as string) in event delivered to perseo-core for each notification field (#579)
 - Fix: parse metadata geo:json of type Point in a the same special way than geo:point when process event for perseo-core (#576)
