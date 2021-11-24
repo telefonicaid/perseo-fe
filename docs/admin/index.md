@@ -119,27 +119,27 @@ You can see an example of using some of the environment variables in this
 
 #### perseo-fe
 
-| Environment variable       | Default Value | Description                                                                                                                                                                     |
-| :------------------------- | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `PERSEO_ENDPOINT_HOST`     |               | Host where the CEP will listen to.                                                                                                                                              |
-| `PERSEO_ENDPOINT_PORT`     |               | Port where the CEP will listen to.                                                                                                                                              |
-| `PERSEO_MONGO_ENDPOINT`✅  |               | Endpoint (host[:port]) list for Mongo DB.                                                                                                                                       |
-| `PERSEO_MONGO_REPLICASET`  |               | ReplicaSet name for Mongo DB.                                                                                                                                                   |
-| `PERSEO_MONGO_AUTH_SOURCE` |               | The database name associated with the user's credentials for Mongo DB, see https://docs.mongodb.com/manual/reference/connection-string/#mongodb-urioption-urioption.authSource. |
-| `PERSEO_MONGO_USER`        |               | User for Mongo DB.                                                                                                                                                              |
-| `PERSEO_MONGO_PASSWORD`    |               | Password for Mongo DB.                                                                                                                                                          |
-| `PERSEO_CORE_URL`✅        |               | URL where Perseo Core is listening (e.g: http://host_or_ip:port).                                                                                                               |
-| `PERSEO_NEXT_URL`          |               | URL where Perseo Core replicated node is listening.                                                                                                                             |
-| `PERSEO_ORION_URL`✅       |               | URL of the Orion Context Broker.                                                                                                                                                |
-| `PERSEO_LOG_LEVEL`         |               | Log level.                                                                                                                                                                      |
-| `PERSEO_SMTP_HOST`         |               | Host of the SMTP server                                                                                                                                                         |
-| `PERSEO_SMTP_PORT`         |               | Port of the SMTP server                                                                                                                                                         |
-| `PERSEO_SMTP_VERIFY_CA`    | `false`       | `true` if self-signed or invalid TLS certificate should be rejected                                                                                                             |
-| `PERSEO_SMTP_SECURE`       | `false`       | `true` if SSL should be used with the SMTP server                                                                                                                               |
-| `PERSEO_SMTP_AUTH_USER`    |               | Authentication data, the username                                                                                                                                               |
-| `PERSEO_SMTP_AUTH_PASS`    |               | Authentication data, the user password                                                                                                                                          |
-| `PERSEO_NOTICES_PATH`      | `'/notices'`  | Path for incoming notices                                                                                                                                                       |
-| `PERSEO_RULES_PATH`        | `'/rules'`    | Path for incoming rules                                                                                                                                                         |
+| Environment variable       | Default Value | Description                                                                                                                                                                    |
+| :------------------------- | :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PERSEO_ENDPOINT_HOST`     |               | Host where the CEP will listen to.                                                                                                                                             |
+| `PERSEO_ENDPOINT_PORT`     |               | Port where the CEP will listen to.                                                                                                                                             |
+| `PERSEO_MONGO_ENDPOINT`✅  |               | Endpoint (host[:port]) list for Mongo DB.                                                                                                                                      |
+| `PERSEO_MONGO_REPLICASET`  |               | ReplicaSet name for Mongo DB.                                                                                                                                                  |
+| `PERSEO_MONGO_AUTH_SOURCE` |               | The database name associated with the user's credentials for Mongo DB, see https://docs.mongodb.com/manual/reference/connection-string/#mongodb-urioption-urioptionauthSource. |
+| `PERSEO_MONGO_USER`        |               | User for Mongo DB.                                                                                                                                                             |
+| `PERSEO_MONGO_PASSWORD`    |               | Password for Mongo DB.                                                                                                                                                         |
+| `PERSEO_CORE_URL`✅        |               | URL where Perseo Core is listening (e.g: http://host_or_ip:port).                                                                                                              |
+| `PERSEO_NEXT_URL`          |               | URL where Perseo Core replicated node is listening.                                                                                                                            |
+| `PERSEO_ORION_URL`✅       |               | URL of the Orion Context Broker.                                                                                                                                               |
+| `PERSEO_LOG_LEVEL`         |               | Log level.                                                                                                                                                                     |
+| `PERSEO_SMTP_HOST`         |               | Host of the SMTP server                                                                                                                                                        |
+| `PERSEO_SMTP_PORT`         |               | Port of the SMTP server                                                                                                                                                        |
+| `PERSEO_SMTP_VERIFY_CA`    | `false`       | `true` if self-signed or invalid TLS certificate should be rejected                                                                                                            |
+| `PERSEO_SMTP_SECURE`       | `false`       | `true` if SSL should be used with the SMTP server                                                                                                                              |
+| `PERSEO_SMTP_AUTH_USER`    |               | Authentication data, the username                                                                                                                                              |
+| `PERSEO_SMTP_AUTH_PASS`    |               | Authentication data, the user password                                                                                                                                         |
+| `PERSEO_NOTICES_PATH`      | `'/notices'`  | Path for incoming notices                                                                                                                                                      |
+| `PERSEO_RULES_PATH`        | `'/rules'`    | Path for incoming rules                                                                                                                                                        |
 
 -   For legacy SMS and SMPP support, please refer to [this file](configuration.md).
 
