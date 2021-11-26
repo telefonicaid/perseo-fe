@@ -23,7 +23,7 @@
     "healthcheck": "node ./bin/healthcheck",
     "test": "mocha --recursive 'test/**/*.js' --reporter spec --timeout 5000 --ui bdd --exit --color true",
     "test:watch": "npm run test -- -w ./lib",
-    "lint": "jshint lib/ --config .jshintrc && jshint test/ --config test/.jshintrc",
+    "lint": "jshint lib/ --config .jshintrc && jshint bin/ --config .jshintrc && jshint test/ --config test/.jshintrc",
     "lint:md": "remark  -f '*.md' 'docs/*.md'",
     "lint:text": "textlint '*.md' 'docs/*.md'",
     "prettier": "prettier --config .prettierrc.json --write '**/**/**/**/*.js' '**/**/**/*.js' '**/**/*.js' '**/*.js' '*.js'",
