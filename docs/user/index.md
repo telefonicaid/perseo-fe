@@ -25,11 +25,9 @@ By leveraging on the
 [notifications mechanism](http://fiware-orion.readthedocs.io/en/latest/user/walkthrough_apiv2/index.html#subscriptions),
 clients instruct Orion CB to notify Perseo of the changes in the entities they care about (`Event API`). Details of this
 process are explained in the [Orion Subscription part of the User Manual](user/index.md#orion-subscription). Then, rules
-to the CORE Rule Engine can be easily managed using the publicly available
-[WireCloud](https://github.com/Wirecloud/wirecloud)) operational dashboard, or making use of any of the REST clients
-able to programmaticly use the Perseo's `Rule API`. These rules will identify patterns that will trigger actions with
-Orion to create or update entities, or with other different components or external systems, such as Web (HTTP), Email
-(SMTP) or SMS (SMPP) servers.
+to the CORE Rule Engine can be easily managed using the Perseo's `Rule API`. These rules will identify patterns that
+will trigger actions with Orion to create or update entities, or with other different components or external systems,
+such as Web (HTTP), Email (SMTP) or SMS (SMPP) servers.
 
 Perseo allows you to create/edit/delete rules through its API. You can find more accurate information about the Perseo
 API [here](../API/api.md)
@@ -100,7 +98,8 @@ You will find more information about Perseo Actions [here](../API/plain_rules.md
 An `action` can include references to one or more of the available atributes of the context broker's notification. This
 allows you to leverage context information in a very simple way. For example, the `sms`, `email`, and `post` actions
 include a `template` field that can be used to build the body of the message/request. This text can include placeholders
-for those attributes of the generated complex event. The placeholder takes the form of `${X}`, with `X` among several possibilities (entity id, attribute value, etc.).
+for those attributes of the generated complex event. The placeholder takes the form of `${X}`, with `X` among several
+possibilities (entity id, attribute value, etc.).
 
 You will find more information about substitution syntax [here](../API/plain_rules.md#string-substitution-syntax)
 
