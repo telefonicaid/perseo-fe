@@ -25,9 +25,11 @@ By leveraging on the
 [notifications mechanism](http://fiware-orion.readthedocs.io/en/latest/user/walkthrough_apiv2/index.html#subscriptions),
 clients instruct Orion CB to notify Perseo of the changes in the entities they care about (`Event API`). Details of this
 process are explained in the [Orion Subscription part of the User Manual](user/index.md#orion-subscription). Then, rules
-to the CORE Rule Engine can be easily managed using the Perseo's `Rule API`. These rules will identify patterns that
-will trigger actions with Orion to create or update entities, or with other different components or external systems,
-such as Web (HTTP), Email (SMTP) or SMS (SMPP) servers.
+to the CORE Rule Engine can be easily managed using any of the REST clients (Postman, curl, etc.)able to programmaticly 
+use the Perseo's `Rule API`. These rules will identify patterns that will trigger actions with Orion to create or update
+entities, or with other different components or external systems, such as Web (HTTP), Email (SMTP) or SMS (SMPP) 
+servers.
+
 
 Perseo allows you to create/edit/delete rules through its API. You can find more accurate information about the Perseo
 API [here](../API/api.md)
