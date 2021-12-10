@@ -1,1 +1,2 @@
+Fix: set 'None' as default type of entity for updateAction (#611)
 Add: PERSEO_MONGO_AUTH_SOURCE variable (#607)
