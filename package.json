@@ -30,7 +30,8 @@
     "prettier:text": "prettier 'README.md' 'docs/*.md' 'docs/**/*.md' --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
     "test:coverage": "nyc --reporter=lcov mocha --recursive 'test/**/*.js' --reporter spec --timeout 5000 --exit --color true",
     "test:coveralls": "npm run test:coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
-    "watch": "watch 'npm test && npm run lint' ./lib ./test"
+    "watch": "watch 'npm test && npm run lint' ./lib ./test",
+    "start": "node ./bin/perseo"
   },
   "devDependencies": {
     "chai": "~4.1.2",
