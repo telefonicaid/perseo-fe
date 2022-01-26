@@ -81,7 +81,7 @@ function loadConfiguration() {
         'PERSEO_CORE_URL',
         'PERSEO_NEXT_URL',
         'PERSEO_ORION_URL',
-        'PERSEO_PEP_URL',
+        'PERSEO_PEP_ORION_URL',
         'PERSEO_LOG_LEVEL',
         'PERSEO_SMTP_PORT',
         'PERSEO_SMTP_HOST',
@@ -180,8 +180,8 @@ function loadConfiguration() {
     if (process.env.PERSEO_ORION_URL) {
         config.orion.URL = new URL(process.env.PERSEO_ORION_URL);
     }
-    if (process.env.PERSEO_PEP_URL) {
-        config.pep.URL = new URL(process.env.PERSEO_PEP_URL);
+    if (process.env.PERSEO_PEP_ORION_URL) {
+        config.pep.URL = new URL(process.env.PERSEO_PEP_ORION_URL);
     }
     if (process.env.PERSEO_LOG_LEVEL) {
         config.logLevel = process.env.PERSEO_LOG_LEVEL;
