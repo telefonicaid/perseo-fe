@@ -1,5 +1,7 @@
 # Perseo Context-Aware CEP
 
+THIS ONLY FOR TEST TO DELETE
+
 [![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: AGPLv3](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](./LICENSE)
 [![Docker Status](https://img.shields.io/docker/pulls/fiware/perseo.svg)](https://hub.docker.com/r/fiware/perseo/)
