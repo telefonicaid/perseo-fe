@@ -1,10 +1,13 @@
 ### Full Trust Token Flow:
 
+This flow explains how a user `adm1` gives permisson to another user `pep` just for a subservice.
+
 Given the following keystone ids:
 
 - project_id: 0984fc0e319c4b3d8b9d9f5e441eca1e (subservice)
 - user `adm1` id:: 6669270e8a2b45d5b984b7df6f352294
 - domain_id: d6a6e375072045fca4b9ebcadb6edded (service)
+- role name: d6a6e375072045fca4b9ebcadb6edded#SubServiceAdmin (role of user `adm1` in subsrvice)
 - token of adm1 in project_id: gAAAAABheRNWN_hK1h7COoLylc99j8iPhoSUfsZ7_r
 - user `pep` id: 1e15e74598b34f5790dbe3fbad45d939
 
