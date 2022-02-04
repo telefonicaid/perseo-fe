@@ -199,7 +199,8 @@ describe('Metrics', function() {
         it('should increment a failed for update', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_update.json');
-            utilsT.getConfig().orion.URL = new URL('http://inventedurl.notexists.com');
+            var invalidPort = 3333;
+            utilsT.getConfig().orion.URL = new URL(util.format('http://localhost:%s', invalidPort));
             metrics.GetDecorated(true); // reset metrics
             async.series(
                 [
