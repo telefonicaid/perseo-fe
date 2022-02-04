@@ -199,6 +199,10 @@ describe('Metrics', function() {
         it('should increment a failed for update', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_update.json');
+            // previously we were using 'http://inventedurl.notexists.com' but that domain exists.
+            // It's better to use localhost in an invalid port (even in the case of using non-existing domains
+            // timeouts due to DNS lookup may expire and the test to fail)
+            // port is a better  option 
             var invalidPort = 3333;
             utilsT.getConfig().orion.URL = new URL(util.format('http://localhost:%s', invalidPort));
             metrics.GetDecorated(true); // reset metrics
