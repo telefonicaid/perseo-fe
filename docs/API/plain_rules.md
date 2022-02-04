@@ -386,6 +386,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
     a subservice. Complete info could be found at:
     -   [Trusts concept](https://docs.openstack.org/keystone/stein/user/trusts)
     -   [Trusts API](https://docs.openstack.org/keystone/stein/api_curl_examples.html#post-v3-os-trust-trusts)
+    -   [Trust token flow example](./trust_token.md)
 -   service: optional, service that will be used by updateAction rule instead of current event service. In this case,
     Orion PEP URL will be used instead of Orion URL, and then no token for auth will be negotiated.
 -   subservice: optional, subservice that will be used by updateAction rule instead of current event subservice. In this
