@@ -2,17 +2,17 @@
 
 Given the following keystone ids:
 
-- project id: 0984fc0e319c4b3d8b9d9f5e441eca1e
+- project_id: 0984fc0e319c4b3d8b9d9f5e441eca1e
 - adm1: 6669270e8a2b45d5b984b7df6f352294
 - smartcity: d6a6e375072045fca4b9ebcadb6edded
-- token: gAAAAABheRNWN_hK1h7COoLylc99j8iPhoSUfsZ7_r-kSlhhp5chRpWxh0Aa6NBmERaEIF9s83NGN1nsD1oA2LNHtImmRD9mK3ZwoceiPvcX8fQYOIyLQ3MNYc1MFgefodz0VGRsaduDv9bFaim18FGbFga3nAGJ_YBQorBDtMn8waAorLD78ufmxg0DrCUWyhvUM80K0db
+- token of adm1 in project_id: gAAAAABheRNWN_hK1h7COoLylc99j8iPhoSUfsZ7_r
 - pep: 1e15e74598b34f5790dbe3fbad45d939
 
 #### Request a trust token:
 
 ```
 curl -s \
--H "X-Auth-Token: gAAAAABheRWS1YKGbxeRmOU-vk3oIrmTGK4OQXIhmhRpXgrOY6RzdSlYIyFJJbJEsV1hU528trOY3ls0dpvwWJqEFlqT5rnJhAjbDYAvbjYWMfcMRxXR5qtO3ER1YiuCDlsdQozX2Gl7OiYHE2g0S97qRKvaBC1qNoVMb2KyxDyIfJlwkJmpbfdEXxMeFKTMRFtiOa73BTIP" \
+-H "X-Auth-Token: gAAAAABheRNWN_hK1h7COoLylc99j8iPhoSUfsZ7_r" \
 -H "Content-Type: application/json" \
 -d '
 { "trust": {
@@ -95,5 +95,5 @@ curl -i -s \
 
 Response (a keystone token):
 ```
-X-Subject-Token: gAAAAABheRtZG6styyO2uSsJbXKF7b6B5lSlJN8kvR6FpqgJOBleAAvL9jnxtAoRXOKkmtfqsIyvRUjh_qrJvUaYIkJUdg8ek2FBFNuiZPh1Eo1TJ1M6SxO-zZojVd_iI3EJA2g7pZm8mhxDjYUpKITmZopgR91n5JMZg5-8Gcw7h0u9cFj2OZZJZ9pUfzaDycS5os9O0V9d
+X-Subject-Token: gAAAAABheRtZG6styyO2uSsJbXKF7b6B5l
 ```
