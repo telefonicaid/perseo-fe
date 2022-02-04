@@ -2,11 +2,11 @@
 
 Given the following keystone ids:
 
-project id: 0984fc0e319c4b3d8b9d9f5e441eca1e
-adm1: 6669270e8a2b45d5b984b7df6f352294
-smartcity: d6a6e375072045fca4b9ebcadb6edded
-token: gAAAAABheRNWN_hK1h7COoLylc99j8iPhoSUfsZ7_r-kSlhhp5chRpWxh0Aa6NBmERaEIF9s83NGN1nsD1oA2LNHtImmRD9mK3ZwoceiPvcX8fQYOIyLQ3MNYc1MFgefodz0VGRsaduDv9bFaim18FGbFga3nAGJ_YBQorBDtMn8waAorLD78ufmxg0DrCUWyhvUM80K0db
-pep: 1e15e74598b34f5790dbe3fbad45d939
+- project id: 0984fc0e319c4b3d8b9d9f5e441eca1e
+- adm1: 6669270e8a2b45d5b984b7df6f352294
+- smartcity: d6a6e375072045fca4b9ebcadb6edded
+- token: gAAAAABheRNWN_hK1h7COoLylc99j8iPhoSUfsZ7_r-kSlhhp5chRpWxh0Aa6NBmERaEIF9s83NGN1nsD1oA2LNHtImmRD9mK3ZwoceiPvcX8fQYOIyLQ3MNYc1MFgefodz0VGRsaduDv9bFaim18FGbFga3nAGJ_YBQorBDtMn8waAorLD78ufmxg0DrCUWyhvUM80K0db
+- pep: 1e15e74598b34f5790dbe3fbad45d939
 
 #### Request a trust token:
 
@@ -93,7 +93,7 @@ curl -i -s \
 "http://localhost:5001/v3/auth/tokens"
 ```
 
-Response:
-
+Response (a keystone token):
+```
 X-Subject-Token: gAAAAABheRtZG6styyO2uSsJbXKF7b6B5lSlJN8kvR6FpqgJOBleAAvL9jnxtAoRXOKkmtfqsIyvRUjh_qrJvUaYIkJUdg8ek2FBFNuiZPh1Eo1TJ1M6SxO-zZojVd_iI3EJA2g7pZm8mhxDjYUpKITmZopgR91n5JMZg5-8Gcw7h0u9cFj2OZZJZ9pUfzaDycS5os9O0V9d
-
+```
