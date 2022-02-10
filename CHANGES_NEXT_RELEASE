@@ -1,3 +1,4 @@
+Add: externalCBUrl as action parameters for updateAction (#625)
 Fix: fill proper srv and subsrc in logs of noSignal (#624)
 Update mongodb dep driver from 3.6.8 to 3.6.12
 Fix: set 'None' as default type of entity for updateAction (#611)

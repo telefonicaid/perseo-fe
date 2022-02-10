@@ -388,9 +388,12 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   [Trusts API](https://docs.openstack.org/keystone/stein/api_curl_examples.html#post-v3-os-trust-trusts)
     -   [Trust token flow example](./trust_token.md)
 -   service: optional, service that will be used by updateAction rule instead of current event service. In this case,
-    Orion PEP URL will be used instead of Orion URL, and then no token for auth will be negotiated.
+    externalCBUrl or configured Orion PEP URL will be used instead of Orion URL, and then no token for auth will be
+    negotiated.
 -   subservice: optional, subservice that will be used by updateAction rule instead of current event subservice. In this
-    case, Orion PEP URL will be used instead of Orion URL, and then no token for auth will be negotiated.
+    case, externalCBUrl or confgiured Orion PEP URL will be used instead of Orion URL, and then no token for auth will
+    be negotiated.
+-   externalCBUrl: optional, externalCBUrl that will be used by updateAction rule instead of configured Orion PEP URL.
 -   filter: optional, a NGSI-v2 filter (see Simple Query Language section at
     [NGSI-v2 specification](https://telefonicaid.github.io/fiware-orion/api/v2/stable)). If provided then updateAction
     is done over result of query. This overrides the `id` field (in other words, if you use `filter` then `id` field is
