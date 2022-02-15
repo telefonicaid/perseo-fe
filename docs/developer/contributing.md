@@ -11,7 +11,7 @@ Before we get started, here are a few things we expect from you (and that you sh
   before we can merge your contribution.
 * When adding content, please consider if it is widely valuable. Please don't add references or links to things you or
   your employer have created as others will do so if they appreciate it.
-* When reporting a vulnerability on the software, please, put in contact with IoT Agent Node Lib repository maintainers in order to discuss it 
+* When reporting a vulnerability on the software, please, put in contact with Perseo repository maintainers in order to discuss it 
   in a private way.
 
 ## How to contribute
@@ -80,15 +80,15 @@ In order to start contributing:
 git clone https://github.com/your-github-username/perseo-fe.git
 ```
 
-3. Add the main iotagent-node-lib repository as a remote to your forked repository (use any name for your remote
-   repository, it does not have to be iotagent-node-lib, although we will use it in the next steps):
+3. Add the main perseo-fe repository as a remote to your forked repository (use any name for your remote
+   repository, it does not have to be perseo-fe, although we will use it in the next steps):
 
 ```bash
-git remote add iotagent-node-lib https://github.com/telefonicaid/perseo-fe.git
+git remote add perseo-fe https://github.com/telefonicaid/perseo-fe.git
 ```
 
 Before starting your contribution, remember to synchronize the `master` branch in your forked repository with the
-`master` branch in the main iotagent-node-lib repository, by following this steps
+`master` branch in the main perseo-fe repository, by following this steps
 
 1. Change to your local `master` branch (in case you are not in it already):
 
