@@ -163,7 +163,6 @@ The process of making a release consists of the following steps:
 4. Create a release branch from the last version of `master` named with the version number.
 5. Create a new task for preparing the next release, adding the sufix `-next` to the current version number (to signal
    this as the development version), and flush the contents of the CHANGES_NEXT_RELEASE file.
-6. Upload the new library version to the npm repository using `npm publish` command from the release branch.
 
 ## Version numbers
 
