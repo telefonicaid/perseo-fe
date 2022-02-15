@@ -8,6 +8,7 @@
 [![CI](https://github.com/telefonicaid/perseo-fe/workflows/CI/badge.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/perseo-fe/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/perseo-fe?branch=master)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5597/badge)](https://bestpractices.coreinfrastructure.org/projects/5597)
 
 ## Overview
 
