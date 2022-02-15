@@ -19,5 +19,7 @@ Perseo: Documentation
     -   [Plain rules](API/plain_rules.md)
     -   [Errors](API/errors.md)
 -   [Data model](models/models.md)
--   [Documentation for developers of perseo](developer/development.md)
+-   Developers
+    -   [Contribution guidelines](developer/contributing.md)
+    -   [Documentation for developers](developer/development.md)
 -   [Roadmap](roadmap.md)

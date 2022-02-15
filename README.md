@@ -29,6 +29,7 @@ This project is part of [FIWARE](https://www.fiware.org). You can find more FIWA
 -   [Installation](#installation)
 -   [Usage](#usage)
 -   [API](#api)
+-   [Contributing](#Contributing)
 -   [Testing](#testing)
 -   [More Information](#more-information)
 -   [License](#license)
@@ -64,6 +65,12 @@ Information about how to use Perseo can be found in the [User & Programmers Manu
 ## API
 
 APIs and examples of their usage can be found [here](docs/API/api.md)
+
+## Contributing
+
+Contributions to this project are welcome. Developers planning to contribute should follow the 
+[Contribution Guidelines](docs/developer/contributing.md). If you plan to contribute, please also read the
+[Development documentation](docs/developer/development.md).
 
 ## Testing
 
