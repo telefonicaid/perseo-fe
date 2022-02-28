@@ -8,6 +8,7 @@
 [![CI](https://github.com/telefonicaid/perseo-fe/workflows/CI/badge.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/perseo-fe/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/perseo-fe?branch=master)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5597/badge)](https://bestpractices.coreinfrastructure.org/projects/5597)
 
 ## Overview
 
@@ -29,6 +30,7 @@ This project is part of [FIWARE](https://www.fiware.org). You can find more FIWA
 -   [Installation](#installation)
 -   [Usage](#usage)
 -   [API](#api)
+-   [Contributing](#Contributing)
 -   [Testing](#testing)
 -   [More Information](#more-information)
 -   [License](#license)
@@ -64,6 +66,12 @@ Information about how to use Perseo can be found in the [User & Programmers Manu
 ## API
 
 APIs and examples of their usage can be found [here](docs/API/api.md)
+
+## Contributing
+
+Contributions to this project are welcome. Developers planning to contribute should follow the 
+[Contribution Guidelines](docs/developer/contributing.md). If you plan to contribute, please also read the
+[Development documentation](docs/developer/development.md).
 
 ## Testing
 
