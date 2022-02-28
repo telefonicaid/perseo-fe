@@ -1,0 +1,6 @@
+{
+    "name": "stream",
+    "text": "expression BP alias for {cast(cast(BloodPressure?,String),float)} insert into mynewstream select *,\"stream\" as ruleName,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(BP>1.5 and type=\"BloodMeter\")]",
+    "action": [
+    ]
+}
