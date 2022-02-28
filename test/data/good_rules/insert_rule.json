@@ -2,11 +2,5 @@
     "name": "expr",
     "text": "expression BP alias for {cast(cast(BloodPressure?,String),float)} insert into mynewstream select *,\"expr\" as ruleName,ev.BloodPressure? as Pression, ev.id? as Meter from pattern [every ev=iotEvent(BP>1.5 and type=\"BloodMeter\")]",
     "action": {
-        "type": "email",
-        "template": "Meter ${Meter} has pression ${Pression}: ${ev__complejo__saludo} (GEN RULE)",
-        "parameters": {
-            "to": "brox@tid.es",
-            "from": "brox@tid.es"
-        }
     }
 }
