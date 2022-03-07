@@ -392,11 +392,11 @@ the Perseo configuration). The `parameters` map includes the following fields:
     should be negotiated.
     i.e.:  
     ```
-    authentication = {
-        host: 'ext-keystone',
-        port: '5001',
-        user: 'cep',
-        password: 'ceppassword'
+    "authentication": {
+        "host": "ext-keystone",
+        "port": 5001,
+        "user": "cep",
+        "password: "ceppassword"
      }
      ```
 -   service: optional, service that will be used by updateAction rule instead of current event service. In this case,
