@@ -387,6 +387,18 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   [Trusts concept](https://docs.openstack.org/keystone/stein/user/trusts)
     -   [Trusts API](https://docs.openstack.org/keystone/stein/api_curl_examples.html#post-v3-os-trust-trusts)
     -   [Trust token flow example](./trust_token.md)
+-   authentication: optional, authentication (host, port, user and password) configuration values that will be used by
+    updateAction rule (instead of default authentication defined by configuration) which will be used when a trust token
+    should be negotiated.
+    i.e.:  
+    ```
+    "authentication": {
+        "host": "ext-keystone",
+        "port": 5001,
+        "user": "cep",
+        "password: "ceppassword"
+     }
+     ```
 -   service: optional, service that will be used by updateAction rule instead of current event service. In this case,
     externalCBUrl or configured Orion PEP URL will be used instead of Orion URL, and then no token for auth will be
     negotiated.
