@@ -1,3 +1,4 @@
+Add: authentication as action parameters for updateAction (#638)
 Add: support for insert into stream rules (in detail: <Expression Context 'insert into stream` select...> ) (#630)
 Add: externalCBUrl as action parameters for updateAction (#625)
 Fix: fill proper srv and subsrc in logs of noSignal (#624)
