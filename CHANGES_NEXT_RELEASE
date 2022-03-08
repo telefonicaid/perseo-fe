@@ -1,3 +1,4 @@
+Fix: ensure timed rules has unique names (using service and subservice) (perseo-core#191)
 Add: authentication as action parameters for updateAction (#638)
 Add: support for insert into stream rules (in detail: <Expression Context 'insert into stream` select...> ) (#630)
 Add: externalCBUrl as action parameters for updateAction (#625)
