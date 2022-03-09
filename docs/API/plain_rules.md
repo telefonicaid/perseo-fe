@@ -117,10 +117,7 @@ You should take into consideration the following guidelines:
 -   Metadata is also available as explained in the [metadata and object values](#metadata-and-object-values) section.
 -   The variable `ruleName` in automatically added to the action, even if it is not present in the EPL text. The
     ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using
-    `GET /rules` or `GET /rules/{name}`. For time based rules if `rulename` was not provided in EPL text then will be
-    added automatically by using an unique format, which inludes service and subservice (i.e. provided name rule was
-    `myrule` in service `smartcity` and subservice `/gerdens` then ruleName for EPL text will be
-    `myrule@smartcity/gardens`)
+    `GET /rules` or `GET /rules/{name}`.
 
 Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
 
