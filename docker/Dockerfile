@@ -98,7 +98,7 @@ WORKDIR /opt/perseo-fe
 
 # hadolint ignore=DL3008
 RUN \
-        apt-get update && \
+	apt-get update && \
 	# Ensure that Git is installed prior to running npm install
 	apt-get install -y --no-install-recommends git && \
 	echo "INFO: npm install --production..." && \
