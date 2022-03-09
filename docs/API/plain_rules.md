@@ -117,7 +117,10 @@ You should take into consideration the following guidelines:
 -   Metadata is also available as explained in the [metadata and object values](#metadata-and-object-values) section.
 -   The variable `ruleName` in automatically added to the action, even if it is not present in the EPL text. The
     ruleName automatically added this way is retrieved as part of the EPL text when the rule is recovered using
-    `GET /rules` or `GET /rules/{name}`.
+    `GET /rules` or `GET /rules/{name}`. For time based rules if `rulename` was not provided in EPL text then will be
+    added automatically by using an unique format, which inludes service and subservice (i.e. provided name rule was
+    `myrule` in service `smartcity` and subservice `/gerdens` then ruleName for EPL text will be
+    `myrule@smartcity/gardens`)
 
 Some hightligths in the Esper 8.x version, that allow to write simpler and cleaner EPL statements:
 
@@ -389,8 +392,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   [Trust token flow example](./trust_token.md)
 -   authentication: optional, authentication (host, port, user and password) configuration values that will be used by
     updateAction rule (instead of default authentication defined by configuration) which will be used when a trust token
-    should be negotiated.
-    i.e.:  
+    should be negotiated. i.e.:
     ```
     "authentication": {
         "host": "ext-keystone",
@@ -398,7 +400,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
         "user": "cep",
         "password: "ceppassword"
      }
-     ```
+    ```
 -   service: optional, service that will be used by updateAction rule instead of current event service. In this case,
     externalCBUrl or configured Orion PEP URL will be used instead of Orion URL, and then no token for auth will be
     negotiated.
