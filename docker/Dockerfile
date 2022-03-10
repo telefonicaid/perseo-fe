@@ -21,7 +21,7 @@
 
 
 
-ARG NODE_VERSION=14-slim
+ARG NODE_VERSION=14
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=perseo-fe
 ARG DOWNLOAD=latest
@@ -98,7 +98,6 @@ WORKDIR /opt/perseo-fe
 
 # hadolint ignore=DL3008
 RUN \
-	apt-get update && \
 	# Ensure that Git is installed prior to running npm install
 	apt-get install -y --no-install-recommends git && \
 	echo "INFO: npm install --production..." && \
