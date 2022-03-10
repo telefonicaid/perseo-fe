@@ -7,4 +7,4 @@ Fix: set 'None' as default type of entity for updateAction (#611)
 Add: PERSEO_MONGO_AUTH_SOURCE variable (#607)
 Upgrade logops dep from 2.1.0 to 2.1.2 due to colors dependency corruption
 Add: Add graceful shutdown listening to SIGINT (#617)
-Upgrade NodeJS version from 12 to 14 in Dockerfile
+Upgrade NodeJS version from 12 to 14-slim in Dockerfile

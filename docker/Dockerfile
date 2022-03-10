@@ -21,7 +21,7 @@
 
 
 
-ARG NODE_VERSION=14
+ARG NODE_VERSION=14-slim
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=perseo-fe
 ARG DOWNLOAD=latest
@@ -68,8 +68,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL3008
 RUN \
+	apt-get update && \
 	# Ensure that unzip is installed prior to downloading
-	apt-get install -y --no-install-recommends unzip ca-certificates && \
+	apt-get install -y --no-install-recommends unzip ca-certificates curl && \
 	if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
 		RELEASE="${SOURCE_BRANCH}"; \
@@ -215,8 +216,9 @@ WORKDIR /opt/perseo-fe
 
 # hadolint ignore=DL3008
 RUN \
+	apt-get update && \
 	# Ensure that Curl is installed prior to running old entrypoints
-	apt-get install -y --no-install-recommends && \
+	apt-get install -y --no-install-recommends curl && \
 	rm -rf /var/lib/apt/lists/* 
 
 USER node
