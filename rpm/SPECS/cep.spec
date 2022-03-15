@@ -164,18 +164,18 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
-* Mon Mar 14 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.21.0
-- Fix: Ensure timed rules are provided to perseo-core with ruleName in EPL are in unique format (perseo-core#191) (needs perseo-core 1.9.0)
+* Tue Mar 15 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.21.0
 - Add: authentication as action parameters for updateAction (#638)
 - Add: support for insert into stream rules (in detail: <Expression Context 'insert into stream` select...> ) (#630)
 - Add: externalCBUrl as action parameters for updateAction (#625)
-- Fix: fill proper srv and subsrc in logs of noSignal (#624)
-- Update mongodb dep driver from 3.6.8 to 3.6.12
-- Fix: set 'None' as default type of entity for updateAction (#611)
 - Add: PERSEO_MONGO_AUTH_SOURCE variable (#607)
+- Add: Add graceful shutdown listening to SIGINT (#617)
+- Fix: ensure timed rules are provided to perseo-core with ruleName in EPL are in unique format (perseo-core#191) (needs perseo-core 1.9.0)
+- Fix: fill proper srv and subsrc in logs of noSignal (#624)
+- Fix: set 'None' as default type of entity for updateAction (#611)
+- Upgrade mongodb dep driver from 3.6.8 to 3.6.12
 - Upgrade logops dep from 2.1.0 to 2.1.2 due to colors dependency corruption
 - Upgrade nodemailer dep from 6.4.18 to 6.6.5
-- Add: Add graceful shutdown listening to SIGINT (#617)
 - Upgrade NodeJS version from 12 to 14 in Dockerfile
 
 * Fri Nov 12 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
