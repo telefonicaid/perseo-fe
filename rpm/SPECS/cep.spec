@@ -164,6 +164,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Wed Mar 16 2022 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.21.1
+- Fix: preselect in ruleWithContext (#630)
+
 * Tue Mar 15 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.21.0
 - Add: authentication as action parameters for updateAction (#638)
 - Add: support for insert into stream rules (in detail: <Expression Context 'insert into stream` select...> ) (#630)
