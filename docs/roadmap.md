@@ -24,7 +24,6 @@ Disclaimer:
 
 The following list of features are planned to be addressed in the short term, and incorporated in the next release:
 
--   Full support for pagination in APIs /rules and /vrules
 -   Swagger documentation
 -   Upgrade Esper to 8.8
 
@@ -50,6 +49,7 @@ wish to get involved in the implementation or influence the roadmap
 
 ## Done
 
+-   Full support for pagination in APIs /rules and /vrules #364
 -   "nosignal" actions supported in HA scenarios
 -   Add astronomic clock support to timed rules (included sunrise and sunset functions for EPL statements)
 -   Timezone support in EPL statements
