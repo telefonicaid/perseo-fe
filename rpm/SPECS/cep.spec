@@ -164,6 +164,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Wed Mar 30 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.21.2
+- Fix: avoid modify ruleName epl if already unique (#654)
+
 * Wed Mar 16 2022 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.21.1
 - Fix: preselect in ruleWithContext (#630)
 
