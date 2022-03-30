@@ -1,1 +1,1 @@
-- Fix: preselect in ruleWithContext (#630)
+- Fix: avoid modify ruleName epl if already unique (#654)
