@@ -1,2 +1,3 @@
+- fix: check data access in function cbDoReqUpdAxn (#659)
 - Fix: avoid modify ruleName epl if already unique (#654)
 - Fix: preselect in ruleWithContext (#630)
