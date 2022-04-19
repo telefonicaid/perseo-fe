@@ -105,7 +105,8 @@ function loadConfiguration() {
         'PERSEO_AUTHENTICATION_HOST',
         'PERSEO_AUTHENTICATION_PORT',
         'PERSEO_AUTHENTICATION_USER',
-        'PERSEO_AUTHENTICATION_PASSWORD'
+        'PERSEO_AUTHENTICATION_PASSWORD',
+        'PERSEO_AUTHENTICATION_SERVICE'
     ];
 
     const protectedVariables = [
@@ -227,6 +228,7 @@ function loadConfiguration() {
     config.authentication.port = process.env.PERSEO_AUTHENTICATION_PORT || config.authentication.port;
     config.authentication.user = process.env.PERSEO_AUTHENTICATION_USER || config.authentication.user;
     config.authentication.password = process.env.PERSEO_AUTHENTICATION_PASSWORD || config.authentication.password;
+    config.authentication.service = process.env.PERSEO_AUTHENTICATION_SERVICE || config.authentication.service;
 }
 
 loadConfiguration();
