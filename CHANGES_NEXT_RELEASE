@@ -1,3 +1,6 @@
 - Add: service to authentication action parameters (and associated env var PERSEO_AUTHENTICATION_SERVICE)
 - Fix: avoid modify ruleName epl if already unique (#654)
 - Fix: preselect in ruleWithContext (#630)
+- Fix: improve CB error management when response has no data (#659)
+
+
