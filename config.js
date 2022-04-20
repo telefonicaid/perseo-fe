@@ -164,7 +164,8 @@ config.authentication = {
     host: 'keystone',
     port: '5001',
     user: 'user',
-    password: 'password'
+    password: 'password',
+    service: 'admin_domain'
 };
 
 /**

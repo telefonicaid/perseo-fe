@@ -16,7 +16,7 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_ENDPOINT_PORT               | Port where the CEP will listen.                                                                                                                                                                         |
 | PERSEO_MONGO_ENDPOINT              | Endpoint (`host[:port]`) list for Mongo DB.                                                                                                                                                             |
 | PERSEO_MONGO_REPLICASET            | ReplicaSet name for Mongo DB.                                                                                                                                                                           |
-| PERSEO_MONGO_AUTH_SOURCE           | The database name associated with the user's credentials for Mongo DB. [More info here](https://docs.mongodb.com/manual/reference/connection-string/#mongodb-urioption-urioptionauthSource).                         |
+| PERSEO_MONGO_AUTH_SOURCE           | The database name associated with the user's credentials for Mongo DB. [More info here](https://docs.mongodb.com/manual/reference/connection-string/#mongodb-urioption-urioptionauthSource).            |
 | PERSEO_MONGO_USER                  | User for Mongo DB.                                                                                                                                                                                      |
 | PERSEO_MONGO_PASSWORD              | Password for Mongo DB.                                                                                                                                                                                  |
 | PERSEO_IS_MASTER                   | true if this one is the master or false it is the slave                                                                                                                                                 |
@@ -48,6 +48,7 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_AUTHENTICATION_PORT         | Port of the authentication endpoint                                                                                                                                                                     |
 | PERSEO_AUTHENTICATION_USER         | User to perform authentication                                                                                                                                                                          |
 | PERSEO_AUTHENTICATION_PASSWORD     | Password for the user to perform authentication                                                                                                                                                         |
+| PERSEO_AUTHENTICATION_SERVICE      | Keystone User Service to perform authentication                                                                                                                                                         |
 | PERSEO_CAST_TYPE                   | If true, enable attribute value casting based in NGSI-v2 attribute types if true. If false (default), the JSON native type for the attribute value is used.                                             |
 
 ### Basic Configuration
