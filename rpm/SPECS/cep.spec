@@ -164,6 +164,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Fri Apr 22 2022 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.22.0
+- Add: service to authentication action parameters (and associated env var PERSEO_AUTHENTICATION_SERVICE)
+- Fix: check properly 401 error response (i.e. token expired) from CB requests
+- Fix: improve CB error management when response has no data (#659)
+- Fix: avoid modify ruleName epl if already unique (#654)
+- Fix: preselect in ruleWithContext (#630)
+
 * Tue Mar 15 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.21.0
 - Add: authentication as action parameters for updateAction (#638)
 - Add: support for insert into stream rules (in detail: <Expression Context 'insert into stream` select...> ) (#630)
