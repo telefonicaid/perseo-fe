@@ -49,17 +49,18 @@ wish to get involved in the implementation or influence the roadmap
 
 ## Done
 
--   Full support for pagination in APIs /rules and /vrules #364
+-   Full support for pagination in APIs /rules and /vrules #364 ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
 -   "nosignal" actions supported in HA scenarios
--   Add astronomic clock support to timed rules (included sunrise and sunset functions for EPL statements)
--   Timezone support in EPL statements
--   Support of NGSI filter to support updating to groups of entities (commands)
--   Upgrade Esper library from 6.1.0 to 7.1.0   !Probablemente versión 8
--   Software quality improvement based on ISO25010 recommendations
--   Enhanced multi-tenancy support. Leverage different "Fiware-Service" and "Fiware-ServicePath" in rules
+
+-   Support of NGSI filter to support updating to groups of entities (commands) #335 ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
+-   Software quality improvement based on ISO25010 recommendations #428 (([1.12.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.12.0)))
+-   Enhanced multi-tenancy support. Leverage different "Fiware-Service" and "Fiware-ServicePath" in rules #349 ([1.13.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.13.0))
 -   Improve template processing, extending it to StructuredValue/JSON attributes.
--   Support for dealing with several Context Brokers from the same Perseo instance. To do so, update actions will
-    support to configure target context broker, if not provided such configuration, the default context broker will be
-    used.
--   Usage of EPL scripts beyond select statement
--   Task/set internal timer resolution #195
+-   Support for dealing with several Context Brokers from the same Perseo instance. Add: externalCBUrl as 
+    action parameters for updateAction #625 ([1.21.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.21.0))
+-   Usage of EPL scripts beyond select statement #630 ([1.21.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.21.0))
+
+-   Add astronomic clock support to timed rules (included sunrise and sunset functions for EPL statements) https://github.com/telefonicaid/perseo-core/issues/130 ([Core 1.4.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.4.0))
+-   Timezone support in EPL statements https://github.com/telefonicaid/perseo-core/pull/143 ([Core 1.5.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.5.0))
+-   Upgrade to use Esper 8.4 from Exper 7.X https://github.com/telefonicaid/perseo-core/issues/136 ([Core 1.8.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.8.0))
+-   Task/set internal timer resolution https://github.com/telefonicaid/perseo-core/pull/195 ([Core 1.9.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.9.0))
