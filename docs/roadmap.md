@@ -49,6 +49,8 @@ wish to get involved in the implementation or influence the roadmap
 
 ## Features already completed
 
+The following list contains all features that were in the roadmap and have already been implemented.
+
 -   Full support for pagination in APIs /rules and /vrules (<https://github.com/telefonicaid/perseo-fe/issues/364>)
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
 -   "nosignal" actions supported in HA scenarios
@@ -57,7 +59,7 @@ wish to get involved in the implementation or influence the roadmap
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
 -   Software quality improvement based on ISO25010 recommendations
     (<https://github.com/telefonicaid/perseo-fe/issues/428>)
-    (([1.12.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.12.0)))
+    ([1.12.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.12.0))
 -   Enhanced multi-tenancy support. Leverage different "Fiware-Service" and "Fiware-ServicePath" in rules
     (<https://github.com/telefonicaid/perseo-fe/issues/349>)
     ([1.13.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.13.0))
