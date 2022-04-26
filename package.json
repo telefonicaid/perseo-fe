@@ -16,7 +16,7 @@
   },
   "main": "bin/perseo",
   "engines": {
-    "node": ">=10.17.0"
+    "node": ">=12"
   },
   "scripts": {
     "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf coverage",
@@ -58,7 +58,7 @@
   },
   "keywords": [],
   "dependencies": {
-    "async": "2.6.2",
+    "async": "2.6.4",
     "body-parser": "~1.18.2",
     "express": "~4.16.4",
     "logops": "2.1.2",
