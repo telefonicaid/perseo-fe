@@ -80,6 +80,10 @@ var dateValue = '2018-06-03T09:31:26.296Z';
 var arrayType = 'json';
 var arrayValue = [1, 2, 3, 4];
 
+// Object
+var objectType = 'json';
+var objectValue = { color: 'red' };
+
 // Location
 var locType = 'geo:point';
 var lat = 40.418889;
@@ -185,6 +189,27 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey + '__type']).to.equal(arrayType);
                 expect(noticeResult[attrKey]).to.equal(arrayValue);
+                done();
+            });
+        });
+
+        it('should accept simple notice using Object', function(done) {
+            notices.__with__({
+                'uuid.v1': uuidMock,
+                'Date.now': dateNowMock
+            })(function() {
+                noticeExample.data[0][attrKey].type = objectType;
+                noticeExample.data[0][attrKey].value = objectValue;
+                var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
+                expect(noticeResult.noticeId).to.equal(mockedUid);
+                expect(noticeResult.noticeTS).to.equal(mockedDateMilis);
+                expect(noticeResult.id).to.equal(id);
+                expect(noticeResult.type).to.equal(type);
+                expect(noticeResult.subservice).to.equal(subservice);
+                expect(noticeResult.service).to.equal(service);
+                expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey + '__type']).to.equal(objectType);
+                expect(noticeResult[attrKey]).to.equal(objectValue);
                 done();
             });
         });
