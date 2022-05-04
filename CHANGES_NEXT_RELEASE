@@ -1,2 +1,3 @@
+- ADD: keep original array and object value in event sent to perseo-core (#662)
 - Upgrade async dep from 2.6.2 to 2.6.4 due to security vulnerability (CWE-1321)
 - Set Nodejs 12 as minimum version in packages.json (effectively removing Nodev10 from supported versions)

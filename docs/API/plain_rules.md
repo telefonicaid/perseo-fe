@@ -1371,10 +1371,10 @@ will send to core the "event"
     "subservice": "/",
     "service": "unknownt",
     "myJsonValue__color": "blue",
-    "myJsonValue": "{\"type\":\"myType1\",\"value\":{\"color\":\"blue\"}}",
+    "myJsonValue": {"type":"myType1","value":{"color":"blue"}},
     "myArrayValue__0": "green",
     "myArrayValue__1": "black",
-    "myArrayValue": "{ \"type\": \"myType2\", \"value\": [\"green\", \"blue\"] }",
+    "myArrayValue": { "type": "myType2", "value": ["green", "blue"] },
     "TimeInstant__type": "DateTime",
     "TimeInstant": "2021-10-19T10:15:37.050Z",
     "TimeInstant__ts": 1634638537050,
@@ -1399,7 +1399,7 @@ will send to core the "event"
     "location__lon": 53.120405283,
     "location__x": 642009.4673614734,
     "location__y": 5883931.8311913265,
-    "location": "{\"type\":\"Point\",\"coordinates\":[53.120405283,53.0859375]}"
+    "location": {"type":"Point","coordinates":[53.120405283,53.0859375]}
 }
 ```
 
@@ -1415,10 +1415,10 @@ Additionally all attributes are also included in non flatten format in the event
     "subservice": "/",
     "service": "unknownt",
     "myJsonValue__color": "blue",
-    "myJsonValue": "{\"type\":\"myType1\",\"value\":{\"color\":\"blue\"}}",
+    "myJsonValue": {"type":"myType1","value":{"color":"blue"}},
     "myArrayValue__0": "green",
     "myArrayValue__1": "black"
-    "myArrayValue": "{ \"type\": \"myType2\", \"value\": [\"green\", \"blue\"] }",
+    "myArrayValue": { "type": "myType2", "value": ["green", "blue"] },
     "location__type": "Point",
     "location__coordinates__0": 53.120405283,
     "location__coordinates__1": 53.0859375,
@@ -1426,7 +1426,7 @@ Additionally all attributes are also included in non flatten format in the event
     "location__lon": 53.120405283,
     "location__x": 642009.4673614734,
     "location__y": 5883931.8311913265,
-    "location":"{\"type\":\"Point\",\"coordinates\":[53.120405283,53.0859375]}"
+    "location":{"type":"Point","coordinates":[53.120405283,53.0859375]},
     "stripped": {
         "id": "John Doe",
         "type": "employee",
