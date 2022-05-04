@@ -226,6 +226,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.subservice).to.equal(subservice);
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey]).to.equal(locValue2);
                 expect(noticeResult[attrKey + '__type']).to.equal(locValue2.type);
                 expect(noticeResult[attrKey + '__lat']).to.equal(lat);
                 expect(noticeResult[attrKey + '__lon']).to.equal(long);
@@ -259,6 +260,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.subservice).to.equal(subservice);
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey]).to.equal(locValue3);
                 expect(noticeResult[attrKey + '__type']).to.equal(locValue3.type);
                 expect(noticeResult[attrKey + '__coordinates__0__0']).to.equal(p1);
                 expect(noticeResult[attrKey + '__coordinates__0__1']).to.equal(p2);
@@ -288,6 +290,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.subservice).to.equal(subservice);
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
+                expect(noticeResult[attrKey]).to.equal(locValue4);
                 expect(noticeResult[attrKey + '__type']).to.equal(locValue4.type);
                 expect(noticeResult[attrKey + '__coordinates__0__0__0']).to.equal(q1);
                 expect(noticeResult[attrKey + '__coordinates__0__0__1']).to.equal(q2);
