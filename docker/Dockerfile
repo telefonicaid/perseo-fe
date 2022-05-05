@@ -66,9 +66,11 @@ ENV DOWNLOAD=${DOWNLOAD}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# hadolint ignore=DL3008
+# hadolint ignore=DL3008,DL3005
 RUN \
 	apt-get update && \
+	# Install security updates
+	apt-get upgrade -y && \
 	# Ensure that unzip is installed prior to downloading
 	apt-get install -y --no-install-recommends unzip ca-certificates curl && \
 	if [ "${DOWNLOAD}" = "latest" ] ; \
