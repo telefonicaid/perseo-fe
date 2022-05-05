@@ -66,7 +66,7 @@ ENV DOWNLOAD=${DOWNLOAD}
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# hadolint ignore=DL3008
+# hadolint ignore=DL3008,DL3005
 RUN \
 	apt-get update && \
 	# Install security updates
