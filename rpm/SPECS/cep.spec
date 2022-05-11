@@ -164,6 +164,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Wed May 11 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.23.0
+- Add: keep original array and object value in event sent to perseo-core (#662)
+- Set Nodejs 12 as minimum version in packages.json (effectively removing Nodev10 from supported versions)    
+- Fix: Dockerfile to include initial packages upgrade
+- Upgrade async dep from 2.6.2 to 2.6.4 due to security vulnerability (CWE-1321)
+
 * Fri Apr 22 2022 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.22.0
 - Add: service to authentication action parameters (and associated env var PERSEO_AUTHENTICATION_SERVICE)
 - Fix: check properly 401 error response (i.e. token expired) from CB requests
