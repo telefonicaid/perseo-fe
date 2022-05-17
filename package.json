@@ -67,7 +67,7 @@
     "nodemailer": "6.6.5",
     "nodemailer-smtp-transport": "~2.7.2",
     "request": "2.88.2",
-    "shortid": "~2.2.15",
+    "nanoid": "3.3.4",
     "smpp": "0.3.1",
     "swagger-jsdoc": "~3.4.0",
     "swagger-ui-express": "~4.1.1",
