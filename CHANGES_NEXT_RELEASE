@@ -1,1 +1,2 @@
 - Upgrade express dep from 4.16.4 to 4.18.1
+- Upgrade uuid dep from ~1.4.2 to 3.4.0
