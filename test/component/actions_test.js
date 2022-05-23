@@ -358,6 +358,7 @@ describe('Actions', function() {
         it('should not execute an action when has been triggered with the same correlator', function(done) {
             var rule = utilsT.loadExample('./test/data/good_vrs/time_card.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_sms.json');
+            utilsT.getConfig().maxRulesByCorr = 1;
             action.ev.id = Date.now(); // generate unique id for event source
 
             function postAction(action, callback) {
