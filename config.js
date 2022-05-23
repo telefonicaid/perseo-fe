@@ -227,4 +227,9 @@ config.restBase = null;
  */
 config.castTypes = false;
 
+/**
+ * Maximun number of rules with the same correlator until refuse execute a rule
+ */
+config.maxRulesByCorr = 20;
+
 module.exports = config;
