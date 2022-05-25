@@ -228,7 +228,7 @@ config.restBase = null;
 config.castTypes = false;
 
 /**
- * Maximun number of rules with the same correlator until refuse execute a rule
+ * Maximun number of rules triggered by the some notification (correlator) until refuse execute a rule
  */
 config.maxRulesByCorr = 20;
 
