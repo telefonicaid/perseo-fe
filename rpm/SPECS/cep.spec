@@ -164,7 +164,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
-* Thu May 26 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.23.0
+* Thu May 26 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.24.0
 - Fix: changed detection of rule loop by checking max number of rule executions triggered by the same notification (with the same correlator) (new env var PERSEO_MAX_RULES_BY_CORR) (#678)
 - Fix: replace deprecated dep shortid by nanoid
 - Upgrade ngsijs dep from ~1.3.0 to 1.4.1
