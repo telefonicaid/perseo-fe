@@ -164,6 +164,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Thu May 26 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.23.0
+- Fix: changed detection of rule loop by checking max number of rule executions triggered by the same notification (with the same correlator) (new env var PERSEO_MAX_RULES_BY_CORR) (#678)
+- Fix: replace deprecated dep shortid by nanoid
+- Upgrade ngsijs dep from ~1.3.0 to 1.4.1
+- Upgrade express dep from ~4.16.4 to 4.18.1
+- Upgrade uuid dep from ~1.4.2 to 3.4.0
+
 * Wed May 11 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.23.0
 - Add: keep original array and object value in event sent to perseo-core (#662)
 - Set Nodejs 12 as minimum version in packages.json (effectively removing Nodev10 from supported versions)    
