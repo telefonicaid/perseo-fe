@@ -254,8 +254,8 @@ infinite loop of triggers/updates.
 In a best-effort to avoid this situation as much as possible, the feature of propagation of the header field
 `Fiware-correlator` is used. This header field is taken from the incoming request (or created if not present) and sent
 to every external system. The Context Broker follows the same tactic. In a loop, the same correlator will be sent
-between perseo and orion, like a ping-pong game. So, if perseo-core sends an action to perseo-fe and that action (for
-the same rule) has been executed with that correlator already, it declines executing it. It could be part of an infinite
+between perseo and orion, like a ping-pong game. So, if perseo-core sends an action to perseo-fe and the number of rules 
+executed previously with that same correlator exceds then it declines execuite it. It could be part of an infinite
 loop. The fact is logged and the action is ignored.
 
 ## Data flow
