@@ -51,11 +51,14 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_AUTHENTICATION_SERVICE      | Keystone User Service to perform authentication                                                                                                                                                         |
 | PERSEO_CAST_TYPE                   | If true, enable attribute value casting based in NGSI-v2 attribute types if true. If false (default), the JSON native type for the attribute value is used.                                             |
 
+| PERSEO_MAX_RULES_BY_CORR | Maximum number of rule executions triggered by the same notification (with the same correlator) until refuse execute a rule. Default is 20. See [loop detection tips](https://github.com/telefonicaid/perseo-fe/blob/master/docs/architecture/architecture.md#loop-detection)
+|
+
 ### Basic Configuration
 
 In order to have perseo running, there are several basic pieces of information to fill:
 
--   `config.logLevel`: level for log messages (`FATAL`, `ERROR`, `INFO` or `DEBUG`)
+-   `config.logLevel`: level for log messages (`FATAL`, `ERROR`, `WARN`, `INFO` or `DEBUG`)
 -   `config.perseoCore.rulesURL`: URL for management of EPL rules at core.
 -   `config.perseoCore.noticesURL`: URL for processing events at core rule engine.
 -   `config.perseoCore.interval`: interval for refreshing rules at core rule engine (milliseconds).
@@ -87,6 +90,7 @@ In order to have perseo running, there are several basic pieces of information t
     [database aspects](admin.md#database-aspects) documentation for mode detail).
 -   `config.checkDB.bufferMaxEntries`: Number of operations buffered up before giving up on getting a working connection
     (see [database aspects](admin.md#database-aspects) documentation for mode detail).
+-   `config.maxRulesByCorr`: Maximum number of rule executions triggered by the same notification (with the same correlator) until refuse execute a rule. Defualt is 20
 
 Options for HA:
 

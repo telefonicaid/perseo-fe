@@ -106,7 +106,8 @@ function loadConfiguration() {
         'PERSEO_AUTHENTICATION_PORT',
         'PERSEO_AUTHENTICATION_USER',
         'PERSEO_AUTHENTICATION_PASSWORD',
-        'PERSEO_AUTHENTICATION_SERVICE'
+        'PERSEO_AUTHENTICATION_SERVICE',
+        'PERSEO_MAX_RULES_BY_CORR'
     ];
 
     const protectedVariables = [
@@ -229,6 +230,10 @@ function loadConfiguration() {
     config.authentication.user = process.env.PERSEO_AUTHENTICATION_USER || config.authentication.user;
     config.authentication.password = process.env.PERSEO_AUTHENTICATION_PASSWORD || config.authentication.password;
     config.authentication.service = process.env.PERSEO_AUTHENTICATION_SERVICE || config.authentication.service;
+
+    if (process.env.PERSEO_MAX_RULES_BY_CORR) {
+        config.maxRulesByCorr = process.env.PERSEO_MAX_RULES_BY_CORR;
+    }
 }
 
 loadConfiguration();
