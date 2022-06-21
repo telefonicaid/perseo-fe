@@ -183,7 +183,7 @@ checkInterval could impact on performance.
 The following virtual attributes are available to be used in non signal actions:
 -   **service**: service of rule
 -   **subservice**: subservice of rule
--   **ruleName**: name or rule
+-   **ruleName**: name of the rule
 -   **reportInterval**: time to see entity
 -   **id**: entity id,
 -   **type**: entity type,
