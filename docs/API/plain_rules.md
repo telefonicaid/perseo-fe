@@ -185,7 +185,7 @@ The following virtual attributes are available to be used in non signal actions:
 -   **subservice**: subservice of rule
 -   **ruleName**: name or rule
 -   **reportInterval**: time to see entity
--   **id**: emtity id,
+-   **id**: entity id,
 -   **type**: entity type,
 -   **internalCurrentTime**: current time
 -   **lastTime**: lastTime rule was executed
