@@ -184,7 +184,7 @@ The following virtual attributes are available to be used in non signal template
 -   **service**: service of rule
 -   **subservice**: subservice of rule
 -   **ruleName**: name of the rule
--   **reportInterval**: time to report entity
+-   **reportInterval**: time to see an entity as silent
 -   **id**: entity id,
 -   **type**: entity type,
 -   **internalCurrentTime**: current time
