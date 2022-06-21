@@ -38,7 +38,7 @@ xdescribe('Db', function() {
             utilsT.getConfig().mongo.connectTimeoutMS = 200;
         });
         after(function() {
-            utilsT.getConfig().mongo.port = mongourl;
+            utilsT.getConfig().mongo.url = mongourl;
             utilsT.getConfig().mongo.connectTimeoutMS = connectTimeoutMS;
         });
         it('should return an error when there is no database', function(done) {
