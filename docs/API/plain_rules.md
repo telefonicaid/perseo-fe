@@ -180,15 +180,16 @@ checkInterval could impact on performance.
 
 ## Non signal actions
 
-The following virtual attributes are available to be used in non signal actions:
+The following virtual attributes are available to be used in non signal template actions:
 -   **service**: service of rule
 -   **subservice**: subservice of rule
 -   **ruleName**: name of the rule
--   **reportInterval**: time to see entity
+-   **reportInterval**: time to report entity
 -   **id**: entity id,
 -   **type**: entity type,
 -   **internalCurrentTime**: current time
 -   **lastTime**: lastTime rule was executed
+as well as all entity attributes
 
 ## Actions
 
