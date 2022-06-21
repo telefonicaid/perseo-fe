@@ -1,1 +1,2 @@
+- Fix typo in non signal event internalCurentTime -> internalCurrentTime
 - Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
