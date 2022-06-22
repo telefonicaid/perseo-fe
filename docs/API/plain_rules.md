@@ -185,8 +185,8 @@ The following virtual attributes are available to be used in non signal template
 -   **subservice**: subservice of rule
 -   **ruleName**: name of the rule
 -   **reportInterval**: time to see an entity as silent (in other words, how much time has to pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered)
--   **id**: entity id,
--   **type**: entity type,
+-   **id**: entity id
+-   **type**: entity type
 -   **internalCurrentTime**: current time
 -   **lastTime**: lastTime rule was executed as well as all entity attributes
 
