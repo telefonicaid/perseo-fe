@@ -171,7 +171,7 @@ fields:
 -   **checkInterval**: _mandatory_, time in minutes for checking the attribute. Min value is 0.5 and max is 35791, other
     values are truncated to them (a warning log message is generated if such truncation occurs)
 -   **attribute**: _mandatory_, attribute for watch
--   **reportInterval**: _mandatory_, time in seconds to see an entity as silent
+-   **reportInterval**: _mandatory_, time in seconds to see an entity as silent (in other words, how much time has to pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered)
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
 -   type: _optional_, type of entities to watch
 
