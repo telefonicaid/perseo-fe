@@ -188,8 +188,7 @@ The following virtual attributes are available to be used in non signal template
 -   **id**: entity id,
 -   **type**: entity type,
 -   **internalCurrentTime**: current time
--   **lastTime**: lastTime rule was executed
-as well as all entity attributes
+-   **lastTime**: lastTime rule was executed as well as all entity attributes
 
 ## Actions
 
