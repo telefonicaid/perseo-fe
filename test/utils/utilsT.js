@@ -160,7 +160,7 @@ function dropEntities(callback) {
     MongoClient.connect(
         config.orionDb.url,
         function(err, client) {
-            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_TENANT);
+            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE);
             if (err) {
                 return callback(err);
             }
