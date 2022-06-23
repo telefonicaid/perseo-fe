@@ -1,3 +1,4 @@
+- Add: full detail about batch update error or success in logs
 - Fix: expanding an object variable in action of rule (#692)
 - Fix: for EPL with context + insert + select rule (without expression) (#652)
 - Fix: format of internalCurrentTime fixed to ISO 8601
