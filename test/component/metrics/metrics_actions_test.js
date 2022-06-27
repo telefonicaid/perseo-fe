@@ -72,7 +72,6 @@ describe('Metrics', function() {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_sms.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_sms.json');
             utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
-            utilsT.getConfig().logLevel = 'DEBUG';
             metrics.GetDecorated(true); // reset metrics
             async.series(
                 [
