@@ -51,30 +51,31 @@ wish to get involved in the implementation or influence the roadmap
 
 The following list contains all features that were in the roadmap and have already been implemented.
 
+-   Support for dealing with several Context Brokers from the same Perseo instance. Add: externalCBUrl as action
+    parameters for updateAction (<https://github.com/telefonicaid/perseo-fe/issues/625>)
+    ([1.21.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.21.0))
+-   Usage of EPL scripts beyond select statement (<https://github.com/telefonicaid/perseo-fe/issues/630>)
+    ([1.21.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.21.0))
+-   Enhanced multi-tenancy support. Leverage different "Fiware-Service" and "Fiware-ServicePath" in rules
+    (<https://github.com/telefonicaid/perseo-fe/issues/349>)
+    ([1.13.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.13.0))
+-   Software quality improvement based on ISO25010 recommendations
+    (<https://github.com/telefonicaid/perseo-fe/issues/428>)
+    ([1.12.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.12.0))
 -   Full support for pagination in APIs /rules and /vrules (<https://github.com/telefonicaid/perseo-fe/issues/364>)
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
 -   "nosignal" actions supported in HA scenarios
 -   Support of NGSI filter to support updating to groups of entities (commands)
     (<https://github.com/telefonicaid/perseo-fe/issues/335>)
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
--   Software quality improvement based on ISO25010 recommendations
-    (<https://github.com/telefonicaid/perseo-fe/issues/428>)
-    ([1.12.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.12.0))
--   Enhanced multi-tenancy support. Leverage different "Fiware-Service" and "Fiware-ServicePath" in rules
-    (<https://github.com/telefonicaid/perseo-fe/issues/349>)
-    ([1.13.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.13.0))
 -   Improve template processing, extending it to StructuredValue/JSON attributes.
--   Support for dealing with several Context Brokers from the same Perseo instance. Add: externalCBUrl as action
-    parameters for updateAction (<https://github.com/telefonicaid/perseo-fe/issues/625>)
-    ([1.21.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.21.0))
--   Usage of EPL scripts beyond select statement (<https://github.com/telefonicaid/perseo-fe/issues/630>)
-    ([1.21.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.21.0))
+-   Task/set internal timer resolution (<https://github.com/telefonicaid/perseo-core/pull/195>)
+    ([Core 1.9.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.9.0))
+-   Upgrade to use Esper 8.4 from Exper 7.X (<https://github.com/telefonicaid/perseo-core/issues/136>)
+    ([Core 1.8.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.8.0))
+-   Timezone support in EPL statements (<https://github.com/telefonicaid/perseo-core/pull/143>)
+    ([Core 1.5.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.5.0))
 -   Add astronomic clock support to timed rules (included sunrise and sunset functions for EPL statements)
     (<https://github.com/telefonicaid/perseo-core/issues/130>)
     ([Core 1.4.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.4.0))
--   Timezone support in EPL statements (<https://github.com/telefonicaid/perseo-core/pull/143>)
-    ([Core 1.5.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.5.0))
--   Upgrade to use Esper 8.4 from Exper 7.X (<https://github.com/telefonicaid/perseo-core/issues/136>)
-    ([Core 1.8.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.8.0))
--   Task/set internal timer resolution (<https://github.com/telefonicaid/perseo-core/pull/195>)
-    ([Core 1.9.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.9.0))
+
