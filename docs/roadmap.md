@@ -72,7 +72,6 @@ The following list contains all features that were in the roadmap and have alrea
 -    Explicit casting in EPL rules is no longer needed (full support of NGSI-v2 based typing)
     (<https://github.com/telefonicaid/perseo-fe/issues/376>)
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
--   Improve template processing, extending it to StructuredValue/JSON attributes.
 -   Task/set internal timer resolution (<https://github.com/telefonicaid/perseo-core/pull/195>)
     ([Core 1.9.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.9.0))
 -   Upgrade to use Esper 8.4 from Exper 7.X (<https://github.com/telefonicaid/perseo-core/issues/136>)
