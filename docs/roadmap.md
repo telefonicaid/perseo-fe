@@ -24,7 +24,6 @@ Disclaimer:
 
 The following list of features are planned to be addressed in the short term, and incorporated in the next release:
 
--   Swagger documentation
 -   Upgrade Esper to 8.8
 
 ## Medium term
