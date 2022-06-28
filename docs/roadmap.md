@@ -64,11 +64,11 @@ The following list contains all features that were in the roadmap and have alrea
     ([1.12.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.12.0))
 -   Full support for pagination in APIs /rules and /vrules (<https://github.com/telefonicaid/perseo-fe/issues/364>)
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
--   "nosignal" actions supported in HA scenarios
 -   Support of NGSI filter to support updating to groups of entities (commands)
     (<https://github.com/telefonicaid/perseo-fe/issues/335>)
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
 -   Improve template processing, extending it to StructuredValue/JSON attributes.
+-   "nosignal" actions supported in HA scenarios
 -   Task/set internal timer resolution (<https://github.com/telefonicaid/perseo-core/pull/195>)
     ([Core 1.9.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.9.0))
 -   Upgrade to use Esper 8.4 from Exper 7.X (<https://github.com/telefonicaid/perseo-core/issues/136>)
