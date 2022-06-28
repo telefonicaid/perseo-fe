@@ -69,7 +69,7 @@ The following list contains all features that were in the roadmap and have alrea
 -   Support of NGSI filter to support updating to groups of entities (commands)
     (<https://github.com/telefonicaid/perseo-fe/issues/335>)
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
--    Explicit casting in EPL rules is no longer needed (full support of NGSI-v2 based typing)
+-   Explicit casting in EPL rules is no longer needed (full support of NGSI-v2 based typing)
     (<https://github.com/telefonicaid/perseo-fe/issues/376>)
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
 -   Task/set internal timer resolution (<https://github.com/telefonicaid/perseo-core/pull/195>)
