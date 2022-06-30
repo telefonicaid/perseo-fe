@@ -1,3 +1,4 @@
+- Fix: check rule.name match with EPL rule.text ruleName when upate a text rule
 - Fix: ensure datetime attrs from entity for nosignal events are in ISO format instead of epoc
 - Add: full detail about batch update error or success in logs
 - Fix: expanding an object variable in action of rule (#692)
