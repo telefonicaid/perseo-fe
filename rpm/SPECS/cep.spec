@@ -164,6 +164,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Fri Jul 1 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.25.0
+- Add: full detail about batch update error or success in logs
+- Fix: check rule.name match with EPL rule.text ruleName when update a text rule (#699)
+- Fix: ensure datetime attrs from entity for nosignal events are in ISO format instead of epoc
+- Fix: expanding an object variable in action of rule (#692)
+- Fix: for EPL with context + insert + select rule (without expression) (#652)
+- Fix: format of internalCurrentTime fixed to ISO 8601
+- Fix: typo in non signal event internalCurentTime -> internalCurrentTime
+- Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
+
 * Thu May 26 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.24.0
 - Fix: changed detection of rule loop by checking max number of rule executions triggered by the same notification (with the same correlator) (new env var PERSEO_MAX_RULES_BY_CORR) (#678)
 - Fix: replace deprecated dep shortid by nanoid
