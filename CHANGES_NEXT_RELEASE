@@ -1,3 +1,1 @@
-- Fix: typo in non signal event internalCurentTime -> internalCurrentTime
 - Upgrade mongodb dep from 3.6.12 to 4.7.0
-- Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
