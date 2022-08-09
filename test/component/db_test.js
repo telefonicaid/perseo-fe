@@ -27,7 +27,7 @@ var should = require('should'),
     utilsT = require('../utils/utilsT'),
     db = require('../../lib/db');
 
-xdescribe('Db', function() {
+describe('Db', function() {
     describe('#GetDB()', function() {
         var mongourl = '';
         var connectTimeoutMS;
