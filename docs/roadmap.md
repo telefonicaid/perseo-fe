@@ -61,8 +61,7 @@ The following list contains all features that were in the roadmap and have alrea
 -   Software quality improvement based on ISO25010 recommendations
     (<https://github.com/telefonicaid/perseo-fe/issues/428>)
     ([1.12.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.12.0))
--   Nosignal actions supported in HA scenarios
-    (<https://github.com/telefonicaid/perseo-fe/issues/624>)
+-   Nosignal actions supported in HA scenarios (<https://github.com/telefonicaid/perseo-fe/issues/624>)
     ([1.12.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.12.0))
 -   Full support for pagination in APIs /rules and /vrules (<https://github.com/telefonicaid/perseo-fe/issues/364>)
     ([1.10.0](https://github.com/telefonicaid/perseo-fe/releases/tag/1.10.0))
@@ -81,4 +80,3 @@ The following list contains all features that were in the roadmap and have alrea
 -   Add astronomic clock support to timed rules (included sunrise and sunset functions for EPL statements)
     (<https://github.com/telefonicaid/perseo-core/issues/130>)
     ([Core 1.4.0](https://github.com/telefonicaid/perseo-core/releases/tag/1.4.0))
-

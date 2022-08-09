@@ -171,7 +171,8 @@ fields:
 -   **checkInterval**: _mandatory_, time in minutes for checking the attribute. Min value is 0.5 and max is 35791, other
     values are truncated to them (a warning log message is generated if such truncation occurs)
 -   **attribute**: _mandatory_, attribute for watch
--   **reportInterval**: _mandatory_, time in seconds to see an entity as silent (in other words, how much time has to pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered)
+-   **reportInterval**: _mandatory_, time in seconds to see an entity as silent (in other words, how much time has to
+    pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered)
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
 -   type: _optional_, type of entities to watch
 
@@ -181,10 +182,12 @@ checkInterval could impact on performance.
 ## Non signal actions
 
 The following virtual attributes are available to be used in non signal template actions:
+
 -   **service**: service of rule
 -   **subservice**: subservice of rule
 -   **ruleName**: name of the rule
--   **reportInterval**: time to see an entity as silent (in other words, how much time has to pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered)
+-   **reportInterval**: time to see an entity as silent (in other words, how much time has to pass since last entity
+    update to consider that entity is in "no signal" situation so the rule is triggered)
 -   **id**: entity id
 -   **type**: entity type
 -   **internalCurrentTime**: current time
@@ -1384,7 +1387,7 @@ will send to core the "event"
     "subservice": "/",
     "service": "unknownt",
     "myJsonValue__color": "blue",
-    "myJsonValue": {"type":"myType1","value":{"color":"blue"}},
+    "myJsonValue": { "type": "myType1", "value": { "color": "blue" } },
     "myArrayValue__0": "green",
     "myArrayValue__1": "black",
     "myArrayValue": { "type": "myType2", "value": ["green", "blue"] },
@@ -1412,7 +1415,7 @@ will send to core the "event"
     "location__lon": 53.120405283,
     "location__x": 642009.4673614734,
     "location__y": 5883931.8311913265,
-    "location": {"type":"Point","coordinates":[53.120405283,53.0859375]}
+    "location": { "type": "Point", "coordinates": [53.120405283, 53.0859375] }
 }
 ```
 
