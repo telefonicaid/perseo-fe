@@ -1,1 +1,1 @@
-- Fix: actions of timed based rule with a filter are not tried to execute after a fail
+- Fix: update actions with filter of timed based rules are not tried to execute after first failure updating entities
