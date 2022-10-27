@@ -164,6 +164,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Thu Oct 27 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.26.0
+- Fix: update actions with filter of timed based rules are not tried to execute after first failure updating entities (#708)
+
 * Fri Jul 1 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.25.0
 - Add: full detail about batch update error or success in logs
 - Fix: check rule.name match with EPL rule.text ruleName when update a text rule (#699)
