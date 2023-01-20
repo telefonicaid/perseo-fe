@@ -569,7 +569,7 @@ describe('Notices NGSIv2', function() {
 
         it('should fail parsing invalid location attribute', function(done) {
             var invalidLoc = '47.418889, -3.691944, 12.123'; // invalid location for attribute
-            var locError = new notices.errors.InvalidLocation(invalidLoc);
+            // var locError = new notices.errors.InvalidLocation(invalidLoc);
             // var parseLocationMock = sinon.spy(function() {
             //     return locError;
             // });
@@ -599,7 +599,7 @@ describe('Notices NGSIv2', function() {
         it('should fail parsing invalid location metadata attribute', function(done) {
             var at = 'theMetaAttribute';
             var invalidLoc = '47.418889, -3.691944, 12.123'; // invalid location for attribute
-            var locError = new notices.errors.InvalidLocation(invalidLoc);
+            // var locError = new notices.errors.InvalidLocation(invalidLoc);
             // var parseLocationMock = sinon.spy(function() {
             //     return locError;
             // });
