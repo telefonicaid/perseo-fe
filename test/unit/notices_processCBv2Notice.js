@@ -88,8 +88,8 @@ var objectValue = { color: 'red' };
 var locType = 'geo:point';
 var lat = 40.418889;
 var long = -3.691944;
-var x = 441298.13043762115;
-var y = 4474481.316254241;
+// var x = 441298.13043762115;
+// var y = 4474481.316254241;
 var locValue = lat + ', ' + long;
 
 var locType2 = 'geo:json';
@@ -510,7 +510,7 @@ describe('Notices NGSIv2', function() {
         it('should fail parsing invalid DateTime metadata attribute', function(done) {
             var at = 'theMetaAttribute';
             var invalidMetaDate = '2018-96-03T09:31:26.296Z'; // invalid date for metadata
-            var errorDateNotice = new notices.errors.InvalidDateTime(invalidMetaDate);
+            //var errorDateNotice = new notices.errors.InvalidDateTime(invalidMetaDate);
             // var parseDateMock = sinon.spy(function() {
             //     return errorDateNotice;
             // });
@@ -540,7 +540,7 @@ describe('Notices NGSIv2', function() {
 
         it('should fail parsing invalid DateTime attribute', function(done) {
             var invalidAttDate = '2018-08-32T09:31:26.296Z'; // invalid date for attribute
-            var errorDateNotice = new notices.errors.InvalidDateTime(invalidAttDate);
+            //var errorDateNotice = new notices.errors.InvalidDateTime(invalidAttDate);
             // var parseDateMock = sinon.spy(function() {
             //     return errorDateNotice;
             // });

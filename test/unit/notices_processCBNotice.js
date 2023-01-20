@@ -86,8 +86,8 @@ var dateValue = '2018-06-03T09:31:26.296Z';
 var locType = 'geo:point';
 var lat = 40.418889;
 var long = -3.691944;
-var x = 441298.13043762115;
-var y = 4474481.316254241;
+// var x = 441298.13043762115;
+// var y = 4474481.316254241;
 var locValue = lat + ', ' + long;
 
 describe('Notices NGSIv1', function() {
@@ -343,7 +343,7 @@ describe('Notices NGSIv1', function() {
         });
 
         it('should catch correctly errors', function(done) {
-            var error = new Error('fake error');
+            // var error = new Error('fake error');
             //var parseLocationMock = sinon.stub().throws(error);
             var logErrorMock = sinon.spy(function(notice) {});
             notices.__with__({
