@@ -1,1 +1,1 @@
-
+- Remove unnecessary event data transformations (stripped, location parse, datetime parse) (#706,#712)
