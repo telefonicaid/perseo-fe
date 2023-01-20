@@ -86,8 +86,6 @@ var dateValue = '2018-06-03T09:31:26.296Z';
 var locType = 'geo:point';
 var lat = 40.418889;
 var long = -3.691944;
-// var x = 441298.13043762115;
-// var y = 4474481.316254241;
 var locValue = lat + ', ' + long;
 
 describe('Notices NGSIv1', function() {
@@ -117,18 +115,9 @@ describe('Notices NGSIv1', function() {
         });
 
         it('should accept simple notice using geo:point type', function(done) {
-            // var parseLocationMock = sinon.spy(function() {
-            //     return {
-            //         lat: lat,
-            //         lon: long,
-            //         x: x,
-            //         y: y
-            //     };
-            // });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseLocation: parseLocationMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
@@ -142,12 +131,6 @@ describe('Notices NGSIv1', function() {
                 expect(noticeResult.isPattern).to.equal('false');
                 expect(noticeResult[attrKey + '__type']).to.equal(locType);
                 expect(noticeResult[attrKey]).to.equal(locValue);
-                // expect(noticeResult[attrKey + '__lat']).to.equal(lat);
-                // expect(noticeResult[attrKey + '__lon']).to.equal(long);
-                // expect(noticeResult[attrKey + '__x']).to.equal(x);
-                // expect(noticeResult[attrKey + '__y']).to.equal(y);
-                // parseLocationMock.should.have.been.calledWith(locValue);
-                // parseLocationMock.should.be.calledOnce;
                 done();
             });
         });
@@ -298,18 +281,9 @@ describe('Notices NGSIv1', function() {
         it('should accept notices and parse value as location when exist an attribute named location in metadata', function(done) {
             // this feature does not seem to make sense
             var at = 'location';
-            // var parseLocationMock = sinon.spy(function() {
-            //     return {
-            //         lat: lat,
-            //         lon: long,
-            //         x: x,
-            //         y: y
-            //     };
-            // });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseLocation: parseLocationMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
                     {
@@ -330,65 +304,8 @@ describe('Notices NGSIv1', function() {
                 expect(noticeResult[attrKey]).to.equal(attrValue);
                 expect(noticeResult[attrKey + '__metadata__' + at]).to.equal(locValue);
                 expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locType);
-                // expect(noticeResult[attrKey + '__lat']).to.equal(lat);
-                // expect(noticeResult[attrKey + '__lon']).to.equal(long);
-                // expect(noticeResult[attrKey + '__x']).to.equal(x);
-                // expect(noticeResult[attrKey + '__y']).to.equal(y);
-
-                // Why call parselocation with the attribute value and not with location metadata attribute?
-                // parseLocationMock.should.have.been.calledWith(attrValue);
-                // parseLocationMock.should.be.calledOnce;
                 done();
             });
         });
-
-        // it('should catch correctly errors', function(done) {
-        //     // var error = new Error('fake error');
-        //     //var parseLocationMock = sinon.stub().throws(error);
-        //     var logErrorMock = sinon.spy(function(notice) {});
-        //     notices.__with__({
-        //         'uuid.v1': uuidMock,
-        //         'Date.now': dateNowMock,
-        //         // parseLocation: parseLocationMock,
-        //         'myutils.logErrorIf': logErrorMock
-        //     })(function() {
-        //         noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
-        //         noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
-        //         var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-        //         noticeResult.should.be.instanceof(notices.errors.InvalidNotice);
-        //         expect(noticeResult.name).to.equal('INVALID_NOTICE');
-        //         expect(noticeResult.message).to.equal('invalid notice format ' + JSON.stringify(noticeExample));
-        //         expect(noticeResult.httpCode).to.equal(400);
-        //         // expect(parseLocationMock).to.throw(Error);
-        //         // expect(parseLocationMock).to.have.been.calledWith(locValue);
-        //         // Checking logError
-        //         logErrorMock.should.have.been.calledWith(noticeResult);
-        //         logErrorMock.should.be.calledOnce;
-        //         done();
-        //     });
-        // });
-
-        // it('should fail parsing invalid location attribute', function(done) {
-        //     var error = new notices.errors.InvalidLocation('fake error');
-        //     // var parseLocationMock = sinon.spy(function() {
-        //     //     return error;
-        //     // });
-        //     notices.__with__({
-        //         'uuid.v1': uuidMock,
-        //         'Date.now': dateNowMock
-        //         //parseLocation: parseLocationMock
-        //     })(function() {
-        //         noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
-        //         noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
-        //         var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-        //         noticeResult.should.be.instanceof(notices.errors.InvalidLocation);
-        //         expect(noticeResult.name).to.equal('INVALID_LOCATION');
-        //         expect(noticeResult.message).to.equal(error.message);
-        //         expect(noticeResult.httpCode).to.equal(400);
-        //         // parseLocationMock.should.have.been.calledWith(locValue);
-        //         // parseLocationMock.should.be.calledOnce;
-        //         done();
-        //     });
-        // });
     });
 });

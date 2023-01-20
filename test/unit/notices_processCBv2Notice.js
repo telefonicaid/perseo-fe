@@ -88,8 +88,6 @@ var objectValue = { color: 'red' };
 var locType = 'geo:point';
 var lat = 40.418889;
 var long = -3.691944;
-// var x = 441298.13043762115;
-// var y = 4474481.316254241;
 var locValue = lat + ', ' + long;
 
 var locType2 = 'geo:json';
@@ -140,17 +138,9 @@ describe('Notices NGSIv2', function() {
         });
 
         it('should accept simple notice using DateTime', function(done) {
-            // var parseDateMock = sinon.spy(function() {
-            //     return {
-            //         a: 123,
-            //         b: 456
-            //     };
-            // });
-
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseDate: parseDateMock
             })(function() {
                 noticeExample.data[0][attrKey].type = dateType;
                 noticeExample.data[0][attrKey].value = dateValue;
@@ -164,10 +154,6 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey + '__type']).to.equal(dateType);
                 expect(noticeResult[attrKey]).to.equal(dateValue);
-                // expect(noticeResult[attrKey + '__a']).to.equal(123);
-                // expect(noticeResult[attrKey + '__b']).to.equal(456);
-                // parseDateMock.should.have.been.calledWith(dateValue);
-                // parseDateMock.should.be.calledOnce;
                 done();
             });
         });
@@ -215,19 +201,9 @@ describe('Notices NGSIv2', function() {
         });
 
         it('should accept simple notice using geo:point type', function(done) {
-            // var parseLocationMock = sinon.spy(function() {
-            //     return {
-            //         lat: lat,
-            //         lon: long,
-            //         x: x,
-            //         y: y
-            //     };
-            // });
-
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseLocation: parseLocationMock
             })(function() {
                 noticeExample.data[0][attrKey].type = locType;
                 noticeExample.data[0][attrKey].value = locValue;
@@ -240,31 +216,14 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue);
-                // expect(noticeResult[attrKey + '__type']).to.equal(locType);
-                // expect(noticeResult[attrKey + '__lat']).to.equal(lat);
-                // expect(noticeResult[attrKey + '__lon']).to.equal(long);
-                // expect(noticeResult[attrKey + '__x']).to.equal(x);
-                // expect(noticeResult[attrKey + '__y']).to.equal(y);
-                // parseLocationMock.should.have.been.calledWith(locValue);
-                // parseLocationMock.should.be.calledOnce;
                 done();
             });
         });
 
         it('should accept simple notice using geo:json type Point', function(done) {
-            // var parseLocationMock = sinon.spy(function() {
-            //     return {
-            //         lat: lat,
-            //         lon: long,
-            //         x: x,
-            //         y: y
-            //     };
-            // });
-
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseLocation: parseLocationMock
             })(function() {
                 noticeExample.data[0][attrKey].type = locType2;
                 noticeExample.data[0][attrKey].value = locValue2;
@@ -278,27 +237,14 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue2);
                 expect(noticeResult[attrKey + '__type']).to.equal(locValue2.type);
-                // expect(noticeResult[attrKey + '__lat']).to.equal(lat);
-                // expect(noticeResult[attrKey + '__lon']).to.equal(long);
-                // expect(noticeResult[attrKey + '__x']).to.equal(x);
-                // expect(noticeResult[attrKey + '__y']).to.equal(y);
-                // expect(noticeResult[attrKey + '__coordinates__0']).to.equal(long);
-                // expect(noticeResult[attrKey + '__coordinates__1']).to.equal(lat);
-                // parseLocationMock.should.have.been.calledWith(locValue2.coordinates.reverse().toString());
-                // parseLocationMock.should.be.calledOnce;
                 done();
             });
         });
 
         it('should accept simple notice using geo:json type LineString', function(done) {
-            // var parseLocationMock = sinon.spy(function() {
-            //     return {};
-            // });
-
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseLocation: parseLocationMock
             })(function() {
                 noticeExample.data[0][attrKey].type = locType3;
                 noticeExample.data[0][attrKey].value = locValue3;
@@ -312,23 +258,14 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue3);
                 expect(noticeResult[attrKey + '__type']).to.equal(locValue3.type);
-                // expect(noticeResult[attrKey + '__coordinates__0__0']).to.equal(p1);
-                // expect(noticeResult[attrKey + '__coordinates__0__1']).to.equal(p2);
-                // expect(noticeResult[attrKey + '__coordinates__1__0']).to.equal(p3);
-                // expect(noticeResult[attrKey + '__coordinates__1__1']).to.equal(p4);
                 done();
             });
         });
 
         it('should accept simple notice using geo:json type Polygon', function(done) {
-            // var parseLocationMock = sinon.spy(function() {
-            //     return {};
-            // });
-
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseLocation: parseLocationMock
             })(function() {
                 noticeExample.data[0][attrKey].type = locType4;
                 noticeExample.data[0][attrKey].value = locValue4;
@@ -342,14 +279,6 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue4);
                 expect(noticeResult[attrKey + '__type']).to.equal(locValue4.type);
-                // expect(noticeResult[attrKey + '__coordinates__0__0__0']).to.equal(q1);
-                // expect(noticeResult[attrKey + '__coordinates__0__0__1']).to.equal(q2);
-                // expect(noticeResult[attrKey + '__coordinates__0__1__0']).to.equal(q3);
-                // expect(noticeResult[attrKey + '__coordinates__0__1__1']).to.equal(q4);
-                // expect(noticeResult[attrKey + '__coordinates__0__2__0']).to.equal(q5);
-                // expect(noticeResult[attrKey + '__coordinates__0__2__1']).to.equal(q6);
-                // expect(noticeResult[attrKey + '__coordinates__0__3__0']).to.equal(q7);
-                // expect(noticeResult[attrKey + '__coordinates__0__3__1']).to.equal(q8);
                 done();
             });
         });
@@ -383,18 +312,9 @@ describe('Notices NGSIv2', function() {
 
         it('should accept notices including geo:point metadata', function(done) {
             var at = 'theAttribute';
-            // var parseLocationMock = sinon.spy(function() {
-            //     return {
-            //         lat: lat,
-            //         lon: long,
-            //         x: x,
-            //         y: y
-            //     };
-            // });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseLocation: parseLocationMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
                 meta[at] = {
@@ -412,30 +332,15 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__type']).to.equal(attrType);
                 expect(noticeResult[attrKey]).to.equal(attrValue);
                 expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locType);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__lat']).to.equal(lat);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__lon']).to.equal(long);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__x']).to.equal(x);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
-                // parseLocationMock.should.have.been.calledWith(locValue);
-                // parseLocationMock.should.be.calledOnce;
                 done();
             });
         });
 
         it('should accept notices including geo:json metadata type Point', function(done) {
             var at = 'theAttribute';
-            // var parseLocationMock = sinon.spy(function() {
-            //     return {
-            //         lat: lat,
-            //         lon: long,
-            //         x: x,
-            //         y: y
-            //     };
-            // });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseLocation: parseLocationMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
                 meta[at] = {
@@ -453,32 +358,15 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__type']).to.equal(attrType);
                 expect(noticeResult[attrKey]).to.equal(attrValue);
                 expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locValue2.type);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__lat']).to.equal(lat);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__lon']).to.equal(long);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__x']).to.equal(x);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__y']).to.equal(y);
-                //parseLocationMock.should.have.been.calledWith(locValue2.coordinates.reverse().toString());
-                //parseLocationMock.should.be.calledOnce;
                 done();
             });
         });
 
         it('should accept notices including DateTime metadata', function(done) {
             var at = 'theAttribute';
-            // var parseDateMock = sinon.spy(function() {
-            //     return {
-            //         ts: 1528018286296,
-            //         day: 3,
-            //         month: 6,
-            //         year: 2018,
-            //         hour: 11
-            //         // ...
-            //     };
-            // });
             notices.__with__({
                 'uuid.v1': uuidMock,
                 'Date.now': dateNowMock
-                //parseDate: parseDateMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
                 meta[at] = {
@@ -496,170 +384,9 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult[attrKey + '__type']).to.equal(attrType);
                 expect(noticeResult[attrKey]).to.equal(attrValue);
                 expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(dateType);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__ts']).to.equal(1528018286296);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__day']).to.equal(3);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__month']).to.equal(6);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__year']).to.equal(2018);
-                // expect(noticeResult[attrKey + '__metadata__' + at + '__hour']).to.equal(11);
-                // parseDateMock.should.have.been.calledWith(dateValue);
-                // parseDateMock.should.be.calledOnce;
                 done();
             });
         });
-
-        // it('should fail parsing invalid DateTime metadata attribute', function(done) {
-        //     var at = 'theMetaAttribute';
-        //     var invalidMetaDate = '2018-96-03T09:31:26.296Z'; // invalid date for metadata
-        //     //var errorDateNotice = new notices.errors.InvalidDateTime(invalidMetaDate);
-        //     // var parseDateMock = sinon.spy(function() {
-        //     //     return errorDateNotice;
-        //     // });
-        //     notices.__with__({
-        //         'uuid.v1': uuidMock,
-        //         'Date.now': dateNowMock
-        //         //parseDate: parseDateMock
-        //     })(function() {
-        //         // Set Invalid DateType metadata attribute
-        //         var meta = (noticeExample.data[0].Attr1.metadata = {});
-        //         meta[at] = {
-        //             value: invalidMetaDate,
-        //             type: dateType
-        //         };
-        //         var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-        //         noticeResult.should.be.instanceof(notices.errors.InvalidDateTime);
-        //         expect(noticeResult.name).to.equal('INVALID_DATETIME');
-        //         expect(noticeResult.message).to.equal(
-        //             'Invalid ' + dateType + ' attribute metadata: datetime is not valid ' + invalidMetaDate
-        //         );
-        //         expect(noticeResult.httpCode).to.equal(400);
-        //         // parseDateMock.should.have.been.calledWith(invalidMetaDate);
-        //         // parseDateMock.should.be.calledOnce;
-        //         done();
-        //     });
-        // });
-
-        // it('should fail parsing invalid DateTime attribute', function(done) {
-        //     var invalidAttDate = '2018-08-32T09:31:26.296Z'; // invalid date for attribute
-        //     //var errorDateNotice = new notices.errors.InvalidDateTime(invalidAttDate);
-        //     // var parseDateMock = sinon.spy(function() {
-        //     //     return errorDateNotice;
-        //     // });
-        //     notices.__with__({
-        //         'uuid.v1': uuidMock,
-        //         'Date.now': dateNowMock
-        //         //parseDate: parseDateMock
-        //     })(function() {
-        //         // Set Invalid DateType attribute
-        //         noticeExample.data[0].Attr1 = {
-        //             value: invalidAttDate,
-        //             type: dateType
-        //         };
-        //         var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-        //         noticeResult.should.be.instanceof(notices.errors.InvalidDateTime);
-        //         expect(noticeResult.name).to.equal('INVALID_DATETIME');
-        //         expect(noticeResult.message).to.equal(
-        //             'Invalid ' + dateType + ' attribute: datetime is not valid ' + invalidAttDate
-        //         );
-        //         expect(noticeResult.httpCode).to.equal(400);
-        //         // parseDateMock.should.have.been.calledWith(invalidAttDate);
-        //         // parseDateMock.should.be.calledOnce;
-        //         done();
-        //     });
-        // });
-
-        // it('should fail parsing invalid location attribute', function(done) {
-        //     var invalidLoc = '47.418889, -3.691944, 12.123'; // invalid location for attribute
-        //     // var locError = new notices.errors.InvalidLocation(invalidLoc);
-        //     // var parseLocationMock = sinon.spy(function() {
-        //     //     return locError;
-        //     // });
-        //     notices.__with__({
-        //         'uuid.v1': uuidMock,
-        //         'Date.now': dateNowMock
-        //         //parseLocation: parseLocationMock
-        //     })(function() {
-        //         // Set Invalid location attribute
-        //         noticeExample.data[0].Attr1 = {
-        //             value: invalidLoc,
-        //             type: locType
-        //         };
-        //         var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-        //         noticeResult.should.be.instanceof(notices.errors.InvalidLocation);
-        //         expect(noticeResult.name).to.equal('INVALID_LOCATION');
-        //         expect(noticeResult.message).to.equal(
-        //             'Invalid ' + locType + ' attribute: invalid location ' + invalidLoc
-        //         );
-        //         expect(noticeResult.httpCode).to.equal(400);
-        //         // parseLocationMock.should.have.been.calledWith(invalidLoc);
-        //         // parseLocationMock.should.be.calledOnce;
-        //         done();
-        //     });
-        // });
-
-        // it('should fail parsing invalid location metadata attribute', function(done) {
-        //     var at = 'theMetaAttribute';
-        //     var invalidLoc = '47.418889, -3.691944, 12.123'; // invalid location for attribute
-        //     // var locError = new notices.errors.InvalidLocation(invalidLoc);
-        //     // var parseLocationMock = sinon.spy(function() {
-        //     //     return locError;
-        //     // });
-        //     notices.__with__({
-        //         'uuid.v1': uuidMock,
-        //         'Date.now': dateNowMock
-        //         //parseLocation: parseLocationMock
-        //     })(function() {
-        //         // Set Invalid location metadata attribute
-        //         var meta = (noticeExample.data[0].Attr1.metadata = {});
-        //         meta[at] = {
-        //             value: invalidLoc,
-        //             type: locType
-        //         };
-        //         var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-        //         noticeResult.should.be.instanceof(notices.errors.InvalidLocation);
-        //         expect(noticeResult.name).to.equal('INVALID_LOCATION');
-        //         expect(noticeResult.message).to.equal(
-        //             'Invalid ' + locType + ' attribute metadata: invalid location ' + invalidLoc
-        //         );
-        //         expect(noticeResult.httpCode).to.equal(400);
-        //         // parseLocationMock.should.have.been.calledWith(invalidLoc);
-        //         // parseLocationMock.should.be.calledOnce;
-        //         done();
-        //     });
-        // });
-
-        // it('should handle exception correctly', function(done) {
-        //     var at = 'theMetaAttribute';
-        //     var error = new Error('fake error');
-        //     //var parseLocationMock = sinon.stub().throws(error);
-        //     var logErrorMock = sinon.spy(function(notice) {});
-
-        //     notices.__with__({
-        //         'uuid.v1': uuidMock,
-        //         'Date.now': dateNowMock,
-        //         //parseLocation: parseLocationMock,
-        //         'myutils.logErrorIf': logErrorMock
-        //     })(function() {
-        //         // Set location metadata attribute
-        //         var meta = (noticeExample.data[0].Attr1.metadata = {});
-        //         meta[at] = {
-        //             value: locValue,
-        //             type: locType
-        //         };
-        //         var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
-        //         noticeResult.should.be.instanceof(notices.errors.InvalidV2Notice);
-        //         expect(noticeResult.name).to.equal('INVALID_NGSIV2_NOTICE');
-        //         expect(noticeResult.message).to.equal(
-        //             'invalid NGSIv2 notice format ' + error + ' (' + JSON.stringify(noticeExample) + ')'
-        //         );
-        //         expect(noticeResult.httpCode).to.equal(400);
-        //         // expect(parseLocationMock).to.throw(Error);
-        //         // expect(parseLocationMock).to.have.been.calledWith(locValue);
-        //         // Checking logError
-        //         logErrorMock.should.have.been.calledWith(noticeResult);
-        //         logErrorMock.should.be.calledOnce;
-        //         done();
-        //     });
-        // });
     });
 
     describe('#Data types location and time', function() {
@@ -668,154 +395,5 @@ describe('Notices NGSIv2', function() {
             // Default
             noticeExample = JSON.parse(noticeExampleV2);
         });
-
-        // it('should fail parsing invalid location attributes', function() {
-        //     var callback = function(e, request) {
-        //         expect(e).exist;
-        //         expect(request).not.exist;
-        //         expect(e.httpCode).to.equal(400);
-        //         expect(e.message[0]).to.equal('Invalid geo:point attribute: invalid location 47.41x8889, -3.691944, x');
-        //         expect(e.message[1]).to.equal('Invalid geo:point attribute metadata: longitude is not valid NaN');
-        //         expect(e.message[2]).to.equal(
-        //             'Invalid geo:point attribute metadata: invalid location Error: ' +
-        //                 'Longitude must be in range [-180, 180).'
-        //         );
-        //         expect(e.message[3]).to.equal(
-        //             'Invalid geo:point attribute: invalid location Error: ' + 'Latitude must be in range [-90, 90).'
-        //         );
-        //         expect(e.message[4]).to.equal('Invalid geo:point attribute metadata: latitude is not valid NaN');
-        //         expect(e.message[5]).to.equal('Invalid geo:point attribute: invalid location 4559');
-        //     };
-        //     noticeExample.data = [
-        //         {
-        //             id: 'sensor-1',
-        //             type: 'tipeExample1',
-        //             Attr1: {
-        //                 type: 'geo:point',
-        //                 value: '47.41x8889, -3.691944, x',
-        //                 metadata: {
-        //                     metaAttr1: {
-        //                         type: 'geo:point',
-        //                         value: '47.55555, -ll3.333x-333'
-        //                     }
-        //                 }
-        //             }
-        //         },
-        //         {
-        //             id: 'sensor-2',
-        //             type: 'tipeExample2',
-        //             Attr1: {
-        //                 type: 'geo:point',
-        //                 value: '43.41x8889, -5.691944',
-        //                 metadata: {
-        //                     metaAttr1: {
-        //                         type: 'geo:point',
-        //                         value: '47.55555, -ll3.333x-333'
-        //                     }
-        //                 }
-        //             }
-        //         },
-        //         {
-        //             id: 'sensor-3',
-        //             type: 'tipeExample1',
-        //             Attr1: {
-        //                 type: 'geo:point',
-        //                 value: '47.418889, -3.691944',
-        //                 metadata: {
-        //                     metaAttr1: {
-        //                         type: 'geo:point',
-        //                         value: '47.55555, -333.333333'
-        //                     }
-        //                 }
-        //             }
-        //         },
-        //         {
-        //             id: 'sensor-4',
-        //             type: 'tipeExample1',
-        //             Attr1: {
-        //                 type: 'geo:point',
-        //                 value: '470.418889, -3.691944',
-        //                 metadata: {}
-        //             }
-        //         },
-        //         {
-        //             id: 'sensor-5',
-        //             type: 'tipeExample2',
-        //             Attr1: {
-        //                 type: 'geo:point',
-        //                 value: '43.41x8889, -5.691944',
-        //                 metadata: {
-        //                     metaAttr1: {
-        //                         type: 'geo:point',
-        //                         value: 'x4x7x.5555x5-, -3.33333'
-        //                     }
-        //                 }
-        //             }
-        //         },
-        //         {
-        //             id: 'sensor-6',
-        //             type: 'tipeExample2',
-        //             Attr1: {
-        //                 type: 'geo:point',
-        //                 value: 4559,
-        //                 metadata: {
-        //                     metaAttr1: {
-        //                         type: 'geo:point',
-        //                         value: '47.55555, 3.33333'
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     ];
-        //     noticeExample.subservice =
-        //         '/test/notices/unit,/test/notices/unit,/test/notices/unit,' +
-        //         '/test/notices/unit,/test/notices/unit,/test/notices/unit';
-        //     notices.Do(noticeExample, callback);
-        // });
-        // it('should fail parsing invalid DateTime attributes', function() {
-        //     var callback = function(e, request) {
-        //         expect(e).exist;
-        //         expect(request).not.exist;
-        //         expect(e.httpCode).to.equal(400);
-        //         expect(e.message[0]).to.equal(
-        //             'Invalid DateTime attribute metadata: datetime' + ' is not valid 2018-96-03T09:31:26.296Z'
-        //         );
-        //         expect(e.message[1]).to.equal(
-        //             'Invalid DateTime attribute: datetime' + ' is not valid 2018-08-32T09:31:26.296Z'
-        //         );
-        //     };
-        //     noticeExample.data = [
-        //         {
-        //             id: 'sensor-1',
-        //             type: 'tipeExample1',
-        //             Attr1: {
-        //                 type: 'DateTime',
-        //                 value: '2018-06-03T09:31:26.296Z',
-        //                 metadata: {
-        //                     metaAttr1: {
-        //                         value: '2018-96-03T09:31:26.296Z',
-        //                         type: 'DateTime'
-        //                     }
-        //                 }
-        //             }
-        //         },
-        //         {
-        //             id: 'sensor-2',
-        //             type: 'tipeExample2',
-        //             Attr1: {
-        //                 type: 'DateTime',
-        //                 value: '2018-08-32T09:31:26.296Z',
-        //                 metadata: {
-        //                     metaAttr1: {
-        //                         value: '2018-06-03T09:31:26.296Z',
-        //                         type: 'DateTime'
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     ];
-        //     noticeExample.subservice = '/test/notices/unit,/test/notices/unit';
-        //     notices.Do(noticeExample, callback);
-        // });
     });
 });
