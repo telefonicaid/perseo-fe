@@ -136,21 +136,9 @@ describe('Notices NGSIv1', function() {
         });
 
         it('should accept simple notice using DateTime type', function(done) {
-            var parseDateMock = sinon.spy(function() {
-                return {
-                    ts: 1528018286296,
-                    day: 3,
-                    month: 6,
-                    year: 2018,
-                    hour: 11,
-                    minute: 31,
-                    second: 26
-                };
-            });
             notices.__with__({
                 'uuid.v1': uuidMock,
-                'Date.now': dateNowMock,
-                parseDate: parseDateMock
+                'Date.now': dateNowMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = dateType;
                 noticeExample.contextResponses[0].contextElement.attributes[0].value = dateValue;
@@ -164,15 +152,6 @@ describe('Notices NGSIv1', function() {
                 expect(noticeResult.isPattern).to.equal('false');
                 expect(noticeResult[attrKey + '__type']).to.equal(dateType);
                 expect(noticeResult[attrKey]).to.equal(dateValue);
-                expect(noticeResult[attrKey + '__ts']).to.equal(1528018286296);
-                expect(noticeResult[attrKey + '__day']).to.equal(3);
-                expect(noticeResult[attrKey + '__month']).to.equal(6);
-                expect(noticeResult[attrKey + '__year']).to.equal(2018);
-                expect(noticeResult[attrKey + '__hour']).to.equal(11);
-                expect(noticeResult[attrKey + '__minute']).to.equal(31);
-                expect(noticeResult[attrKey + '__second']).to.equal(26);
-                parseDateMock.should.have.been.calledWith(dateValue);
-                parseDateMock.should.be.calledOnce;
                 done();
             });
         });
@@ -208,21 +187,9 @@ describe('Notices NGSIv1', function() {
 
         it('should accept notice using DateTime metadata', function(done) {
             var at = 'theMetaAttribute';
-            var parseDateMock = sinon.spy(function() {
-                return {
-                    ts: 1528018286296,
-                    day: 3,
-                    month: 6,
-                    year: 2018,
-                    hour: 11,
-                    minute: 31,
-                    second: 26
-                };
-            });
             notices.__with__({
                 'uuid.v1': uuidMock,
-                'Date.now': dateNowMock,
-                parseDate: parseDateMock
+                'Date.now': dateNowMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
                     {
@@ -242,15 +209,6 @@ describe('Notices NGSIv1', function() {
                 expect(noticeResult[attrKey + '__type']).to.equal(attrType);
                 expect(noticeResult[attrKey]).to.equal(attrValue);
                 expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(dateType);
-                expect(noticeResult[attrKey + '__metadata__' + at + '__ts']).to.equal(1528018286296);
-                expect(noticeResult[attrKey + '__metadata__' + at + '__day']).to.equal(3);
-                expect(noticeResult[attrKey + '__metadata__' + at + '__month']).to.equal(6);
-                expect(noticeResult[attrKey + '__metadata__' + at + '__year']).to.equal(2018);
-                expect(noticeResult[attrKey + '__metadata__' + at + '__hour']).to.equal(11);
-                expect(noticeResult[attrKey + '__metadata__' + at + '__minute']).to.equal(31);
-                expect(noticeResult[attrKey + '__metadata__' + at + '__second']).to.equal(26);
-                parseDateMock.should.have.been.calledWith(dateValue);
-                parseDateMock.should.be.calledOnce;
                 done();
             });
         });
