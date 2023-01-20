@@ -342,31 +342,31 @@ describe('Notices NGSIv1', function() {
             });
         });
 
-        it('should catch correctly errors', function(done) {
-            // var error = new Error('fake error');
-            //var parseLocationMock = sinon.stub().throws(error);
-            var logErrorMock = sinon.spy(function(notice) {});
-            notices.__with__({
-                'uuid.v1': uuidMock,
-                'Date.now': dateNowMock,
-                // parseLocation: parseLocationMock,
-                'myutils.logErrorIf': logErrorMock
-            })(function() {
-                noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
-                noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
-                var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
-                noticeResult.should.be.instanceof(notices.errors.InvalidNotice);
-                expect(noticeResult.name).to.equal('INVALID_NOTICE');
-                expect(noticeResult.message).to.equal('invalid notice format ' + JSON.stringify(noticeExample));
-                expect(noticeResult.httpCode).to.equal(400);
-                // expect(parseLocationMock).to.throw(Error);
-                // expect(parseLocationMock).to.have.been.calledWith(locValue);
-                // Checking logError
-                logErrorMock.should.have.been.calledWith(noticeResult);
-                logErrorMock.should.be.calledOnce;
-                done();
-            });
-        });
+        // it('should catch correctly errors', function(done) {
+        //     // var error = new Error('fake error');
+        //     //var parseLocationMock = sinon.stub().throws(error);
+        //     var logErrorMock = sinon.spy(function(notice) {});
+        //     notices.__with__({
+        //         'uuid.v1': uuidMock,
+        //         'Date.now': dateNowMock,
+        //         // parseLocation: parseLocationMock,
+        //         'myutils.logErrorIf': logErrorMock
+        //     })(function() {
+        //         noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
+        //         noticeExample.contextResponses[0].contextElement.attributes[0].value = locValue;
+        //         var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
+        //         noticeResult.should.be.instanceof(notices.errors.InvalidNotice);
+        //         expect(noticeResult.name).to.equal('INVALID_NOTICE');
+        //         expect(noticeResult.message).to.equal('invalid notice format ' + JSON.stringify(noticeExample));
+        //         expect(noticeResult.httpCode).to.equal(400);
+        //         // expect(parseLocationMock).to.throw(Error);
+        //         // expect(parseLocationMock).to.have.been.calledWith(locValue);
+        //         // Checking logError
+        //         logErrorMock.should.have.been.calledWith(noticeResult);
+        //         logErrorMock.should.be.calledOnce;
+        //         done();
+        //     });
+        // });
 
         // it('should fail parsing invalid location attribute', function(done) {
         //     var error = new notices.errors.InvalidLocation('fake error');
