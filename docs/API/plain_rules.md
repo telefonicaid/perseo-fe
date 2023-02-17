@@ -384,11 +384,12 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   type: optional, the type of the entity which attribute is to be updated (by default the type of the entity that
     triggers the rule is usedi.e. `${type}`)
 -   version: optional, The NGSI version for the update action. Set this attribute to `2` or `"2"` if you want to use
-    NGSv2 format. `2` by default.
+    NGSv2 format. `2` by default. **It is NOT recommended to use `1`**.
 -   isPattern: optional, `false` by default. (Only for NGSIv1. If `version` is set to 2, this attribute will be ignored)
 -   attributes: _mandatory_, array of target attributes to update. Each element of the array must contain the fields
     -   **name**: _mandatory_, attribute name to set
-    -   **value**: _mandatory_, attribute value to set
+    -   **value**: _mandatory_, attribute value to set. All JSON types (string, number, bool, object, array and null)
+        are supported.
     -   type: optional, type of the attribute to set. By default, not set (in which case, only the attribute value is
         changed).
 -   actionType: optional, type of CB action: APPEND, UPDATE or DELETE. By default is APPEND.
@@ -459,25 +460,6 @@ is translated to equivalent filter replacing `geojsonpolygon` with `georel`, `ge
       "georel": "coveredBy",
       "geometry": "polygon",
       "coords": "54.36775852406841,9.84375;42.032974332441405,-4.921875;40.713955826286046,34.80468749999999;53.54030739150022,29.53125;54.36775852406841,9.84375"
-    }
-```
-
-NGSIv1 example:
-
-```json
-"action":{
-        "type":"update",
-        "parameters":{
-            "id":"${id}_mirror",
-            "attributes": [
-                {
-                    "name":"abnormal",
-                    "type":"boolean",
-                    "value":"true"
-                }
-            ],
-            "actionType": "UPDATE"
-        }
     }
 ```
 
