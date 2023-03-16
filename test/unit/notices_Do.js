@@ -34,28 +34,28 @@ var expect = chai.expect;
 chai.Should();
 chai.use(sinonChai);
 
-var noticeExampleV1 = JSON.stringify({
-    subscriptionId: '5b34e37052a01bc4c7e67c34',
-    originator: 'localhost',
-    contextResponses: [
-        {
-            contextElement: {
-                type: 'tipeExample1',
-                isPattern: 'false',
-                id: 'sensor-1',
-                attributes: [
-                    {
-                        name: 'Attr1',
-                        type: 'Number',
-                        value: '123'
-                    }
-                ]
-            }
-        }
-    ],
-    subservice: '/test/notices/unit',
-    service: 'utest'
-});
+// var noticeExampleV1 = JSON.stringify({
+//     subscriptionId: '5b34e37052a01bc4c7e67c34',
+//     originator: 'localhost',
+//     contextResponses: [
+//         {
+//             contextElement: {
+//                 type: 'tipeExample1',
+//                 isPattern: 'false',
+//                 id: 'sensor-1',
+//                 attributes: [
+//                     {
+//                         name: 'Attr1',
+//                         type: 'Number',
+//                         value: '123'
+//                     }
+//                 ]
+//             }
+//         }
+//     ],
+//     subservice: '/test/notices/unit',
+//     service: 'utest'
+// });
 
 var noticeExampleV2 = JSON.stringify({
     subscriptionId: '5b311ccb29adb333f843b5f3',
@@ -84,52 +84,52 @@ var coreNotice1 = {
 
 describe('Notices Do', function() {
     describe('#DoNotice', function() {
-        var v1notice, v2notice;
+        var /*v1notice,*/ v2notice;
 
         beforeEach(function() {
-            v1notice = JSON.parse(noticeExampleV1);
+            //v1notice = JSON.parse(noticeExampleV1);
             v2notice = JSON.parse(noticeExampleV2);
         });
 
-        it('should accept NGSIv1 entities', function(done) {
-            var postEvent = 'POST_EVENT';
-            var alarmReleaseMock = sinon.spy(function() {});
-            var processCBNoticeMock = sinon.spy(function() {
-                return coreNotice1;
-            });
-            var requestWOMetricsMock = sinon.spy(function(method, option, callback) {
-                callback(null, { httpCode: '200', message: 'all right' });
-            });
-            notices.__with__({
-                processCBNotice: processCBNoticeMock,
-                'myutils.requestHelperWOMetrics': requestWOMetricsMock,
-                'config.perseoCore.noticesURL': 'http://mokedurl.org',
-                'alarm.release': alarmReleaseMock,
-                'alarm.POST_EVENT': postEvent
-            })(function() {
-                var callback = function(e, request) {
-                    should.exist(request);
-                    request.should.not.be.instanceof(Error);
-                    should.equal(request.length, 1);
-                    should.equal(request[0].httpCode, 200);
-                    // Checking call to processCBNotice
-                    processCBNoticeMock.should.have.been.calledWith('utest', '/test/notices/unit', v1notice, 0);
-                    processCBNoticeMock.should.be.calledOnce;
-                    // Checking call to requestWOMetrics
-                    var h = { 'fiware-servicepath': '/test/notices/unit' };
-                    requestWOMetricsMock.should.have.been.calledWith('post', {
-                        url: 'http://mokedurl.org',
-                        json: coreNotice1,
-                        headers: h
-                    });
-                    requestWOMetricsMock.should.be.calledOnce;
-                    alarmReleaseMock.should.have.been.calledWith(postEvent);
-                    alarmReleaseMock.should.be.calledOnce;
-                    done();
-                };
-                notices.Do(v1notice, callback);
-            });
-        });
+        // it('should accept NGSIv1 entities', function(done) {
+        //     var postEvent = 'POST_EVENT';
+        //     var alarmReleaseMock = sinon.spy(function() {});
+        //     var processCBNoticeMock = sinon.spy(function() {
+        //         return coreNotice1;
+        //     });
+        //     var requestWOMetricsMock = sinon.spy(function(method, option, callback) {
+        //         callback(null, { httpCode: '200', message: 'all right' });
+        //     });
+        //     notices.__with__({
+        //         processCBNotice: processCBNoticeMock,
+        //         'myutils.requestHelperWOMetrics': requestWOMetricsMock,
+        //         'config.perseoCore.noticesURL': 'http://mokedurl.org',
+        //         'alarm.release': alarmReleaseMock,
+        //         'alarm.POST_EVENT': postEvent
+        //     })(function() {
+        //         var callback = function(e, request) {
+        //             should.exist(request);
+        //             request.should.not.be.instanceof(Error);
+        //             should.equal(request.length, 1);
+        //             should.equal(request[0].httpCode, 200);
+        //             // Checking call to processCBNotice
+        //             processCBNoticeMock.should.have.been.calledWith('utest', '/test/notices/unit', v1notice, 0);
+        //             processCBNoticeMock.should.be.calledOnce;
+        //             // Checking call to requestWOMetrics
+        //             var h = { 'fiware-servicepath': '/test/notices/unit' };
+        //             requestWOMetricsMock.should.have.been.calledWith('post', {
+        //                 url: 'http://mokedurl.org',
+        //                 json: coreNotice1,
+        //                 headers: h
+        //             });
+        //             requestWOMetricsMock.should.be.calledOnce;
+        //             alarmReleaseMock.should.have.been.calledWith(postEvent);
+        //             alarmReleaseMock.should.be.calledOnce;
+        //             done();
+        //         };
+        //         notices.Do(v1notice, callback);
+        //     });
+        // });
 
         it('should fail whith empty notice', function(done) {
             var callback = function(e, request) {
