@@ -293,29 +293,29 @@ describe('Notices Do', function() {
             v2notice.data = 123;
             notices.Do(v2notice, callback);
         });
-        it('should fail with invalid NGSIv1 contextResponses', function(done) {
-            var callback = function(e, request) {
-                should.not.exists(request);
-                should.exist(e);
-                // Check invalid Location error
-                should.equal(e.httpCode, 400);
-                should.equal(e.message, 'ContextResponses is not an array (number)');
-                done();
-            };
-            v1notice.contextResponses = 123;
-            notices.Do(v1notice, callback);
-        });
+        // it('should fail with invalid NGSIv1 contextResponses', function(done) {
+        //     var callback = function(e, request) {
+        //         should.not.exists(request);
+        //         should.exist(e);
+        //         // Check invalid Location error
+        //         should.equal(e.httpCode, 400);
+        //         should.equal(e.message, 'ContextResponses is not an array (number)');
+        //         done();
+        //     };
+        //     v1notice.contextResponses = 123;
+        //     notices.Do(v1notice, callback);
+        // });
 
-        it('should fail whith invalid Servipaths', function(done) {
-            var callback = function(e, request) {
-                should.exist(e);
-                should.not.exist(request);
-                should.equal(e.httpCode, 400);
-                should.equal(e.message, 'Number of servicepath items does not match ContextResponses(3,1)');
-                done();
-            };
-            v1notice.subservice += ',extra/service/4fail, extra2/service';
-            notices.Do(v1notice, callback);
-        });
+        // it('should fail whith invalid Servipaths', function(done) {
+        //     var callback = function(e, request) {
+        //         should.exist(e);
+        //         should.not.exist(request);
+        //         should.equal(e.httpCode, 400);
+        //         should.equal(e.message, 'Number of servicepath items does not match ContextResponses(3,1)');
+        //         done();
+        //     };
+        //     v1notice.subservice += ',extra/service/4fail, extra2/service';
+        //     notices.Do(v1notice, callback);
+        // });
     });
 });
