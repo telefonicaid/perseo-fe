@@ -1,38 +1,25 @@
 {
     "subscriptionId": "51c04a21d714fb3b37d7d5a7",
-    "originator": "localhost",
-    "contextResponses": [
+    "data": [
         {
-            "contextElement": {
-                "attributes": [
-                    {
-                        "name": "temperature",
-                        "type": "celsius",
-                        "value": "5555"
-                    },
-                    {
-                        "name": "TimeInstant",
-                        "type": "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
-                        "value": "2014-04-29T13:18:05Z"
-                    },
-                    {
-                        "name": "device.asset.name",
-                        "value": "DEVICE NAME"
-                    },
-                    {
-                        "name": "measure",
-                        "value": {
-                            "value": "MEASURE VALUE"
-                        }
-                    }
-                ],
-                "type": "ModeloTemperatura",
-                "isPattern": "false",
-                "id": "termotro1"
+            "type": "ModeloTemperatura",
+            "isPattern": "false",
+            "id": "termotro1",
+            "temperature": {
+                "type": "celsius",
+                "value": "5555"
             },
-            "statusCode": {
-                "code": "200",
-                "reasonPhrase": "OK"
+            "TimeInstant": {
+                "type": "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
+                "value": "2014-04-29T13:18:05Z"
+            },
+            "device.asset.name": {
+                "value": "DEVICE NAME"
+            },
+            "measure": {
+                "value": {
+                    "value": "MEASURE VALUE"
+                }
             }
         }
     ]
