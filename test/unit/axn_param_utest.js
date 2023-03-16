@@ -27,7 +27,7 @@ var should = require('should'),
     emailAction = require('../../lib/models/emailAction'),
     postAction = require('../../lib/models/postAction'),
     smsAction = require('../../lib/models/smsAction'),
-    twitterAction = require('../../lib/models/twitterAction'),
+    twitterAction = require('../../lib/models/twitterAction');
 //    updateAction = require('../../lib/models/updateAction');
 
 describe('AxnParams', function() {
