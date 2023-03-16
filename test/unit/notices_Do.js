@@ -34,29 +34,6 @@ var expect = chai.expect;
 chai.Should();
 chai.use(sinonChai);
 
-// var noticeExampleV1 = JSON.stringify({
-//     subscriptionId: '5b34e37052a01bc4c7e67c34',
-//     originator: 'localhost',
-//     contextResponses: [
-//         {
-//             contextElement: {
-//                 type: 'tipeExample1',
-//                 isPattern: 'false',
-//                 id: 'sensor-1',
-//                 attributes: [
-//                     {
-//                         name: 'Attr1',
-//                         type: 'Number',
-//                         value: '123'
-//                     }
-//                 ]
-//             }
-//         }
-//     ],
-//     subservice: '/test/notices/unit',
-//     service: 'utest'
-// });
-
 var noticeExampleV2 = JSON.stringify({
     subscriptionId: '5b311ccb29adb333f843b5f3',
     data: [
@@ -90,46 +67,6 @@ describe('Notices Do', function() {
             //v1notice = JSON.parse(noticeExampleV1);
             v2notice = JSON.parse(noticeExampleV2);
         });
-
-        // it('should accept NGSIv1 entities', function(done) {
-        //     var postEvent = 'POST_EVENT';
-        //     var alarmReleaseMock = sinon.spy(function() {});
-        //     var processCBNoticeMock = sinon.spy(function() {
-        //         return coreNotice1;
-        //     });
-        //     var requestWOMetricsMock = sinon.spy(function(method, option, callback) {
-        //         callback(null, { httpCode: '200', message: 'all right' });
-        //     });
-        //     notices.__with__({
-        //         processCBNotice: processCBNoticeMock,
-        //         'myutils.requestHelperWOMetrics': requestWOMetricsMock,
-        //         'config.perseoCore.noticesURL': 'http://mokedurl.org',
-        //         'alarm.release': alarmReleaseMock,
-        //         'alarm.POST_EVENT': postEvent
-        //     })(function() {
-        //         var callback = function(e, request) {
-        //             should.exist(request);
-        //             request.should.not.be.instanceof(Error);
-        //             should.equal(request.length, 1);
-        //             should.equal(request[0].httpCode, 200);
-        //             // Checking call to processCBNotice
-        //             processCBNoticeMock.should.have.been.calledWith('utest', '/test/notices/unit', v1notice, 0);
-        //             processCBNoticeMock.should.be.calledOnce;
-        //             // Checking call to requestWOMetrics
-        //             var h = { 'fiware-servicepath': '/test/notices/unit' };
-        //             requestWOMetricsMock.should.have.been.calledWith('post', {
-        //                 url: 'http://mokedurl.org',
-        //                 json: coreNotice1,
-        //                 headers: h
-        //             });
-        //             requestWOMetricsMock.should.be.calledOnce;
-        //             alarmReleaseMock.should.have.been.calledWith(postEvent);
-        //             alarmReleaseMock.should.be.calledOnce;
-        //             done();
-        //         };
-        //         notices.Do(v1notice, callback);
-        //     });
-        // });
 
         it('should fail whith empty notice', function(done) {
             var callback = function(e, request) {
@@ -293,29 +230,5 @@ describe('Notices Do', function() {
             v2notice.data = 123;
             notices.Do(v2notice, callback);
         });
-        // it('should fail with invalid NGSIv1 contextResponses', function(done) {
-        //     var callback = function(e, request) {
-        //         should.not.exists(request);
-        //         should.exist(e);
-        //         // Check invalid Location error
-        //         should.equal(e.httpCode, 400);
-        //         should.equal(e.message, 'ContextResponses is not an array (number)');
-        //         done();
-        //     };
-        //     v1notice.contextResponses = 123;
-        //     notices.Do(v1notice, callback);
-        // });
-
-        // it('should fail whith invalid Servipaths', function(done) {
-        //     var callback = function(e, request) {
-        //         should.exist(e);
-        //         should.not.exist(request);
-        //         should.equal(e.httpCode, 400);
-        //         should.equal(e.message, 'Number of servicepath items does not match ContextResponses(3,1)');
-        //         done();
-        //     };
-        //     v1notice.subservice += ',extra/service/4fail, extra2/service';
-        //     notices.Do(v1notice, callback);
-        // });
     });
 });
