@@ -28,7 +28,7 @@ var should = require('should'),
     postAction = require('../../lib/models/postAction'),
     smsAction = require('../../lib/models/smsAction'),
     twitterAction = require('../../lib/models/twitterAction'),
-    updateAction = require('../../lib/models/updateAction');
+//    updateAction = require('../../lib/models/updateAction');
 
 describe('AxnParams', function() {
     describe('#buildMailOptions()', function() {
