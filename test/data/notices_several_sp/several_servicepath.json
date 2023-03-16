@@ -1,74 +1,43 @@
 {
     "subscriptionId" : "51c04a21d714fb3b37d7d5a7",
-    "originator" : "localhost",
-    "contextResponses" : [
+    "data": [
         {
-            "contextElement" : {
-                "attributes" : [
-                    {
-                        "name" : "BloodPressure",
-                        "type" : "centigrade",
-                        "value" : "2"
-                    },
-                    {
-                        "name" : "TimeInstant",
-                        "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
-                        "value" : "2014-04-29T13:18:05Z"
-                    }
-                ],
-                "type" : "BloodMeter",
-                "isPattern" : "false",
-                "id" : "bloodm1"
+            "type" : "BloodMeter",
+            "isPattern" : "false",
+            "id" : "bloodm1",
+            "BloodPressure": {
+                "type" : "centigrade",
+                "value" : "2"
             },
-            "statusCode" : {
-                "code" : "200",
-                "reasonPhrase" : "OK"
+            "TimeInstant": {
+                "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
+                "value" : "2014-04-29T13:18:05Z"
             }
         },
         {
-            "contextElement" : {
-                "attributes" : [
-                    {
-                        "name" : "Temperature",
-                        "type" : "centigrade",
-                        "value" : "3"
-                    },
-                    {
-                        "name" : "TimeInstant",
-                        "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
-                        "value" : "2014-04-29T13:18:05Z"
-                    }
-                ],
-                "type" : "BloodMeter",
-                "isPattern" : "false",
-                "id" : "bloodm1"
+            "type" : "BloodMeter",
+            "isPattern" : "false",
+            "id" : "bloodm1",
+            "Temperature": {
+                "type" : "centigrade",
+                "value" : "3"
             },
-            "statusCode" : {
-                "code" : "200",
-                "reasonPhrase" : "OK"
+            "TimeInstant": {
+              "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
+                "value" : "2014-04-29T13:18:05Z"
             }
         },
         {
-            "contextElement" : {
-                "attributes" : [
-                    {
-                        "name" : "Velocidad",
-                        "type" : "km/h",
-                        "value" : "95"
-                    },
-                    {
-                        "name" : "TimeInstant",
-                        "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
-                        "value" : "2014-04-29T13:18:05Z"
-                    }
-                ],
-                "type" : "BloodMeter",
-                "isPattern" : "false",
-                "id" : "bloodm1"
+            "type" : "BloodMeter",
+            "isPattern" : "false",
+            "id" : "bloodm1",
+            "Velocidad": {
+                "type" : "km/h",
+                "value" : "95"
             },
-            "statusCode" : {
-                "code" : "200",
-                "reasonPhrase" : "OK"
+            "TimeInstant": {
+                "type" : "urn:x-ogc:def:trs:IDAS:1.0:ISO8601",
+                "value" : "2014-04-29T13:18:05Z"
             }
         }
     ]
