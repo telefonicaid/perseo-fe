@@ -4,7 +4,6 @@
     "action": {
         "type": "update",
         "parameters": {
-            "version": "1",
             "name": "abnormal",
             "value": "true",
             "type": "boolean",
