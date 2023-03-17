@@ -61,10 +61,9 @@ var coreNotice1 = {
 
 describe('Notices Do', function() {
     describe('#DoNotice', function() {
-        var /*v1notice,*/ v2notice;
+        var v2notice;
 
         beforeEach(function() {
-            //v1notice = JSON.parse(noticeExampleV1);
             v2notice = JSON.parse(noticeExampleV2);
         });
 
