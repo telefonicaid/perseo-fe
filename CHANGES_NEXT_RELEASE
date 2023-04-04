@@ -1,1 +1,3 @@
 - Remove unnecessary event data transformations (stripped, location parse, datetime parse) (#706, #712)
+- Add support to run tests with node 18
+- Set Nodejs 16 as minimum version in packages.json (effectively removing Nodev12 and Nodev14 from supported versions)
