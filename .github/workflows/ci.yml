@@ -26,10 +26,10 @@ jobs:
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Run Remark Markdown Linter
         run: |
           npm install
@@ -43,10 +43,10 @@ jobs:
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Run EsLint Node.js Linter
         run: |
           npm install
@@ -93,7 +93,7 @@ jobs:
       - name: 'Test Coverage with Node.js 14.x'
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 16.x
       - run: |
           npm install
           npm run test:coverage
