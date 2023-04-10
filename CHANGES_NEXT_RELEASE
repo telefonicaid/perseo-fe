@@ -1,2 +1,4 @@
 - Remove support for ngsv1 notifications (#714)
-- Remove unnecessary event data transformat#ions (stripped, location parse, datetime parse) (#706, #712)
+- Remove unnecessary event data transformations (stripped, location parse, datetime parse) (#706, #712)
+- Add support to run tests with node 18
+- Set Nodejs 16 as minimum version in packages.json (effectively removing Nodev12 and Nodev14 from supported versions)
