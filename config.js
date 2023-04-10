@@ -227,4 +227,9 @@ config.restBase = null;
  */
 config.castTypes = false;
 
+/**
+ * Maximum number of rule executions triggered by the same notification (with the same correlator) until refuse execute a rule
+ */
+config.maxRulesByCorr = 20;
+
 module.exports = config;

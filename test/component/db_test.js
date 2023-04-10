@@ -35,7 +35,7 @@ describe('Db', function() {
             utilsT.getConfig().mongo.url = 'mongodb://ihopethisdoesnotexistpleeease:32321/perseo_testing';
         });
         after(function() {
-            utilsT.getConfig().mongo.port = mongourl;
+            utilsT.getConfig().mongo.url = mongourl;
         });
         it('should return an error when there is no database', function(done) {
             db.getDb(function(error, database) {

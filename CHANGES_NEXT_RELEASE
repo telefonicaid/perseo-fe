@@ -1,3 +1,4 @@
-- Fix: replace deprecated dep shortid by nanoid
-- Upgrade express dep from ~4.16.4 to 4.18.1
 - Upgrade uuid dep from ~1.4.2 to 8.3.2
+- Remove unnecessary event data transformations (stripped, location parse, datetime parse) (#706, #712)
+- Add support to run tests with node 18
+- Set Nodejs 16 as minimum version in packages.json (effectively removing Nodev12 and Nodev14 from supported versions)
