@@ -236,7 +236,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue2);
-                expect(noticeResult[attrKey + '__type']).to.equal(locValue2.type);
+                expect(noticeResult[attrKey + '__type']).to.equal(locType2);
                 done();
             });
         });
@@ -257,7 +257,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue3);
-                expect(noticeResult[attrKey + '__type']).to.equal(locValue3.type);
+                expect(noticeResult[attrKey + '__type']).to.equal(locType3);
                 done();
             });
         });
@@ -278,7 +278,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue4);
-                expect(noticeResult[attrKey + '__type']).to.equal(locValue4.type);
+                expect(noticeResult[attrKey + '__type']).to.equal(locType4);
                 done();
             });
         });
@@ -357,7 +357,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey + '__type']).to.equal(attrType);
                 expect(noticeResult[attrKey]).to.equal(attrValue);
-                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locValue2.type);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locType2);
                 done();
             });
         });
