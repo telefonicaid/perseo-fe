@@ -1,2 +1,1 @@
 - Remove ngsiv1 support for updateAction (#714)
-- Remove unnecessary event data transformations (stripped, location parse, datetime parse) (#706, #712)

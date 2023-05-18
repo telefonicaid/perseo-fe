@@ -120,7 +120,7 @@ describe('Notices NGSIv2', function() {
     describe('#processCBv2Notice', function() {
         it('should accept simple notice using Number type', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 var noticeResult = processCBv2Notice(service, subservice, noticeExample, 0);
@@ -139,7 +139,7 @@ describe('Notices NGSIv2', function() {
 
         it('should accept simple notice using DateTime', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.data[0][attrKey].type = dateType;
@@ -160,7 +160,7 @@ describe('Notices NGSIv2', function() {
 
         it('should accept simple notice using Array', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.data[0][attrKey].type = arrayType;
@@ -181,7 +181,7 @@ describe('Notices NGSIv2', function() {
 
         it('should accept simple notice using Object', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.data[0][attrKey].type = objectType;
@@ -202,7 +202,7 @@ describe('Notices NGSIv2', function() {
 
         it('should accept simple notice using geo:point type', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.data[0][attrKey].type = locType;
@@ -222,7 +222,7 @@ describe('Notices NGSIv2', function() {
 
         it('should accept simple notice using geo:json type Point', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.data[0][attrKey].type = locType2;
@@ -236,14 +236,14 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue2);
-                expect(noticeResult[attrKey + '__type']).to.equal(locValue2.type);
+                expect(noticeResult[attrKey + '__type']).to.equal(locType2);
                 done();
             });
         });
 
         it('should accept simple notice using geo:json type LineString', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.data[0][attrKey].type = locType3;
@@ -257,14 +257,14 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue3);
-                expect(noticeResult[attrKey + '__type']).to.equal(locValue3.type);
+                expect(noticeResult[attrKey + '__type']).to.equal(locType3);
                 done();
             });
         });
 
         it('should accept simple notice using geo:json type Polygon', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.data[0][attrKey].type = locType4;
@@ -278,7 +278,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.service).to.equal(service);
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey]).to.equal(locValue4);
-                expect(noticeResult[attrKey + '__type']).to.equal(locValue4.type);
+                expect(noticeResult[attrKey + '__type']).to.equal(locType4);
                 done();
             });
         });
@@ -287,7 +287,7 @@ describe('Notices NGSIv2', function() {
             var at = 'theAttribute';
             var metavalue = 'attMetaEXtraValue';
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
@@ -313,7 +313,7 @@ describe('Notices NGSIv2', function() {
         it('should accept notices including geo:point metadata', function(done) {
             var at = 'theAttribute';
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
@@ -339,7 +339,7 @@ describe('Notices NGSIv2', function() {
         it('should accept notices including geo:json metadata type Point', function(done) {
             var at = 'theAttribute';
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});
@@ -357,7 +357,7 @@ describe('Notices NGSIv2', function() {
                 expect(noticeResult.isPattern).to.equal(false);
                 expect(noticeResult[attrKey + '__type']).to.equal(attrType);
                 expect(noticeResult[attrKey]).to.equal(attrValue);
-                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locValue2.type);
+                expect(noticeResult[attrKey + '__metadata__' + at + '__type']).to.equal(locType2);
                 done();
             });
         });
@@ -365,7 +365,7 @@ describe('Notices NGSIv2', function() {
         it('should accept notices including DateTime metadata', function(done) {
             var at = 'theAttribute';
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 var meta = (noticeExample.data[0].Attr1.metadata = {});

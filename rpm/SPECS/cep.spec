@@ -164,6 +164,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+* Thu May 18 2023 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.27.0
+- Add: support to run tests with node 18
+- Fix: do not flat in to map object or array attributes of event (#720)
+- Remove: unnecessary event data transformations (stripped, location parse, datetime parse) (#706, #712)
+- Upgrade uuid dep from ~1.4.2 to 9.0.0
+- Set Nodejs 16 as minimum version in packages.json (effectively removing Nodev12 and Nodev14 from supported versions)
+
 * Thu Oct 27 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.26.0
 - Fix: update actions with filter of timed based rules are not tried to execute after first failure updating entities (#708)
 

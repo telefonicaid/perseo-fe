@@ -97,7 +97,7 @@ describe('Notices NGSIv1', function() {
     describe('#processCBNotice', function() {
         it('should accept simple notice using Number type', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 var noticeResult = processCBNotice(service, subservice, noticeExample, 0);
@@ -116,7 +116,7 @@ describe('Notices NGSIv1', function() {
 
         it('should accept simple notice using geo:point type', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = locType;
@@ -137,7 +137,7 @@ describe('Notices NGSIv1', function() {
 
         it('should accept simple notice using DateTime type', function(done) {
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].type = dateType;
@@ -160,7 +160,7 @@ describe('Notices NGSIv1', function() {
             var at = 'theMetaAttribute';
             var metaAtVal = 'mockedValue1234';
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
@@ -188,7 +188,7 @@ describe('Notices NGSIv1', function() {
         it('should accept notice using DateTime metadata', function(done) {
             var at = 'theMetaAttribute';
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [
@@ -240,7 +240,7 @@ describe('Notices NGSIv1', function() {
             // this feature does not seem to make sense
             var at = 'location';
             notices.__with__({
-                'uuid.v1': uuidMock,
+                uuidv1: uuidMock,
                 'Date.now': dateNowMock
             })(function() {
                 noticeExample.contextResponses[0].contextElement.attributes[0].metadatas = [

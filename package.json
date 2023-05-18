@@ -2,7 +2,7 @@
   "name": "perseo",
   "description": "IOT CEP front End",
   "license": "AGPL-3.0-only",
-  "version": "1.26.0-next",
+  "version": "1.27.0-next",
   "author": {
     "name": "crbrox",
     "email": "carlos.romerobrox@telefonica.com"
@@ -16,7 +16,7 @@
   },
   "main": "bin/perseo",
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "scripts": {
     "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf coverage",
@@ -72,7 +72,7 @@
     "swagger-jsdoc": "~3.4.0",
     "swagger-ui-express": "~4.1.1",
     "twitter": "~1.7.1",
-    "uuid": "3.4.0"
+    "uuid": "9.0.0"
   },
   "husky": {
     "hooks": {
