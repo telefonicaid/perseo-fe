@@ -850,7 +850,7 @@ pre-provisioned application associated to the twitter user.
 
 The `template` field performs [string substitution](#string-substitution-syntax).
 
-## Metadata and object values
+## Metadata values
 
 Metadata values can be accessed by adding the suffix `__metadata__x` to the attribute name, being `x` the name of the
 metadata attribute. This name can be used in the EPL text of the rule and in the parameters of the action which accept
@@ -917,117 +917,5 @@ could be used by a rule so
 }
 ```
 
-Generally, fields of attribute values which are objects themselves are accessible by adding to the name of the field a
-double underscore prefix, so an attribute `x` with fields `a`, `b`, `c`, will allow these fields to be referred as
-`x__a`, `x__b` and `x__c`.
-
 Note: be aware of the difference between the key `metadatas` used in the context broker notificacions (v1), ending in
 `s` and the infix `metadata`, without the final `s`, used to access fields from EPL and actions.
-
-## JSON and Array fields in attributes
-
-Some attributes like JSON and Array based, will generate a pseudo-attribute with the same name as the attribute and a
-suffix "\_\_" followed by element name (for the case of JSON) or the ordinal (for the case of arrays), with the parsed
-value. This value makes easier to write the EPL text which involves time comparisons.
-
-Aditionally attribute objects are provided also in a json format (stringified).
-
-So, an incoming notification like this:
-
-```json
-{
-    "subscriptionId": "51c04a21d714fb3b37d7d5a7",
-    "data": [
-        {
-            "id": "John Doe",
-            "type": "employee",
-            "myJsonValue": {
-                "type": "myType1",
-                "value": { "color": "blue" }
-            },
-            "myArrayValue": {
-                "type": "myType2",
-                "value": ["green", "blue"]
-            },
-            "TimeInstant": "2021-10-19T10:15:37.050Z",
-            "location": {
-                "type": "geo:json",
-                "value": {
-                    "type": "Point",
-                    "coordinates": [53.120405283, 53.0859375]
-                },
-                "metadata": {}
-            }
-        }
-    ]
-}
-```
-
-will send to core the "event"
-
-```json
-{
-    "noticeId": "799635b0-914f-11e6-836b-bf1691c99768",
-    "noticeTS": 1476368120971,
-    "id": "John Doe",
-    "type": "employee",
-    "isPattern": "false",
-    "subservice": "/",
-    "service": "unknownt",
-    "myJsonValue__color": "blue",
-    "myJsonValue": { "type": "myType1", "value": { "color": "blue" } },
-    "myArrayValue__0": "green",
-    "myArrayValue__1": "black",
-    "myArrayValue": { "type": "myType2", "value": ["green", "blue"] },
-    "TimeInstant__type": "DateTime",
-    "TimeInstant": "2021-10-19T10:15:37.050Z",
-    "location__type": "Point",
-    "location": { "type": "Point", "coordinates": [53.120405283, 53.0859375] }
-}
-```
-
-Additionally all attributes are also included in non flatten format in the event into the `stripped` section:
-
-```json
-{
-    "noticeId": "799635b0-914f-11e6-836b-bf1691c99768",
-    "noticeTS": 1476368120971,
-    "id": "John Doe",
-    "type": "employee",
-    "isPattern": "false",
-    "subservice": "/",
-    "service": "unknownt",
-    "myJsonValue__color": "blue",
-    "myJsonValue": {"type":"myType1","value":{"color":"blue"}},
-    "myArrayValue__0": "green",
-    "myArrayValue__1": "black"
-    "myArrayValue": { "type": "myType2", "value": ["green", "blue"] },
-    "location__type": "Point",
-    "location":{"type":"Point","coordinates":[53.120405283,53.0859375]},
-    "stripped": {
-        "id": "John Doe",
-        "type": "employee",
-        "myJsonValue": {
-            "type": "myType1",
-            "value": { "color": "blue" }
-        },
-        "myArrayValue": {
-            "type": "myType2",
-            "value": ["green", "blue"]
-        },
-        "TimeInstant": {
-            "type": "DateTime",
-            "value": "2021-10-19T10:15:37.050Z",
-            "metadata": {}
-        },
-        "location": {
-            "type": "geo:json",
-            "value": {
-                "type": "Point",
-                "coordinates": [53.120405283, 53.0859375]
-            },
-            "metadata": {}
-        }
-    }
-}
-```
