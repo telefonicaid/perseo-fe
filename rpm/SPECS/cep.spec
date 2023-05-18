@@ -164,7 +164,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
-* Wed May 17 2023 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.27.0
+* Thu May 18 2023 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.27.0
 - Add: support to run tests with node 18
 - Fix: do not flat in to map object or array attributes of event (#720)
 - Remove: unnecessary event data transformations (stripped, location parse, datetime parse) (#706, #712)
