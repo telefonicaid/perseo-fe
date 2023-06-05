@@ -47,6 +47,33 @@ describe('noSignal', function() {
             type: null
         }
     };
+    var rule2 = {
+        name: 'NSR2',
+        action: {
+            type: 'update',
+            parameters: {
+                id: 'alarma:${id}',
+                type: 'Alarm',
+                attributes: [
+                    {
+                        name: 'msg',
+                        value: 'El status de ${id} es ${status}'
+                    }
+                ]
+            }
+        },
+        subservice: '/',
+        service: 'unknownt',
+        nosignal: {
+            checkInterval: '1',
+            attribute: 'temperature',
+            reportInterval: '5',
+            id: 'thing:disp1',
+            idRegexp: null,
+            type: 'thing'
+        }
+    };
+
     describe('#addNSRule()', function() {
         it('should reject to add a rule with invalid check interval', function() {
             rule.nosignal.checkInterval = 'aserejé';
@@ -108,6 +135,15 @@ describe('noSignal', function() {
             noSignal.RefreshAllRules([rule]);
             updatedRule = noSignal.GetNSArrRule(rule.service, rule.subservice, rule.name);
             should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal), updatedRule);
+        });
+    });
+
+    describe('#checkNoSignal()', function() {
+        it('check no signal ', function() {
+            var gotNSRule;
+            should.notEqual(noSignal.AddNSRule(rule2.service, rule2.subservice, rule2.name, rule2.nosignal), 0);
+            gotNSRule = noSignal.GetNSArrRule(rule2.service, rule2.subservice, rule2.name);
+            //console.log("RULE: " + JSON.stringify(gotNSRule));
         });
     });
 });

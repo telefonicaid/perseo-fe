@@ -232,4 +232,10 @@ config.castTypes = false;
  */
 config.maxRulesByCorr = 20;
 
+/**
+ * Check nonSignal rules using API ngsiv2 or just access to mongo
+ * @type {Boolean}
+ */
+config.nonSignalByAPI = false;
+
 module.exports = config;

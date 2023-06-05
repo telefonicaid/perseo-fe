@@ -107,7 +107,8 @@ function loadConfiguration() {
         'PERSEO_AUTHENTICATION_USER',
         'PERSEO_AUTHENTICATION_PASSWORD',
         'PERSEO_AUTHENTICATION_SERVICE',
-        'PERSEO_MAX_RULES_BY_CORR'
+        'PERSEO_MAX_RULES_BY_CORR',
+        'PERSEO_CHECK_NON_SIGNAL_BY_API'
     ];
 
     const protectedVariables = [
@@ -233,6 +234,9 @@ function loadConfiguration() {
 
     if (process.env.PERSEO_MAX_RULES_BY_CORR) {
         config.maxRulesByCorr = process.env.PERSEO_MAX_RULES_BY_CORR;
+    }
+    if (process.env.PERSEO_CHECK_NON_SIGNAL_BY_API) {
+        config.nonSignalByAPI = process.env.PERSEO_CHECK_NON_SIGNAL_BY_API;
     }
 }
 
