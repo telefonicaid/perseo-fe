@@ -29,7 +29,6 @@ var should = require('should');
 var rewire = require('rewire');
 var entitiesStore = rewire('../../lib/models/entitiesStore.js');
 var assert = require('assert');
-var MongoClient = require('mongodb').MongoClient;
 var chai = require('chai');
 var expect = chai.expect;
 var sinon = require('sinon');
@@ -37,10 +36,6 @@ var sinonChai = require('sinon-chai');
 var config = require('../../config.js');
 chai.Should();
 chai.use(sinonChai);
-
-/*
-(service, subservice, ruleData, func, callback)
-*/
 
 describe('Test suit', function() {
     var ruleData = {
@@ -80,30 +75,30 @@ describe('Test suit', function() {
         };
     describe('FindSilentEntities test', () => {
         it('By default should call FindSilentEntitiesByMongo', () => {
-            // Crear un stub de Sinon para la función findSilentEntitiesByMongo
+            // Create a Sinon stub for the function findSilentEntitiesByMongo
             var FindSilentEntitiesByMongoStub = sinon.stub();
 
-            // Configurar el módulo para que utilice el stub en lugar de la implementación real
+            // Configure the module to use the stub instead of the actual implementation
             entitiesStore.FindSilentEntitiesByMongo = FindSilentEntitiesByMongoStub;
 
-            // Llamar a la función que se va a probar
+            // Calling the function to be tested
             entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, func, callback);
 
-            // Comprobar si la función FindSilentEntitiesByMongo ha sido llamada
+            // Check if the function FindSilentEntitiesByMongo has been call
             expect(FindSilentEntitiesByMongoStub.calledOnce).to.be.true;
         });
         it('If default settings are changed FindSilentEntitiesByAPI should be called', () => {
             config.nonSignalByAPI = true;
-            // Crear un stub de Sinon para la función FindSilentEntitiesByAPI
+            // Create a Sinon stub for the function FindSilentEntitiesByAPI
             var FindSilentEntitiesByAPIStub = sinon.stub();
 
-            // Configurar el módulo para que utilice el stub en lugar de la implementación real
+            // Configure the module to use the stub instead of the actual implementation
             entitiesStore.FindSilentEntitiesByAPI = FindSilentEntitiesByAPIStub;
 
-            // Llamar a la función que se va a probar
+            // Calling the function to be tested
             entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, func, callback);
 
-            // Comprobar si la función FindSilentEntitiesByAPI ha sido llamada
+            // Check if the function FindSilentEntitiesByAPI has been call
             expect(FindSilentEntitiesByAPIStub.calledOnce).to.be.true;
         });
     });
