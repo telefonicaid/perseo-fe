@@ -2,7 +2,7 @@
 
 [![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: AGPLv3](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](./LICENSE)
-[![Docker Status](https://img.shields.io/docker/pulls/fiware/perseo.svg)](https://hub.docker.com/r/fiware/perseo/)
+[![Docker badge](https://img.shields.io/badge/quay.io-fiware%2Fperseo--fe-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/perseo-fe)
 [![Support badge](https://img.shields.io/badge/tag-fiware--perseo-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware-perseo)
 <br> [![Documentation badge](https://img.shields.io/readthedocs/fiware-perseo-fe.svg)](https://fiware-perseo-fe.readthedocs.io/en/latest/)
 [![CI](https://github.com/telefonicaid/perseo-fe/workflows/CI/badge.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
@@ -20,7 +20,7 @@ context broker tested with Perseo and officially supported is
 This project is part of [FIWARE](https://www.fiware.org). You can find more FIWARE components in the
 [FIWARE catalogue](https://catalogue.fiware.org).
 
-| :books: [Documentation](https://fiware-perseo-fe.readthedocs.io/en/latest/) | :whale: [Docker Hub](https://hub.docker.com/r/fiware/perseo/) | :dart: [Roadmap](documentation/roadmap.md) |
+| :books: [Documentation](https://fiware-perseo-fe.readthedocs.io/en/latest/) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/perseo-fe) | :dart: [Roadmap](documentation/roadmap.md) |
 | ---------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------ |
 
 
@@ -89,6 +89,9 @@ For performing a basic end-to-end test, you can follow the detailed instructions
 
 Perseo FE is licensed under [Affero General Public License (GPL) version 3](./LICENSE).
 
+<details>
+<summary><strong>Further information on the use of the AGPL open source license</strong></summary>
+
 ### Are there any legal issues with AGPL 3.0? Is it safe for me to use?
 
 There is absolutely no problem in using a product licensed under AGPL 3.0. Issues with GPL (or AGPL) licenses are mostly
@@ -103,3 +106,5 @@ public statement as follows:
 > incorporate enhancements is considered a derivative work of the product. Software that merely uses or aggregates (i.e.
 > links to) an otherwise unmodified version of existing software is not considered a derivative work, and therefore it
 > does not need to be released as under the same license, or even released as open source.
+
+</details>
