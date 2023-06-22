@@ -28,9 +28,8 @@
 var should = require('should');
 var rewire = require('rewire');
 var entitiesStore = rewire('../../lib/models/entitiesStore.js');
-var assert = require('assert');
+//var assert = require('assert');
 var chai = require('chai');
-var expect = chai.expect;
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 var config = require('../../config.js');
@@ -69,7 +68,6 @@ describe('Test suit', function() {
             should.exist(request);
             should.not.exist(e);
             should.equal(request.httpCode, 200);
-            done();
         };
 
     it('By default should call findSilentEntitiesByMongo', function() {
