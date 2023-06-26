@@ -31,7 +31,6 @@ var entitiesStore = rewire('../../lib/models/entitiesStore.js');
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
-var expect = chai.expect;
 var config = require('../../config.js');
 var NGSI = require('ngsijs');
 chai.Should();
@@ -105,6 +104,7 @@ describe('entitiesStore', function() {
         /* jshint ignore:start */
 
         it('should return silent entities', async function() {
+            var expect = chai.expect;
             var funcM = sinon.spy(),
                 callbackM = sinon.spy();
 
@@ -118,10 +118,10 @@ describe('entitiesStore', function() {
                 funcM,
                 callbackM
             );
-            /* jshint ignore:end */
             expect(listEntitiesMock.calledOnce).to.be.true;
             expect(funcM.callCount).to.equal(0);
             expect(callbackM.calledOnceWith(null, [])).to.be.true;
         });
     });
+    /*jshint ignore:end */
 });
