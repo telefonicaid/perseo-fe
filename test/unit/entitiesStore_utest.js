@@ -102,7 +102,8 @@ describe('entitiesStore', function() {
             entitiesStore.FindSilentEntities();
             sinon.assert.calledOnce(findSilentEntitiesByAPISpy);
         });
-        // eslint-disable-next-line
+        / jshint ignore:start /;
+
         it('should return silent entities', async function() {
             var funcM = sinon.spy(),
                 callbackM = sinon.spy();
@@ -117,10 +118,10 @@ describe('entitiesStore', function() {
                 funcM,
                 callbackM
             );
-
+            / jshint ignore:end /;
             expect(listEntitiesMock.calledOnce).to.be.true;
             expect(funcM.callCount).to.equal(0);
             expect(callbackM.calledOnceWith(null, [])).to.be.true;
-        }); // jshint ignore:line
+        });
     });
 });
