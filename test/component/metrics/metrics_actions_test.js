@@ -185,10 +185,6 @@ describe('Metrics', function() {
 
                                 should.equal(m.services.unknownt.sum.actionEntityUpdate, 1);
                                 // V2 request is expecting a valid response. V1 not.
-                                // should.equal(m.services.unknownt.sum.okActionEntityUpdate, 1);
-                                // should.equal(m.services.unknownt.sum.failedActionEntityUpdate, 0);
-                                // should.equal(m.services.unknownt.sum.outgoingTransactions, 1);
-                                // should.equal(m.services.unknownt.sum.outgoingTransactionsErrors, 0);
                                 return callback();
                             }, 50);
                         });
@@ -232,8 +228,6 @@ describe('Metrics', function() {
                                 should.equal(m.services.unknownt.sum.actionEntityUpdate, 1);
                                 should.equal(m.services.unknownt.sum.okActionEntityUpdate, 0);
                                 should.equal(m.services.unknownt.sum.failedActionEntityUpdate, 1);
-                                //should.equal(m.services.unknownt.sum.outgoingTransactions, 1);
-                                //should.equal(m.services.unknownt.sum.outgoingTransactionsErrors, 1);
                                 return callback();
                             }, 1500);
                         });
