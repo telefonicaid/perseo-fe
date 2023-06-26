@@ -104,6 +104,7 @@ describe('entitiesStore', function() {
         });
 
         it('should return silent entities', async function() {
+            // jshint ignore:line
             var funcM = sinon.spy(),
                 callbackM = sinon.spy();
 
@@ -121,6 +122,6 @@ describe('entitiesStore', function() {
             expect(listEntitiesMock.calledOnce).to.be.true;
             expect(funcM.callCount).to.equal(0);
             expect(callbackM.calledOnceWith(null, [])).to.be.true;
-        });
+        }); // jshint ignore:line
     });
 });
