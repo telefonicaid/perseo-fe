@@ -102,9 +102,8 @@ describe('entitiesStore', function() {
             entitiesStore.FindSilentEntities();
             sinon.assert.calledOnce(findSilentEntitiesByAPISpy);
         });
-
+        // eslint-disable-next-line
         it('should return silent entities', async function() {
-            // jshint ignore:line
             var funcM = sinon.spy(),
                 callbackM = sinon.spy();
 
