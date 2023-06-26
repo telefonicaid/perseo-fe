@@ -122,6 +122,6 @@ describe('entitiesStore', function() {
             expect(funcM.callCount).to.equal(0);
             expect(callbackM.calledOnceWith(null, [])).to.be.true;
         });
+        /*jshint ignore:end */
     });
-    /*jshint ignore:end */
 });
