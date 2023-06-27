@@ -1,3 +1,3 @@
 
--  Allow access entities using NGSIv2 API for non_signal rules (#549)
+-  Allow access entities using NGSIv2 API for non_signal rules (new setting nonSignalByAPI / PERSEO_CHECK_NON_SIGNAL_BY_API) (#549)
 

@@ -32,7 +32,7 @@ var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 var config = require('../../config.js');
-var NGSI = require('ngsijs');
+var ngsi = require('ngsijs');
 chai.Should();
 chai.use(sinonChai);
 
@@ -42,7 +42,7 @@ describe('entitiesStore', function() {
         var listEntitiesMock;
 
         beforeEach(function() {
-            connectionMock = sinon.stub(NGSI, 'Connection');
+            connectionMock = sinon.stub(ngsi, 'Connection');
             listEntitiesMock = sinon.stub();
 
             // Mock the Connection function
