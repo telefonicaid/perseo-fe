@@ -47,32 +47,6 @@ describe('noSignal', function() {
             type: null
         }
     };
-    var rule2 = {
-        name: 'NSR2',
-        action: {
-            type: 'update',
-            parameters: {
-                id: 'alarma:${id}',
-                type: 'Alarm',
-                attributes: [
-                    {
-                        name: 'msg',
-                        value: 'El status de ${id} es ${status}'
-                    }
-                ]
-            }
-        },
-        subservice: '/',
-        service: 'unknownt',
-        nosignal: {
-            checkInterval: '1',
-            attribute: 'temperature',
-            reportInterval: '5',
-            id: 'thing:disp1',
-            idRegexp: null,
-            type: 'thing'
-        }
-    };
 
     describe('#addNSRule()', function() {
         it('should reject to add a rule with invalid check interval', function() {
