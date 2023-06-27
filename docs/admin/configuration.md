@@ -49,10 +49,12 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_AUTHENTICATION_USER         | User to perform authentication                                                                                                                                                                          |
 | PERSEO_AUTHENTICATION_PASSWORD     | Password for the user to perform authentication                                                                                                                                                         |
 | PERSEO_AUTHENTICATION_SERVICE      | Keystone User Service to perform authentication                                                                                                                                                         |
-| PERSEO_CAST_TYPE                   | If true, enable attribute value casting based in NGSI-v2 attribute types if true. If false (default), the JSON native type for the attribute value is used.                                             |
+| PERSEO_CAST_TYPE                   | Maximum number of rule executions triggered by the same notification (with the same correlator) until refuse execute a rule. Default is 20. See [loop detection tips](https://github.com/telefonicaid/perseo-fe/blob/master/docs/architecture/architecture.md#loop-detection)   |
+| PERSEO_MAX_RULES_BY_CORR           | If true, enable attribute value casting based in NGSI-v2 attribute types if true. If false (default), the JSON native type for the attribute value is used.                                           |
+| PERSEO_CHECK_NON_SIGNAL_BY_API     | If false, the entities will be directly find using MongoDB, if true they will be fing using NGSIv2 API                 
+                                                
 
-| PERSEO_MAX_RULES_BY_CORR | Maximum number of rule executions triggered by the same notification (with the same correlator) until refuse execute a rule. Default is 20. See [loop detection tips](https://github.com/telefonicaid/perseo-fe/blob/master/docs/architecture/architecture.md#loop-detection)
-|
+                                                
 
 ### Basic Configuration
 
@@ -91,6 +93,7 @@ In order to have perseo running, there are several basic pieces of information t
 -   `config.checkDB.bufferMaxEntries`: Number of operations buffered up before giving up on getting a working connection
     (see [database aspects](admin.md#database-aspects) documentation for mode detail).
 -   `config.maxRulesByCorr`: Maximum number of rule executions triggered by the same notification (with the same correlator) until refuse execute a rule. Defualt is 20
+-   `config.nonSignalByAPI`: Flag value, determine the use of the NGSIv2 API or MongoDB. By default is false.
 
 Options for HA:
 
