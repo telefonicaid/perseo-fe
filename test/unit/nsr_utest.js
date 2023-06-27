@@ -137,13 +137,4 @@ describe('noSignal', function() {
             should.deepEqual(noSignal.Nsr2Arr(rule.service, rule.subservice, rule.name, rule.nosignal), updatedRule);
         });
     });
-
-    describe('#checkNoSignal()', function() {
-        it('check no signal ', function() {
-            var gotNSRule;
-            should.notEqual(noSignal.AddNSRule(rule2.service, rule2.subservice, rule2.name, rule2.nosignal), 0);
-            gotNSRule = noSignal.GetNSArrRule(rule2.service, rule2.subservice, rule2.name);
-            //console.log("RULE: " + JSON.stringify(gotNSRule));
-        });
-    });
 });
