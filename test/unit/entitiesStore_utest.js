@@ -37,83 +37,69 @@ chai.Should();
 chai.use(sinonChai);
 
 describe('entitiesStore', function() {
-    describe('#findSilentEntitiesByAPI', function() {
-        var connectionMock;
-        var listEntitiesMock;
-
-        beforeEach(function() {
-            connectionMock = sinon.stub(ngsi, 'Connection');
-            listEntitiesMock = sinon.stub();
-
-            // Mock the Connection function
-            connectionMock.returns({ v2: { listEntities: listEntitiesMock } });
-        });
-
-        afterEach(function() {
-            // Restore the original function after each test
-            connectionMock.restore();
-        });
-
-        var ruleData = {
-                name: 'NSR2',
-                action: {
-                    type: 'update',
-                    parameters: {
-                        id: 'alarma:${id}',
-                        type: 'Alarm',
-                        attributes: [
-                            {
-                                name: 'msg',
-                                value: 'El status de ${id} es ${status}'
-                            }
-                        ]
-                    }
-                },
-                subservice: '/',
-                service: 'unknownt',
-                nosignal: {
-                    checkInterval: '1',
-                    attribute: 'temperature',
-                    reportInterval: '5',
-                    id: 'thing:disp1',
-                    idRegexp: null,
-                    type: 'thing'
+    var ruleData = {
+            name: 'NSR2',
+            action: {
+                type: 'update',
+                parameters: {
+                    id: 'alarma:${id}',
+                    type: 'Alarm',
+                    attributes: [
+                        {
+                            name: 'msg',
+                            value: 'El status de ${id} es ${status}'
+                        }
+                    ]
                 }
             },
-            func = 'sinon.stub()',
-            callback = function(e, request) {
-                should.exist(request);
-                should.not.exist(e);
-                should.equal(request.httpCode, 200);
-            };
+            subservice: '/',
+            service: 'unknownt',
+            nosignal: {
+                checkInterval: '1',
+                attribute: 'temperature',
+                reportInterval: '5',
+                id: 'thing:disp1',
+                idRegexp: null,
+                type: 'thing'
+            }
+        },
+        func = 'sinon.stub()',
+        callback = function(e, request) {
+            should.exist(request);
+            should.not.exist(e);
+            should.equal(request.httpCode, 200);
+        };
 
-        it('By default should call findSilentEntitiesByMongo', function() {
-            var findSilentEntitiesByMongoSpy = sinon.spy();
-            entitiesStore.__set__('findSilentEntitiesByMongo', findSilentEntitiesByMongoSpy);
-            entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, func, callback);
-            sinon.assert.calledOnce(findSilentEntitiesByMongoSpy);
-        });
+    it('By default should call findSilentEntitiesByMongo', function() {
+        var findSilentEntitiesByMongoSpy = sinon.spy();
+        entitiesStore.__set__('findSilentEntitiesByMongo', findSilentEntitiesByMongoSpy);
+        entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, func, callback);
+        sinon.assert.calledOnce(findSilentEntitiesByMongoSpy);
+    });
 
-        it('If default settings are changed FindSilentEntitiesByAPI should be called', function() {
-            config.nonSignalByAPI = true;
-            var findSilentEntitiesByAPISpy = sinon.spy();
-            entitiesStore.__set__('findSilentEntitiesByAPI', findSilentEntitiesByAPISpy);
-            entitiesStore.FindSilentEntities();
-            sinon.assert.calledOnce(findSilentEntitiesByAPISpy);
-        });
+    it('If default settings are changed FindSilentEntitiesByAPI should be called', function() {
+        config.nonSignalByAPI = true;
+        var findSilentEntitiesByAPISpy = sinon.spy();
+        entitiesStore.__set__('findSilentEntitiesByAPI', findSilentEntitiesByAPISpy);
+        entitiesStore.FindSilentEntities();
+        sinon.assert.calledOnce(findSilentEntitiesByAPISpy);
+    });
 
-        it('should correctly create a connection', function() {
-            var service = 'Service';
-            var subservice = 'Subservice';
+    it('should call findSilentEntitiesByAPIWithPagination', function() {
+        var findSilentEntitiesByAPIWithPaginationSpy = sinon.spy();
+        var createConnectionStub = sinon.stub().returns({});
+        var createFilterStub = sinon.stub().returns({});
+        var func2 = sinon.stub();
+        var callback2 = sinon.stub();
 
-            entitiesStore.createConnection(service, subservice);
+        entitiesStore.__set__('findSilentEntitiesByAPIWithPagination', findSilentEntitiesByAPIWithPaginationSpy);
+        entitiesStore.__set__('createConnection', createConnectionStub);
+        entitiesStore.__set__('createFilter', createFilterStub);
 
-            sinon.assert.calledOnce(connectionMock);
-            sinon.assert.calledWithExactly(connectionMock, config.orion.URL, {
-                service: service,
-                servicepath: subservice,
-                headers: {}
-            });
-        });
+        entitiesStore.findSilentEntitiesByAPI(ruleData.service, ruleData.subservice, ruleData, func2, callback2);
+
+        sinon.assert.calledOnce(findSilentEntitiesByAPIWithPaginationSpy);
+        sinon.assert.calledOnce(createConnectionStub);
+        sinon.assert.calledOnce(createFilterStub);
     });
 });
