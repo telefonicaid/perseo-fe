@@ -56,6 +56,7 @@ The following table shows the environment variables available for Perseo configu
 (*)Although the idea is that now Perseo works always using NGSIv2 API to check times for non signal rules, this setting has been introduced to ease a potential rollback if some problem is found with this new approach. Thus, I has to be considered a kind of temporal debugging settings, to be removed when we get confident with the new functionality, thus you shouldn't use it with care. 
                                                 
 
+
 ### Basic Configuration
 
 In order to have perseo running, there are several basic pieces of information to fill:
