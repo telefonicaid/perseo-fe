@@ -101,27 +101,19 @@ describe('entitiesStore', function() {
             entitiesStore.FindSilentEntities();
             sinon.assert.calledOnce(findSilentEntitiesByAPISpy);
         });
-        /* jshint ignore:start */
 
-        it('should return silent entities', async function() {
-            var expect = chai.expect;
-            var funcM = sinon.spy(),
-                callbackM = sinon.spy();
+        it('should correctly create a connection', function() {
+            var service = 'Service';
+            var subservice = 'Subservice';
 
-            // Mock the listEntities function to resolve with a test response
-            listEntitiesMock.returns(Promise.resolve({ results: [] }));
+            entitiesStore.createConnection(service, subservice);
 
-            await entitiesStore.findSilentEntitiesByAPI(
-                ruleData.service,
-                ruleData.subservice,
-                ruleData,
-                funcM,
-                callbackM
-            );
-            expect(listEntitiesMock.calledOnce).to.be.true;
-            expect(funcM.callCount).to.equal(0);
-            expect(callbackM.calledOnceWith(null, [])).to.be.true;
+            sinon.assert.calledOnce(connectionMock);
+            sinon.assert.calledWithExactly(connectionMock, config.orion.URL, {
+                service: service,
+                servicepath: subservice,
+                headers: {}
+            });
         });
-        /*jshint ignore:end */
     });
 });
