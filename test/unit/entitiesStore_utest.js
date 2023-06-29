@@ -62,7 +62,7 @@ describe('entitiesStore', function() {
                 type: 'thing'
             }
         },
-        func = 'sinon.stub()',
+        alterFunc = 'sinon.stub()',
         callback = function(e, request) {
             should.exist(request);
             should.not.exist(e);
@@ -72,7 +72,7 @@ describe('entitiesStore', function() {
     it('By default should call findSilentEntitiesByMongo', function() {
         var findSilentEntitiesByMongoSpy = sinon.spy();
         entitiesStore.__set__('findSilentEntitiesByMongo', findSilentEntitiesByMongoSpy);
-        entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, func, callback);
+        entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, alterFunc, callback);
         sinon.assert.calledOnce(findSilentEntitiesByMongoSpy);
     });
 
@@ -88,17 +88,71 @@ describe('entitiesStore', function() {
         var findSilentEntitiesByAPIWithPaginationSpy = sinon.spy();
         var createConnectionStub = sinon.stub().returns({});
         var createFilterStub = sinon.stub().returns({});
-        var func2 = sinon.stub();
+        var alterFunc2 = sinon.stub();
         var callback2 = sinon.stub();
 
         entitiesStore.__set__('findSilentEntitiesByAPIWithPagination', findSilentEntitiesByAPIWithPaginationSpy);
         entitiesStore.__set__('createConnection', createConnectionStub);
         entitiesStore.__set__('createFilter', createFilterStub);
 
-        entitiesStore.findSilentEntitiesByAPI(ruleData.service, ruleData.subservice, ruleData, func2, callback2);
+        entitiesStore.findSilentEntitiesByAPI(ruleData.service, ruleData.subservice, ruleData, alterFunc2, callback2);
 
         sinon.assert.calledOnce(findSilentEntitiesByAPIWithPaginationSpy);
         sinon.assert.calledOnce(createConnectionStub);
         sinon.assert.calledOnce(createFilterStub);
+    });
+
+    it('should call listEntities and handle successful API response', function(done) {
+        var listEntitiesStub = sinon.stub().returns(
+            Promise.resolve({
+                results: [],
+                count: 0
+            })
+        );
+        var fakeConnection = {
+            v2: {
+                listEntities: listEntitiesStub
+            }
+        };
+        var fakeFilter = {};
+        var alterFuncStub = sinon.stub();
+        var callbackStub = sinon.stub();
+
+        entitiesStore
+            .findSilentEntitiesByAPIWithPagination(fakeConnection, fakeFilter, alterFuncStub, callbackStub)
+            .then(() => {
+                sinon.assert.calledOnce(listEntitiesStub);
+                sinon.assert.calledWith(listEntitiesStub, fakeFilter);
+                sinon.assert.calledOnce(alterFuncStub);
+                sinon.assert.calledOnce(callbackStub);
+                done();
+            })
+            .catch(done);
+    });
+
+    it('should handle errors from listEntities', function(done) {
+        var listEntitiesStub = sinon.stub().returns(Promise.reject('error'));
+        var fakeConnection = {
+            v2: {
+                listEntities: listEntitiesStub
+            }
+        };
+        var fakeFilter = {};
+        var alterFuncStub = sinon.stub();
+        var callbackStub = sinon.stub();
+
+        entitiesStore
+            .findSilentEntitiesByAPIWithPagination(fakeConnection, fakeFilter, alterFuncStub, callbackStub)
+            .then(() => {
+                done(new Error('Expected method to reject.'));
+            })
+            .catch(() => {
+                sinon.assert.calledOnce(listEntitiesStub);
+                sinon.assert.calledWith(listEntitiesStub, fakeFilter);
+                sinon.assert.notCalled(alterFuncStub);
+                sinon.assert.calledOnce(callbackStub);
+                sinon.assert.calledWith(callbackStub, 'error', null);
+                done();
+            });
     });
 });
