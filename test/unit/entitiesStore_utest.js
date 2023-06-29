@@ -32,6 +32,7 @@ var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 var config = require('../../config.js');
+var assert = require('chai').assert;
 chai.Should();
 chai.use(sinonChai);
 
@@ -100,5 +101,35 @@ describe('entitiesStore', function() {
         sinon.assert.calledOnce(findSilentEntitiesByAPIWithPaginationSpy);
         sinon.assert.calledOnce(createConnectionStub);
         sinon.assert.calledOnce(createFilterStub);
+    });
+    it('should correctly create filter', function() {
+        // Define input arguments
+        var service = 'testService';
+        var subservice = 'testSubservice';
+        var ruleData = {
+            type: 'testType',
+            attribute: 'testAttribute',
+            eportInterval: 3000,
+            id: 'testId'
+        };
+        var limit = 20;
+        var offset = 0;
+
+        var expectedFilter = {
+            service: service,
+            servicepath: subservice,
+            type: ruleData.type,
+            mq: ruleData.attribute + '.dateModified<' + (Date.now() / 1000 - ruleData.reportInterval).toString(),
+            options: 'count',
+            limit: limit,
+            offset: offset,
+            id: ruleData.id
+        };
+
+        // Call the function
+        var resultFilter = entitiesStore.createFilter(ruleData, service, subservice, limit, offset);
+
+        // Verify the result using assert.deepEqual
+        assert.deepStrictEqual(resultFilter, expectedFilter);
     });
 });
