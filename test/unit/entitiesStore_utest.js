@@ -120,7 +120,7 @@ describe('entitiesStore', function() {
             servicepath: subservice,
             type: ruleData.type,
             mq: ruleData.attribute + '.dateModified<' + (Date.now() / 1000 - ruleData.reportInterval).toString(),
-            options: 'count',
+            count: true,
             limit: limit,
             offset: offset,
             id: ruleData.id
