@@ -70,66 +70,78 @@ describe('entitiesStore', function() {
             should.equal(request.httpCode, 200);
         };
 
-    it('By default should call findSilentEntitiesByMongo', function() {
-        var findSilentEntitiesByMongoSpy = sinon.spy();
-        entitiesStore.__set__('findSilentEntitiesByMongo', findSilentEntitiesByMongoSpy);
-        entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, alterFunc, callback);
-        sinon.assert.calledOnce(findSilentEntitiesByMongoSpy);
+    describe('FindSilentEntities', function() {
+        it('By default should call findSilentEntitiesByMongo', function() {
+            var findSilentEntitiesByMongoSpy = sinon.spy();
+            entitiesStore.__set__('findSilentEntitiesByMongo', findSilentEntitiesByMongoSpy);
+            entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, alterFunc, callback);
+            sinon.assert.calledOnce(findSilentEntitiesByMongoSpy);
+        });
+
+        it('If default settings are changed FindSilentEntitiesByAPI should be called', function() {
+            config.nonSignalByAPI = true;
+            var findSilentEntitiesByAPISpy = sinon.spy();
+            entitiesStore.__set__('findSilentEntitiesByAPI', findSilentEntitiesByAPISpy);
+            entitiesStore.FindSilentEntities();
+            sinon.assert.calledOnce(findSilentEntitiesByAPISpy);
+        });
     });
 
-    it('If default settings are changed FindSilentEntitiesByAPI should be called', function() {
-        config.nonSignalByAPI = true;
-        var findSilentEntitiesByAPISpy = sinon.spy();
-        entitiesStore.__set__('findSilentEntitiesByAPI', findSilentEntitiesByAPISpy);
-        entitiesStore.FindSilentEntities();
-        sinon.assert.calledOnce(findSilentEntitiesByAPISpy);
+    describe('findSilentEntitiesByAPI', function() {
+        it('should call findSilentEntitiesByAPIWithPagination', function() {
+            var findSilentEntitiesByAPIWithPaginationSpy = sinon.spy();
+            var createConnectionStub = sinon.stub().returns({});
+            var createFilterStub = sinon.stub().returns({});
+            var alterFunc2 = sinon.stub();
+            var callback2 = sinon.stub();
+
+            entitiesStore.__set__('findSilentEntitiesByAPIWithPagination', findSilentEntitiesByAPIWithPaginationSpy);
+            entitiesStore.__set__('createConnection', createConnectionStub);
+            entitiesStore.__set__('createFilter', createFilterStub);
+
+            entitiesStore.findSilentEntitiesByAPI(
+                ruleData.service,
+                ruleData.subservice,
+                ruleData,
+                alterFunc2,
+                callback2
+            );
+
+            sinon.assert.calledOnce(findSilentEntitiesByAPIWithPaginationSpy);
+            sinon.assert.calledOnce(createConnectionStub);
+            sinon.assert.calledOnce(createFilterStub);
+        });
     });
 
-    it('should call findSilentEntitiesByAPIWithPagination', function() {
-        var findSilentEntitiesByAPIWithPaginationSpy = sinon.spy();
-        var createConnectionStub = sinon.stub().returns({});
-        var createFilterStub = sinon.stub().returns({});
-        var alterFunc2 = sinon.stub();
-        var callback2 = sinon.stub();
+    describe('createFilter', function() {
+        it('should correctly create filter', function() {
+            // Define input arguments
+            var service = 'testService';
+            var subservice = 'testSubservice';
+            var ruleData = {
+                type: 'testType',
+                attribute: 'testAttribute',
+                eportInterval: 3000,
+                id: 'testId'
+            };
+            var limit = 20;
+            var offset = 0;
 
-        entitiesStore.__set__('findSilentEntitiesByAPIWithPagination', findSilentEntitiesByAPIWithPaginationSpy);
-        entitiesStore.__set__('createConnection', createConnectionStub);
-        entitiesStore.__set__('createFilter', createFilterStub);
+            var expectedFilter = {
+                service: service,
+                servicepath: subservice,
+                type: ruleData.type,
+                mq: ruleData.attribute + '.dateModified<' + (Date.now() / 1000 - ruleData.reportInterval).toString(),
+                limit: limit,
+                offset: offset,
+                id: ruleData.id
+            };
 
-        entitiesStore.findSilentEntitiesByAPI(ruleData.service, ruleData.subservice, ruleData, alterFunc2, callback2);
+            // Call the function
+            var resultFilter = entitiesStore.createFilter(ruleData, service, subservice, limit, offset);
 
-        sinon.assert.calledOnce(findSilentEntitiesByAPIWithPaginationSpy);
-        sinon.assert.calledOnce(createConnectionStub);
-        sinon.assert.calledOnce(createFilterStub);
-    });
-    it('should correctly create filter', function() {
-        // Define input arguments
-        var service = 'testService';
-        var subservice = 'testSubservice';
-        var ruleData = {
-            type: 'testType',
-            attribute: 'testAttribute',
-            eportInterval: 3000,
-            id: 'testId'
-        };
-        var limit = 20;
-        var offset = 0;
-
-        var expectedFilter = {
-            service: service,
-            servicepath: subservice,
-            type: ruleData.type,
-            mq: ruleData.attribute + '.dateModified<' + (Date.now() / 1000 - ruleData.reportInterval).toString(),
-            count: true,
-            limit: limit,
-            offset: offset,
-            id: ruleData.id
-        };
-
-        // Call the function
-        var resultFilter = entitiesStore.createFilter(ruleData, service, subservice, limit, offset);
-
-        // Verify the result using assert.deepEqual
-        assert.deepStrictEqual(resultFilter, expectedFilter);
+            // Verify the result using assert.deepEqual
+            assert.deepStrictEqual(resultFilter, expectedFilter);
+        });
     });
 });
