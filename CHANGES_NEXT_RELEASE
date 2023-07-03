@@ -1,1 +1,2 @@
+- Remove support for ngsv1 notifications (#714)
 - Remove ngsiv1 support for updateAction (#714)

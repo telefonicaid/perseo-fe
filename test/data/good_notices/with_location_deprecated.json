@@ -1,31 +1,23 @@
 {
     "subscriptionId":"57f73930e0e2c975a712b8fd",
-    "originator":"localhost",
-    "contextResponses":[
+    "data": [
         {
-            "contextElement":{
-                "type":"Motorbike",
-                "isPattern":"false",
-                "id":"M1",
-                "attributes":[
+            "type":"Motorbike",
+            "isPattern":"false",
+            "id":"M1",
+            "position": {
+                "type":"coords",
+                "value":"40.418889, -3.691944",
+                "metadatas":[
                     {
-                        "name":"position",
-                        "type":"coords",
-                        "value":"40.418889, -3.691944",
-                        "metadatas":[
-                            {
-                                "name":"location",
-                                "type":"string",
-                                "value":"WGS84"
-                            }
-                        ]
+                        "location": {
+                            "type":"string",
+                            "value":"WGS84"
+                        }
                     }
                 ]
-            },
-            "statusCode":{
-                "code":"200",
-                "reasonPhrase":"OK"
             }
         }
     ]
 }
+
