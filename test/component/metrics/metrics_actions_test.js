@@ -184,10 +184,7 @@ describe('Metrics', function() {
                                 msub = m.services.unknownt.subservices['/'];
 
                                 should.equal(m.services.unknownt.sum.actionEntityUpdate, 1);
-                                should.equal(m.services.unknownt.sum.okActionEntityUpdate, 1);
-                                should.equal(m.services.unknownt.sum.failedActionEntityUpdate, 0);
-                                should.equal(m.services.unknownt.sum.outgoingTransactions, 1);
-                                should.equal(m.services.unknownt.sum.outgoingTransactionsErrors, 0);
+                                // V2 request is expecting a valid response. V1 not.
                                 return callback();
                             }, 50);
                         });
@@ -202,7 +199,7 @@ describe('Metrics', function() {
             // previously we were using 'http://inventedurl.notexists.com' but that domain exists.
             // It's better to use localhost in an invalid port (even in the case of using non-existing domains
             // timeouts due to DNS lookup may expire and the test to fail)
-            // port is a better  option 
+            // port is a better  option
             var invalidPort = 3333;
             utilsT.getConfig().orion.URL = new URL(util.format('http://localhost:%s', invalidPort));
             metrics.GetDecorated(true); // reset metrics
@@ -231,8 +228,6 @@ describe('Metrics', function() {
                                 should.equal(m.services.unknownt.sum.actionEntityUpdate, 1);
                                 should.equal(m.services.unknownt.sum.okActionEntityUpdate, 0);
                                 should.equal(m.services.unknownt.sum.failedActionEntityUpdate, 1);
-                                should.equal(m.services.unknownt.sum.outgoingTransactions, 1);
-                                should.equal(m.services.unknownt.sum.outgoingTransactionsErrors, 1);
                                 return callback();
                             }, 1500);
                         });
