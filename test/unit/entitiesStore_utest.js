@@ -7,8 +7,6 @@ var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 var config = require('../../config.js');
-var assert = require('chai').assert;
-var ngsi = require('ngsijs');
 chai.Should();
 chai.use(sinonChai);
 
@@ -90,6 +88,7 @@ describe('entitiesStore', function() {
     });
 
     describe('findSilentEntitiesByAPIWithPagination', function() {
+        /* jshint ignore:start */
         it('should call ngsi.Connection.v2.listEntities', async function() {
             var filter = {};
             var alterFunc3 = sinon.stub();
@@ -102,16 +101,17 @@ describe('entitiesStore', function() {
         });
 
         it('should call alterFunc for each entity', async function() {
-            var filter = { limit: 20, offset: 0 };
+            var filter2 = { limit: 20, offset: 0 };
             var entities = [{}, {}, {}];
             var connection = {
                 v2: { listEntities: sinon.stub().resolves({ count: entities.length, results: entities }) }
             };
-            var alterFunc = sinon.stub();
-            var callback = sinon.stub();
+            var alterFunc4 = sinon.stub();
+            var callback4 = sinon.stub();
 
-            await entitiesStore.findSilentEntitiesByAPIWithPagination(connection, filter, alterFunc, callback);
-            sinon.assert.callCount(alterFunc, entities.length);
+            await entitiesStore.findSilentEntitiesByAPIWithPagination(connection, filter2, alterFunc4, callback4);
+            sinon.assert.callCount(alterFunc4, entities.length);
         });
+        /* jshint ignore:end */
     });
 });
