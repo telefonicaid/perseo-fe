@@ -53,7 +53,7 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_MAX_RULES_BY_CORR           | If true, enable attribute value casting based in NGSI-v2 attribute types if true. If false (default), the JSON native type for the attribute value is used.                                           |
 | PERSEO_CHECK_NON_SIGNAL_BY_API     | If false, the entities will be directly find using MongoDB, if true they will be fing using NGSIv2 API(*)                 
                                                 
-(*)Although the idea is that now Perseo works always using NGSIv2 API to check times for non signal rules, this setting has been introduced to ease a potential rollback if some problem is found with this new approach. Thus, I has to be considered a kind of temporal debugging settings, to be removed when we get confident with the new functionality, thus you shouldn't use it with care. 
+(*)Although the idea is that now Perseo works always using NGSIv2 API to check times for non signal rules, this setting has been introduced to ease a potential rollback if some problem is found with this new approach. Thus, I has to be considered a kind of temporal debugging settings, to be removed when we get confident with the new functionality, thus you should use it with care. 
                                                 
 
 
