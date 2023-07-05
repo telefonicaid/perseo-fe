@@ -1,4 +1,4 @@
--  Add: allow access entities using NGSIv2 API for non_signal rules (new setting nonSignalByAPI / PERSEO_CHECK_NON_SIGNAL_BY_API) (#549)
+- Add: allow access entities using NGSIv2 API for non_signal rules (new setting nonSignalByAPI / PERSEO_CHECK_NON_SIGNAL_BY_API) (#549)
 - Remove support for ngsv1 notifications (#714)
 - Remove ngsiv1 support for updateAction (#714)
 
