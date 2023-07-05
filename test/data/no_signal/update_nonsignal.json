@@ -1,0 +1,31 @@
+{
+    "_id": "6474761fa509a6104ad7e415",
+    "name": "update_nonsignal",
+    "description": "testUpdate2",
+    "misc": "",
+    "text": "",
+    "VR": "",
+    "action": {
+        "type": "update",
+        "parameters": {
+            "id": "alarma:${id}",
+            "type": "Alarm",
+            "attributes": [
+                {
+                    "name": "msg",
+                    "value": "El status de ${id} es ${status}"
+                }
+            ]
+        }
+    },
+    "nosignal": {
+        "checkInterval": "1",
+        "attribute": "temperature",
+        "reportInterval": "5",
+        "id": "thing:disp1",
+        "idRegexp": null,
+        "type": "thing"
+    },
+    "subservice": "/test",
+    "service": "smartcity"
+}
