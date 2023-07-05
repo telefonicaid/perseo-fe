@@ -59,7 +59,7 @@ describe('Entity', function() {
                 }
             ],
             checkInterval = 1,
-            rule = utilsT.loadExample('./test/data/no_signal/generic_nonsignal.json');
+            rule = utilsT.loadExample('./test/data/no_signal/visualrule_nonsignal.json');
 
         // This is not correct, it does not affect actions module
         //      utilsT.getConfig().sms.URL = util.format('http://localhost:%s', utilsT.fakeHttpServerPort);
