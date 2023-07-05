@@ -21,7 +21,7 @@
   "scripts": {
     "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf coverage",
     "healthcheck": "node ./bin/healthcheck",
-    "test": "mocha --recursive 'test/unit/**.*.js' --reporter spec --timeout 5000 --ui bdd --exit --color true",
+    "test": "mocha --recursive 'test/**.*.js' --reporter spec --timeout 5000 --ui bdd --exit --color true",
     "test:watch": "npm run test -- -w ./lib",
     "lint": "jshint lib/ --config .jshintrc && jshint bin/ --config .jshintrc && jshint test/ --config test/.jshintrc",
     "lint:md": "remark  -f '*.md' 'docs/*.md'",
