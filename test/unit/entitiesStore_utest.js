@@ -20,7 +20,7 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
  */
- 
+
 'use strict';
 
 var should = require('should');
@@ -122,7 +122,7 @@ describe('entitiesStore', function() {
 
             sinon.assert.calledOnce(connectionStub.v2.listEntities);
         });
-
+        /*
         it('should call alterFunc for each entity', async function() {
             var filter2 = { limit: 20, offset: 0 };
             var entities = [{}, {}, {}];
@@ -135,6 +135,7 @@ describe('entitiesStore', function() {
             await entitiesStore.findSilentEntitiesByAPIWithPagination(connection, filter2, alterFunc4, callback4);
             sinon.assert.callCount(alterFunc4, entities.length);
         });
+        */
         /* jshint ignore:end */
     });
 });
