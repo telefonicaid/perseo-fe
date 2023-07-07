@@ -141,21 +141,72 @@ describe('entitiesStore', function() {
             );
         });
 
-        it('should pass accumulated results to callback when all entities are fetched', function(done) {
+        it('should recursively call itself when more entities are present', function() {
             var filter = { limit: 2, offset: 0 };
-            var entitiesBatch = [{ id: 'entity1' }, { id: 'entity2' }];
+            var entitiesBatch1 = [
+                {
+                    id: 'entity1',
+                    type: 'Device',
+                    attributes: {
+                        temperature: {
+                            value: 23,
+                            type: 'Float'
+                        },
+                        humidity: {
+                            value: 45,
+                            type: 'Float'
+                        }
+                    }
+                },
+                {
+                    id: 'entity2',
+                    type: 'Device',
+                    attributes: {
+                        temperature: {
+                            value: 25,
+                            type: 'Float'
+                        },
+                        humidity: {
+                            value: 50,
+                            type: 'Float'
+                        }
+                    }
+                }
+            ];
+            var entitiesBatch2 = [
+                {
+                    id: 'entity3',
+                    type: 'Device',
+                    attributes: {
+                        temperature: {
+                            value: 22,
+                            type: 'Float'
+                        },
+                        humidity: {
+                            value: 55,
+                            type: 'Float'
+                        }
+                    }
+                }
+            ];
 
-            connectionMock.v2.listEntities.returns(Promise.resolve({ results: entitiesBatch, count: 2 }));
+            connectionMock.v2.listEntities
+                .onFirstCall()
+                .returns(Promise.resolve({ results: entitiesBatch1, count: 3 }));
+            connectionMock.v2.listEntities
+                .onSecondCall()
+                .returns(Promise.resolve({ results: entitiesBatch2, count: 3 }));
 
-            entitiesStore.findSilentEntitiesByAPIWithPagination(
+            return entitiesStore.findSilentEntitiesByAPIWithPagination(
                 connectionMock,
                 filter,
                 alterFuncMock,
                 accumulatedResults,
                 function(err, entities, count) {
-                    chai.expect(entities).to.deep.equal(entitiesBatch);
-                    chai.expect(count).to.equal(2);
-                    done(err);
+                    sinon.assert.calledTwice(connectionMock.v2.listEntities);
+                    sinon.assert.calledThrice(alterFuncMock);
+                    chai.expect(entities).to.deep.equal(entitiesBatch1.concat(entitiesBatch2));
+                    chai.expect(count).to.equal(3);
                 }
             );
         });
