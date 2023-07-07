@@ -109,4 +109,55 @@ describe('entitiesStore', function() {
             sinon.assert.calledOnce(createFilterStub);
         });
     });
+    describe('findSilentEntitiesByAPIWithPagination', function() {
+        var connectionMock, alterFuncMock, accumulatedResults, callbackMock;
+
+        beforeEach(function() {
+            connectionMock = {
+                v2: {
+                    listEntities: sinon.stub()
+                }
+            };
+            alterFuncMock = sinon.stub();
+            accumulatedResults = [];
+            callbackMock = sinon.stub();
+        });
+
+        it('should pass error to callback when listEntities promise is rejected', function(done) {
+            var filter = { limit: 20, offset: 0 };
+            var error = new Error('test error');
+
+            connectionMock.v2.listEntities.returns(Promise.reject(error));
+
+            entitiesStore.findSilentEntitiesByAPIWithPagination(
+                connectionMock,
+                filter,
+                alterFuncMock,
+                accumulatedResults,
+                function(err) {
+                    chai.expect(err).to.equal(error);
+                    done();
+                }
+            );
+        });
+
+        it('should pass accumulated results to callback when all entities are fetched', function(done) {
+            var filter = { limit: 2, offset: 0 };
+            var entitiesBatch = [{ id: 'entity1' }, { id: 'entity2' }];
+
+            connectionMock.v2.listEntities.returns(Promise.resolve({ results: entitiesBatch, count: 2 }));
+
+            entitiesStore.findSilentEntitiesByAPIWithPagination(
+                connectionMock,
+                filter,
+                alterFuncMock,
+                accumulatedResults,
+                function(err, entities, count) {
+                    chai.expect(entities).to.deep.equal(entitiesBatch);
+                    chai.expect(count).to.equal(2);
+                    done(err);
+                }
+            );
+        });
+    });
 });
