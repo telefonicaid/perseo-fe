@@ -211,4 +211,80 @@ describe('entitiesStore', function() {
             );
         });
     });
+
+    describe('findSilentEntitiesByMongo', function() {
+        var ruleData = {
+            name: 'NSR4',
+            action: {
+                type: 'update',
+                parameters: {
+                    id: 'alarma:${id}',
+                    type: 'Alarm',
+                    attributes: [
+                        {
+                            name: 'msg',
+                            value: 'El status de ${id} es ${status}'
+                        }
+                    ]
+                }
+            },
+            subservice: '/',
+            service: 'unknownt',
+            nosignal: {
+                checkInterval: '1',
+                attribute: 'temperature',
+                reportInterval: '5',
+                id: 'thing:disp1',
+                idRegexp: null,
+                type: 'thing'
+            }
+        };
+
+        var alterFunc4 = sinon.stub();
+        var callback4 = sinon.stub();
+        var col = { find: sinon.stub().returnsThis(), batchSize: sinon.stub().returnsThis(), each: sinon.stub() };
+        var db = { collection: sinon.stub().yields(null, col) };
+
+        beforeEach(function() {
+            entitiesStore.__set__('orionServiceDb', sinon.stub().returns(db));
+        });
+
+        it('should call findSilentEntitiesByMongo', function(done) {
+            entitiesStore.findSilentEntitiesByMongo(
+                ruleData.service,
+                ruleData.subservice,
+                ruleData,
+                alterFunc4,
+                callback4
+            );
+            col.find.should.have.been.calledOnce;
+            done();
+        });
+
+        it('should pass error to callback when listEntities promise is rejected', function(done) {
+            var expectedError = new Error('Test Error');
+            var col = {
+                find: sinon.stub().returnsThis(),
+                batchSize: sinon.stub().returnsThis(),
+                each: sinon.stub().yields(expectedError, null)
+            };
+            var db = { collection: sinon.stub().yields(null, col) };
+
+            entitiesStore.__set__('orionServiceDb', sinon.stub().returns(db));
+            var callback4 = sinon.stub();
+
+            entitiesStore.findSilentEntitiesByMongo(
+                ruleData.service,
+                ruleData.subservice,
+                ruleData,
+                alterFunc4,
+                callback4
+            );
+
+            process.nextTick(function() {
+                callback4.should.have.been.calledOnceWith(expectedError);
+                done();
+            });
+        });
+    });
 });
