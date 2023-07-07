@@ -109,33 +109,4 @@ describe('entitiesStore', function() {
             sinon.assert.calledOnce(createFilterStub);
         });
     });
-
-    describe('findSilentEntitiesByAPIWithPagination', function() {
-        /* jshint ignore:start */
-        it('should call ngsi.Connection.v2.listEntities', async function() {
-            var filter = {};
-            var alterFunc3 = sinon.stub();
-            var callback3 = sinon.stub();
-            var connectionStub = { v2: { listEntities: sinon.stub().resolves([]) } };
-
-            await entitiesStore.findSilentEntitiesByAPIWithPagination(connectionStub, filter, alterFunc3, callback3);
-
-            sinon.assert.calledOnce(connectionStub.v2.listEntities);
-        });
-        /*
-        it('should call alterFunc for each entity', async function() {
-            var filter2 = { limit: 20, offset: 0 };
-            var entities = [{}, {}, {}];
-            var connection = {
-                v2: { listEntities: sinon.stub().resolves({ count: entities.length, results: entities }) }
-            };
-            var alterFunc4 = sinon.stub();
-            var callback4 = sinon.stub();
-
-            await entitiesStore.findSilentEntitiesByAPIWithPagination(connection, filter2, alterFunc4, callback4);
-            sinon.assert.callCount(alterFunc4, entities.length);
-        });
-        */
-        /* jshint ignore:end */
-    });
 });
