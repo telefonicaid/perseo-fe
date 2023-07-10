@@ -47,6 +47,7 @@ describe('noSignal', function() {
             type: null
         }
     };
+
     describe('#addNSRule()', function() {
         it('should reject to add a rule with invalid check interval', function() {
             rule.nosignal.checkInterval = 'aserejé';
