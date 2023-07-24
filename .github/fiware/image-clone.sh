@@ -1,9 +1,12 @@
 set -e
 
 SOURCE="telefonicaiot/perseo-fe"
+DOCKER_TARGET="fiware/perseo-fe"
+QUAY_TARGET="quay.io/fiware/perseo-fe"
 
-DOCKER_TARGET="fiware/$(basename $(git rev-parse --show-toplevel))"
-QUAY_TARGET="quay.io/fiware/$(basename $(git rev-parse --show-toplevel))"
+# DOCKER_TARGET="fiware/$(basename $(git rev-parse --show-toplevel))"
+# QUAY_TARGET="quay.io/fiware/$(basename $(git rev-parse --show-toplevel))"
+
 VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
 
 function clone {
