@@ -404,7 +404,7 @@ the Perseo configuration). The `parameters` map includes the following fields:
 -   authentication: optional, authentication (host, port, user, password and service) configuration values that will be
     used by updateAction rule (instead of default authentication defined by configuration) which will be used when a
     trust token should be negotiated. i.e.:
-    ```
+    ```json
     "authentication": {
         "host": "ext-keystone",
         "port": 5001,
@@ -495,7 +495,10 @@ NGSI-v2 example:
                 {
                    "name": "locationCopy",
                    "type": "MyCustomTypo",
-                   "value": "{\"type\":\"Point\",\"coordinates\":[${Lat},${Lon}]}"
+                   "value": {
+                       "type":"Point",
+                       "coordinates":["${Lat}","${Lon}"]
+                   }
               }
             ]
         }
