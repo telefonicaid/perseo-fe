@@ -239,8 +239,8 @@ example, the actions `sms`, `email`, `post` include a field `template` used to b
 text can include placeholders for attributes of the generated event. That placeholder has the form `${X}` where `X` may
 be one of the following posibilities:
 
--   `{$id}` for the ID of the entity that triggers the rule.
--   `{$type}` for the type of the entity that triggers the rule
+-   `${id}` for the ID of the entity that triggers the rule.
+-   `${type}` for the type of the entity that triggers the rule
 -   The name of an attribute in the entity which triggers the rule and the placeholder is substituted by the value of
     that attribute, e.g. `${temperature}`
 -   Alias defined in the [EPL text](#epl-text) of the associated rule. Some examples:
@@ -409,8 +409,8 @@ the Perseo configuration). The `parameters` map includes the following fields:
         "host": "ext-keystone",
         "port": 5001,
         "user": "mycepuser",
-        "password: "myceppassword",
-        "service: "mycepuserservice"
+        "password": "myceppassword",
+        "service": "mycepuserservice"
      }
     ```
 -   service: optional, service that will be used by updateAction rule instead of current event service. In this case,
