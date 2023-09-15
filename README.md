@@ -20,7 +20,7 @@ context broker tested with Perseo and officially supported is
 This project is part of [FIWARE](https://www.fiware.org). You can find more FIWARE components in the
 [FIWARE catalogue](https://catalogue.fiware.org).
 
-| :books: [Documentation](https://fiware-perseo-fe.readthedocs.io/en/latest/) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/perseo-fe)  | :dart: [Roadmap](documentation/roadmap.md) |
+| :books: [Documentation](https://fiware-perseo-fe.readthedocs.io/en/latest/) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/perseo-fe)  | :whale: [Docker Hub](https://hub.docker.com/r/telefonicaiot/perseo-fe/) | :dart: [Roadmap](documentation/roadmap.md) |
 | ---------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------ |
 
 
