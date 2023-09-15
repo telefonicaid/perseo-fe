@@ -2,7 +2,8 @@
 
 [![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: AGPLv3](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](./LICENSE)
-[![Docker badge](https://img.shields.io/badge/quay.io-fiware%2Fperseo--fe-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/perseo-fe)
+[![Quay badge](https://img.shields.io/badge/quay.io-fiware%2Fperseo--fe-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/perseo-fe)
+[![Docker badge](https://img.shields.io/badge/docker-telefonicaiot%2Fperseo--fe-blue?logo=docker)](https://hub.docker.com/r/telefonicaiot/perseo-fe)
 [![Support badge](https://img.shields.io/badge/tag-fiware--perseo-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware-perseo)
 <br> [![Documentation badge](https://img.shields.io/readthedocs/fiware-perseo-fe.svg)](https://fiware-perseo-fe.readthedocs.io/en/latest/)
 [![CI](https://github.com/telefonicaid/perseo-fe/workflows/CI/badge.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
