@@ -2,8 +2,10 @@
 
 [![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: AGPLv3](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](./LICENSE)
-[![Docker Status](https://img.shields.io/docker/pulls/fiware/perseo.svg)](https://hub.docker.com/r/fiware/perseo/)
 [![Support badge](https://img.shields.io/badge/tag-fiware--perseo-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware-perseo)
+<br/>
+[![Quay badge](https://img.shields.io/badge/quay.io-fiware%2Fperseo--fe-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/perseo-fe)
+[![Docker badge](https://img.shields.io/badge/docker-telefonicaiot%2Fperseo--fe-blue?logo=docker)](https://hub.docker.com/r/telefonicaiot/perseo-fe)
 <br> [![Documentation badge](https://img.shields.io/readthedocs/fiware-perseo-fe.svg)](https://fiware-perseo-fe.readthedocs.io/en/latest/)
 [![CI](https://github.com/telefonicaid/perseo-fe/workflows/CI/badge.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/perseo-fe/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/perseo-fe?branch=master)
@@ -20,8 +22,8 @@ context broker tested with Perseo and officially supported is
 This project is part of [FIWARE](https://www.fiware.org). You can find more FIWARE components in the
 [FIWARE catalogue](https://catalogue.fiware.org).
 
-| :books: [Documentation](https://fiware-perseo-fe.readthedocs.io/en/latest/) | :whale: [Docker Hub](https://hub.docker.com/r/fiware/perseo/) | :dart: [Roadmap](documentation/roadmap.md) |
-| ---------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------ |
+| :books: [Documentation](https://fiware-perseo-fe.readthedocs.io/en/latest/) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/perseo-fe)  | :whale: [Docker Hub](https://hub.docker.com/r/telefonicaiot/perseo-fe/) | :dart: [Roadmap](documentation/roadmap.md) |
+| ---------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------ | --- |
 
 
 ## Content
