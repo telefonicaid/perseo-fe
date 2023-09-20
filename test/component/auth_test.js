@@ -45,6 +45,14 @@ describe('Auth', function() {
             action.ev.id += date.getTime();
             utilsT.getConfig().authentication.host = 'localhost';
             utilsT.getConfig().authentication.port = utilsT.fakeHttpServerPort;
+            utilsT.getConfig().trusts = [
+                {
+                    id: 'thisIsATriustToken',
+                    user: 'user1',
+                    password: 'password',
+                    service: 'domain1'
+                }
+            ];
             utilsT.getConfig().orion.URL = new URL(util.format('http://localhost:%s', utilsT.fakeHttpServerPort));
             updateDone.once('updated_renew', done);
             updateDone.once('updated_first', function(error) {
