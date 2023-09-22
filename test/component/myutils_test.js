@@ -58,6 +58,26 @@ describe('Myutils', function() {
                 newStr.should.be.equal(23);
             });
         });
+        describe('When there is a variable which is a boolean', function() {
+            it('should return the boolean', function() {
+                var str = '${a}',
+                    map = { a: true },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal(true);
+            });
+        });
+        describe('When there is a variable which is a string boolean', function() {
+            it('should return the boolean', function() {
+                var str = '${a}',
+                    map = { a: 'true' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal(true);
+            });
+        });
         describe('When there is a variable which is a null', function() {
             it('should return the null', function() {
                 var str = '${a}',
