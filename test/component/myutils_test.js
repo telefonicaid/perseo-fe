@@ -38,6 +38,73 @@ describe('Myutils', function() {
                 newStr.should.be.equal(str);
             });
         });
+        describe('When there is a variable which is a number', function() {
+            it('should return the number', function() {
+                var str = '${a}',
+                    map = { a: 23 },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal(23);
+            });
+        });
+        describe('When there is a variable which is a string number', function() {
+            it('should return the number', function() {
+                var str = '${a}',
+                    map = { a: '23' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal(23);
+            });
+        });
+        describe('When there is a variable which is a null', function() {
+            it('should return the null', function() {
+                var str = '${a}',
+                    map = { a: null },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.equal(newStr, null);
+            });
+        });
+        describe('When there is a variable which is a string null', function() {
+            it('should return the null', function() {
+                var str = '${a}',
+                    map = { a: 'null' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.equal(newStr, null);
+            });
+        });
+        describe('When there is a variable which is a string', function() {
+            it('should return the string', function() {
+                var str = '${a}',
+                    map = { a: 'boniato' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal('boniato');
+            });
+        });
+        describe('When there is not variable ', function() {
+            it('should return the string', function() {
+                var str = '${a}',
+                    map = { b: 'boniato' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.equal(newStr, null);
+            });
+        });
+        describe('When there is not some variables', function() {
+            it('should return the string', function() {
+                var str = '${a} and ${b}',
+                    map = { b: 'boniato' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal('null and boniato');
+            });
+        });
     });
     describe('#RequestHelper()', function() {
         describe('When there is a network problem', function() {
