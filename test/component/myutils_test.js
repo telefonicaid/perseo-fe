@@ -58,6 +58,26 @@ describe('Myutils', function() {
                 newStr.should.be.equal(23);
             });
         });
+        describe('When there is a variable which is a number', function() {
+            it('should return the string number', function() {
+                var str = '"${a}"',
+                    map = { a: 23 },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal('"23"');
+            });
+        });
+        describe('When there is a variable which is a string number', function() {
+            it('should return the string number', function() {
+                var str = '"${a}"',
+                    map = { a: '23' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal('"23"');
+            });
+        });
         describe('When there is a variable which is a boolean', function() {
             it('should return the boolean', function() {
                 var str = '${a}',
@@ -116,6 +136,24 @@ describe('Myutils', function() {
                     newStr;
                 newStr = myutils.expandVar(str, map, true);
                 should.equal(newStr, null);
+            });
+        });
+        describe('When there is a variable which is a null', function() {
+            it('should return the null', function() {
+                var str = '"${a}"',
+                    map = { a: null },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.equal(newStr, '"null"');
+            });
+        });
+        describe('When there is a variable which is a string null', function() {
+            it('should return the null', function() {
+                var str = '"${a}"',
+                    map = { a: 'null' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.equal(newStr, '"null"');
             });
         });
         describe('When there is a variable which is a string', function() {
