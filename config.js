@@ -169,24 +169,6 @@ config.authentication = {
 };
 
 /**
- * List of pre-configured trusts
- */
-config.trusts = [
-    {
-        id: 'trust1',
-        user: 'user1',
-        password: 'password',
-        service: 'domain1'
-    },
-    {
-        id: 'trust2',
-        user: 'user2',
-        password: 'password2',
-        service: 'domain2'
-    }
-];
-
-/**
  * Collections
  * @type {String}
  */

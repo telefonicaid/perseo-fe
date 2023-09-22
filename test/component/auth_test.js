@@ -45,7 +45,7 @@ describe('Auth', function() {
             action.ev.id += date.getTime();
             utilsT.getConfig().authentication.host = 'localhost';
             utilsT.getConfig().authentication.port = utilsT.fakeHttpServerPort;
-            utilsT.getConfig().trusts = [
+            utilsT.getConfigTrust().trusts = [
                 {
                     id: 'thisIsATriustToken',
                     user: 'user1',
