@@ -185,6 +185,16 @@ describe('Myutils', function() {
                 newStr.should.be.equal('null and boniato');
             });
         });
+        describe('When there is a variable which is a string number to expand in a phone number', function() {
+            it('should return the phone number', function() {
+                var str = '${a}',
+                    map = { a: '666123123' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, false);
+                should.exist(newStr);
+                newStr.should.be.equal('666123123');
+            });
+        });
     });
     describe('#RequestHelper()', function() {
         describe('When there is a network problem', function() {
