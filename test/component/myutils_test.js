@@ -78,6 +78,26 @@ describe('Myutils', function() {
                 newStr.should.be.equal('"23"');
             });
         });
+        describe('When string and there is a variable which is a number to expand', function() {
+            it('should return the string number', function() {
+                var str = "'${a}'",
+                    map = { a: 23 },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal("'23'");
+            });
+        });
+        describe('When string and there is a variable which is a number to expand', function() {
+            it('should return the string number', function() {
+                var str = '${a}',
+                    map = { a: 23 },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.should.be.equal(23);
+            });
+        });
         describe('When there is a variable which is a boolean to expand', function() {
             it('should return the boolean', function() {
                 var str = '${a}',
@@ -121,7 +141,7 @@ describe('Myutils', function() {
             });
         });
         describe('When there is a variable which is a null to expand', function() {
-            it('should return the null', function() {
+            it('should return null', function() {
                 var str = '${a}',
                     map = { a: null },
                     newStr;
@@ -130,7 +150,7 @@ describe('Myutils', function() {
             });
         });
         describe('When there is a variable which is a string null to expand', function() {
-            it('should return the null', function() {
+            it('should return null', function() {
                 var str = '${a}',
                     map = { a: 'null' },
                     newStr;
@@ -138,8 +158,17 @@ describe('Myutils', function() {
                 should.equal(newStr, null);
             });
         });
+        describe('When there is a variable which is not expanded', function() {
+            it('should return null', function() {
+                var str = '${a}',
+                    map = {},
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.equal(newStr, null);
+            });
+        });
         describe('When string and there is a variable which is a null to expand', function() {
-            it('should return the null', function() {
+            it('should return "null"', function() {
                 var str = '"${a}"',
                     map = { a: null },
                     newStr;
@@ -148,7 +177,7 @@ describe('Myutils', function() {
             });
         });
         describe('When string and there is a variable which is a string null to expand', function() {
-            it('should return the null', function() {
+            it('should return "null"', function() {
                 var str = '"${a}"',
                     map = { a: 'null' },
                     newStr;
