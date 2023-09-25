@@ -28,7 +28,7 @@ var should = require('should'),
 
 describe('Myutils', function() {
     describe('#ExpandVar()', function() {
-        describe('When there are not variables', function() {
+        describe('When there are not variables to expand', function() {
             it('should return the same string passed', function() {
                 var str = 'a string without vars',
                     map = { without: 'XXXX', vars: 'YYYYY' },
@@ -38,7 +38,7 @@ describe('Myutils', function() {
                 newStr.should.be.equal(str);
             });
         });
-        describe('When there is a variable which is a number', function() {
+        describe('When there is a variable which is a number to expand', function() {
             it('should return the number', function() {
                 var str = '${a}',
                     map = { a: 23 },
@@ -48,7 +48,7 @@ describe('Myutils', function() {
                 newStr.should.be.equal(23);
             });
         });
-        describe('When there is a variable which is a string number', function() {
+        describe('When there is a variable which is a string number to expand', function() {
             it('should return the number', function() {
                 var str = '${a}',
                     map = { a: '23' },
@@ -58,7 +58,7 @@ describe('Myutils', function() {
                 newStr.should.be.equal(23);
             });
         });
-        describe('When there is a variable which is a number', function() {
+        describe('When string and there is a variable which is a number to expand', function() {
             it('should return the string number', function() {
                 var str = '"${a}"',
                     map = { a: 23 },
@@ -68,7 +68,7 @@ describe('Myutils', function() {
                 newStr.should.be.equal('"23"');
             });
         });
-        describe('When there is a variable which is a string number', function() {
+        describe('When string and there is a variable which is a string number to expand', function() {
             it('should return the string number', function() {
                 var str = '"${a}"',
                     map = { a: '23' },
@@ -78,7 +78,7 @@ describe('Myutils', function() {
                 newStr.should.be.equal('"23"');
             });
         });
-        describe('When there is a variable which is a boolean', function() {
+        describe('When there is a variable which is a boolean to expand', function() {
             it('should return the boolean', function() {
                 var str = '${a}',
                     map = { a: true },
@@ -88,7 +88,7 @@ describe('Myutils', function() {
                 newStr.should.be.equal(true);
             });
         });
-        describe('When there is a variable which is a string boolean', function() {
+        describe('When there is a variable which is a string boolean to expand', function() {
             it('should return the boolean', function() {
                 var str = '${a}',
                     map = { a: 'true' },
@@ -98,7 +98,7 @@ describe('Myutils', function() {
                 newStr.should.be.equal(true);
             });
         });
-        describe('When there is a variable which is a string object', function() {
+        describe('When there is a variable which is a string object to expand', function() {
             it('should return the object', function() {
                 var str = '{"type":"Point"}',
                     map = { a: true },
@@ -108,7 +108,7 @@ describe('Myutils', function() {
                 newStr.type.should.be.equal('Point');
             });
         });
-        describe('When there is a variable which is a string object', function() {
+        describe('When there is a variable which is a string object to expand', function() {
             it('should return the boolean', function() {
                 var str = '${p}',
                     map = { p: { type: 'Point', coordinates: [11, 12] } },
@@ -120,7 +120,7 @@ describe('Myutils', function() {
                 newStr.coordinates[1].should.be.equal(12);
             });
         });
-        describe('When there is a variable which is a null', function() {
+        describe('When there is a variable which is a null to expand', function() {
             it('should return the null', function() {
                 var str = '${a}',
                     map = { a: null },
@@ -129,7 +129,7 @@ describe('Myutils', function() {
                 should.equal(newStr, null);
             });
         });
-        describe('When there is a variable which is a string null', function() {
+        describe('When there is a variable which is a string null to expand', function() {
             it('should return the null', function() {
                 var str = '${a}',
                     map = { a: 'null' },
@@ -138,7 +138,7 @@ describe('Myutils', function() {
                 should.equal(newStr, null);
             });
         });
-        describe('When there is a variable which is a null', function() {
+        describe('When string and there is a variable which is a null to expand', function() {
             it('should return the null', function() {
                 var str = '"${a}"',
                     map = { a: null },
@@ -147,7 +147,7 @@ describe('Myutils', function() {
                 should.equal(newStr, '"null"');
             });
         });
-        describe('When there is a variable which is a string null', function() {
+        describe('When string and there is a variable which is a string null to expand', function() {
             it('should return the null', function() {
                 var str = '"${a}"',
                     map = { a: 'null' },
@@ -156,7 +156,7 @@ describe('Myutils', function() {
                 should.equal(newStr, '"null"');
             });
         });
-        describe('When there is a variable which is a string', function() {
+        describe('When there is a variable which is a string to expand', function() {
             it('should return the string', function() {
                 var str = '${a}',
                     map = { a: 'boniato' },
@@ -166,7 +166,7 @@ describe('Myutils', function() {
                 newStr.should.be.equal('boniato');
             });
         });
-        describe('When there is not variable ', function() {
+        describe('When there is not variable to expand', function() {
             it('should return the string', function() {
                 var str = '${a}',
                     map = { b: 'boniato' },
@@ -175,7 +175,7 @@ describe('Myutils', function() {
                 should.equal(newStr, null);
             });
         });
-        describe('When there is not some variables', function() {
+        describe('When there is not some variables to expand', function() {
             it('should return the string', function() {
                 var str = '${a} and ${b}',
                     map = { b: 'boniato' },
