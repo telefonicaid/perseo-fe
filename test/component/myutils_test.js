@@ -80,12 +80,16 @@ describe('Myutils', function() {
         });
         describe('When string and there is a variable which is a number to expand', function() {
             it('should return the string number', function() {
+                /*jshint quotmark: double */
                 var str = "'${a}'",
+                    /*jshint quotmark: single */
                     map = { a: 23 },
                     newStr;
                 newStr = myutils.expandVar(str, map, true);
                 should.exist(newStr);
+                /*jshint quotmark: double */
                 newStr.should.be.equal("'23'");
+                /*jshint quotmark: single */
             });
         });
         describe('When string and there is a variable which is a number to expand', function() {
