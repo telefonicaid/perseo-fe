@@ -1,3 +1,4 @@
+- Add: apply expandVar with JSON.parse to all actions
 - Fix: expandVar return a 'null' instead of null (#746)
 - Fix: smtp and smpp logs (#738)
 - Add: allow access entities using NGSIv2 API for non_signal rules (new setting nonSignalByAPI / PERSEO_CHECK_NON_SIGNAL_BY_API) (#549)
