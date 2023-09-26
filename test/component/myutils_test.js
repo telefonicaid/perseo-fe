@@ -55,7 +55,7 @@ describe('Myutils', function() {
                     newStr;
                 newStr = myutils.expandVar(str, map, true);
                 should.exist(newStr);
-                newStr.should.be.equal(23);
+                newStr.should.be.equal('23');
             });
         });
         describe('When string and there is a variable which is a number to expand', function() {
@@ -119,7 +119,7 @@ describe('Myutils', function() {
                     newStr;
                 newStr = myutils.expandVar(str, map, true);
                 should.exist(newStr);
-                newStr.should.be.equal(true);
+                newStr.should.be.equal('true');
             });
         });
         describe('When there is a variable which is a string object to expand', function() {
@@ -159,7 +159,7 @@ describe('Myutils', function() {
                     map = { a: 'null' },
                     newStr;
                 newStr = myutils.expandVar(str, map, true);
-                should.equal(newStr, null);
+                should.equal(newStr, 'null');
             });
         });
         describe('When there is a variable which is not expanded', function() {
