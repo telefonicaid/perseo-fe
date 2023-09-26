@@ -396,7 +396,21 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust for getting an access token from Auth Server which can be used to get to a Context Broker
-    behind a PEP.
+    behind a PEP. This trust is indexed by `id` in a configuration file named configTrust.js which has the following
+    format which describe full client credentials including idm endpoint:
+
+    ```
+    configTrust.trusts = [
+       {
+           host: 'keystone',
+           port: '5001',
+           id: 'trust1',
+           user: 'user1',
+           password: 'password',
+           service: 'domain1'
+       }
+    ```
+
 -   service: optional, service that will be used by updateAction rule instead of current event service. In this case,
     externalCBUrl or configured Orion PEP URL will be used instead of Orion URL, and then no token for auth will be
     negotiated.
