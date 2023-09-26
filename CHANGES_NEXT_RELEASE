@@ -1,4 +1,4 @@
-- Add: apply expandVar with JSON.parse to all fields of all actions (sms, smpp, email, post, update)
+- Add: apply expandVar with JSON.parse to all fields of all actions (sms, smpp, email, post, update) (#746)
 - Fix: check domain before access domain
 - Fix: expandVar return a 'null' instead of null (#746)
 - Fix: smtp and smpp logs (#738)
