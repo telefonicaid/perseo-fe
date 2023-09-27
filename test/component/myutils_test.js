@@ -228,6 +228,18 @@ describe('Myutils', function() {
                 newStr.should.be.equal('666123123');
             });
         });
+        describe('When there are variables which is a string number to expand in a json object', function() {
+            it('should expand json object key values', function() {
+                var str = { type: 'Point', coordinates: ['${Lat}', '${Lon}'] },
+                    map = { Lat: '22', Lon: '33' },
+                    newStr;
+                newStr = myutils.expandVar(str, map, true);
+                should.exist(newStr);
+                newStr.type.should.be.equal('Point');
+                newStr.coordinates[0].should.be.equal(22);
+                newStr.coordinates[1].should.be.equal(33);
+            });
+        });
     });
     describe('#RequestHelper()', function() {
         describe('When there is a network problem', function() {
