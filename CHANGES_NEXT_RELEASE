@@ -1,4 +1,5 @@
 - Add: new approach to handle trust auth (urbo-deployer#868)
+- Add: allow use expandVar with JSON objects (#703)
 - Add: apply expandVar with JSON.parse to all fields of all actions (sms, smpp, email, post, update) (#746)
 - Fix: check domain before access domain
 - Fix: expandVar return a 'null' instead of null (#746)
