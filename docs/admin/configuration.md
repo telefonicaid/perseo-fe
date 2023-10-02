@@ -104,10 +104,14 @@ Options for HA:
 
 Options for Authentication through PEP (for update action)
 
--   `config.authentication.host`: host (keyStone) to exchange trust tokens for access tokens
--   `config.authentication.port`: port,
--   `config.authentication.user`: provisioned user for CEP in Keystone
--   `config.authentication.password`: provisioned password for CEP in Keystone
+-   `configTrust.trust[].host`: host (keyStone) to exchange tokens for access tokens
+-   `configTrust.trust[].port`: port, (keyStone) to exchange tokens for access tokens
+-   `configTrust.trust[].id`: id of trust to use in update action rule 
+-   `configTrust.trust[].user`: provisioned user for trust in Keystone
+-   `configTrust.trust[].password`: provisioned password for trust in Keystone
+-   `configTrust.trust[].service`: provisioned service for trust in Keystone
+
+Options for NGSI (for update action)
 -   `config.castTypes`: cast or not attribute values to expected type conform NGSI-v2 (false by default)
 
 URL format for mongoDB could be found at `http://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html`
