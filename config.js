@@ -158,17 +158,6 @@ config.pep = {
 };
 
 /**
- * Authorization endpoint
- */
-config.authentication = {
-    host: 'keystone',
-    port: '5001',
-    user: 'user',
-    password: 'password',
-    service: 'admin_domain'
-};
-
-/**
  * Collections
  * @type {String}
  */
