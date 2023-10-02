@@ -38,7 +38,7 @@ describe('Auth', function() {
     afterEach(testEnv.commonAfterEach);
 
     describe('#UpdateAction()', function() {
-        it('should return ok with using a trust token', function(done) {
+        it('should return ok with using a trust', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update_trust.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_update_trust.json'),
                 date = new Date();
