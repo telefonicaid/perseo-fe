@@ -1,5 +1,6 @@
 - Add: new approach to handle trust auth (urbo-deployer#868)
 - Remove: field "authentication" support in update action
+- Remove: config.authentication (along with related env vars PERSEO_AUTHENTICATION_*)
 - Add: allow use expandVar with JSON objects (#703)
 - Add: apply expandVar with JSON.parse to all fields of all actions (sms, smpp, email, post, update) (#746)
 - Fix: check domain before access domain
