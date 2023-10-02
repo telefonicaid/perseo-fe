@@ -102,7 +102,7 @@ Options for HA:
 -   `config.nextCore.noticesURL`: URL for processing events at _replicated_ core rule engine. If set, the events will be
     propagated to that one also.
 
-Options for Authentication through PEP (for update action)
+Options for Authentication through PEP (for update action) in the configTrust.js file:
 
 -   `configTrust.trust[].host`: host (keyStone) to exchange tokens for access tokens
 -   `configTrust.trust[].port`: port, (keyStone) to exchange tokens for access tokens
