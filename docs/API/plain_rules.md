@@ -60,8 +60,8 @@ There are two kind of rules:
         "type": "email",
         "template": "No signal in temperature",
         "parameters": {
-            "to": "brox@tid.es",
-            "from": "dca_support@tid.es",
+            "to": "brox@acme.com",
+            "from": "dca_support@acme.com",
             "subject": "temperature no signal"
         }
     }
@@ -338,8 +338,8 @@ email can be set in the field `subject` in `parameters`.
         "type": "email",
         "template": "Meter ${Meter} has pressure ${Pressure} (GEN RULE)",
         "parameters": {
-            "to": "someone@telefonica.com",
-            "from": "cep@system.org",
+            "to": "someone@acme.com",
+            "from": "cep@acme.com",
             "subject": "It's The End Of The World As We Know It (And I Feel Fine)"
         }
     }
@@ -355,8 +355,8 @@ Additionally, Email action could include a `smtp` field to include SMTP configur
         "type": "email",
         "template": "Meter ${Meter} has pressure ${Pressure} (GEN RULE)",
         "parameters": {
-            "to": "someone@telefonica.com",
-            "from": "cep@system.org",
+            "to": "someone@acme.com",
+            "from": "cep@acme.com",
             "subject": "It's The End Of The World As We Know It (And I Feel Fine)",
             "smtp": {
                "port": 25,
@@ -905,8 +905,8 @@ could be used by a rule so
         "type": "email",
         "template": "Meter ${Meter} has pression ${Pression} (GEN RULE) and system is ${BloodPressure__metadata__crs__system}",
         "parameters": {
-            "to": "someone@org.com",
-            "from": "perseo_cep@telefonica.com",
+            "to": "someone@acme.com",
+            "from": "perseo_cep@acme.com",
             "subject": "MD VALUE: ${BloodPressure__metadata__crs__system}"
         }
     }
