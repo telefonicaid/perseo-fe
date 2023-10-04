@@ -1,3 +1,21 @@
+1.28.0 (October 4th, 2023)
+
+- Add: new approach to handle trust auth (urbo-deployer#868)
+- Add: allow access entities using NGSIv2 API for non_signal rules (new setting nonSignalByAPI / PERSEO_CHECK_NON_SIGNAL_BY_API) (#549)
+- Add: allow use expandVar with JSON objects (#703)
+- Add: apply expandVar with JSON.parse to all fields of all actions (sms, smpp, email, post, update) (#746)
+- Fix: check domain before access domain
+- Fix: expandVar return a 'null' instead of null (#746)
+- Fix: expandVar for single string values with null, boolean, number (#746)
+- Fix: smtp and smpp logs (#738)
+- Fix: check timer string in lower case in TimedRule checker
+- Fix: dep of chai get-func-name to 2.0.0 to avoid installation errors
+- Remove: field "authentication" support in update action
+- Remove: config.authentication (along with related env vars PERSEO_AUTHENTICATION_*)
+- Remove: support for ngsv1 notifications (#714)
+- Remove: ngsiv1 support for updateAction (#714)
+- Remove: RPM stuff
+
 1.27.0 (May 18th, 2023)
 
 - Add: support to run tests with node 18
