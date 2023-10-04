@@ -16,7 +16,6 @@
 - Remove: ngsiv1 support for updateAction (#714)
 - Remove: RPM stuff
 
-
 1.27.0 (May 18th, 2023)
 
 - Add: support to run tests with node 18
