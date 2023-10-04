@@ -12,3 +12,4 @@
 - Remove ngsiv1 support for updateAction (#714)
 - Fix: check timer string in lower case in TimedRule checker
 - Fix: dep of chai get-func-name to 2.0.0 to avoid installation errors
+- Remove: RPM stuff
