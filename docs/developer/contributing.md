@@ -157,7 +157,7 @@ The process of making a release consists of the following steps:
 
 1. Create a new task branch changing the development version number in the package.json (with a sufix `-next`), to the
    new target version (without any sufix), and PR into `master`. Also, in this task, the contents of the Change log are
-   copied to the RPM spec.
+   copied to the Changelog file.
 2. Create a tag from the last version of `master` named with the version number and push it to the repository.
 3. Create the release in Github, from the created tag. In the description, add the contents of the Change log.
 4. Create a release branch from the last version of `master` named with the version number.
