@@ -20,6 +20,10 @@
 # For those usages not covered by this license please contact with
 # iot_support at tid dot es
 
+# FIXME: this script is outdated. It is still using the rpm-based changelog.
+# Have a look to same script at fiware-orion repo (which was adapted to use the new Changelog file)
+# if we want to fix it
+
 # ------------------------------------------------------------------------------
 #
 # Example execution:

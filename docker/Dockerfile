@@ -87,7 +87,7 @@ RUN \
 	fi && \
 	RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
 	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
-	unzip source.zip -x "*/test/**" "*/rpm/**" "*/docker/**" "*/documentation/**" "*/.*" && \
+	unzip source.zip -x "*/test/**" "*/docker/**" "*/documentation/**" "*/.*" && \
 	rm source.zip && \
 	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/perseo-fe && \
 	# Remove unzip and clean apt cache
