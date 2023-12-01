@@ -1,3 +1,7 @@
+1.29.0 (December 1st, 2023)
+
+- Add: watch changes and reload configTrust file (#757)
+
 1.28.0 (October 4th, 2023)
 
 - Add: new approach to handle trust auth (urbo-deployer#868)
