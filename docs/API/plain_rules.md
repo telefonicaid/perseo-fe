@@ -396,7 +396,8 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust for getting an access token from Auth Server which can be used to get to a Context Broker
-    behind a PEP. This trust is indexed by `id` in a configuration file named configTrust.js which has the following
+    behind a PEP. This trust is indexed by `id` in a configuration file named configTrust.js (full path
+    /opt/perseo-fe/configTrust.js i.e. in a docker image) which has the following
     format which describe full client credentials including idm endpoint:
 
     ```
