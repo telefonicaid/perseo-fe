@@ -1,1 +1,1 @@
-
+- Do not stringify template in postAction if it is already a string (issue #763)
