@@ -1,3 +1,6 @@
+1.30.0 (December 26th, 2024)
+- Fix: do not stringify template in postAction if it is already a string (#763)
+
 1.29.0 (December 1st, 2023)
 
 - Add: watch changes and reload configTrust file (#757)
