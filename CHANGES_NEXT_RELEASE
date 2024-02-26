@@ -1,0 +1,1 @@
+- Upgrade nodemailer dep from 6.6.5 to 6.9.9 due to a vulnerability
