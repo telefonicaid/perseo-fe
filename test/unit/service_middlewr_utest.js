@@ -25,13 +25,14 @@
 
 var should = require('should'),
     service = require('../../lib/middleware/service');
+var logger = require('logops');
 
 describe('service middleware', function() {
     var serviceHeader = 'fiware-service',
         camelWord = 'camelCaseWord';
     describe('#service()', function() {
         it('should transform to lower case', function() {
-            var req = { headers: {} },
+            var req = { headers: {}, logger: logger },
                 err;
             req.headers[serviceHeader] = camelWord;
             err = service.checkServiceHeaders(req);
@@ -43,7 +44,7 @@ describe('service middleware', function() {
         var subserviceHeader = 'fiware-servicepath',
             camelWord = '/camelCaseWord';
         it('should not transform to lower case', function() {
-            var req = { headers: {} },
+            var req = { headers: {}, logger: logger },
                 err;
             req.headers[subserviceHeader] = camelWord;
             err = service.checkServiceHeaders(req);
