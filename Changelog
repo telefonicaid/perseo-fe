@@ -1,3 +1,10 @@
+1.31.0 (June 11th, 2024)
+
+- Fix: release transport resources of nodemailer after send email
+- Upgrade express dep from 4.18.1 to 4.19.2 due to a vulnerability
+- Upgrade nodemailer dep from 6.6.5 to 6.9.13 due to a vulnerability
+
+
 1.30.0 (February 26th, 2024)
 
 - Fix: do not stringify template in postAction if it is already a string (#763)
