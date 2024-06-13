@@ -1,4 +1,4 @@
-Fix: upgrade rule in mongo using service and subservice to avoid match with other rule
+Fix: upgrade rule in mongo using service and subservice to avoid match with other rule (#783)
 
 1.31.0 (June 11th, 2024)
 
