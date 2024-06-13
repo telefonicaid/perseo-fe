@@ -1,4 +1,7 @@
-Fix: upgrade rule in mongo using service and subservice to avoid match with other rule (#783)
+1.32.0 (June 13th, 2024)
+
+- Add: Send multiple sms when multiple destination in sms action
+- Fix: upgrade rule in mongo using service and subservice to avoid match with other rule (#783)
 
 1.31.0 (June 11th, 2024)
 
