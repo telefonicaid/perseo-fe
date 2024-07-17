@@ -1,0 +1,1 @@
+- Fix: do not invoke calback twice when error about trust not found in trustConf (#790)
