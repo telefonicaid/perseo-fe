@@ -1,1 +1,2 @@
+- FIX: do not try cast entity id and entity type in update rules when expandVar (#791)
 - Fix: do not invoke calback twice when error about trust not found in trustConf (#790)
