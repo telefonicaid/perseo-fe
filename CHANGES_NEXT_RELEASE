@@ -1,1 +1,2 @@
+- Fix: Do not search in entities collection with strict mode by non_signal checker (#793)
 - Fix: do not invoke calback twice when error about trust not found in trustConf (#790)
