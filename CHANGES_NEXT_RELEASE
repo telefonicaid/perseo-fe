@@ -1,2 +1,2 @@
-- FIX: do not try cast entity id and entity type in update rules when expand parameters of rule to avoid BadRequest en CB tries to update that entities (#791)
+- Fix: do not try cast entity id and entity type in update rules when expand parameters of rule to avoid BadRequest en CB tries to update that entities (#791)
 - Fix: do not invoke calback twice when error about trust not found in trustConf (#790)
