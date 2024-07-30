@@ -1,1 +1,1 @@
-- Fix smtpConfig after error in emailAction rule (#798)
+- Fix: smtpConfig after error in emailAction rule (#798)
