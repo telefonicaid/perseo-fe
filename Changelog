@@ -1,3 +1,7 @@
+1.34.0 (July 30th, 2024)
+
+- Fix: smtpConfig after error in emailAction rule (#798)
+
 1.33.0 (July 29th, 2024)
 
 - Fix: do not search in entities collection with strict mode by non_signal checker (#793)
