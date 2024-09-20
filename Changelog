@@ -1,3 +1,18 @@
+1.34.0 (July 30th, 2024)
+
+- Fix: smtpConfig after error in emailAction rule (#798)
+
+1.33.0 (July 29th, 2024)
+
+- Fix: do not search in entities collection with strict mode by non_signal checker (#793)
+- Fix: do not try cast entity id and entity type in update rules when expand parameters of rule to avoid BadRequest en CB tries to update that entities (#791)
+- Fix: do not invoke calback twice when error about trust not found in trustConf (#790)
+
+1.32.0 (June 13th, 2024)
+
+- Add: Send multiple sms when multiple destination in sms action
+- Fix: upgrade rule in mongo using service and subservice to avoid match with other rule (#783)
+
 1.31.0 (June 11th, 2024)
 
 - Fix: release transport resources of nodemailer after send email
