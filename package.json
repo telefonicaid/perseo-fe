@@ -63,7 +63,7 @@
     "body-parser": "~1.20.3",
     "express": "4.21.2",
     "logops": "2.1.2",
-    "mongodb": "3.6.12",
+    "mongodb": "4.17.2",
     "ngsijs": "1.4.1",
     "nodemailer": "6.9.13",
     "nodemailer-smtp-transport": "~2.7.2",

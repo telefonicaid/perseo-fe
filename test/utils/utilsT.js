@@ -57,18 +57,14 @@ function remove(collection, callback) {
             if (err) {
                 return callback(err);
             }
-            const db = client.db();
-            db.collection(collection, {}, function(err, coll) {
+            const col = client.db().collection(collection);
+
+            col.remove({}, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                coll.remove({}, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
@@ -88,18 +84,13 @@ function dropCollection(collection, callback) {
             if (err) {
                 return callback(err);
             }
-            const db = client.db();
-            db.collection(collection, {}, function(err, col) {
+            const col = client.db().collection(collection);
+            col.drop(function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                col.drop(function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
@@ -118,15 +109,11 @@ function createRulesCollection(callback) {
             if (err) {
                 return callback(err);
             }
-            const db = client.db();
-            db.collection(config.collections.rules, {}, function(err, rules) {
-                if (err) {
-                    return callback(err);
-                }
-                rules.ensureIndex({ name: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                    client.close();
-                    return callback(err, indexName);
-                });
+            const rules = client.db().collection(config.collections.rules);
+
+            rules.createIndex({ name: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
+                client.close();
+                return callback(err, indexName);
             });
         }
     );
@@ -139,18 +126,14 @@ function addRule(rule, callback) {
             if (err) {
                 return callback(err);
             }
-            const db = client.db();
-            db.collection(config.collections.rules, {}, function(err, rules) {
+            const rules = client.db().collection(config.collections.rules);
+
+            rules.insertOne(rule, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                rules.save(rule, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
@@ -164,15 +147,12 @@ function createEntitiesCollection(tenant, callback) {
             if (err) {
                 return callback(err);
             }
-            db2.collection(config.orionDb.collection, {}, function(err, rules) {
-                if (err) {
-                    return callback(err);
-                }
-                // We don't mind what fields have index in that collection
-                rules.ensureIndex({ modDate: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                    client.close();
-                    return callback(err, indexName);
-                });
+            var rules = db2.collection(config.orionDb.collection);
+
+            // We don't mind what fields have index in that collection
+            rules.createIndex({ modDate: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
+                client.close();
+                return callback(err, indexName);
             });
         }
     );
@@ -181,21 +161,18 @@ function dropEntities(callback) {
     MongoClient.connect(
         config.orionDb.url,
         function(err, client) {
-            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_TENANT);
+            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE);
             if (err) {
                 return callback(err);
             }
-            db2.collection(config.orionDb.collection, {}, function(err, coll) {
+            var coll = db2.collection(config.orionDb.collection);
+
+            coll.remove({}, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                coll.remove({}, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
@@ -209,17 +186,14 @@ function addEntity(tenant, entity, callback) {
                 return callback(err);
             }
             db2 = client.db(config.orionDb.prefix + '-' + tenant);
-            db2.collection(config.orionDb.collection, {}, function(err, entities) {
+            var entities = db2.collection(config.orionDb.collection);
+
+            entities.insertOne(entity, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                entities.save(entity, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
