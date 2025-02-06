@@ -1,1 +1,5 @@
 - Upgrade smpp dep from 0.3.1 to 0.5.1
+- Fix: deprecated mongo warnings about save and remove methods (#806)
+- Fix: remove unnecessary env vars (PERSEO_MONGO_HOST and PERSEO_CORE_URL) from Dockerfile (#810)
+- Upgrade express from 4.19.2 to 4.21.2
+- Upgrade body-parser dep from 1.18.2 to 1.20.3
