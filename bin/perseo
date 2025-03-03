@@ -72,6 +72,7 @@ function loadConfiguration() {
         'PERSEO_ENDPOINT_HOST',
         'PERSEO_ENDPOINT_PORT',
         'PERSEO_MONGO_ENDPOINT',
+        'PERSEO_MONGO_DB_NAME',
         'PERSEO_MONGO_REPLICASET',
         'PERSEO_MONGO_AUTH_SOURCE',
         'PERSEO_MONGO_USER',
@@ -148,9 +149,13 @@ function loadConfiguration() {
         config.endpoint.port = process.env.PERSEO_ENDPOINT_PORT;
     }
     if (process.env.PERSEO_MONGO_ENDPOINT) {
+        let dbName = 'cep';
+        if (process.env.PERSEO_MONGO_DB_NAME) {
+            dbName = process.env.PERSEO_MONGO_DB_NAME;
+        }
         config.mongo.url = 'mongodb://'+ (
             process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD ? process.env.PERSEO_MONGO_USER + ':' + process.env.PERSEO_MONGO_PASSWORD + '@' : '') +
-            process.env.PERSEO_MONGO_ENDPOINT + '/cep' + (
+            process.env.PERSEO_MONGO_ENDPOINT + '/' + dbName + (
             (process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '') +
             (process.env.PERSEO_MONGO_AUTH_SOURCE ? (process.env.PERSEO_MONGO_REPLICASET ? '&' : '?') + 'authSource=' + process.env.PERSEO_MONGO_AUTH_SOURCE : ''));
         config.orionDb.url = 'mongodb://' + (
