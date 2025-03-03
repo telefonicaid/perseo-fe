@@ -15,6 +15,7 @@ The following table shows the environment variables available for Perseo configu
 | PERSEO_ENDPOINT_HOST               | Host where the CEP will listen.                                                                                                                                                                                                                                               |
 | PERSEO_ENDPOINT_PORT               | Port where the CEP will listen.                                                                                                                                                                                                                                               |
 | PERSEO_MONGO_ENDPOINT              | Endpoint (`host[:port]`) list for Mongo DB.                                                                                                                                                                                                                                   |
+| PERSEO_MONGO_DB_NAME               | Mongo Data Base name .                                                                                                                                                                                                                                                        |
 | PERSEO_MONGO_REPLICASET            | ReplicaSet name for Mongo DB.                                                                                                                                                                                                                                                 |
 | PERSEO_MONGO_AUTH_SOURCE           | The database name associated with the user's credentials for Mongo DB. [More info here](https://docs.mongodb.com/manual/reference/connection-string/#mongodb-urioption-urioptionauthSource).                                                                                  |
 | PERSEO_MONGO_USER                  | User for Mongo DB.                                                                                                                                                                                                                                                            |
@@ -106,12 +107,13 @@ Options for Authentication through PEP (for update action) in the configTrust.js
 
 -   `configTrust.trust[].host`: host (keyStone) to exchange tokens for access tokens
 -   `configTrust.trust[].port`: port, (keyStone) to exchange tokens for access tokens
--   `configTrust.trust[].id`: id of trust to use in update action rule 
+-   `configTrust.trust[].id`: id of trust to use in update action rule
 -   `configTrust.trust[].user`: provisioned user for trust in Keystone
 -   `configTrust.trust[].password`: provisioned password for trust in Keystone
 -   `configTrust.trust[].service`: provisioned service for trust in Keystone
 
 Options for NGSI (for update action)
+
 -   `config.castTypes`: cast or not attribute values to expected type conform NGSI-v2 (false by default)
 
 URL format for mongoDB could be found at `http://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html`
