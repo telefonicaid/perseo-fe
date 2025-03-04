@@ -87,7 +87,7 @@ RUN \
 	fi && \
 	RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
 	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
-	unzip source.zip -x "*/test/**" "*/rpm/**" "*/docker/**" "*/documentation/**" "*/.*" && \
+	unzip source.zip -x "*/test/**" "*/docker/**" "*/documentation/**" "*/.*" && \
 	rm source.zip && \
 	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/perseo-fe && \
 	# Remove unzip and clean apt cache
@@ -137,8 +137,6 @@ COPY --from=builder /opt/perseo-fe /opt/perseo-fe
 RUN npm install pm2@4.4.0 -g --no-package-lock --no-optional
 
 USER node
-ENV PERSEO_MONGO_HOST=mongodb
-ENV PERSEO_CORE_URL=http://corehost:8080
 ENV NODE_ENV=production
 
 # Expose 9090 for HTTP PORT
@@ -181,8 +179,6 @@ COPY --from=anon-user /etc/passwd /etc/shadow /etc/group /etc/
 WORKDIR /opt/perseo-fe
 
 USER nobody
-ENV PERSEO_MONGO_HOST=mongodb
-ENV PERSEO_CORE_URL=http://corehost:8080
 ENV NODE_ENV=production
 
 # Expose 9090 for HTTP PORT
@@ -223,8 +219,6 @@ RUN \
 	rm -rf /var/lib/apt/lists/* 
 
 USER node
-ENV PERSEO_MONGO_HOST=mongodb
-ENV PERSEO_CORE_URL=http://corehost:8080
 ENV NODE_ENV=production
 
 # Expose 9090 for HTTP PORT

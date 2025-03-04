@@ -27,6 +27,7 @@ var fs = require('fs'),
     path = require('path'),
     MongoClient = require('mongodb').MongoClient,
     config = require('../../config'),
+    configTrust = require('../../configTrust.js').configTrust,
     fakeServerPort = 9753,
     fakeServerCode = 200,
     fakeServerMessage = 'All right',
@@ -244,6 +245,10 @@ function getConfig() {
     return config;
 }
 
+function getConfigTrust() {
+    return configTrust;
+}
+
 function fakeHttpServer(cb) {
     var server = require('http')
         .createServer(function(req, res) {
@@ -289,3 +294,4 @@ module.exports.setServerCallback = function(fxn) {
     fakeServerCallback = fxn;
 };
 module.exports.getConfig = getConfig;
+module.exports.getConfigTrust = getConfigTrust;

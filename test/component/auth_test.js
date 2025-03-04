@@ -38,13 +38,21 @@ describe('Auth', function() {
     afterEach(testEnv.commonAfterEach);
 
     describe('#UpdateAction()', function() {
-        it('should return ok with using a trust token', function(done) {
+        it('should return ok with using a trust', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update_trust.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_update_trust.json'),
                 date = new Date();
             action.ev.id += date.getTime();
-            utilsT.getConfig().authentication.host = 'localhost';
-            utilsT.getConfig().authentication.port = utilsT.fakeHttpServerPort;
+            utilsT.getConfigTrust().trusts = [
+                {
+                    host: 'localhost',
+                    port: utilsT.fakeHttpServerPort,
+                    id: 'thisIsATriustToken',
+                    user: 'user1',
+                    password: 'password',
+                    service: 'domain1'
+                }
+            ];
             utilsT.getConfig().orion.URL = new URL(util.format('http://localhost:%s', utilsT.fakeHttpServerPort));
             updateDone.once('updated_renew', done);
             updateDone.once('updated_first', function(error) {

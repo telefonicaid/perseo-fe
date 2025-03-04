@@ -60,8 +60,8 @@ There are two kind of rules:
         "type": "email",
         "template": "No signal in temperature",
         "parameters": {
-            "to": "brox@tid.es",
-            "from": "dca_support@tid.es",
+            "to": "brox@acme.com",
+            "from": "dca_support@acme.com",
             "subject": "temperature no signal"
         }
     }
@@ -338,8 +338,8 @@ email can be set in the field `subject` in `parameters`.
         "type": "email",
         "template": "Meter ${Meter} has pressure ${Pressure} (GEN RULE)",
         "parameters": {
-            "to": "someone@telefonica.com",
-            "from": "cep@system.org",
+            "to": "someone@acme.com",
+            "from": "cep@acme.com",
             "subject": "It's The End Of The World As We Know It (And I Feel Fine)"
         }
     }
@@ -355,8 +355,8 @@ Additionally, Email action could include a `smtp` field to include SMTP configur
         "type": "email",
         "template": "Meter ${Meter} has pressure ${Pressure} (GEN RULE)",
         "parameters": {
-            "to": "someone@telefonica.com",
-            "from": "cep@system.org",
+            "to": "someone@acme.com",
+            "from": "cep@acme.com",
             "subject": "It's The End Of The World As We Know It (And I Feel Fine)",
             "smtp": {
                "port": 25,
@@ -396,23 +396,22 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   UPDATE: update attributes, asumming they exist (otherwise the update operation fails at CB)
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust for getting an access token from Auth Server which can be used to get to a Context Broker
-    behind a PEP. A trust is a way of Keystone to allow an user (trustor) delegates a role to another user (trustee) for
-    a subservice. Complete info could be found at:
-    -   [Trusts concept](https://docs.openstack.org/keystone/stein/user/trusts)
-    -   [Trusts API](https://docs.openstack.org/keystone/stein/api_curl_examples.html#post-v3-os-trust-trusts)
-    -   [Trust token flow example](./trust_token.md)
--   authentication: optional, authentication (host, port, user, password and service) configuration values that will be
-    used by updateAction rule (instead of default authentication defined by configuration) which will be used when a
-    trust token should be negotiated. i.e.:
-    ```json
-    "authentication": {
-        "host": "ext-keystone",
-        "port": 5001,
-        "user": "mycepuser",
-        "password": "myceppassword",
-        "service": "mycepuserservice"
-     }
+    behind a PEP. This trust is indexed by `id` in a configuration file named configTrust.js (full path
+    /opt/perseo-fe/configTrust.js i.e. in a docker image) which has the following
+    format which describe full client credentials including idm endpoint:
+
     ```
+    configTrust.trusts = [
+       {
+           host: 'keystone',
+           port: '5001',
+           id: 'trust1',
+           user: 'user1',
+           password: 'password',
+           service: 'domain1'
+       }
+    ```
+
 -   service: optional, service that will be used by updateAction rule instead of current event service. In this case,
     externalCBUrl or configured Orion PEP URL will be used instead of Orion URL, and then no token for auth will be
     negotiated.
@@ -907,8 +906,8 @@ could be used by a rule so
         "type": "email",
         "template": "Meter ${Meter} has pression ${Pression} (GEN RULE) and system is ${BloodPressure__metadata__crs__system}",
         "parameters": {
-            "to": "someone@org.com",
-            "from": "perseo_cep@telefonica.com",
+            "to": "someone@acme.com",
+            "from": "perseo_cep@acme.com",
             "subject": "MD VALUE: ${BloodPressure__metadata__crs__system}"
         }
     }
