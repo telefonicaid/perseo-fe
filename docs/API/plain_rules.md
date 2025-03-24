@@ -4,7 +4,7 @@
 -   [EPL text](#epl-text)
     -   [Pre-SELECT clauses](#pre-select-clauses)
 -   [No signal conditions](#no-signal-conditions)
--   [No signal actions](#no-signal-actions)
+-   [No signal actions](#non-signal-actions)
 -   [Actions](#actions)
     -   [String substitution syntax](#string-substitution-syntax)
     -   [SMS action](#sms-action)
