@@ -71,7 +71,7 @@ describe('entitiesStore', function() {
         it('By default should call findSilentEntitiesByMongo', function() {
             var findSilentEntitiesByMongoSpy = sinon.spy();
             entitiesStore.__set__('findSilentEntitiesByMongo', findSilentEntitiesByMongoSpy);
-            entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, alterFunc, callback);
+            entitiesStore.FindSilentEntities();
             sinon.assert.calledOnce(findSilentEntitiesByMongoSpy);
         });
 
@@ -242,7 +242,10 @@ describe('entitiesStore', function() {
 
         var alterFunc4 = sinon.stub();
         var callback4 = sinon.stub();
-        var col = { find: sinon.stub().returnsThis(), batchSize: sinon.stub().returnsThis(), each: sinon.stub() };
+        var col = {
+            aggregate: sinon.stub().returnsThis(),
+            toArray: sinon.stub()
+        };
         var db = { collection: sinon.stub().yields(null, col) };
 
         beforeEach(function() {
@@ -257,16 +260,15 @@ describe('entitiesStore', function() {
                 alterFunc4,
                 callback4
             );
-            col.find.should.have.been.calledOnce;
+            col.aggregate.should.have.been.calledOnce;
             done();
         });
 
         it('should pass error to callback when listEntities promise is rejected', function(done) {
             var expectedError = new Error('Test Error');
             var col = {
-                find: sinon.stub().returnsThis(),
-                batchSize: sinon.stub().returnsThis(),
-                each: sinon.stub().yields(expectedError, null)
+                aggregate: sinon.stub().returnsThis(),
+                toArray: sinon.stub().yields(expectedError, null)
             };
             var db = { collection: sinon.stub().yields(null, col) };
 
