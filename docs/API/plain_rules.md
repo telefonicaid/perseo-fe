@@ -170,7 +170,9 @@ fields:
     values are truncated to them (a warning log message is generated if such truncation occurs)
 -   **attribute**: _mandatory_, attribute for watch
 -   **reportInterval**: _mandatory_, time in seconds to see an entity as silent (in other words, how much time has to
-    pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered)
+    pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered). In
+    order to not check too old entities there is a _maxTimeDetection_ (global configuration or entity attributed) to
+    limit this search.
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
 -   type: _optional_, type of entities to watch
 
@@ -397,8 +399,8 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust for getting an access token from Auth Server which can be used to get to a Context Broker
     behind a PEP. This trust is indexed by `id` in a configuration file named configTrust.js (full path
-    /opt/perseo-fe/configTrust.js i.e. in a docker image) which has the following
-    format which describe full client credentials including idm endpoint:
+    /opt/perseo-fe/configTrust.js i.e. in a docker image) which has the following format which describe full client
+    credentials including idm endpoint:
 
     ```
     configTrust.trusts = [
