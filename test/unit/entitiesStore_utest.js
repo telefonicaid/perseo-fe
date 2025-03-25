@@ -71,7 +71,7 @@ describe('entitiesStore', function() {
         it('By default should call findSilentEntitiesByMongo', function() {
             var findSilentEntitiesByMongoSpy = sinon.spy();
             entitiesStore.__set__('findSilentEntitiesByMongo', findSilentEntitiesByMongoSpy);
-            entitiesStore.FindSilentEntities();
+            entitiesStore.FindSilentEntities(ruleData.service, ruleData.subservice, ruleData, alterFunc, callback);
             sinon.assert.calledOnce(findSilentEntitiesByMongoSpy);
         });
 
