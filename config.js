@@ -227,4 +227,10 @@ config.maxRulesByCorr = 20;
  */
 config.nonSignalByAPI = false;
 
+/**
+ * Max time detection for check nonSignal rules by mongo in seconds
+ * @type {Number}
+ */
+config.nonSignalMaxTimeDetection = 604800;
+
 module.exports = config;
