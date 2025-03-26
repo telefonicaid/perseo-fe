@@ -228,7 +228,7 @@ config.maxRulesByCorr = 20;
 config.nonSignalByAPI = false;
 
 /**
- * Max time detection for check nonSignal rules by mongo in seconds
+ * Max time detection for check nonSignal rules by mongo in seconds. By default 1 week = 604800 seconds
  * @type {Number}
  */
 config.nonSignalMaxTimeDetection = 604800;
