@@ -240,7 +240,7 @@ function loadConfiguration() {
         config.nonSignalByAPI = process.env.PERSEO_CHECK_NON_SIGNAL_BY_API;
     }
     if (process.env.PERSEO_NON_SIGNAL_MAX_TIME_DETECTION) {
-        config.nonSignalMaxTimeDetection = process.env.PERSEO_NON_SIGNAL_MAX_TIME_DETECTION
+        config.nonSignalMaxTimeDetection = process.env.PERSEO_NON_SIGNAL_MAX_TIME_DETECTION;
     }
 }
 
