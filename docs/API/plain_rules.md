@@ -171,10 +171,12 @@ fields:
 -   **attribute**: _mandatory_, attribute for watch
 -   **reportInterval**: _mandatory_, time in seconds to see an entity as silent (in other words, how much time has to
     pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered). In
-    order to not check too old entities there is a _maxTimeDetection_ (global configuration or entity attributed) to
-    limit this search.
+    order to not check too old entities there is a _maxTimeDetection_ (fir entity attribute configuration, then rule
+    configuration and at last global configuration is considered) to limit this search
+-   **maxTimeDetection**: _optional_, max time in seconds to see an entity as silent (in other words, how much time has
+    to pass since last entity update to not consider that entity is in "no signal" situation due to entity is death
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
--   type: _optional_, type of entities to watch
+-   **type**: _optional_, type of entities to watch
 
 Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of
 checkInterval could impact on performance.
@@ -189,6 +191,8 @@ actions:
 -   **ruleName**: name of the rule
 -   **reportInterval**: time to see an entity as silent (in other words, how much time has to pass since last entity
     update to consider that entity is in "no signal" situation so the rule is triggered)
+-   **maxTimeDetection**: max time in seconds to see an entity as silent (in other words, how much time has to pass
+    since last entity update to not consider that entity is in "no signal" situation due to entity is death
 -   **id**: entity id
 -   **type**: entity type
 -   **internalCurrentTime**: current time
