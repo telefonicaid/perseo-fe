@@ -235,7 +235,7 @@ function configTest() {
     // beginning, for the module 'actions' taking it into account
     config.sms.URL = 'http://localhost:' + fakeServerPort;
 
-    config.logLevel = 'fatal';
+    config.logLevel = 'debug';
     config.nextCore = {};
     config.orionDb.url = 'mongodb://localhost:27017/test';
     config.orionDb.prefix = 'oriontest';
