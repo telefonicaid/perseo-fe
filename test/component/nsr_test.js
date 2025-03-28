@@ -39,6 +39,13 @@ describe('Entity', function() {
     describe('#alertFunc()', function() {
         var entities = [
                 {
+                    _id: { id: 'eA', servicePath: DEFAULT_SUBSERVICE, type: 'type e1' },
+                    attrs: {
+                        at: { value: 1, modDate: 0 },
+                        other: { value: 'this is a value', modDate: 0 }
+                    }
+                },
+                {
                     _id: { id: 'eB', servicePath: DEFAULT_SUBSERVICE, type: '' },
                     attrs: {
                         at: { value: 2, modDate: Date.now() / 1000 - 30 * 60 }
