@@ -1,1 +1,2 @@
-
+- Add: max time detection for non singal rules to not see an entity as silent due to is death (#827)
+- Add: env var PERSEO_NON_SIGNAL_MAX_TIME_DETECTION to set global nonSignalMaxTimeDetection (#827)

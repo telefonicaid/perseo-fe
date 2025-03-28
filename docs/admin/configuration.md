@@ -94,8 +94,8 @@ In order to have perseo running, there are several basic pieces of information t
 -   `config.maxRulesByCorr`: Maximum number of rule executions triggered by the same notification (with the same
     correlator) until refuse execute a rule. Defualt is 20
 -   `config.nonSignalByAPI`: Flag value, determine the use of the NGSIv2 API or MongoDB. By default is false.
--   `config.nonSignalMaxTimeDetection`: Max time detection for check nonSignal rules by mongo in seconds. Default is 1
-    week.
+-   `config.nonSignalMaxTimeDetection`: Max time detection for check nonSignal rules by mongo in seconds. Default is 30
+    days.
 
 Options for HA:
 
