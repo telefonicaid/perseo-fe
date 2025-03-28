@@ -171,11 +171,13 @@ fields:
 -   **attribute**: _mandatory_, attribute for watch
 -   **reportInterval**: _mandatory_, time in seconds to see an entity as silent (in other words, how much time has to
     pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered). In
-    order to not check too old entities there is a _maxTimeDetection_ (fir entity attribute configuration, then rule
+    order to not check too old entities there is a _maxTimeDetection_ (in entity attribute configuration, then rule
     configuration and at last global configuration is considered) to limit this search
+-   **reportIntervalAttr**: _optional_, entity attribute where find value for reportInterval.
 -   **maxTimeDetection**: _optional_, max time in seconds to see an entity as silent (in other words, how much time has
     to pass since last entity update to not consider that entity is in "no signal" situation due to entity is death (no
     modified during a long time)
+-   **maxTimeDetectionAttr**: _optional_, entity attribute where find value for maxTimeDetection.
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
 -   **type**: _optional_, type of entities to watch
 
@@ -192,9 +194,11 @@ actions:
 -   **ruleName**: name of the rule
 -   **reportInterval**: time to see an entity as silent (in other words, how much time has to pass since last entity
     update to consider that entity is in "no signal" situation so the rule is triggered)
+-   **reportIntervalAttr**: entity attribute where find value for reportInterval.
 -   **maxTimeDetection**: max time in seconds to not see an entity as silent (in other words, how much time has to pass
     since last entity update to not consider that entity is in "no signal" situation due to entity is death (no modified
     during a long time)
+-   **maxTimeDetectionAttr**: entity attribute where find value for maxTimeDetection.
 -   **id**: entity id
 -   **type**: entity type
 -   **internalCurrentTime**: current time
