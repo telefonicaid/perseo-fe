@@ -171,8 +171,9 @@ fields:
 -   **attribute**: _mandatory_, attribute for watch
 -   **reportInterval**: _mandatory_, time in seconds to see an entity as silent (in other words, how much time has to
     pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered). In
-    order to not check too old entities there is a _maxTimeDetection_ (in entity attribute configuration, then rule
-    configuration and at last global configuration is considered) to limit this search
+    order to not check too old entities there is a _maxTimeDetection_ (perseo checks for the attribute first in the
+    entity configuration, maxTimeDetectionAttr, then in the rule configuration, and lastly, if not found, in the global
+    configuration) to limit this search
 -   **reportIntervalAttr**: _optional_, entity attribute where find value for reportInterval.
 -   **maxTimeDetection**: _optional_, max time in seconds to see an entity as silent (in other words, how much time has
     to pass since last entity update to not consider that entity is in "no signal" situation due to entity is death (no
