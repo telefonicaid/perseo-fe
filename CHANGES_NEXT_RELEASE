@@ -1,2 +1,3 @@
-- Add: max time detection for non singal rules to not see an entity as silent due to is death (#827)
-- Add: env var PERSEO_NON_SIGNAL_MAX_TIME_DETECTION to set global nonSignalMaxTimeDetection (#827)
+- Add: max time detection for non singal rules to not see an entity as silent due to is death (#824)
+- Add: reportIntervalAttr, maxTimeDetectionAttr and maxTimeDetection optional fields to non signal rules (#824)
+- Add: env var PERSEO_NON_SIGNAL_MAX_TIME_DETECTION to set global nonSignalMaxTimeDetection (#824)
