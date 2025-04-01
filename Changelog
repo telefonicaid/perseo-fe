@@ -1,3 +1,6 @@
+
+- Upgrade: mongodb dependency from 3.6.12 to 4.17.2
+
 1.35.0 (March 4th, 2025)
 
 - Add: env var PERSEO_MONGO_DB_NAME to set mongo DB name (#819)
