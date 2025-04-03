@@ -104,7 +104,8 @@ function loadConfiguration() {
         'PERSEO_RULES_PATH',
         'PERSEO_CAST_TYPES',
         'PERSEO_MAX_RULES_BY_CORR',
-        'PERSEO_CHECK_NON_SIGNAL_BY_API'
+        'PERSEO_CHECK_NON_SIGNAL_BY_API',
+        'PERSEO_NON_SIGNAL_MAX_TIME_DETECTION'
     ];
 
     const protectedVariables = [
@@ -237,6 +238,9 @@ function loadConfiguration() {
     }
     if (process.env.PERSEO_CHECK_NON_SIGNAL_BY_API) {
         config.nonSignalByAPI = process.env.PERSEO_CHECK_NON_SIGNAL_BY_API;
+    }
+    if (process.env.PERSEO_NON_SIGNAL_MAX_TIME_DETECTION) {
+        config.nonSignalMaxTimeDetection = process.env.PERSEO_NON_SIGNAL_MAX_TIME_DETECTION;
     }
 }
 
