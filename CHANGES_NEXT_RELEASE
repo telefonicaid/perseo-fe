@@ -1,1 +1,1 @@
-
+- Fix perseo stop when start with a wrong configTrust file format (#830)
