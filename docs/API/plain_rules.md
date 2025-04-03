@@ -199,15 +199,17 @@ actions:
 -   **ruleName**: name of the rule
 -   **reportInterval**: time to see an entity as silent (in other words, how much time has to pass since last entity
     update to consider that entity is in "no signal" situation so the rule is triggered) (same value as field of the same field in rule condition).
--   **reportIntervalAttr**: entity attribute where find value for reportInterval (same value as field of the same field in rule condition).
+-   **reportIntervalAttr**: entity attribute where find value for reportInterval (same value as field of the same field in rule condition) (*)
 -   **maxTimeDetection**: max time in seconds to not see an entity as silent (in other words, how much time has to pass
     since last entity update to not consider that entity is in "no signal" situation due to entity is death (no modified
-    during a long time) (same value as field of the same field in rule condition)
--   **maxTimeDetectionAttr**: entity attribute where find value for maxTimeDetection (same value as field of the same field in rule condition).
+    during a long time) (same value as field of the same field in rule condition) (*)
+-   **maxTimeDetectionAttr**: entity attribute where find value for maxTimeDetection (same value as field of the same field in rule condition) (*)
 -   **id**: entity id
 -   **type**: entity type
 -   **internalCurrentTime**: current time
 -   **lastTime**: lastTime rule was executed as well as all entity attributes
+
+(*) Only include as virtual attribute in the case the field is used in the condition of the rule (take into account that is an optional field)
 
 ## Actions
 
