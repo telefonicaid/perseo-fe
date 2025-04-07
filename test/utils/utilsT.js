@@ -214,6 +214,7 @@ function configTest() {
     config.orionDb.url = 'mongodb://localhost:27017/test';
     config.orionDb.prefix = 'oriontest';
     config.perseoCore.interval = 10 * 60e3; //Do not refresh in the middle of a long test
+    config.nonSignalMaxTimeDetection = 2592000;
 }
 function getConfig() {
     return config;

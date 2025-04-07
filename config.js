@@ -227,4 +227,10 @@ config.maxRulesByCorr = 20;
  */
 config.nonSignalByAPI = false;
 
+/**
+ * Max time detection for check nonSignal rules by mongo in seconds. By default 30 days = 2592000 seconds
+ * @type {Number}
+ */
+config.nonSignalMaxTimeDetection = 2592000;
+
 module.exports = config;

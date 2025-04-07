@@ -243,9 +243,8 @@ describe('entitiesStore', function() {
         var alterFunc4 = sinon.stub();
         var callback4 = sinon.stub();
         var col = {
-            find: sinon.stub().returnsThis(),
-            batchSize: sinon.stub().returnsThis(),
-            each: sinon.stub()
+            aggregate: sinon.stub().returnsThis(),
+            toArray: sinon.stub()
         };
         var db = {
             collection: sinon.stub().yields(null, col),
@@ -265,16 +264,18 @@ describe('entitiesStore', function() {
                 alterFunc4,
                 callback4
             );
+
             db.listCollections.should.have.been.calledOnce;
+            db.forEach.should.have.been.calledOnce;
+
             done();
         });
 
         it('should pass error to callback when listEntities promise is rejected', function(done) {
             var expectedError = new Error('Test Error');
             var col = {
-                find: sinon.stub().returnsThis(),
-                batchSize: sinon.stub().returnsThis(),
-                each: sinon.stub().yields(expectedError, null)
+                aggregate: sinon.stub().returnsThis(),
+                toArray: sinon.stub().yields(expectedError, null)
             };
             var db = {
                 collection: sinon.stub().yields(null, col),
