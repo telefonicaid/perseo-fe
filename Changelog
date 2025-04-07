@@ -1,3 +1,11 @@
+1.36.0 (April 7th, 2025)
+
+- Add: max time detection for non signal rules to not see an entity as silent due to is death (#824)
+- Add: reportIntervalAttr, maxTimeDetectionAttr and maxTimeDetection optional fields to non signal rules (#824)
+- Add: env var PERSEO_NON_SIGNAL_MAX_TIME_DETECTION to set global nonSignalMaxTimeDetection (#824)
+- Fix: remove cache token when action rule uses trust at update or remove rule (#831)
+- Fix: prevent Perseo from crashing on startup with malformed configTrust file (#830)
+
 1.35.0 (March 4th, 2025)
 
 - Add: env var PERSEO_MONGO_DB_NAME to set mongo DB name (#819)
