@@ -1,3 +1,5 @@
+- Add: allow send email bodies as HTML when template is expanded to html (#837)
+
 1.36.0 (April 7th, 2025)
 
 - Add: max time detection for non signal rules to not see an entity as silent due to is death (#824)
