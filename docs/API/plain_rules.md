@@ -370,7 +370,8 @@ email can be set in the field `subject` in `parameters`.
 ```
 
 The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax). If the
-content body resulting in `template` is an HTML content then the email will be sent as HTML instead plain text.
+content body resulting in `template` is an HTML content then email will be sent as HTML and plain text, in order to
+ensure accesibility and compability.
 
 Additionally, Email action could include a `smtp` field to include SMTP configuration (see
 [nodemailer transport options for full detail](https://nodemailer.com/smtp/) which overwrites global SMTP configuration:
