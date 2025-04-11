@@ -1,4 +1,4 @@
-- Add: allow send email bodies as HTML when template is expanded to html (#837)
+- Add: allow send email bodies as HTML (keepting also text) when template is expanded to html (#837)
 
 1.36.0 (April 7th, 2025)
 
