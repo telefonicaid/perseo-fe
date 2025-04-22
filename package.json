@@ -62,6 +62,8 @@
     "async": "2.6.4",
     "body-parser": "~1.20.3",
     "express": "4.21.2",
+    "html-to-text": "9.0.5",
+    "is-html": "2.0.0",
     "logops": "2.1.2",
     "mongodb": "3.6.12",
     "ngsijs": "1.4.1",
