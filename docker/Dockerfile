@@ -68,46 +68,46 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL3008,DL3005
 RUN \
-	#apt-get update && \
-	# Install security updates
-	#apt-get upgrade -y && \
-	# Ensure that unzip is installed prior to downloading
-	apt-get install -y --no-install-recommends unzip ca-certificates curl && \
-	if [ "${DOWNLOAD}" = "latest" ] ; \
-	then \
-		RELEASE="${SOURCE_BRANCH}"; \
-		echo "INFO: Building Latest Development from ${SOURCE_BRANCH} branch."; \
-	elif [ "${DOWNLOAD}" = "stable" ]; \
-	then \
-		RELEASE=$(curl -s https://api.github.com/repos/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/releases/latest | grep 'tag_name' | cut -d\" -f4); \
-		echo "INFO: Building Latest Stable Release: ${RELEASE}"; \
-	else \
-	 	RELEASE="${DOWNLOAD}"; \
-	 	echo "INFO: Building Release: ${RELEASE}"; \
-	fi && \
-	RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
-	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
-	unzip source.zip -x "*/test/**" "*/docker/**" "*/documentation/**" "*/.*" && \
-	rm source.zip && \
-	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/perseo-fe && \
-	# Remove unzip and clean apt cache
-	apt-get clean && \
-	apt-get remove -y unzip && \
-	apt-get -y autoremove && \
-	rm -rf /var/lib/apt/lists/* 
+        #apt-get update && \
+        # Install security updates
+        #apt-get upgrade -y && \
+        # Ensure that unzip is installed prior to downloading
+        apt-get install -y --no-install-recommends unzip ca-certificates curl && \
+        if [ "${DOWNLOAD}" = "latest" ] ; \
+        then \
+                RELEASE="${SOURCE_BRANCH}"; \
+                echo "INFO: Building Latest Development from ${SOURCE_BRANCH} branch."; \
+        elif [ "${DOWNLOAD}" = "stable" ]; \
+        then \
+                RELEASE=$(curl -s https://api.github.com/repos/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/releases/latest | grep 'tag_name' | cut -d\" -f4); \
+                echo "INFO: Building Latest Stable Release: ${RELEASE}"; \
+        else \
+                RELEASE="${DOWNLOAD}"; \
+                echo "INFO: Building Release: ${RELEASE}"; \
+        fi && \
+        RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
+        curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
+        unzip source.zip -x "*/test/**" "*/docker/**" "*/documentation/**" "*/.*" && \
+        rm source.zip && \
+        mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/perseo-fe && \
+        # Remove unzip and clean apt cache
+        apt-get clean && \
+        apt-get remove -y unzip && \
+        apt-get -y autoremove && \
+        rm -rf /var/lib/apt/lists/* 
 
 WORKDIR /opt/perseo-fe
 
 # hadolint ignore=DL3008
 RUN \
-	# Ensure that Git is installed prior to running npm install
-	apt-get install -y --no-install-recommends git && \
-	echo "INFO: npm install --production..." && \
-	npm install --only=prod --no-package-lock --no-optional && \
-	# Remove Git and clean apt cache
-	apt-get clean && \
-	apt-get remove -y git && \
-	apt-get -y autoremove 
+        # Ensure that Git is installed prior to running npm install
+        apt-get install -y --no-install-recommends git curl && \
+        echo "INFO: npm install --production..." && \
+        npm install --only=prod --no-package-lock --no-optional && \
+        # Remove Git and clean apt cache
+        apt-get clean && \
+        apt-get remove -y git && \
+        apt-get -y autoremove 
 
 ########################################################################################
 #
@@ -213,10 +213,10 @@ WORKDIR /opt/perseo-fe
 
 # hadolint ignore=DL3008
 #RUN \
-#	apt-get update && \
-#	# Ensure that Curl is installed prior to running old entrypoints
-#	apt-get install -y --no-install-recommends curl && \
-#	rm -rf /var/lib/apt/lists/* 
+#       apt-get update && \
+#       # Ensure that Curl is installed prior to running old entrypoints
+#       apt-get install -y --no-install-recommends curl && \
+#       rm -rf /var/lib/apt/lists/* 
 
 USER node
 ENV NODE_ENV=production
