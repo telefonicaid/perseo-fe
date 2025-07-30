@@ -90,6 +90,9 @@ function loadConfiguration() {
         'PERSEO_SMTP_AUTH_USER',
         'PERSEO_SMTP_AUTH_PASS',
         'PERSEO_SMTP_TLS_REJECTUNAUTHORIZED',
+        'PERSEO_SMTP_TLS_CA',
+        'PERSEO_SMTP_TLS_KEY',
+        'PERSEO_SMTP_TLS_CERT',
         'PERSEO_SMS_URL',
         'PERSEO_SMS_API_KEY',
         'PERSEO_SMS_API_SECRET',
@@ -113,6 +116,7 @@ function loadConfiguration() {
         'PERSEO_MONGO_PASSWORD',
         'PERSEO_SMTP_AUTH_USER',
         'PERSEO_SMTP_AUTH_PASS',
+        'PERSEO_SMTP_TLS_KEY',
         'PERSEO_SMS_API_KEY',
         'PERSEO_SMS_API_SECRET',
         'PERSEO_SMPP_SYSTEMID',
@@ -205,11 +209,16 @@ function loadConfiguration() {
     if (!config.smtp.auth.user && !config.smtp.auth.user) {
         delete config.smtp.auth;
     }
+    config.smtp.tls = config.smtp.tls || {};
     if (process.env.PERSEO_SMTP_TLS_REJECTUNAUTHORIZED === 'true') {
         config.smtp.tls.rejectUnauthorized = true;
     } else if (process.env.PERSEO_SMTP_TLS_REJECTUNAUTHORIZED === 'false') {
         config.smtp.tls.rejectUnauthorized = false;
     }
+    config.smtp.tls.ca = process.env.PERSEO_SMTP_TLS_CA || config.smtp.tls.ca;
+    config.smtp.tls.key = process.env.PERSEO_SMTP_TLS_KEY || config.smtp.tls.key;
+    config.smtp.tls.cert = process.env.PERSEO_SMTP_TLS_CERT || config.smtp.tls.cert;
+
     config.sms = config.sms || {};
     config.sms.URL = process.env.PERSEO_SMS_URL || config.sms.URL;
     config.sms.API_KEY = process.env.PERSEO_SMS_API_KEY || config.sms.API_KEY;
