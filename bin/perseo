@@ -93,6 +93,8 @@ function loadConfiguration() {
         'PERSEO_SMTP_TLS_CA',
         'PERSEO_SMTP_TLS_KEY',
         'PERSEO_SMTP_TLS_CERT',
+        'PERSEO_SMTP_TLS_MIN_VERSION',
+        'PERSEO_SMTP_TLS_SERVER_NAME',
         'PERSEO_SMS_URL',
         'PERSEO_SMS_API_KEY',
         'PERSEO_SMS_API_SECRET',
@@ -218,6 +220,8 @@ function loadConfiguration() {
     config.smtp.tls.ca = process.env.PERSEO_SMTP_TLS_CA || config.smtp.tls.ca;
     config.smtp.tls.key = process.env.PERSEO_SMTP_TLS_KEY || config.smtp.tls.key;
     config.smtp.tls.cert = process.env.PERSEO_SMTP_TLS_CERT || config.smtp.tls.cert;
+    config.smtp.tls.minVersion = process.env.PERSEO_SMTP_TLS_MIN_VERSION || config.smtp.tls.minVersion;
+    config.smtp.tls.servername = process.env.PERSEO_SMTP_TLS_SERVER_NAME || config.smtp.tls.servername;
 
     config.sms = config.sms || {};
     config.sms.URL = process.env.PERSEO_SMS_URL || config.sms.URL;
