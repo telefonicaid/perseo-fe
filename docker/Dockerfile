@@ -21,7 +21,7 @@
 
 
 
-ARG NODE_VERSION=16-bullseye
+ARG NODE_VERSION=16
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=perseo-fe
 ARG DOWNLOAD=latest
@@ -44,7 +44,7 @@ ARG SOURCE_BRANCH=master
 # --target=builder
 #
 ######################################################################################## 
-FROM node:${NODE_VERSION} AS builder
+FROM node:${NODE_VERSION}-bullseye AS builder
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG DOWNLOAD
@@ -118,7 +118,7 @@ RUN \
 # --target=pm2-install
 #
 ########################################################################################
-FROM node:${NODE_VERSION}-slim AS pm2
+FROM node:${NODE_VERSION}-bullseye-slim AS pm2
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
@@ -150,7 +150,7 @@ CMD ["pm2-runtime", "/opt/perseo-fe/bin/perseo", "-- ", "config.js"]
 # as defined below.
 #
 ########################################################################################
-FROM node:${NODE_VERSION}-slim AS anon-user
+FROM node:${NODE_VERSION}-bullseye-slim AS anon-user
 RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
     && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
 
@@ -193,7 +193,7 @@ HEALTHCHECK  --interval=30s --timeout=3s --start-period=10s \
 # This build stage creates a node-slim image for production.
 #
 ########################################################################################
-FROM node:${NODE_VERSION}-slim AS slim
+FROM node:${NODE_VERSION}-bullseye-slim AS slim
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
