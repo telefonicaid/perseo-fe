@@ -212,11 +212,11 @@ COPY --from=builder /opt/perseo-fe /opt/perseo-fe
 WORKDIR /opt/perseo-fe
 
 # hadolint ignore=DL3008
-RUN \
-	#apt-get update && \
-	# Ensure that Curl is installed prior to running old entrypoints
-	apt-get install -y --no-install-recommends curl && \
-	rm -rf /var/lib/apt/lists/* 
+#RUN \
+#	apt-get update && \
+#	# Ensure that Curl is installed prior to running old entrypoints
+#	apt-get install -y --no-install-recommends curl && \
+#	rm -rf /var/lib/apt/lists/* 
 
 USER node
 ENV NODE_ENV=production
