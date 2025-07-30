@@ -21,7 +21,7 @@
 
 
 
-ARG NODE_VERSION=16
+ARG NODE_VERSION=16-bullseye
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=perseo-fe
 ARG DOWNLOAD=latest
@@ -68,9 +68,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL3008,DL3005
 RUN \
-        #apt-get update && \
+        apt-get update && \
         # Install security updates
-        #apt-get upgrade -y && \
+        apt-get upgrade -y && \
         # Ensure that unzip is installed prior to downloading
         apt-get install -y --no-install-recommends unzip ca-certificates curl && \
         if [ "${DOWNLOAD}" = "latest" ] ; \
@@ -101,7 +101,7 @@ WORKDIR /opt/perseo-fe
 # hadolint ignore=DL3008
 RUN \
         # Ensure that Git is installed prior to running npm install
-        apt-get install -y --no-install-recommends git curl && \
+        apt-get install -y --no-install-recommends git && \
         echo "INFO: npm install --production..." && \
         npm install --only=prod --no-package-lock --no-optional && \
         # Remove Git and clean apt cache
@@ -212,11 +212,11 @@ COPY --from=builder /opt/perseo-fe /opt/perseo-fe
 WORKDIR /opt/perseo-fe
 
 # hadolint ignore=DL3008
-#RUN \
-#       apt-get update && \
-#       # Ensure that Curl is installed prior to running old entrypoints
-#       apt-get install -y --no-install-recommends curl && \
-#       rm -rf /var/lib/apt/lists/* 
+RUN \
+       apt-get update && \
+       # Ensure that Curl is installed prior to running old entrypoints
+       apt-get install -y --no-install-recommends curl && \
+       rm -rf /var/lib/apt/lists/* 
 
 USER node
 ENV NODE_ENV=production
