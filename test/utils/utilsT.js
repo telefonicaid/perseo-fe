@@ -60,13 +60,15 @@ function remove(collection, callback) {
         .then((client) => {
             const col = client.db().collection(collection);
 
-            col.remove({}, function(err, result) {
-                if (err) {
+            col.deleteMany({})
+                .then((result) => {
+                    client.close();
+                    return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
                     return callback(err);
-                }
-                client.close();
-                return callback(null, result);
-            });
+                });
         })
         .catch((err) => {
             return callback(err);
@@ -89,13 +91,15 @@ function dropCollection(collection, callback) {
     connectPromise
         .then((client) => {
             const col = client.db().collection(collection);
-            col.drop(function(err, result) {
-                if (err) {
+            col.drop()
+                .then((result) => {
+                    client.close();
+                    return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
                     return callback(err);
-                }
-                client.close();
-                return callback(null, result);
-            });
+                });
         })
         .catch((err) => {
             return callback(err);
@@ -118,10 +122,15 @@ function createRulesCollection(callback) {
         .then((client) => {
             const rules = client.db().collection(config.collections.rules);
 
-            rules.createIndex({ name: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                client.close();
-                return callback(err, indexName);
-            });
+            rules.createIndex({ name: 1 }, { unique: true, w: 'majority' })
+                .then((indexName) => {
+                    client.close();
+                    return callback(null, indexName);
+                })
+                .catch((err) => {
+                    client.close();
+                    return callback(err);
+                });
         })
         .catch((err) => {
             return callback(err);
@@ -138,13 +147,15 @@ function addRule(rule, callback) {
         .then((client) => {
             const rules = client.db().collection(config.collections.rules);
 
-            rules.insertOne(rule, function(err, result) {
-                if (err) {
+            rules.insertOne(rule)
+                .then((result) => {
+                    client.close();
+                    return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
                     return callback(err);
-                }
-                client.close();
-                return callback(null, result);
-            });
+                });
         })
         .catch((err) => {
             return callback(err);
@@ -163,10 +174,15 @@ function createEntitiesCollection(tenant, callback) {
             var rules = db2.collection(config.orionDb.collection);
 
             // We don't mind what fields have index in that collection
-            rules.createIndex({ modDate: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                client.close();
-                return callback(err, indexName);
-            });
+            rules.createIndex({ modDate: 1 }, { unique: true, w: 'majority' })
+                .then((indexName) => {
+                    client.close();
+                    return callback(null, indexName);
+                })
+                .catch((err) => {
+                    client.close();
+                    return callback(err);
+                });
         })
         .catch((err) => {
             return callback(err);
@@ -183,13 +199,15 @@ function dropEntities(callback) {
             var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE);
             var coll = db2.collection(config.orionDb.collection);
 
-            coll.remove({}, function(err, result) {
-                if (err) {
+            coll.deleteMany({})
+                .then((result) => {
+                    client.close();
+                    return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
                     return callback(err);
-                }
-                client.close();
-                return callback(null, result);
-            });
+                });
         })
         .catch((err) => {
             return callback(err);
@@ -206,13 +224,15 @@ function addEntity(tenant, entity, callback) {
             var db2 = client.db(config.orionDb.prefix + '-' + tenant);
             var entities = db2.collection(config.orionDb.collection);
 
-            entities.insertOne(entity, function(err, result) {
-                if (err) {
+            entities.insertOne(entity)
+                .then((result) => {
+                    client.close();
+                    return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
                     return callback(err);
-                }
-                client.close();
-                return callback(null, result);
-            });
+                });
         })
         .catch((err) => {
             return callback(err);
