@@ -21,7 +21,7 @@
 
 
 
-ARG NODE_VERSION=16
+ARG NODE_VERSION=24
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=perseo-fe
 ARG DOWNLOAD=latest
@@ -158,34 +158,36 @@ RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
 #
 # This build stage creates a distroless image for production.
 #
+# FIXME: distroless stuff disabled. See https://github.com/telefonicaid/iotagent-json/issues/891
+#
 ########################################################################################
-FROM gcr.io/distroless/nodejs:${NODE_VERSION} AS distroless
-ARG GITHUB_ACCOUNT
-ARG GITHUB_REPOSITORY
-ARG NODE_VERSION
-
-LABEL "maintainer"="FIWARE Perseo Team. Telefónica I+D"
-LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
-LABEL "org.opencontainers.image.documentation"="https://perseo.readthedocs.io/"
-LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
-LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
-LABEL "org.opencontainers.image.title"="Complex Event Processing component for NGSI-v2 (Distroless) "
-LABEL "org.opencontainers.image.description"="An Esper-based Complex Event Processing (CEP) software designed to be fully NGSIv2-compliant."
-LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
-LABEL "org.nodejs.version"="${NODE_VERSION}"
-
-COPY --from=builder /opt/perseo-fe /opt/perseo-fe
-COPY --from=anon-user /etc/passwd /etc/shadow /etc/group /etc/
-WORKDIR /opt/perseo-fe
-
-USER nobody
-ENV NODE_ENV=production
-
-# Expose 9090 for HTTP PORT
-EXPOSE ${PERSEO_ENDPOINT_PORT:-9090} 
-CMD ["/opt/perseo-fe/bin/perseo", "-- ", "config.js"]
-HEALTHCHECK  --interval=30s --timeout=3s --start-period=10s \
-  CMD ["/nodejs/bin/node", "./bin/healthcheck"]
+#FROM gcr.io/distroless/nodejs:${NODE_VERSION} AS distroless
+#ARG GITHUB_ACCOUNT
+#ARG GITHUB_REPOSITORY
+#ARG NODE_VERSION
+#
+#LABEL "maintainer"="FIWARE Perseo Team. Telefónica I+D"
+#LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
+#LABEL "org.opencontainers.image.documentation"="https://perseo.readthedocs.io/"
+#LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
+#LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
+#LABEL "org.opencontainers.image.title"="Complex Event Processing component for NGSI-v2 (Distroless) "
+#LABEL "org.opencontainers.image.description"="An Esper-based Complex Event Processing (CEP) software designed to be fully NGSIv2-compliant."
+#LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
+#LABEL "org.nodejs.version"="${NODE_VERSION}"
+#
+#COPY --from=builder /opt/perseo-fe /opt/perseo-fe
+#COPY --from=anon-user /etc/passwd /etc/shadow /etc/group /etc/
+#WORKDIR /opt/perseo-fe
+#
+#USER nobody
+#ENV NODE_ENV=production
+#
+## Expose 9090 for HTTP PORT
+#EXPOSE ${PERSEO_ENDPOINT_PORT:-9090} 
+#CMD ["/opt/perseo-fe/bin/perseo", "-- ", "config.js"]
+#HEALTHCHECK  --interval=30s --timeout=3s --start-period=10s \
+#  CMD ["/nodejs/bin/node", "./bin/healthcheck"]
 
 
 ########################################################################################
