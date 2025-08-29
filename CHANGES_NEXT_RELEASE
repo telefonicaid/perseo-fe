@@ -1,3 +1,4 @@
+- Upgrade: mongodb dependency from 3.6.12 to 6.19.0
 - Add PERSEO_SMTP_TLS_CA, PERSEO_SMTP_TLS_KEY, PERSEO_SMTP_TLS_CERT, PERSEO_SMTP_TLS_MIN_VERSION and PERSEO_SMTP_TLS_SERVER_NAME env vars for global config (#841)
 - Add: allow send email bodies as HTML (keeping also text) when template is expanded to html (#837)
 - Upgrade NodeJS version from 16-slim to 24-bullseye-slim in Dockerfile

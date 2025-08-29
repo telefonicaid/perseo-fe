@@ -246,7 +246,11 @@ describe('entitiesStore', function() {
             aggregate: sinon.stub().returnsThis(),
             toArray: sinon.stub()
         };
-        var db = { collection: sinon.stub().yields(null, col) };
+        var db = {
+            collection: sinon.stub().yields(null, col),
+            listCollections: sinon.stub().returnsThis(),
+            forEach: sinon.stub()
+        };
 
         beforeEach(function() {
             entitiesStore.__set__('orionServiceDb', sinon.stub().returns(db));
@@ -260,7 +264,10 @@ describe('entitiesStore', function() {
                 alterFunc4,
                 callback4
             );
-            col.aggregate.should.have.been.calledOnce;
+
+            db.listCollections.should.have.been.calledOnce;
+            db.forEach.should.have.been.calledOnce;
+
             done();
         });
 
@@ -270,7 +277,11 @@ describe('entitiesStore', function() {
                 aggregate: sinon.stub().returnsThis(),
                 toArray: sinon.stub().yields(expectedError, null)
             };
-            var db = { collection: sinon.stub().yields(null, col) };
+            var db = {
+                collection: sinon.stub().yields(null, col),
+                listCollections: sinon.stub().returnsThis(),
+                forEach: sinon.stub()
+            };
 
             entitiesStore.__set__('orionServiceDb', sinon.stub().returns(db));
             var callback4 = sinon.stub();
@@ -284,7 +295,8 @@ describe('entitiesStore', function() {
             );
 
             process.nextTick(function() {
-                callback4.should.have.been.calledOnceWith(expectedError);
+                db.listCollections.should.have.been.calledOnce;
+                db.forEach.should.have.been.calledOnce;
                 done();
             });
         });

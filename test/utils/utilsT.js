@@ -51,27 +51,28 @@ function loadDirExamples(filepath) {
 }
 
 function remove(collection, callback) {
-    MongoClient.connect(
-        config.mongo.url,
-        function(err, client) {
-            if (err) {
-                return callback(err);
-            }
-            const db = client.db();
-            db.collection(collection, {}, function(err, coll) {
-                if (err) {
-                    return callback(err);
-                }
-                coll.remove({}, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
+    const connectPromise = MongoClient.connect(config.mongo.url, {
+        socketTimeoutMS: config.mongo.connectTimeoutMS || 3000,
+        serverSelectionTimeoutMS: config.mongo.connectTimeoutMS || 3000
+    });
+
+    connectPromise
+        .then((client) => {
+            const col = client.db().collection(collection);
+
+            col.deleteMany({})
+                .then((result) => {
                     client.close();
                     return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
+                    return callback(err);
                 });
-            });
-        }
-    );
+        })
+        .catch((err) => {
+            return callback(err);
+        });
 }
 
 function dropRules(callback) {
@@ -82,27 +83,27 @@ function dropExecutions(callback) {
 }
 
 function dropCollection(collection, callback) {
-    MongoClient.connect(
-        config.mongo.url,
-        function(err, client) {
-            if (err) {
-                return callback(err);
-            }
-            const db = client.db();
-            db.collection(collection, {}, function(err, col) {
-                if (err) {
-                    return callback(err);
-                }
-                col.drop(function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
+    const connectPromise = MongoClient.connect(config.mongo.url, {
+        socketTimeoutMS: config.mongo.connectTimeoutMS || 3000,
+        serverSelectionTimeoutMS: config.mongo.connectTimeoutMS || 3000
+    });
+
+    connectPromise
+        .then((client) => {
+            const col = client.db().collection(collection);
+            col.drop()
+                .then((result) => {
                     client.close();
                     return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
+                    return callback(err);
                 });
-            });
-        }
-    );
+        })
+        .catch((err) => {
+            return callback(err);
+        });
 }
 function dropRulesCollection(callback) {
     dropCollection(config.collections.rules, callback);
@@ -112,117 +113,130 @@ function dropExecutionsCollection(callback) {
 }
 
 function createRulesCollection(callback) {
-    MongoClient.connect(
-        config.mongo.url,
-        function(err, client) {
-            if (err) {
-                return callback(err);
-            }
-            const db = client.db();
-            db.collection(config.collections.rules, {}, function(err, rules) {
-                if (err) {
-                    return callback(err);
-                }
-                rules.ensureIndex({ name: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
+    const connectPromise = MongoClient.connect(config.mongo.url, {
+        socketTimeoutMS: config.mongo.connectTimeoutMS || 3000,
+        serverSelectionTimeoutMS: config.mongo.connectTimeoutMS || 3000
+    });
+
+    connectPromise
+        .then((client) => {
+            const rules = client.db().collection(config.collections.rules);
+
+            rules.createIndex({ name: 1 }, { unique: true, w: 'majority' })
+                .then((indexName) => {
                     client.close();
-                    return callback(err, indexName);
+                    return callback(null, indexName);
+                })
+                .catch((err) => {
+                    client.close();
+                    return callback(err);
                 });
-            });
-        }
-    );
+        })
+        .catch((err) => {
+            return callback(err);
+        });
 }
 
 function addRule(rule, callback) {
-    MongoClient.connect(
-        config.mongo.url,
-        function(err, client) {
-            if (err) {
-                return callback(err);
-            }
-            const db = client.db();
-            db.collection(config.collections.rules, {}, function(err, rules) {
-                if (err) {
-                    return callback(err);
-                }
-                rules.save(rule, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
+    const connectPromise = MongoClient.connect(config.mongo.url, {
+        socketTimeoutMS: config.mongo.connectTimeoutMS || 3000,
+        serverSelectionTimeoutMS: config.mongo.connectTimeoutMS || 3000
+    });
+
+    connectPromise
+        .then((client) => {
+            const rules = client.db().collection(config.collections.rules);
+
+            rules.insertOne(rule)
+                .then((result) => {
                     client.close();
                     return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
+                    return callback(err);
                 });
-            });
-        }
-    );
+        })
+        .catch((err) => {
+            return callback(err);
+        });
 }
 
 function createEntitiesCollection(tenant, callback) {
-    MongoClient.connect(
-        config.orionDb.url,
-        function(err, client) {
+    const connectPromise = MongoClient.connect(config.orionDb.url, {
+        socketTimeoutMS: config.mongo.connectTimeoutMS || 3000,
+        serverSelectionTimeoutMS: config.mongo.connectTimeoutMS || 3000
+    });
+
+    connectPromise
+        .then((client) => {
             var db2 = client.db(config.orionDb.prefix + '-' + tenant);
-            if (err) {
-                return callback(err);
-            }
-            db2.collection(config.orionDb.collection, {}, function(err, rules) {
-                if (err) {
-                    return callback(err);
-                }
-                // We don't mind what fields have index in that collection
-                rules.ensureIndex({ modDate: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
+            var rules = db2.collection(config.orionDb.collection);
+
+            // We don't mind what fields have index in that collection
+            rules.createIndex({ modDate: 1 }, { unique: true, w: 'majority' })
+                .then((indexName) => {
                     client.close();
-                    return callback(err, indexName);
+                    return callback(null, indexName);
+                })
+                .catch((err) => {
+                    client.close();
+                    return callback(err);
                 });
-            });
-        }
-    );
+        })
+        .catch((err) => {
+            return callback(err);
+        });
 }
 function dropEntities(callback) {
-    MongoClient.connect(
-        config.orionDb.url,
-        function(err, client) {
-            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_TENANT);
-            if (err) {
-                return callback(err);
-            }
-            db2.collection(config.orionDb.collection, {}, function(err, coll) {
-                if (err) {
-                    return callback(err);
-                }
-                coll.remove({}, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
+    const connectPromise = MongoClient.connect(config.orionDb.url, {
+        socketTimeoutMS: config.mongo.connectTimeoutMS || 3000,
+        serverSelectionTimeoutMS: config.mongo.connectTimeoutMS || 3000
+    });
+
+    connectPromise
+        .then((client) => {
+            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE);
+            var coll = db2.collection(config.orionDb.collection);
+
+            coll.deleteMany({})
+                .then((result) => {
                     client.close();
                     return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
+                    return callback(err);
                 });
-            });
-        }
-    );
+        })
+        .catch((err) => {
+            return callback(err);
+        });
 }
 function addEntity(tenant, entity, callback) {
-    MongoClient.connect(
-        config.orionDb.url,
-        function(err, client) {
-            var db2;
-            if (err) {
-                return callback(err);
-            }
-            db2 = client.db(config.orionDb.prefix + '-' + tenant);
-            db2.collection(config.orionDb.collection, {}, function(err, entities) {
-                if (err) {
-                    return callback(err);
-                }
-                entities.save(entity, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
+    const connectPromise = MongoClient.connect(config.orionDb.url, {
+        socketTimeoutMS: config.mongo.connectTimeoutMS || 3000,
+        serverSelectionTimeoutMS: config.mongo.connectTimeoutMS || 3000
+    });
+
+    connectPromise
+        .then((client) => {
+            var db2 = client.db(config.orionDb.prefix + '-' + tenant);
+            var entities = db2.collection(config.orionDb.collection);
+
+            entities.insertOne(entity)
+                .then((result) => {
                     client.close();
                     return callback(null, result);
+                })
+                .catch((err) => {
+                    client.close();
+                    return callback(err);
                 });
-            });
-        }
-    );
+        })
+        .catch((err) => {
+            return callback(err);
+        });
 }
 function configTest() {
     config.mongo.url = 'mongodb://localhost:27017/perseo_testing';
