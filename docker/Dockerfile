@@ -159,6 +159,7 @@ RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
 # This build stage creates a distroless image for production.
 #
 ########################################################################################
+# hadolint ignore=DL3007
 FROM gcr.io/distroless/nodejs${NODE_VERSION}-debian12 AS distroless
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
