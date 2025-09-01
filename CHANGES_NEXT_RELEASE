@@ -1,4 +1,3 @@
 - Upgrade: mongodb dependency from 3.6.12 to 4.17.2
 - Add PERSEO_SMTP_TLS_CA, PERSEO_SMTP_TLS_KEY, PERSEO_SMTP_TLS_CERT, PERSEO_SMTP_TLS_MIN_VERSION and PERSEO_SMTP_TLS_SERVER_NAME env vars for global config (#841)
-- Upgrade NodeJS version from 16-slim to 16-bullseye-slim in Dockerfile
-
+- Upgrade NodeJS version from 16-slim to 24-bullseye-slim in Dockerfile
