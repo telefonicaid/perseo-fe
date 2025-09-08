@@ -53,13 +53,17 @@ function loadDirExamples(filepath) {
 function remove(collection, callback) {
     MongoClient.connect(
         config.mongo.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             if (err) {
                 return callback(err);
             }
             const col = client.db().collection(collection);
 
-            col.remove({}, function(err, result) {
+            col.deleteMany({}, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
@@ -80,6 +84,10 @@ function dropExecutions(callback) {
 function dropCollection(collection, callback) {
     MongoClient.connect(
         config.mongo.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             if (err) {
                 return callback(err);
@@ -105,6 +113,10 @@ function dropExecutionsCollection(callback) {
 function createRulesCollection(callback) {
     MongoClient.connect(
         config.mongo.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             if (err) {
                 return callback(err);
@@ -122,6 +134,10 @@ function createRulesCollection(callback) {
 function addRule(rule, callback) {
     MongoClient.connect(
         config.mongo.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             if (err) {
                 return callback(err);
@@ -142,6 +158,10 @@ function addRule(rule, callback) {
 function createEntitiesCollection(tenant, callback) {
     MongoClient.connect(
         config.orionDb.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             var db2 = client.db(config.orionDb.prefix + '-' + tenant);
             if (err) {
@@ -160,6 +180,10 @@ function createEntitiesCollection(tenant, callback) {
 function dropEntities(callback) {
     MongoClient.connect(
         config.orionDb.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE);
             if (err) {
@@ -167,7 +191,7 @@ function dropEntities(callback) {
             }
             var coll = db2.collection(config.orionDb.collection);
 
-            coll.remove({}, function(err, result) {
+            coll.deleteMany({}, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
@@ -180,6 +204,10 @@ function dropEntities(callback) {
 function addEntity(tenant, entity, callback) {
     MongoClient.connect(
         config.orionDb.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             var db2;
             if (err) {
