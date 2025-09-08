@@ -30,12 +30,16 @@ var should = require('should'),
 describe('Db', function() {
     describe('#GetDB()', function() {
         var mongourl = '';
+        var connectTimeoutMS;
         before(function() {
             mongourl = utilsT.getConfig().mongo.url;
+            connectTimeoutMS = utilsT.getConfig().mongo.connectTimeoutMS;
             utilsT.getConfig().mongo.url = 'mongodb://ihopethisdoesnotexistpleeease:32321/perseo_testing';
+            utilsT.getConfig().mongo.connectTimeoutMS = 200;
         });
         after(function() {
             utilsT.getConfig().mongo.url = mongourl;
+            utilsT.getConfig().mongo.connectTimeoutMS = connectTimeoutMS;
         });
         it('should return an error when there is no database', function(done) {
             db.getDb(function(error, database) {
