@@ -53,22 +53,22 @@ function loadDirExamples(filepath) {
 function remove(collection, callback) {
     MongoClient.connect(
         config.mongo.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             if (err) {
                 return callback(err);
             }
-            const db = client.db();
-            db.collection(collection, {}, function(err, coll) {
+            const col = client.db().collection(collection);
+
+            col.deleteMany({}, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                coll.remove({}, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
@@ -84,22 +84,21 @@ function dropExecutions(callback) {
 function dropCollection(collection, callback) {
     MongoClient.connect(
         config.mongo.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             if (err) {
                 return callback(err);
             }
-            const db = client.db();
-            db.collection(collection, {}, function(err, col) {
+            const col = client.db().collection(collection);
+            col.drop(function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                col.drop(function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
@@ -114,19 +113,19 @@ function dropExecutionsCollection(callback) {
 function createRulesCollection(callback) {
     MongoClient.connect(
         config.mongo.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             if (err) {
                 return callback(err);
             }
-            const db = client.db();
-            db.collection(config.collections.rules, {}, function(err, rules) {
-                if (err) {
-                    return callback(err);
-                }
-                rules.ensureIndex({ name: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                    client.close();
-                    return callback(err, indexName);
-                });
+            const rules = client.db().collection(config.collections.rules);
+
+            rules.createIndex({ name: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
+                client.close();
+                return callback(err, indexName);
             });
         }
     );
@@ -135,22 +134,22 @@ function createRulesCollection(callback) {
 function addRule(rule, callback) {
     MongoClient.connect(
         config.mongo.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             if (err) {
                 return callback(err);
             }
-            const db = client.db();
-            db.collection(config.collections.rules, {}, function(err, rules) {
+            const rules = client.db().collection(config.collections.rules);
+
+            rules.insertOne(rule, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                rules.save(rule, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
@@ -159,20 +158,21 @@ function addRule(rule, callback) {
 function createEntitiesCollection(tenant, callback) {
     MongoClient.connect(
         config.orionDb.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             var db2 = client.db(config.orionDb.prefix + '-' + tenant);
             if (err) {
                 return callback(err);
             }
-            db2.collection(config.orionDb.collection, {}, function(err, rules) {
-                if (err) {
-                    return callback(err);
-                }
-                // We don't mind what fields have index in that collection
-                rules.ensureIndex({ modDate: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                    client.close();
-                    return callback(err, indexName);
-                });
+            var rules = db2.collection(config.orionDb.collection);
+
+            // We don't mind what fields have index in that collection
+            rules.createIndex({ modDate: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
+                client.close();
+                return callback(err, indexName);
             });
         }
     );
@@ -180,22 +180,23 @@ function createEntitiesCollection(tenant, callback) {
 function dropEntities(callback) {
     MongoClient.connect(
         config.orionDb.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
-            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_TENANT);
+            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE);
             if (err) {
                 return callback(err);
             }
-            db2.collection(config.orionDb.collection, {}, function(err, coll) {
+            var coll = db2.collection(config.orionDb.collection);
+
+            coll.deleteMany({}, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                coll.remove({}, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
@@ -203,23 +204,24 @@ function dropEntities(callback) {
 function addEntity(tenant, entity, callback) {
     MongoClient.connect(
         config.orionDb.url,
+        {
+            socketTimeoutMS: config.checkDB.reconnectInterval || 30000,
+            serverSelectionTimeoutMS: config.checkDB.reconnectInterval || 30000
+        },
         function(err, client) {
             var db2;
             if (err) {
                 return callback(err);
             }
             db2 = client.db(config.orionDb.prefix + '-' + tenant);
-            db2.collection(config.orionDb.collection, {}, function(err, entities) {
+            var entities = db2.collection(config.orionDb.collection);
+
+            entities.insertOne(entity, function(err, result) {
                 if (err) {
                     return callback(err);
                 }
-                entities.save(entity, function(err, result) {
-                    if (err) {
-                        return callback(err);
-                    }
-                    client.close();
-                    return callback(null, result);
-                });
+                client.close();
+                return callback(null, result);
             });
         }
     );
