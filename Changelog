@@ -1,3 +1,9 @@
+1.37.0 (September 24th, 2025)
+
+- Add PERSEO_SMTP_TLS_CA, PERSEO_SMTP_TLS_KEY, PERSEO_SMTP_TLS_CERT, PERSEO_SMTP_TLS_MIN_VERSION and PERSEO_SMTP_TLS_SERVER_NAME env vars for global config (#841)
+- Add: allow send email bodies as HTML (keeping also text) when template is expanded to html (#837)
+- Upgrade NodeJS version from 16-slim to 24-bullseye-slim in Dockerfile
+
 1.36.0 (April 7th, 2025)
 
 - Add: max time detection for non signal rules to not see an entity as silent due to is death (#824)
