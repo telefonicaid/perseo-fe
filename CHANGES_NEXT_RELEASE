@@ -1,1 +1,2 @@
 - Set Nodejs 20 as minimum version in packages.json (effectively removing Nodev16 and Nodev18 from supported versions)
+- Upgrade: nodemailer dependency from from 6.9.16 to 7.0.7 (solving vulnerability)
