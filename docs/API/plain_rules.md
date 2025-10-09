@@ -334,12 +334,12 @@ or include a `smpp` field to include SMPP configuration which overwrites global 
         "type": "sms",
         "template": "Meter ${Meter} has pressure ${Pressure}.",
         "parameters": {
-            "to": "123456789",
+            "to": "34123456789",
             "smpp": {
-                "from": "myfrom",
+                "from": "34666XXYYZZ",
                 "host": "host",
                 "port": "port",
-                "systemid": "6666666",
+                "systemid": "myuser",
                 "password": "mypwd"
             }
         }
