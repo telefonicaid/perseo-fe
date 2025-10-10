@@ -1,7 +1,0 @@
-- Add: allow mix sms and smpp rules in the same instance of perseo
-- Add: allow use multiple destinataries in action of SMPP rules
-- Fix: SMPP fields for from and to
-- Fix: return callback in action SMPP in all cases (to continue process further sms rules when error)
-- Upgrade smpp dependency from 0.3.1 to 0.6.0-rc.4
-- Set Nodejs 20 as minimum version in packages.json (effectively removing Nodev16 and Nodev18 from supported versions)
-- Upgrade: nodemailer dependency from from 6.9.16 to 7.0.7 (solving vulnerability)
