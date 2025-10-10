@@ -1,5 +1,9 @@
-- Upgrade smpp dep from 0.3.1 to 0.5.1
-- Fix: deprecated mongo warnings about save and remove methods (#806)
-- Fix: remove unnecessary env vars (PERSEO_MONGO_HOST and PERSEO_CORE_URL) from Dockerfile (#810)
-- Upgrade express from 4.19.2 to 4.21.2
+
+- Add: allow mix sms and smpp rules in the same instance of perseo
+- Add: allow use multiple destinataries in action of SMPP rules
+- Fix: SMPP fields for from and to
+- Fix: return callback in action SMPP in all cases (to continue process further sms rules when error)
+- Upgrade smpp dependency from 0.3.1 to 0.6.0-rc.4
+- Set Nodejs 20 as minimum version in packages.json (effectively removing Nodev16 and Nodev18 from supported versions)
+- Upgrade: nodemailer dependency from from 6.9.16 to 7.0.7 (solving vulnerability)
 - Upgrade body-parser dep from 1.18.2 to 1.20.3

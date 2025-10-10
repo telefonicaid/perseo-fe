@@ -4,7 +4,7 @@
 -   [EPL text](#epl-text)
     -   [Pre-SELECT clauses](#pre-select-clauses)
 -   [No signal conditions](#no-signal-conditions)
--   [No signal actions](#no-signal-actions)
+-   [Non signal actions](#non-signal-actions)
 -   [Actions](#actions)
     -   [String substitution syntax](#string-substitution-syntax)
     -   [SMS action](#sms-action)
@@ -170,9 +170,22 @@ fields:
     values are truncated to them (a warning log message is generated if such truncation occurs)
 -   **attribute**: _mandatory_, attribute for watch
 -   **reportInterval**: _mandatory_, time in seconds to see an entity as silent (in other words, how much time has to
-    pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered)
+    pass since last entity update to consider that entity is in "no signal" situation so the rule is triggered). In
+    order to not check too old entities there is a _maxTimeDetection_ (perseo checks for the attribute first in the
+    entity configuration, maxTimeDetectionAttr, then in the rule configuration, and lastly, if not found, in the global
+    configuration) to limit this search
+-   **reportIntervalAttr**: _optional_, entity attribute where find value for reportInterval. If no _reportIntervalAttr_
+-   is found then _reportInterval_ from rule is used.
+-   **maxTimeDetection**: _optional_, max time in seconds to see an entity as silent (in other words, how much time has
+    to pass since last entity update to not consider that entity is in "no signal" situation due to entity is death,
+    i.e. not modified during a long time). If no value is provided then Perseo global config (nonSignalMaxTimeDetection
+    or docker env var PERSEO_NON_SIGNAL_MAX_TIME_DETECTION) is used. By default
+    nonSignalMaxTimeDetection/PERSEO_NON_SIGNAL_MAX_TIME_DETECTION is set to 30 days.
+-   **maxTimeDetectionAttr**: _optional_, entity attribute where find value for maxTimeDetection. If no
+    _maxTimeDetectionAttr_
+-   is found then _maxTimeDetection_ from rule is used.
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
--   type: _optional_, type of entities to watch
+-   **type**: _optional_, type of entities to watch
 
 Is recommended to set checkInterval at least double of reportInterval. Howeer, note that a very demanding value of
 checkInterval could impact on performance.
@@ -186,11 +199,22 @@ actions:
 -   **subservice**: subservice of rule
 -   **ruleName**: name of the rule
 -   **reportInterval**: time to see an entity as silent (in other words, how much time has to pass since last entity
-    update to consider that entity is in "no signal" situation so the rule is triggered)
+    update to consider that entity is in "no signal" situation so the rule is triggered) (same value as field of the
+    same field in rule condition).
+-   **reportIntervalAttr**: entity attribute where find value for reportInterval (same value as field of the same field
+    in rule condition) (\*)
+-   **maxTimeDetection**: max time in seconds to not see an entity as silent (in other words, how much time has to pass
+    since last entity update to not consider that entity is in "no signal" situation due to entity is death (no modified
+    during a long time) (same value as field of the same field in rule condition) (\*)
+-   **maxTimeDetectionAttr**: entity attribute where find value for maxTimeDetection (same value as field of the same
+    field in rule condition) (\*)
 -   **id**: entity id
 -   **type**: entity type
 -   **internalCurrentTime**: current time
 -   **lastTime**: lastTime rule was executed as well as all entity attributes
+
+(\*) Only include as virtual attribute in the case the field is used in the condition of the rule (take into account
+that is an optional field)
 
 ## Actions
 
@@ -310,12 +334,12 @@ or include a `smpp` field to include SMPP configuration which overwrites global 
         "type": "sms",
         "template": "Meter ${Meter} has pressure ${Pressure}.",
         "parameters": {
-            "to": "123456789",
+            "to": "34123456789",
             "smpp": {
-                "from": "myfrom",
+                "from": "34666XXYYZZ",
                 "host": "host",
                 "port": "port",
-                "systemid": "6666666",
+                "systemid": "myuser",
                 "password": "mypwd"
             }
         }
@@ -345,7 +369,9 @@ email can be set in the field `subject` in `parameters`.
     }
 ```
 
-The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax).
+The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax). If the
+content body resulting in `template` is an HTML content then email will be sent as HTML and plain text, in order to
+ensure accesibility and compability.
 
 Additionally, Email action could include a `smtp` field to include SMTP configuration (see
 [nodemailer transport options for full detail](https://nodemailer.com/smtp/) which overwrites global SMTP configuration:
@@ -397,8 +423,8 @@ the Perseo configuration). The `parameters` map includes the following fields:
     -   DELETE: delete attributes (or the entity itself if the attributes list is empty)
 -   trust: optional, trust for getting an access token from Auth Server which can be used to get to a Context Broker
     behind a PEP. This trust is indexed by `id` in a configuration file named configTrust.js (full path
-    /opt/perseo-fe/configTrust.js i.e. in a docker image) which has the following
-    format which describe full client credentials including idm endpoint:
+    /opt/perseo-fe/configTrust.js i.e. in a docker image) which has the following format which describe full client
+    credentials including idm endpoint:
 
     ```
     configTrust.trusts = [
