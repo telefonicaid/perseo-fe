@@ -5,7 +5,10 @@
         "type": "sms",
         "template": "Meter ${Meter} has pression ${Pression}.",
         "parameters": {
-            "to": "123456789"
+            "to": "123456789",
+            "sms": {
+                "from": "tel:22012;phone-context=+34"
+            }
         }
     }
 }
