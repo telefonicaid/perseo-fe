@@ -50,6 +50,13 @@ In order to link other Docker images to the Perso FE image, take into account th
 
 For the full perseo stack to work, both instances should be linked to their appropriate alias.
 
+Using configTrust.js file lodaded from a volume in docker, ensure that file is declared using absolute paths: 
+
+```
+volumes:
+  - ${PATH_PERSEO_FE_CONF:?must be absolute}/configTrust.js:/opt/perseo-fe/configTrust.js
+```
+
 ### Using PM2
 
 The PerseoFEwithin the Docker image can be run encapsulated within the [pm2](http://pm2.keymetrics.io/) Process Manager
