@@ -140,7 +140,8 @@ config.smpp = {
     systemid: '',
     password: '',
     from: '346666666',
-    enabled: false
+    enabled: false,
+    defaultCountryCode: '34'
 };
 
 /**

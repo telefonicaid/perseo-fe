@@ -110,6 +110,30 @@ describe('Actions', function() {
             );
         });
 
+        it('should return ok with a valid action with a rule for smpp with multiple numbers', function(done) {
+            var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_smpp_multiple.json'),
+                action = utilsT.loadExample('./test/data/good_actions/action_smpp_multiple.json');
+            async.series(
+                [
+                    function(callback) {
+                        clients.PostRule(rule, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback(null);
+                        });
+                    },
+                    function(callback) {
+                        clients.PostAction(action, function(error, data) {
+                            should.not.exist(error);
+                            data.should.have.property('statusCode', 200);
+                            return callback();
+                        });
+                    }
+                ],
+                done
+            );
+        });
+
         it('should return ok with a valid action with a rule for update', function(done) {
             var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_update.json'),
                 action = utilsT.loadExample('./test/data/good_actions/action_update.json');
