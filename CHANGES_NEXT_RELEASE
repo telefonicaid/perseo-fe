@@ -1,1 +1,2 @@
-- Allow use all phone number formats (local, short, international) with smpp rules (#861)
+- Add: allow use all phone number formats (local, short, international) with smpp rules (#861)
+- Add: new defaultCountryCode configuration field (associated env var PERSEO_SMPP_DEFAULT_COUNTRY_CODE ) (#861)
