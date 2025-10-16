@@ -105,6 +105,7 @@ function loadConfiguration() {
         'PERSEO_SMPP_PASSWORD',
         'PERSEO_SMPP_FROM',
         'PERSEO_SMPP_ENABLED',
+        'PERSEO_SMPP_DEFAULT_COUNTRY_CODE',
         'PERSEO_NOTICES_PATH',
         'PERSEO_RULES_PATH',
         'PERSEO_CAST_TYPES',
@@ -236,6 +237,7 @@ function loadConfiguration() {
     config.smpp.password = process.env.PERSEO_SMPP_PASSWORD || config.smpp.password;
     config.smpp.from = process.env.PERSEO_SMPP_FROM || config.smpp.from;
     config.smpp.enabled = process.env.PERSEO_SMPP_ENABLED || config.smpp.enabled;
+    config.smpp.defaultCountryCode = process.env.PERSEO_SMPP_DEFAULT_COUNTRY_CODE || config.smpp.defaultCountryCode;
     config.endpoint.noticesPath = process.env.PERSEO_NOTICES_PATH || config.endpoint.noticesPath;
     config.endpoint.rulesPath = process.env.PERSEO_RULES_PATH || config.endpoint.rulesPath;
     config.castTypes = process.env.PERSEO_CAST_TYPES || config.castTypes;

@@ -50,6 +50,13 @@ In order to link other Docker images to the Perso FE image, take into account th
 
 For the full perseo stack to work, both instances should be linked to their appropriate alias.
 
+Using configTrust.js file lodaded from a volume in docker, ensure that file is declared using absolute paths:
+
+```
+volumes:
+  - ${PATH_PERSEO_FE_CONF:?must be absolute}/configTrust.js:/opt/perseo-fe/configTrust.js
+```
+
 ### Using PM2
 
 The PerseoFEwithin the Docker image can be run encapsulated within the [pm2](http://pm2.keymetrics.io/) Process Manager
@@ -137,10 +144,11 @@ In order to undeploy the proxy just kill the process and remove the directory.
 
 ### Log Rotation
 
-Withing `etc` directory we can find some logrotate stuff (formerly used with RPM-based deployments, but probably not used at the present day), just in case they can be useful.
+Withing `etc` directory we can find some logrotate stuff (formerly used with RPM-based deployments, but probably not
+used at the present day), just in case they can be useful.
 
-The configuration is set to rotate every day and whenever
-the log file size is greater than 100MB (checked very 30 minutes by default):
+The configuration is set to rotate every day and whenever the log file size is greater than 100MB (checked very 30
+minutes by default):
 
 -   For daily rotation: `/etc/logrotate.d/logrotate-perseo-daily` : which enables daily log rotation
 -   For size-based rotation: `/etc/sysconfig/logrotate-perseo-size`: in addition to the previous rotation, this file

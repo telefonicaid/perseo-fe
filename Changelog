@@ -1,3 +1,18 @@
+1.39.0 (October 14th, 2025)
+
+- Add: allow use all phone number formats (local, short, international) with smpp rules (#861)
+- Add: new defaultCountryCode configuration field (associated env var PERSEO_SMPP_DEFAULT_COUNTRY_CODE ) (#861)
+
+1.38.0 (October 10th, 2025)
+
+- Add: allow mix sms and smpp rules in the same instance of perseo
+- Add: allow use multiple destinataries in action of SMPP rules
+- Fix: SMPP fields for from and to
+- Fix: return callback in action SMPP in all cases (to continue process further sms rules when error)
+- Upgrade smpp dependency from 0.3.1 to 0.6.0-rc.4
+- Upgrade: nodemailer dependency from from 6.9.16 to 7.0.7 (solving vulnerability)
+- Set Nodejs 20 as minimum version in packages.json (effectively removing Nodev16 and Nodev18 from supported versions)
+
 1.37.0 (September 24th, 2025)
 
 - Add PERSEO_SMTP_TLS_CA, PERSEO_SMTP_TLS_KEY, PERSEO_SMTP_TLS_CERT, PERSEO_SMTP_TLS_MIN_VERSION and PERSEO_SMTP_TLS_SERVER_NAME env vars for global config (#841)
