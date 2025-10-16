@@ -382,6 +382,34 @@ describe('VisualRules', function() {
                 done
             );
         });
+        it('should return an error when something goes wrong in database', function(done) {
+            var cases = utilsT.loadDirExamples('./test/data/good_vrs');
+            async.series(
+                [
+                    utilsT.dropRulesCollection,
+                    function(callback0) {
+                        async.eachSeries(
+                            cases,
+                            function(c, callback) {
+                                clients.PutVR(c.object.name, c.object, function(error, data) {
+                                    should.not.exist(error);
+                                    data.should.have.property('statusCode', 500);
+                                    return callback(null);
+                                });
+                            },
+                            function(error) {
+                                should.not.exist(error);
+                                callback0();
+                            }
+                        );
+                    }
+                ],
+                function(error) {
+                    should.not.exist(error);
+                    done();
+                }
+            );
+        });
         it('should return an error when core-endpoint is not working', function(done) {
             var rule = utilsT.loadExample('./test/data/good_vrs/visual_rule_1.json');
             utilsT.setServerCode(400);
