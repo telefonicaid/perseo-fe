@@ -382,16 +382,6 @@ describe('VisualRules', function() {
                 done
             );
         });
-        it('should return an error when core-endpoint is not working', function(done) {
-            var rule = utilsT.loadExample('./test/data/good_vrs/visual_rule_1.json');
-            utilsT.setServerCode(400);
-            utilsT.setServerMessage('what a pity!');
-            clients.PutVR(rule.name, rule, function(error, data) {
-                should.not.exist(error);
-                data.should.have.property('statusCode', 400);
-                return done();
-            });
-        });
         it('should return an error when something goes wrong in database', function(done) {
             var cases = utilsT.loadDirExamples('./test/data/good_vrs');
             async.series(
@@ -419,6 +409,16 @@ describe('VisualRules', function() {
                     done();
                 }
             );
+        });
+        it('should return an error when core-endpoint is not working', function(done) {
+            var rule = utilsT.loadExample('./test/data/good_vrs/visual_rule_1.json');
+            utilsT.setServerCode(400);
+            utilsT.setServerMessage('what a pity!');
+            clients.PutVR(rule.name, rule, function(error, data) {
+                should.not.exist(error);
+                data.should.have.property('statusCode', 400);
+                return done();
+            });
         });
         it('should not save a VR not compiled by core', function(done) {
             var rule = utilsT.loadExample('./test/data/good_vrs/visual_rule_1.json'),
