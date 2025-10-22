@@ -1,3 +1,3 @@
 - Upgrade: mongodb dependency from 3.6.12 to 4.17.2
-- Add PERSEO_MONGO_URI env var which overrides other mongo options, now deprecated.
-
+- Add PERSEO_MONGO_URI env var which overrides other mongo options
+- Deprecated: PERSEO_MONGO_ different from PERSEO_MONGO_URI (use PERSEO_MONGO_URI instead)
