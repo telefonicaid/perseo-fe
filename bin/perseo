@@ -71,13 +71,13 @@ function loadConfiguration() {
     var environmentValues = [
         'PERSEO_ENDPOINT_HOST',
         'PERSEO_ENDPOINT_PORT',
-        'PERSEO_MONGO_ENDPOINT',
+        'PERSEO_MONGO_ENDPOINT', // FIXME: to be removed (deprecated)
         'PERSEO_MONGO_URI',
-        'PERSEO_MONGO_DB_NAME',
-        'PERSEO_MONGO_REPLICASET',
-        'PERSEO_MONGO_AUTH_SOURCE',
-        'PERSEO_MONGO_USER',
-        'PERSEO_MONGO_PASSWORD',
+        'PERSEO_MONGO_DB_NAME',  // FIXME: to be removed (deprecated)
+        'PERSEO_MONGO_REPLICASET',  // FIXME: to be removed (deprecated)
+        'PERSEO_MONGO_AUTH_SOURCE',  // FIXME: to be removed (deprecated)
+        'PERSEO_MONGO_USER',  // FIXME: to be removed (deprecated)
+        'PERSEO_MONGO_PASSWORD',  // FIXME: to be removed (deprecated)
         'PERSEO_IS_MASTER',
         'PERSEO_SLAVE_DELAY',
         'PERSEO_CORE_URL',
