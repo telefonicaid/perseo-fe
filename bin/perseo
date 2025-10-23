@@ -71,12 +71,13 @@ function loadConfiguration() {
     var environmentValues = [
         'PERSEO_ENDPOINT_HOST',
         'PERSEO_ENDPOINT_PORT',
-        'PERSEO_MONGO_ENDPOINT',
-        'PERSEO_MONGO_DB_NAME',
-        'PERSEO_MONGO_REPLICASET',
-        'PERSEO_MONGO_AUTH_SOURCE',
-        'PERSEO_MONGO_USER',
-        'PERSEO_MONGO_PASSWORD',
+        'PERSEO_MONGO_ENDPOINT', // FIXME: to be removed (deprecated)
+        'PERSEO_MONGO_URI',
+        'PERSEO_MONGO_DB_NAME',  // FIXME: to be removed (deprecated)
+        'PERSEO_MONGO_REPLICASET',  // FIXME: to be removed (deprecated)
+        'PERSEO_MONGO_AUTH_SOURCE',  // FIXME: to be removed (deprecated)
+        'PERSEO_MONGO_USER',  // FIXME: to be removed (deprecated)
+        'PERSEO_MONGO_PASSWORD',  // FIXME: to be removed (deprecated)
         'PERSEO_IS_MASTER',
         'PERSEO_SLAVE_DELAY',
         'PERSEO_CORE_URL',
@@ -156,21 +157,30 @@ function loadConfiguration() {
     if (process.env.PERSEO_ENDPOINT_PORT) {
         config.endpoint.port = process.env.PERSEO_ENDPOINT_PORT;
     }
-    if (process.env.PERSEO_MONGO_ENDPOINT) {
-        let dbName = 'cep';
-        if (process.env.PERSEO_MONGO_DB_NAME) {
-            dbName = process.env.PERSEO_MONGO_DB_NAME;
+    if (process.env.PERSEO_MONGO_ENDPOINT || process.env.PERSEO_MONGO_URI) {
+        let dbName = process.env.PERSEO_MONGO_DB_NAME || 'cep';
+        // Use PERSEO_MONGO_URI if exists
+        if (process.env.PERSEO_MONGO_URI) {
+            config.mongo.url = process.env.PERSEO_MONGO_URI;
+            config.orionDb.url = process.env.PERSEO_MONGO_URI.replace(`/${dbName}`, '/orion');
+        } else {
+            // otherwise build mongo uri
+            const credentials =
+                  process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD
+                  ? `${process.env.PERSEO_MONGO_USER}:${process.env.PERSEO_MONGO_PASSWORD}@`
+                  : '';
+
+            const options = []
+            if (process.env.PERSEO_MONGO_REPLICASET)
+                options.push(`replicaSet=${process.env.PERSEO_MONGO_REPLICASET}`);
+            if (process.env.PERSEO_MONGO_AUTH_SOURCE)
+                options.push(`authSource=${process.env.PERSEO_MONGO_AUTH_SOURCE}`);
+
+            const query = options.length > 0 ? `?${options.join('&')}` : '';
+
+            config.mongo.url = `mongodb://${credentials}${process.env.PERSEO_MONGO_ENDPOINT}/${dbName}${query}`;
+            config.orionDb.url = `mongodb://${credentials}${process.env.PERSEO_MONGO_ENDPOINT}/orion${query}`;
         }
-        config.mongo.url = 'mongodb://'+ (
-            process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD ? process.env.PERSEO_MONGO_USER + ':' + process.env.PERSEO_MONGO_PASSWORD + '@' : '') +
-            process.env.PERSEO_MONGO_ENDPOINT + '/' + dbName + (
-            (process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '') +
-            (process.env.PERSEO_MONGO_AUTH_SOURCE ? (process.env.PERSEO_MONGO_REPLICASET ? '&' : '?') + 'authSource=' + process.env.PERSEO_MONGO_AUTH_SOURCE : ''));
-        config.orionDb.url = 'mongodb://' + (
-            process.env.PERSEO_MONGO_USER && process.env.PERSEO_MONGO_PASSWORD ? process.env.PERSEO_MONGO_USER + ':' + process.env.PERSEO_MONGO_PASSWORD + '@' : '') +
-            process.env.PERSEO_MONGO_ENDPOINT + '/orion' + (
-            (process.env.PERSEO_MONGO_REPLICASET ? '?replicaSet=' + process.env.PERSEO_MONGO_REPLICASET : '') +
-            (process.env.PERSEO_MONGO_AUTH_SOURCE ? (process.env.PERSEO_MONGO_REPLICASET ? '&' : '?') + 'authSource=' + process.env.PERSEO_MONGO_AUTH_SOURCE : ''));
     }
     if (process.env.PERSEO_IS_MASTER === 'true') {
         config.isMaster = true;
