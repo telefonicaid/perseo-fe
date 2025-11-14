@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Telefonica InvestigaciÃ³n y Desarrollo, S.A.U
+ * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
  *
  * This file is part of perseo-fe
  *
