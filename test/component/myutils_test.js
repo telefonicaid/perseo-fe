@@ -255,4 +255,143 @@ describe('Myutils', function() {
             });
         });
     });
+
+    describe('#ExpandObject()', function() {
+        describe('When template contains simple key/value pairs', function() {
+            it('should expand variables inside object values', function() {
+                const template = {
+                    type: 'Alarm',
+                    id: '${ruleName}:${id}'
+                };
+                const map = {
+                    ruleName: 'reglaTemperatura',
+                    id: 'Device01'
+                };
+
+                const result = myutils.expandObject(template, map);
+                should.exist(result);
+                result.should.have.property('type', 'Alarm');
+                result.should.have.property('id', 'reglaTemperatura:Device01');
+            });
+        });
+
+        describe('When template contains nested objects', function() {
+            it('should expand variables inside nested structures', function() {
+                const template = {
+                    outer: {
+                        inner: {
+                            name: '${username}'
+                        }
+                    }
+                };
+                const map = { username: 'Alice' };
+
+                const result = myutils.expandObject(template, map);
+                should.exist(result.outer);
+                result.outer.inner.name.should.be.equal('Alice');
+            });
+        });
+
+        describe('When template contains an array of objects', function() {
+            it('should preserve array structure and expand correctly', function() {
+                const template = {
+                    type: 'Alarm',
+                    id: '${ruleName}:${id}',
+                    attributes: [
+                        {
+                            name: 'msg',
+                            value: 'status of ${id} is ${status}'
+                        }
+                    ]
+                };
+                const map = {
+                    ruleName: 'ruleTemp',
+                    id: 'Device01',
+                    status: 'NoOK'
+                };
+
+                const result = myutils.expandObject(template, map);
+
+                should.exist(result);
+                result.type.should.be.equal('Alarm');
+                result.id.should.be.equal('ruleTemp:Device01');
+
+                // Comprobación compatible con chai/should para arrays
+                Array.isArray(result.attributes).should.be.equal(true);
+                result.attributes.should.have.length(1);
+
+                result.attributes[0].should.have.property('name', 'msg');
+                result.attributes[0].should.have.property('value', 'status of Device01 is NoOK');
+            });
+        });
+
+        describe('When template contains arrays inside arrays', function() {
+            it('should expand deeply nested array values', function() {
+                const template = {
+                    list: [[{ label: '${label1}' }, { label: '${label2}' }]]
+                };
+                const map = { label1: 'A', label2: 'B' };
+
+                const result = myutils.expandObject(template, map);
+                Array.isArray(result.list).should.be.equal(true);
+                Array.isArray(result.list[0]).should.be.equal(true);
+                result.list[0][0].label.should.be.equal('A');
+                result.list[0][1].label.should.be.equal('B');
+            });
+        });
+
+        describe('When template has missing variable references', function() {
+            it('should replace missing variables with null', function() {
+                const template = {
+                    message: 'Hello ${user}!'
+                };
+                const map = {};
+
+                const result = myutils.expandObject(template, map);
+                result.message.should.be.equal('Hello null!');
+            });
+        });
+    });
+    describe('When template contains headers with vars in keys and values', function() {
+        it('should expand vars and produce correct header names', function() {
+            const template = {
+                headers: {
+                    'Content-type': 'text/plain',
+                    'X-${type}-pressure': '${BloodPressure}'
+                }
+            };
+
+            const map = {
+                type: 'Device',
+                BloodPressure: '120/80'
+            };
+
+            const result = myutils.expandObject(template, map);
+
+            should.exist(result.headers);
+
+            result.headers.should.have.property('Content-type', 'text/plain');
+            result.headers.should.have.property('X-Device-pressure', '120/80');
+        });
+    });
+    describe('When template contains qs with dynamic keys', function() {
+        it('should expand qs keys and values correctly', function() {
+            const template = {
+                qs: {
+                    '${id}': '${BloodPressure}'
+                }
+            };
+
+            const map = {
+                id: 'Patient001',
+                BloodPressure: 110
+            };
+
+            const result = myutils.expandObject(template, map);
+
+            should.exist(result.qs);
+
+            result.qs.should.have.property('Patient001', '110');
+        });
+    });
 });
