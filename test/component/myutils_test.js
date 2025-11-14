@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+ * Copyright 2015 Telefonica InvestigaciÃ³n y Desarrollo, S.A.U
  *
  * This file is part of perseo-fe
  *
@@ -350,6 +350,48 @@ describe('Myutils', function() {
                 const result = myutils.expandObject(template, map);
                 result.message.should.be.equal('Hello null!');
             });
+        });
+    });
+    describe('When template contains headers with vars in keys and values', function() {
+        it('should expand vars and produce correct header names', function() {
+            const template = {
+                headers: {
+                    'Content-type': 'text/plain',
+                    'X-${type}-pressure': '${BloodPressure}'
+                }
+            };
+
+            const map = {
+                type: 'Device',
+                BloodPressure: '120/80'
+            };
+
+            const result = myutils.expandObject(template, map);
+
+            should.exist(result.headers);
+
+            result.headers.should.have.property('Content-type', 'text/plain');
+            result.headers.should.have.property('X-Device-pressure', '120/80');
+        });
+    });
+    describe('When template contains qs with dynamic keys', function() {
+        it('should expand qs keys and values correctly', function() {
+            const template = {
+                qs: {
+                    '${id}': '${BloodPressure}'
+                }
+            };
+
+            const map = {
+                id: 'Patient001',
+                BloodPressure: 110
+            };
+
+            const result = myutils.expandObject(template, map);
+
+            should.exist(result.qs);
+
+            result.qs.should.have.property('Patient001', '110');
         });
     });
 });
