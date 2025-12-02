@@ -67,7 +67,7 @@
     "logops": "2.1.2",
     "mongodb": "4.17.2",
     "ngsijs": "1.4.1",
-    "nodemailer": "7.0.7",
+    "nodemailer": "7.0.11",
     "nodemailer-smtp-transport": "~2.7.2",
     "request": "2.88.2",
     "nanoid": "3.3.8",
