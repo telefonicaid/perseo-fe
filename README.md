@@ -1,6 +1,6 @@
 # Perseo Context-Aware CEP
 
-[![FIWARE Processing](https://nexus.lab.fiware.org/static/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
+[![FIWARE Processing](https://fiware.github.io/catalogue/badges/chapters/processing.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: AGPLv3](https://img.shields.io/github/license/telefonicaid/perseo-fe.svg)](./LICENSE)
 [![Support badge](https://img.shields.io/badge/tag-fiware--perseo-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware-perseo)
 <br/>
@@ -9,7 +9,7 @@
 <br> [![Documentation badge](https://img.shields.io/readthedocs/fiware-perseo-fe.svg)](https://fiware-perseo-fe.readthedocs.io/en/latest/)
 [![CI](https://github.com/telefonicaid/perseo-fe/workflows/CI/badge.svg)](https://github.com/telefonicaid/perseo-fe/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/perseo-fe/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/perseo-fe?branch=master)
-![Status](https://nexus.lab.fiware.org/static/badges/statuses/perseo.svg)
+![Status](https://fiware.github.io/catalogue/badges/statuses/status-full.svg)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5597/badge)](https://bestpractices.coreinfrastructure.org/projects/5597)
 
 ## Overview
