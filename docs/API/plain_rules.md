@@ -175,7 +175,7 @@ fields:
     entity configuration, maxTimeDetectionAttr, then in the rule configuration, and lastly, if not found, in the global
     configuration) to limit this search
 -   **reportIntervalAttr**: _optional_, entity attribute where find value for reportInterval. If no _reportIntervalAttr_
--   is found then _reportInterval_ from rule is used.
+    is found then _reportInterval_ from rule is used.
 -   **maxTimeDetection**: _optional_, max time in seconds to see an entity as silent (in other words, how much time has
     to pass since last entity update to not consider that entity is in "no signal" situation due to entity is death,
     i.e. not modified during a long time). If no value is provided then Perseo global config (nonSignalMaxTimeDetection
