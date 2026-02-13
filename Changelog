@@ -1,3 +1,12 @@
+1.40.0 (February 13th, 2026)
+
+- Add PERSEO_MONGO_URI env var which overrides other mongo options
+- Fix in info level logs about silent entities found and pipeline mongo performed (#872)
+- Fix expandObject when post rule is using array of attributes (#866)
+- Upgrade: mongodb dependency from 3.6.12 to 4.17.2
+- Upgrade: nodemailer dependency from from 7.0.7 to 7.0.11 (solving vulnerability CWE-703)
+- Deprecated: PERSEO_MONGO_ different from PERSEO_MONGO_URI (use PERSEO_MONGO_URI instead)
+
 1.39.0 (October 14th, 2025)
 
 - Add: allow use all phone number formats (local, short, international) with smpp rules (#861)
