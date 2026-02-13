@@ -1,3 +1,4 @@
+- Fix in info level logs about silent entities found and pipeline mongo performed (#872)
 - Fix expandObject when post rule is using array of attributes (#866)
 - Upgrade: mongodb dependency from 3.6.12 to 4.17.2
 - Add PERSEO_MONGO_URI env var which overrides other mongo options
