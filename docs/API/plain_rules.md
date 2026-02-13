@@ -182,8 +182,7 @@ fields:
     or docker env var PERSEO_NON_SIGNAL_MAX_TIME_DETECTION) is used. By default
     nonSignalMaxTimeDetection/PERSEO_NON_SIGNAL_MAX_TIME_DETECTION is set to 30 days.
 -   **maxTimeDetectionAttr**: _optional_, entity attribute where find value for maxTimeDetection. If no
-    _maxTimeDetectionAttr_
--   is found then _maxTimeDetection_ from rule is used.
+    _maxTimeDetectionAttr_ is found then _maxTimeDetection_ from rule is used.
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
 -   **type**: _optional_, type of entities to watch
 
