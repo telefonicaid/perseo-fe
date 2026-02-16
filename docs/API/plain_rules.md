@@ -372,7 +372,7 @@ The `template`, `from`, `to` and `subject` fields perform [string substitution](
 content body resulting in `template` is an HTML content then email will be sent as HTML and plain text, in order to
 ensure accesibility and compability.
 
-Regarding with `to` field, it is possible to include several email destinataries by separating with `;` or even better `, ` like:
+Regarding with `to` field, it is possible to include several email destinataries by separating with `;` or `,` like:
 ```json
             "to": "someone@acme.com; anotherone@acme.com"
             "to": "someone@acme.com, anotherone@acme.com"
