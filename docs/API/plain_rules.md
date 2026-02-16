@@ -372,6 +372,11 @@ The `template`, `from`, `to` and `subject` fields perform [string substitution](
 content body resulting in `template` is an HTML content then email will be sent as HTML and plain text, in order to
 ensure accesibility and compability.
 
+Regarding with `to` field, it is possible to include several email destinataries by separating with `;` like:
+```json
+            "to": "someone@acme.com; anotherone@acme.com",
+```
+
 Additionally, Email action could include a `smtp` field to include SMTP configuration (see
 [nodemailer transport options for full detail](https://nodemailer.com/smtp/) which overwrites global SMTP configuration:
 
