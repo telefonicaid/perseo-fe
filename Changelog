@@ -1,4 +1,4 @@
-1.40.0 (February 13th, 2026)
+1.40.0 (February 17th, 2026)
 
 - Add: PERSEO_MONGO_URI env var which overrides other mongo options
 - Fix: info level logs about silent entities found and pipeline mongo performed (#872)
