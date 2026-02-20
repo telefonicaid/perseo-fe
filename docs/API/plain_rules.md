@@ -175,15 +175,14 @@ fields:
     entity configuration, maxTimeDetectionAttr, then in the rule configuration, and lastly, if not found, in the global
     configuration) to limit this search
 -   **reportIntervalAttr**: _optional_, entity attribute where find value for reportInterval. If no _reportIntervalAttr_
--   is found then _reportInterval_ from rule is used.
+    is found then _reportInterval_ from rule is used.
 -   **maxTimeDetection**: _optional_, max time in seconds to see an entity as silent (in other words, how much time has
     to pass since last entity update to not consider that entity is in "no signal" situation due to entity is death,
     i.e. not modified during a long time). If no value is provided then Perseo global config (nonSignalMaxTimeDetection
     or docker env var PERSEO_NON_SIGNAL_MAX_TIME_DETECTION) is used. By default
     nonSignalMaxTimeDetection/PERSEO_NON_SIGNAL_MAX_TIME_DETECTION is set to 30 days.
 -   **maxTimeDetectionAttr**: _optional_, entity attribute where find value for maxTimeDetection. If no
-    _maxTimeDetectionAttr_
--   is found then _maxTimeDetection_ from rule is used.
+    _maxTimeDetectionAttr_ is found then _maxTimeDetection_ from rule is used.
 -   **id** or **idRegexp**: _mandatory_ (but not both at the same time), ID or regular expression of the entity to watch
 -   **type**: _optional_, type of entities to watch
 
@@ -372,6 +371,12 @@ email can be set in the field `subject` in `parameters`.
 The `template`, `from`, `to` and `subject` fields perform [string substitution](#string-substitution-syntax). If the
 content body resulting in `template` is an HTML content then email will be sent as HTML and plain text, in order to
 ensure accesibility and compability.
+
+Regarding with `to` field, it is possible to include several email destinataries by separating with `;` or `,` like:
+```json
+            "to": "someone@acme.com; anotherone@acme.com"
+            "to": "someone@acme.com, anotherone@acme.com"
+```
 
 Additionally, Email action could include a `smtp` field to include SMTP configuration (see
 [nodemailer transport options for full detail](https://nodemailer.com/smtp/) which overwrites global SMTP configuration:
