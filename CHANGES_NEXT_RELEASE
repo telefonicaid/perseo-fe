@@ -1,1 +1,1 @@
-- Upgrade: express dependency from 4.21.2 to 4.22.0. (solving vulnerability CVE-2024-51999)
+- Upgrade: express dependency from 4.21.2 to 4.22.0. (solving vulnerability CVE-2023-28155)
