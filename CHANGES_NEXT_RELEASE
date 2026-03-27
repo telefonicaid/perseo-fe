@@ -1,2 +1,3 @@
 - Upgrade: express dependency from 4.21.2 to 4.22.1
 - Upgrade: markdown dependency from 3.3.4 to 3.8.1
+- Upgrade: nodemailer dependency from from 7.0.11 to 8.0.4 (solving vulnerability CVE-2026-4539)
