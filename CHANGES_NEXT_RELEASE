@@ -1,1 +1,2 @@
 - Upgrade: express dependency from 4.21.2 to 4.22.0
+- Fix: deprecation warning about util.isArray
