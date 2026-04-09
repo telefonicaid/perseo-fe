@@ -98,7 +98,7 @@ describe('lib/models/rules.js', function() {
         it('should not return error if text does not contain "as ruleName"', function() {
             const rule = {
                 name: 'reglaTemperatura',
-                text: "select *, status? from iotEvent where status? <> 'OK'"
+                text: 'select *, status? from iotEvent where status? <> \'OK\''
             };
 
             const result = rules.validNameRule(rule);
@@ -135,7 +135,7 @@ describe('lib/models/rules.js', function() {
         it('should add "name as ruleName" when it does not exist in text', function() {
             const rule = {
                 name: 'reglaTemperatura',
-                text: "select *, status? from iotEvent where status? <> 'OK'"
+                text: 'select *, status? from iotEvent where status? <> \'OK\''
             };
 
             const result = rules.normalizeRuleName(rule);
@@ -172,7 +172,7 @@ describe('lib/models/rules.js', function() {
         it('should keep the rest of the text unchanged after inserting ruleName', function() {
             const rule = {
                 name: 'reglaPresion',
-                text: "select *, status? from iotEvent where status? <> 'OK'"
+                text: 'select *, status? from iotEvent where status? <> \'OK\''
             };
 
             const result = rules.normalizeRuleName(rule);
@@ -188,7 +188,7 @@ describe('lib/models/rules.js', function() {
         it('should not return error after normalizing a rule without ruleName', function() {
             const rule = {
                 name: 'reglaTemperatura',
-                text: "select *, status? from iotEvent where status? <> 'OK'"
+                text: 'select *, status? from iotEvent where status? <> \'OK\''
             };
 
             rules.normalizeRuleName(rule);
