@@ -1,1 +1,1 @@
-
+- Upgrade uuid dep from 9.0.0 to 14.0.0 due to CWE-787 CWE-1285
