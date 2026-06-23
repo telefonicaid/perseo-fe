@@ -1,2 +1,2 @@
 - Upgrade uuid dep from 9.0.0 to 14.0.0 due to CWE-787 CWE-1285
-- Upgrade: nodemailer dependency from from 8.0.5 to 9.0.1 (solving Weakness CWE-73 and CWE-918)
+- Upgrade: nodemailer dependency from from 8.0.5 to 9.0.1 (solving Weakness CWE-73, CWE-295, CWE-93, CWE-862 and CWE-918)
