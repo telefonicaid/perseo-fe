@@ -329,7 +329,6 @@ describe('entitiesStore', function() {
         });
 
         it('should pass error to callback when listEntities promise is rejected', function(done) {
-            var expectedError = new Error('Test Error');
             db = {
                 collection: sinon.stub().returns(col),
                 listCollections: sinon.stub().returns({
