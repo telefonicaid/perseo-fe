@@ -26,7 +26,7 @@
 var async = require('async'),
     should = require('should'),
     util = require('util'),
-    request = require('request'),
+    request = require('@cypress/request'),
     clients = require('../utils/clients'),
     utilsT = require('../utils/utilsT'),
     testEnv = require('../utils/testEnvironment'),

@@ -24,7 +24,7 @@
 'use strict';
 
 var util = require('util'),
-    request = require('request'),
+    request = require('@cypress/request'),
     config = require('../../config'),
     constants = require('../../lib/constants');
 
