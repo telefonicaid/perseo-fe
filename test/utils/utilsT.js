@@ -75,21 +75,23 @@ function executeWithCallback(operation, callback) {
 }
 
 function remove(collection, callback) {
-    executeWithCallback(async function() {
+    executeWithCallback(function() {
         var client;
 
-        try {
-            client = await MongoClient.connect(config.mongo.url);
+        return MongoClient.connect(config.mongo.url)
+            .then(function(c) {
+                client = c;
 
-            return await client
-                .db()
-                .collection(collection)
-                .deleteMany({});
-        } finally {
-            if (client) {
-                await client.close();
-            }
-        }
+                return client
+                    .db()
+                    .collection(collection)
+                    .deleteMany({});
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
+                }
+            });
     }, callback);
 }
 
