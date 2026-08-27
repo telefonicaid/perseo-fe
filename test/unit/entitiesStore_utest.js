@@ -214,45 +214,67 @@ describe('entitiesStore', function() {
 
     describe('findSilentEntitiesByMongo', function() {
         var ruleData = {
-            name: 'NSR4',
-            action: {
-                type: 'update',
-                parameters: {
-                    id: 'alarma:${id}',
-                    type: 'Alarm',
-                    attributes: [
-                        {
-                            name: 'msg',
-                            value: 'El status de ${id} es ${status}'
-                        }
-                    ]
+                name: 'NSR4',
+                action: {
+                    type: 'update',
+                    parameters: {
+                        id: 'alarma:${id}',
+                        type: 'Alarm',
+                        attributes: [
+                            {
+                                name: 'msg',
+                                value: 'El status de ${id} es ${status}'
+                            }
+                        ]
+                    }
+                },
+                subservice: '/',
+                service: 'unknownt',
+                nosignal: {
+                    checkInterval: '1',
+                    attribute: 'temperature',
+                    reportInterval: '5',
+                    id: 'thing:disp1',
+                    idRegexp: null,
+                    type: 'thing'
                 }
             },
-            subservice: '/',
-            service: 'unknownt',
-            nosignal: {
-                checkInterval: '1',
-                attribute: 'temperature',
-                reportInterval: '5',
-                id: 'thing:disp1',
-                idRegexp: null,
-                type: 'thing'
-            }
-        };
-
-        var alterFunc4 = sinon.stub();
-        var callback4 = sinon.stub();
-        var col = {
-            aggregate: sinon.stub().returnsThis(),
-            toArray: sinon.stub()
-        };
-        var db = {
-            collection: sinon.stub().yields(null, col),
-            listCollections: sinon.stub().returnsThis(),
-            forEach: sinon.stub()
-        };
+            alterFunc4,
+            callback4,
+            aggregateCursor,
+            listCollectionsCursor,
+            col,
+            db;
 
         beforeEach(function() {
+            alterFunc4 = sinon.stub();
+            callback4 = sinon.stub();
+
+            /*
+             * Cursor returned by collection.aggregate().
+             */
+            aggregateCursor = {
+                toArray: sinon.stub().resolves([])
+            };
+            col = {
+                aggregate: sinon.stub().returns(aggregateCursor)
+            };
+
+            /*
+             * Cursor returned by db.listCollections().
+             */
+            listCollectionsCursor = {
+                toArray: sinon.stub().resolves([
+                    {
+                        name: config.orionDb.collection
+                    }
+                ])
+            };
+            db = {
+                collection: sinon.stub().returns(col),
+                listCollections: sinon.stub().returns(listCollectionsCursor)
+            };
+
             entitiesStore.__set__('orionServiceDb', sinon.stub().returns(db));
         });
 
@@ -262,27 +284,60 @@ describe('entitiesStore', function() {
                 ruleData.subservice,
                 ruleData,
                 alterFunc4,
-                callback4
+                function(err) {
+                    should.not.exist(err);
+
+                    sinon.assert.calledOnce(db.listCollections);
+
+                    sinon.assert.calledOnce(listCollectionsCursor.toArray);
+
+                    sinon.assert.calledOnce(db.collection);
+
+                    sinon.assert.calledOnce(col.aggregate);
+
+                    sinon.assert.calledOnce(aggregateCursor.toArray);
+
+                    done();
+                }
             );
+        });
 
-            db.listCollections.should.have.been.calledOnce;
-            db.forEach.should.have.been.calledOnce;
+        it('should report an error when aggregate toArray is rejected', function(done) {
+            var expectedError = new Error('Test Error');
 
-            done();
+            aggregateCursor.toArray.rejects(expectedError);
+
+            entitiesStore.findSilentEntitiesByMongo(
+                ruleData.service,
+                ruleData.subservice,
+                ruleData,
+                alterFunc4,
+                function(err) {
+                    chai.expect(err).to.equal(expectedError);
+
+                    sinon.assert.calledOnce(db.listCollections);
+
+                    sinon.assert.calledOnce(listCollectionsCursor.toArray);
+
+                    sinon.assert.calledOnce(col.aggregate);
+
+                    sinon.assert.calledOnce(aggregateCursor.toArray);
+
+                    done();
+                }
+            );
         });
 
         it('should pass error to callback when listEntities promise is rejected', function(done) {
             var expectedError = new Error('Test Error');
-            var col = {
-                aggregate: sinon.stub().returnsThis(),
-                toArray: sinon.stub().yields(expectedError, null)
+            db = {
+                collection: sinon.stub().returns(col),
+                listCollections: sinon.stub().returns({
+                    toArray: function() {
+                        return Promise.resolve([{}]);
+                    }
+                })
             };
-            var db = {
-                collection: sinon.stub().yields(null, col),
-                listCollections: sinon.stub().returnsThis(),
-                forEach: sinon.stub()
-            };
-
             entitiesStore.__set__('orionServiceDb', sinon.stub().returns(db));
             var callback4 = sinon.stub();
 
@@ -296,7 +351,6 @@ describe('entitiesStore', function() {
 
             process.nextTick(function() {
                 db.listCollections.should.have.been.calledOnce;
-                db.forEach.should.have.been.calledOnce;
                 done();
             });
         });
