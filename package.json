@@ -69,7 +69,7 @@
     "ngsijs": "1.4.1",
     "nodemailer": "9.0.1",
     "nodemailer-smtp-transport": "~2.7.2",
-    "request": "2.88.2",
+    "@cypress/request": "4.0.1",
     "nanoid": "3.3.18",
     "smpp": "0.6.0-rc.4",
     "swagger-jsdoc": "~3.4.0",
