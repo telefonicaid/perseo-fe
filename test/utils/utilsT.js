@@ -34,8 +34,9 @@ var fs = require('fs'),
     fakeServerCallback;
 
 function loadExample(fileName) {
-    var f = fs.readFileSync(fileName);
-    return JSON.parse(f);
+    var file = fs.readFileSync(fileName);
+
+    return JSON.parse(file);
 }
 
 function loadDirExamples(filepath) {
@@ -45,177 +46,238 @@ function loadDirExamples(filepath) {
 
     files.forEach(function(element) {
         elementPath = path.join(filepath, element);
-        objects.push({ filename: elementPath, object: loadExample(elementPath) });
+
+        objects.push({
+            filename: elementPath,
+            object: loadExample(elementPath)
+        });
     });
+
     return objects;
 }
 
-function remove(collection, callback) {
-    MongoClient.connect(
-        config.mongo.url,
-        function(err, client) {
-            if (err) {
-                return callback(err);
-            }
-            const col = client.db().collection(collection);
+/**
+ * Executes a Promise-based operation and exposes its result through
+ * the callback API expected by the legacy test suite.
+ *
+ * @param {Function} operation Async operation to execute.
+ * @param {Function} callback Node-style callback.
+ */
+function executeWithCallback(operation, callback) {
+    Promise.resolve()
+        .then(operation)
+        .then(function(result) {
+            callback(null, result);
+        })
+        .catch(function(error) {
+            callback(error);
+        });
+}
 
-            col.remove({}, function(err, result) {
-                if (err) {
-                    return callback(err);
+function remove(collection, callback) {
+    executeWithCallback(function() {
+        var client;
+
+        return MongoClient.connect(config.mongo.url)
+            .then(function(c) {
+                client = c;
+
+                return client
+                    .db()
+                    .collection(collection)
+                    .deleteMany({});
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
                 }
-                client.close();
-                return callback(null, result);
             });
-        }
-    );
+    }, callback);
 }
 
 function dropRules(callback) {
     remove(config.collections.rules, callback);
 }
+
 function dropExecutions(callback) {
     remove(config.collections.executions, callback);
 }
 
 function dropCollection(collection, callback) {
-    MongoClient.connect(
-        config.mongo.url,
-        function(err, client) {
-            if (err) {
-                return callback(err);
-            }
-            const col = client.db().collection(collection);
-            col.drop(function(err, result) {
-                if (err) {
-                    return callback(err);
+    executeWithCallback(function() {
+        var client;
+
+        return MongoClient.connect(config.mongo.url)
+            .then(function(c) {
+                client = c;
+
+                return client
+                    .db()
+                    .collection(collection)
+                    .drop();
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
                 }
-                client.close();
-                return callback(null, result);
             });
-        }
-    );
+    }, callback);
 }
+
 function dropRulesCollection(callback) {
     dropCollection(config.collections.rules, callback);
 }
+
 function dropExecutionsCollection(callback) {
     dropCollection(config.collections.executions, callback);
 }
 
 function createRulesCollection(callback) {
-    MongoClient.connect(
-        config.mongo.url,
-        function(err, client) {
-            if (err) {
-                return callback(err);
-            }
-            const rules = client.db().collection(config.collections.rules);
+    executeWithCallback(function() {
+        var client;
 
-            rules.createIndex({ name: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                client.close();
-                return callback(err, indexName);
+        return MongoClient.connect(config.mongo.url)
+            .then(function(c) {
+                client = c;
+
+                return client
+                    .db()
+                    .collection(config.collections.rules)
+                    .createIndex(
+                        { name: 1 },
+                        {
+                            unique: true,
+                            w: 'majority'
+                        }
+                    );
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
+                }
             });
-        }
-    );
+    }, callback);
 }
 
 function addRule(rule, callback) {
-    MongoClient.connect(
-        config.mongo.url,
-        function(err, client) {
-            if (err) {
-                return callback(err);
-            }
-            const rules = client.db().collection(config.collections.rules);
+    executeWithCallback(function() {
+        var client;
 
-            rules.insertOne(rule, function(err, result) {
-                if (err) {
-                    return callback(err);
+        return MongoClient.connect(config.mongo.url)
+            .then(function(connectedClient) {
+                client = connectedClient;
+
+                return client
+                    .db()
+                    .collection(config.collections.rules)
+                    .insertOne(rule);
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
                 }
-                client.close();
-                return callback(null, result);
             });
-        }
-    );
+    }, callback);
 }
 
 function createEntitiesCollection(tenant, callback) {
-    MongoClient.connect(
-        config.orionDb.url,
-        function(err, client) {
-            var db2 = client.db(config.orionDb.prefix + '-' + tenant);
-            if (err) {
-                return callback(err);
-            }
-            var rules = db2.collection(config.orionDb.collection);
+    executeWithCallback(function() {
+        var client;
 
-            // We don't mind what fields have index in that collection
-            rules.createIndex({ modDate: 1 }, { unique: true, w: 'majority' }, function(err, indexName) {
-                client.close();
-                return callback(err, indexName);
+        return MongoClient.connect(config.orionDb.url)
+            .then(function(c) {
+                client = c;
+
+                return client
+                    .db(config.orionDb.prefix + '-' + tenant)
+                    .collection(config.orionDb.collection)
+                    .createIndex(
+                        { modDate: 1 },
+                        {
+                            unique: true,
+                            w: 'majority'
+                        }
+                    );
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
+                }
             });
-        }
-    );
+    }, callback);
 }
+
 function dropEntities(callback) {
-    MongoClient.connect(
-        config.orionDb.url,
-        function(err, client) {
-            var db2 = client.db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE);
-            if (err) {
-                return callback(err);
-            }
-            var coll = db2.collection(config.orionDb.collection);
+    executeWithCallback(function() {
+        var client;
 
-            coll.remove({}, function(err, result) {
-                if (err) {
-                    return callback(err);
+        return MongoClient.connect(config.orionDb.url)
+            .then(function(c) {
+                client = c;
+
+                return client
+                    .db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE)
+                    .collection(config.orionDb.collection)
+                    .deleteMany({});
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
                 }
-                client.close();
-                return callback(null, result);
             });
-        }
-    );
+    }, callback);
 }
+
 function addEntity(tenant, entity, callback) {
-    MongoClient.connect(
-        config.orionDb.url,
-        function(err, client) {
-            var db2;
-            if (err) {
-                return callback(err);
-            }
-            db2 = client.db(config.orionDb.prefix + '-' + tenant);
-            var entities = db2.collection(config.orionDb.collection);
+    executeWithCallback(function() {
+        var client;
 
-            entities.insertOne(entity, function(err, result) {
-                if (err) {
-                    return callback(err);
+        return MongoClient.connect(config.orionDb.url)
+            .then(function(connectedClient) {
+                client = connectedClient;
+
+                return client
+                    .db(config.orionDb.prefix + '-' + tenant)
+                    .collection(config.orionDb.collection)
+                    .insertOne(entity);
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
                 }
-                client.close();
-                return callback(null, result);
             });
-        }
-    );
+    }, callback);
 }
+
 function configTest() {
     config.mongo.url = 'mongodb://localhost:27017/perseo_testing';
     config.endpoint.port = 9182;
+
     config.perseoCore.noticesURL = 'http://localhost:' + fakeServerPort;
+
     config.perseoCore.rulesURL = 'http://localhost:' + fakeServerPort;
 
-    // This is necessary for SMS actions
-    // The configuration for a working server must be present since the
-    // beginning, for the module 'actions' taking it into account
+    /*
+     * This is necessary for SMS actions.
+     * The configuration for a working server must be present from the
+     * beginning so the actions module takes it into account.
+     */
     config.sms.URL = 'http://localhost:' + fakeServerPort;
 
     config.logLevel = 'fatal';
     config.nextCore = {};
+
     config.orionDb.url = 'mongodb://localhost:27017/test';
     config.orionDb.prefix = 'oriontest';
-    config.perseoCore.interval = 10 * 60e3; //Do not refresh in the middle of a long test
+
+    /*
+     * Do not refresh in the middle of a long test.
+     */
+    config.perseoCore.interval = 10 * 60e3;
+
     config.nonSignalMaxTimeDetection = 2592000;
 }
+
 function getConfig() {
     return config;
 }
@@ -227,15 +289,20 @@ function getConfigTrust() {
 function fakeHttpServer(cb) {
     var server = require('http')
         .createServer(function(req, res) {
-            var body;
+            var body = '';
+
             req.on('data', function(data) {
-                body += data;
+                body += data.toString();
             });
+
             req.on('end', function() {
                 if (fakeServerCallback) {
                     fakeServerCallback(req, res, body);
                 } else {
-                    res.writeHead(fakeServerCode, { 'Content-Type': 'text/plain' });
+                    res.writeHead(fakeServerCode, {
+                        'Content-Type': 'text/plain'
+                    });
+
                     res.end(fakeServerMessage);
                 }
             });
@@ -243,6 +310,10 @@ function fakeHttpServer(cb) {
         .listen(fakeServerPort, function() {
             cb(null, server);
         });
+
+    server.on('error', function(error) {
+        cb(error);
+    });
 }
 
 module.exports.loadExample = loadExample;
@@ -259,14 +330,18 @@ module.exports.dropEntities = dropEntities;
 module.exports.configTest = configTest;
 module.exports.fakeHttpServer = fakeHttpServer;
 module.exports.fakeHttpServerPort = fakeServerPort;
+
 module.exports.setServerCode = function(code) {
     fakeServerCode = code;
 };
+
 module.exports.setServerMessage = function(msg) {
     fakeServerMessage = msg;
 };
+
 module.exports.setServerCallback = function(fxn) {
     fakeServerCallback = fxn;
 };
+
 module.exports.getConfig = getConfig;
 module.exports.getConfigTrust = getConfigTrust;
