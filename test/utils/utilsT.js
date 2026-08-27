@@ -104,21 +104,23 @@ function dropExecutions(callback) {
 }
 
 function dropCollection(collection, callback) {
-    executeWithCallback(async function() {
+    executeWithCallback(function() {
         var client;
 
-        try {
-            client = await MongoClient.connect(config.mongo.url);
+        return MongoClient.connect(config.mongo.url)
+            .then(function(c) {
+                client = c;
 
-            return await client
-                .db()
-                .collection(collection)
-                .drop();
-        } finally {
-            if (client) {
-                await client.close();
-            }
-        }
+                return client
+                    .db()
+                    .collection(collection)
+                    .drop();
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
+                }
+            });
     }, callback);
 }
 
@@ -131,109 +133,119 @@ function dropExecutionsCollection(callback) {
 }
 
 function createRulesCollection(callback) {
-    executeWithCallback(async function() {
+    executeWithCallback(function() {
         var client;
 
-        try {
-            client = await MongoClient.connect(config.mongo.url);
+        return MongoClient.connect(config.mongo.url)
+            .then(function(c) {
+                client = c;
 
-            return await client
-                .db()
-                .collection(config.collections.rules)
-                .createIndex(
-                    { name: 1 },
-                    {
-                        unique: true,
-                        w: 'majority'
-                    }
-                );
-        } finally {
-            if (client) {
-                await client.close();
-            }
-        }
+                return client
+                    .db()
+                    .collection(config.collections.rules)
+                    .createIndex(
+                        { name: 1 },
+                        {
+                            unique: true,
+                            w: 'majority'
+                        }
+                    );
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
+                }
+            });
     }, callback);
 }
 
 function addRule(rule, callback) {
-    executeWithCallback(async function() {
+    executeWithCallback(function() {
         var client;
 
-        try {
-            client = await MongoClient.connect(config.mongo.url);
+        return MongoClient.connect(config.mongo.url)
+            .then(function(connectedClient) {
+                client = connectedClient;
 
-            return await client
-                .db()
-                .collection(config.collections.rules)
-                .insertOne(rule);
-        } finally {
-            if (client) {
-                await client.close();
-            }
-        }
+                return client
+                    .db()
+                    .collection(config.collections.rules)
+                    .insertOne(rule);
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
+                }
+            });
     }, callback);
 }
 
 function createEntitiesCollection(tenant, callback) {
-    executeWithCallback(async function() {
+    executeWithCallback(function() {
         var client;
 
-        try {
-            client = await MongoClient.connect(config.orionDb.url);
+        return MongoClient.connect(config.orionDb.url)
+            .then(function(c) {
+                client = c;
 
-            return await client
-                .db(config.orionDb.prefix + '-' + tenant)
-                .collection(config.orionDb.collection)
-                .createIndex(
-                    { modDate: 1 },
-                    {
-                        unique: true,
-                        w: 'majority'
-                    }
-                );
-        } finally {
-            if (client) {
-                await client.close();
-            }
-        }
+                return client
+                    .db(config.orionDb.prefix + '-' + tenant)
+                    .collection(config.orionDb.collection)
+                    .createIndex(
+                        { modDate: 1 },
+                        {
+                            unique: true,
+                            w: 'majority'
+                        }
+                    );
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
+                }
+            });
     }, callback);
 }
 
 function dropEntities(callback) {
-    executeWithCallback(async function() {
+    executeWithCallback(function() {
         var client;
 
-        try {
-            client = await MongoClient.connect(config.orionDb.url);
+        return MongoClient.connect(config.orionDb.url)
+            .then(function(c) {
+                client = c;
 
-            return await client
-                .db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE)
-                .collection(config.orionDb.collection)
-                .deleteMany({});
-        } finally {
-            if (client) {
-                await client.close();
-            }
-        }
+                return client
+                    .db(config.orionDb.prefix + '-' + config.DEFAULT_SERVICE)
+                    .collection(config.orionDb.collection)
+                    .deleteMany({});
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
+                }
+            });
     }, callback);
 }
 
 function addEntity(tenant, entity, callback) {
-    executeWithCallback(async function() {
+    executeWithCallback(function() {
         var client;
 
-        try {
-            client = await MongoClient.connect(config.orionDb.url);
+        return MongoClient.connect(config.orionDb.url)
+            .then(function(connectedClient) {
+                client = connectedClient;
 
-            return await client
-                .db(config.orionDb.prefix + '-' + tenant)
-                .collection(config.orionDb.collection)
-                .insertOne(entity);
-        } finally {
-            if (client) {
-                await client.close();
-            }
-        }
+                return client
+                    .db(config.orionDb.prefix + '-' + tenant)
+                    .collection(config.orionDb.collection)
+                    .insertOne(entity);
+            })
+            .finally(function() {
+                if (client) {
+                    return client.close();
+                }
+            });
     }, callback);
 }
 
