@@ -67,7 +67,7 @@
     "logops": "2.1.2",
     "mongodb": "7.6.0",
     "ngsijs": "1.4.1",
-    "nodemailer": "9.0.1",
+    "nodemailer": "9.1.1",
     "nodemailer-smtp-transport": "~2.7.2",
     "@cypress/request": "4.0.1",
     "nanoid": "3.3.18",
