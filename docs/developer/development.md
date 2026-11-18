@@ -35,6 +35,28 @@ To run tests, type
 npm test
 ```
 
+#### Action endpoint load test
+
+The opt-in load test exercises `POST /actions/do` against the local Perseo-FE test server. It defaults to 500 requests
+with up to 50 requests in flight, uses a local fake HTTP server for the outgoing SMS action, and reports throughput and
+latency percentiles. It is not included in `npm test`.
+
+Run it with:
+
+```bash
+npm run test:load:actions
+```
+
+The workload can be adjusted with `ACTION_LOAD_REQUESTS` (1–10,000) and `ACTION_LOAD_CONCURRENCY` (1–500), for example:
+
+```bash
+ACTION_LOAD_REQUESTS=1000 ACTION_LOAD_CONCURRENCY=100 npm run test:load:actions
+```
+
+Like the component tests, this test requires the test dependencies to be available, including MongoDB and the configured
+Orion endpoint. The test harness clears test collections before and after the run, so use an isolated test environment
+and never point it at production data.
+
 ### Coding guidelines
 
 jshint
