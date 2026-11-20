@@ -48,7 +48,7 @@ var should = require('should'),
     utilsT = require('../test/utils/utilsT'),
     testEnv = require('../test/utils/testEnvironment'),
     REQUESTS = readLoadSetting('ACTION_LOAD_REQUESTS', 500, 10000),
-    CONCURRENCY = readLoadSetting('ACTION_LOAD_CONCURRENCY', 50, 500),
+    CONCURRENCY = readLoadSetting('ACTION_LOAD_CONCURRENCY', 64, 500),
     DOWNSTREAM_DELAY = 250;
 
 describe('POST /actions/do load', function() {
