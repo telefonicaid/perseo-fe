@@ -21,15 +21,15 @@
   "scripts": {
     "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf coverage",
     "healthcheck": "node ./bin/healthcheck",
-    "test": "mocha --recursive 'test/**/*.js' --reporter spec --timeout 5000 --ui bdd --exit --color true",
-    "test:load:actions": "mocha load-tests/actions-load.test.js --reporter spec --timeout 120000 --exit",
+    "test": "mocha --recursive 'test/**/*.js' --exclude 'test/load/**' --reporter spec --timeout 5000 --ui bdd --exit --color true",
+    "test:load:actions": "mocha test/load/actions-load.test.js --reporter spec --timeout 120000 --exit",
     "test:watch": "npm run test -- -w ./lib",
     "lint": "jshint lib/ --config .jshintrc && jshint bin/ --config .jshintrc && jshint test/ --config test/.jshintrc",
     "lint:md": "remark  -f '*.md' 'docs/*.md'",
     "lint:text": "textlint '*.md' 'docs/*.md'",
     "prettier": "prettier --config .prettierrc.json --write '**/**/**/**/*.js' '**/**/**/*.js' '**/**/*.js' '**/*.js' '*.js'",
     "prettier:text": "prettier 'README.md' 'docs/*.md' 'docs/**/*.md' --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
-    "test:coverage": "nyc --reporter=lcov mocha --recursive 'test/**/*.js' --reporter spec --timeout 5000 --exit --color true",
+    "test:coverage": "nyc --reporter=lcov mocha --recursive 'test/**/*.js' --exclude 'test/load/**' --reporter spec --timeout 5000 --exit --color true",
     "test:coveralls": "npm run test:coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "watch": "watch 'npm test && npm run lint' ./lib ./test",
     "start": "node ./bin/perseo"

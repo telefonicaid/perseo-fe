@@ -37,9 +37,10 @@ npm test
 
 #### Action endpoint load test
 
-The opt-in load test exercises `POST /actions/do` against the local Perseo-FE test server. It defaults to 500 requests
-with up to 64 requests in flight, uses a local fake HTTP server for the outgoing SMS action, and reports throughput and
-latency percentiles. It is not included in `npm test`.
+The opt-in load test in [`test/load/actions-load.test.js`](../../test/load/actions-load.test.js) exercises
+`POST /actions/do` against the local Perseo-FE test server. It defaults to 500 requests with up to 64 requests in
+flight, uses a local fake HTTP server for the outgoing SMS action, and reports throughput and latency percentiles. It is
+not included in `npm test`.
 
 Requests alternate between JSON bodies of exactly 1, 4 and 16 KiB (1,024, 4,096 and 16,384 UTF-8 bytes, excluding HTTP
 headers). The test verifies serialized body sizes and reports the number of requests for each size.

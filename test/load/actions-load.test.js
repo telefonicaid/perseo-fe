@@ -45,9 +45,9 @@ function percentile(samples, ratio) {
 }
 
 const should = require('should'),
-    clients = require('../test/utils/clients'),
-    utilsT = require('../test/utils/utilsT'),
-    testEnv = require('../test/utils/testEnvironment'),
+    clients = require('../utils/clients'),
+    utilsT = require('../utils/utilsT'),
+    testEnv = require('../utils/testEnvironment'),
     REQUESTS = readLoadSetting('ACTION_LOAD_REQUESTS', 500, 10000),
     CONCURRENCY = readLoadSetting('ACTION_LOAD_CONCURRENCY', 64, 500),
     BODY_SIZES = [1024, 4096, 16384],
