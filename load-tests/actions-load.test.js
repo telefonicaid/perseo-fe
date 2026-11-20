@@ -49,6 +49,7 @@ var should = require('should'),
     testEnv = require('../test/utils/testEnvironment'),
     REQUESTS = readLoadSetting('ACTION_LOAD_REQUESTS', 500, 10000),
     CONCURRENCY = readLoadSetting('ACTION_LOAD_CONCURRENCY', 64, 500),
+    BODY_SIZES = [1024, 4096, 16384],
     DOWNSTREAM_DELAY = 250;
 
 describe('POST /actions/do load', function() {
@@ -91,11 +92,12 @@ describe('POST /actions/do load', function() {
             });
 
             var latencies = [],
+                bodyCounts = {},
                 nextRequest = 0,
                 startedAt = Date.now();
 
             function sendNext() {
-                var index, event, requestStartedAt;
+                var index, event, bodySize, paddingSize, requestStartedAt;
                 if (nextRequest >= REQUESTS) {
                     return Promise.resolve();
                 }
@@ -103,6 +105,15 @@ describe('POST /actions/do load', function() {
                 index = nextRequest++;
                 event = JSON.parse(JSON.stringify(action));
                 event.ev.id += '-' + index;
+                bodySize = BODY_SIZES[index % BODY_SIZES.length];
+                event.ev.loadPadding = '';
+                paddingSize = bodySize - Buffer.byteLength(JSON.stringify(event), 'utf8');
+                if (paddingSize < 0) {
+                    throw new Error('Base event exceeds target body size of ' + bodySize + ' bytes');
+                }
+                event.ev.loadPadding = 'x'.repeat(paddingSize);
+                Buffer.byteLength(JSON.stringify(event), 'utf8').should.equal(bodySize);
+                bodyCounts[bodySize] = (bodyCounts[bodySize] || 0) + 1;
                 requestStartedAt = Date.now();
 
                 return new Promise(function(resolve, reject) {
@@ -127,6 +138,7 @@ describe('POST /actions/do load', function() {
                         completedDownstream.should.equal(REQUESTS);
                         maxConcurrentDownstream.should.be.greaterThan(1);
                         latencies.length.should.equal(REQUESTS);
+                        console.log('Body sizes (bytes: requests): %j', bodyCounts);
                         console.log(
                             'Load result: %d requests, concurrency %d, %s requests/s, latency p50=%dms p95=%dms max=%dms, downstream peak=%d',
                             REQUESTS,
