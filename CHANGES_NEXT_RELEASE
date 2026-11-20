@@ -4,3 +4,4 @@
 - Upgrade: mongodb dependency from 4.17.2 to 7.6.0 (#845)
 - Upgrade request 2.88.2 dependency to @cypress/request 4.0.1 due to CVE-2023-28155
 - Upgrade NodeJS version from 24-bullseye-slim to 24-bookworm-slim in Dockerfile
+- Upgrade express dep from 4.22.1 to 4.22.3 
