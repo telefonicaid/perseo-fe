@@ -24,12 +24,11 @@
 'use strict';
 
 function readLoadSetting(name, defaultValue, maximum) {
-    var value;
     if (process.env[name] === undefined) {
         return defaultValue;
     }
 
-    value = Number(process.env[name]);
+    const value = Number(process.env[name]);
     if (!Number.isInteger(value) || value < 1 || value > maximum) {
         throw new Error(name + ' must be an integer between 1 and ' + maximum);
     }
@@ -37,13 +36,13 @@ function readLoadSetting(name, defaultValue, maximum) {
 }
 
 function percentile(samples, ratio) {
-    var sorted = samples.slice().sort(function(a, b) {
+    const sorted = samples.slice().sort(function(a, b) {
         return a - b;
     });
     return sorted[Math.ceil(sorted.length * ratio) - 1];
 }
 
-var should = require('should'),
+const should = require('should'),
     clients = require('../test/utils/clients'),
     utilsT = require('../test/utils/utilsT'),
     testEnv = require('../test/utils/testEnvironment'),
@@ -59,17 +58,17 @@ describe('POST /actions/do load', function() {
     it('should process a configurable concurrent burst', function(done) {
         this.timeout(120000);
 
-        var rule = utilsT.loadExample('./test/data/good_rules/blood_rule_sms.json'),
+        const rule = utilsT.loadExample('./test/data/good_rules/blood_rule_sms.json'),
             action = utilsT.loadExample('./test/data/good_actions/action_sms.json'),
-            workerCount = Math.min(CONCURRENCY, REQUESTS),
-            downstreamCount = 0,
+            workerCount = Math.min(CONCURRENCY, REQUESTS);
+        let downstreamCount = 0,
             completedDownstream = 0,
             activeDownstream = 0,
             maxConcurrentDownstream = 0,
-            downstreamDone,
-            downstreamFinished = new Promise(function(resolve) {
-                downstreamDone = resolve;
-            });
+            downstreamDone;
+        const downstreamFinished = new Promise(function(resolve) {
+            downstreamDone = resolve;
+        });
 
         clients.PostRule(rule, function(ruleError, ruleResponse) {
             should.not.exist(ruleError);
@@ -91,30 +90,29 @@ describe('POST /actions/do load', function() {
                 }, DOWNSTREAM_DELAY);
             });
 
-            var latencies = [],
+            const latencies = [],
                 bodyCounts = {},
-                nextRequest = 0,
                 startedAt = Date.now();
+            let nextRequest = 0;
 
             function sendNext() {
-                var index, event, bodySize, paddingSize, requestStartedAt;
                 if (nextRequest >= REQUESTS) {
                     return Promise.resolve();
                 }
 
-                index = nextRequest++;
-                event = JSON.parse(JSON.stringify(action));
+                const index = nextRequest++;
+                const event = JSON.parse(JSON.stringify(action));
                 event.ev.id += '-' + index;
-                bodySize = BODY_SIZES[index % BODY_SIZES.length];
+                const bodySize = BODY_SIZES[index % BODY_SIZES.length];
                 event.ev.loadPadding = '';
-                paddingSize = bodySize - Buffer.byteLength(JSON.stringify(event), 'utf8');
+                const paddingSize = bodySize - Buffer.byteLength(JSON.stringify(event), 'utf8');
                 if (paddingSize < 0) {
                     throw new Error('Base event exceeds target body size of ' + bodySize + ' bytes');
                 }
                 event.ev.loadPadding = 'x'.repeat(paddingSize);
                 Buffer.byteLength(JSON.stringify(event), 'utf8').should.equal(bodySize);
                 bodyCounts[bodySize] = (bodyCounts[bodySize] || 0) + 1;
-                requestStartedAt = Date.now();
+                const requestStartedAt = Date.now();
 
                 return new Promise(function(resolve, reject) {
                     clients.PostAction(event, function(error, response) {
@@ -132,7 +130,7 @@ describe('POST /actions/do load', function() {
 
             Promise.all(Array.from({ length: workerCount }, sendNext))
                 .then(function() {
-                    var elapsed = Date.now() - startedAt;
+                    const elapsed = Date.now() - startedAt;
                     return downstreamFinished.then(function() {
                         downstreamCount.should.equal(REQUESTS);
                         completedDownstream.should.equal(REQUESTS);
