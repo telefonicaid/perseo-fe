@@ -23,6 +23,8 @@
 
 'use strict';
 
+/* global structuredClone */
+
 function readLoadSetting(name, defaultValue, maximum) {
     if (process.env[name] === undefined) {
         return defaultValue;
@@ -109,7 +111,7 @@ function runLoadTest(done) {
             }
 
             const index = nextRequest++;
-            const event = JSON.parse(JSON.stringify(action));
+            const event = structuredClone(action);
             event.ev.id += '-' + index;
             const bodySize = BODY_SIZES[index % BODY_SIZES.length];
             event.ev.loadPadding = '';
